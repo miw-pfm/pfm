@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  *
- * @author bk0823
+ * @author Cesar Martinez
  */
 public class TestCreateProjectValidatorBean {
 
@@ -60,8 +60,8 @@ public class TestCreateProjectValidatorBean {
         CreateProjectValidatorBean cPVB;
         cPVB = new CreateProjectValidatorBean();
 
-        assertTrue("No Valida Correctamente", cPVB.nameValidator("Project1"));
-        assertTrue("No Valida Correctamente", cPVB.nameValidator("Project2"));
-        assertFalse("No Valida Correctamente", cPVB.nameValidator("Project3"));
+        assertTrue("Ya existe y no lo valida correctamente", cPVB.nameValidator("Project1"));
+        assertTrue("Ya existe y no lo valida correctamente", cPVB.nameValidator("Project2"));
+        assertFalse("No existe y no lo Valida Correctamente", cPVB.nameValidator("Project3"));
     }
 }
