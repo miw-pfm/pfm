@@ -1,5 +1,6 @@
 package eui.miw.pfm.models.dao;
 
+import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.jpa.JPADAOFactory;
 import org.apache.log4j.Logger;
 
@@ -20,6 +21,5 @@ public abstract class AbstractDAOFactory {
         return AbstractDAOFactory.factory;
     }
     
-
-
+    public abstract ProjectDAO getProjectDAO();
 }

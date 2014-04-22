@@ -1,6 +1,7 @@
 package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -21,6 +22,11 @@ public class JPADAOFactory extends AbstractDAOFactory {
                     .createEntityManager();
         }
         return entityManager;
+    }
+
+    @Override
+    public ProjectDAO getProjectDAO() {
+  	return new JPAProjectDAO();
     }
 
 }
