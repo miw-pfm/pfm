@@ -7,7 +7,7 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.CreateProjectValidatorEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.mocks.MockProjectNamesList;
+//import eui.miw.pfm.util.mocks.MockProjectNamesList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
