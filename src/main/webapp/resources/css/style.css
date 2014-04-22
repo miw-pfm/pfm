@@ -1,0 +1,228 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-abr-2014, 10:09:10
+    Author     : aw0591
+*/
+
+p, li, h2, a{
+    color: #404040;
+}
+
+#container {
+    width: 1360px;
+    margin: 0 auto;
+    padding: 0px;
+    background: #FFF;
+}
+
+#panelheader {
+    clear: both;
+    display: block;
+    margin: 0px;
+    padding: 0px;    
+}
+
+#panelmenu {
+    min-height: 26px;
+    clear: both;
+    display: block;
+}
+#panelmenu{
+    margin: 0px;
+}
+
+#panelmenu ul{
+    margin: 0px;
+    padding: 0px;
+}
+#panelmenu li.opcgeneral{
+    width: 170px;
+    list-style: none;
+    float: left;
+    text-align: center;
+
+    background: #F2F2F2;
+}
+
+#panelmenu li.opcgeneral:hover{
+    background: #FF0000;
+}
+
+#panelmenu li.opchome a{
+    border-bottom-color: #FF0000;
+}
+
+#panelmenu li.opc1 a{
+    border-bottom-color: #1F497b;
+}
+
+#panelmenu li.opc1:hover a{
+    background: #1F497D;
+}
+
+#panelmenu li.opc2 a{
+    border-bottom-color: #F79646;
+}
+
+#panelmenu li.opc2:hover a{
+    background: #F79646;
+}
+
+#panelmenu li.opc3 a{
+    border-bottom-color: #C0504D;
+}
+#panelmenu li.opc3:hover a{
+    background: #C0504D;
+}
+#panelmenu li.opc4 a{
+    border-bottom-color: #9BBB59;
+}
+#panelmenu li.opc4:hover a{
+    background: #9BBB59;
+}
+#panelmenu li.opc5 a{
+    border-bottom-color: #8064A2;
+}
+#panelmenu li.opc5:hover a{
+    background: #8064A2;
+}
+#panelmenu li.opc6 a{
+    border-bottom-color: #4BACC6;
+}
+#panelmenu li.opc6:hover a{
+    background: #4BACC6;
+}
+#panelmenu li.opc7 a{
+    border-bottom-color: #4F81BD;
+}
+#panelmenu li.opc7:hover a{
+    background: #4F81BD;
+}
+
+#panelmenu li a{
+    font-size: 16px;
+    color: #A5A5A5;
+    text-decoration: none;
+    padding: 2px 0;
+    width: 170px;
+    border-bottom: 3px solid #FF0000;
+    display: block;
+}
+
+#panelmenu li a:hover{
+    color:#ffffff;
+    cursor: pointer;
+}
+
+
+#panelsubmenu {
+    clear: both;
+    display: block;
+    float: left;
+    margin: 5px 0;
+    width: 170px;
+}
+#panelsubmenu ul{
+    padding: 0px;
+}
+#panelsubmenu li{
+    list-style: none;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#panelsubmenu li a{
+    text-decoration: none;
+}
+#panelsubmenu li a:hover{
+    cursor: pointer;
+    color: #404040;
+    text-decoration: underline;
+}
+#panelbody {
+    clear: both;
+    display: block;
+    margin: 0px;
+    padding: 0px;  
+    overflow: auto;
+}
+
+#panelfooter {
+    min-height: 50px;
+    clear: both;
+    margin: 0px;
+    padding: 0px;    
+    background: #96CAED;
+    overflow: auto;
+}
+
+#panelfooter p {
+    margin-top: 15px;
+    color: #FFF;
+    text-align: center;    
+}
+
+#logo {
+    float: left;
+    height: 85px;
+    width: 170px;
+}
+
+#pagetitle {
+    height: 85px;
+    overflow: hidden;
+}
+
+
+#pagetitle h1{
+    font-size: 26px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-align: right;
+    margin-right: 15px;
+    clear: both;
+    display: block;
+}
+
+#logout {
+    float: right;
+    margin-right: 20px;
+    margin-top: 2px;
+}
+
+
+
+#wrap {
+    width: 1190px;
+    min-height: 400px;
+    background: #fff;
+    overflow: auto;
+    padding-left: 15px;
+}
+
+#title {
+    clear: both;
+    display: block;
+    font-size: 24px;
+    margin: 0;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+
+#subtitle {
+    clear: both;
+    display: block;
+    font-size: 18px;
+    margin: 15px 0 10px;              
+}
+
+#tabmenu {
+    font-size: 14px;
+    background: #ffffff;
+}
