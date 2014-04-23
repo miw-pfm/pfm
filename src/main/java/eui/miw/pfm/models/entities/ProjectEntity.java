@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,7 +45,7 @@ public class ProjectEntity implements Serializable {
     private int weekNumIteration;
 
     @Column(name = "estimated_num_iteration")
-    private int estimatedNumIteration;  //NOPMD
+    private float estimatedNumIteration;  //NOPMD
 
     @Column(name = "chosen_num_iteration")
     private int chosenNumIteration; //NOPMD 
@@ -51,6 +53,13 @@ public class ProjectEntity implements Serializable {
     @Column(name = "description")
     private String description; //NOPMD 
  
+    @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName="id")
+    // NOTA: mediante el joinColumn explicitamos que el nombre de la FK de esta tabla
+    //         (ProjetEntity) se llamara user_id y la PK de la tabla UserEntity a
+    //         la cual hara referencia esta FK se llama id (segun el @column de UserEntity)           
+    private UserEntity owner;
+    
     public ProjectEntity() {
         super();
     }
@@ -59,7 +68,7 @@ public class ProjectEntity implements Serializable {
         this.id = id;
     }
 
-    public ProjectEntity(final Integer id, final String name, final Date startDate, final Date endDate, final int weekNumIteration, final int estimatedNumIteration, final int chosenNumIteration, final String description) {  //NOPMD
+    public ProjectEntity(final Integer id, final String name, final Date startDate, final Date endDate, final int weekNumIteration, final int estimatedNumIteration, final int chosenNumIteration, final String description, final UserEntity owner) {  //NOPMD
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -68,6 +77,7 @@ public class ProjectEntity implements Serializable {
         this.estimatedNumIteration = estimatedNumIteration;
         this.chosenNumIteration = chosenNumIteration;
         this.description = description;
+        this.owner = owner;
     }
 
     public Integer getId() {
@@ -110,7 +120,7 @@ public class ProjectEntity implements Serializable {
         this.weekNumIteration = weekNumIteration;
     }
 
-    public int getEstimatedNumIteration() {
+    public float getEstimatedNumIteration() {
         return estimatedNumIteration;
     }
 
@@ -134,6 +144,14 @@ public class ProjectEntity implements Serializable {
         this.description = description;
     }    
 
+   public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(final UserEntity owner) {
+        this.owner = owner;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

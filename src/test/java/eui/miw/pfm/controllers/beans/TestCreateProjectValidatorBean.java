@@ -7,9 +7,12 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
+import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UserEntity;
 import java.util.Date;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -18,11 +21,31 @@ import org.junit.Test;
  */
 public class TestCreateProjectValidatorBean {
 
+    private UserEntity user;
+    private ProjectEntity project;        
+    
+ 
+    @Before
+    public void before() {      
+        this.user = new UserEntity();
+        this.project = new ProjectEntity();
+        
+        this.user.setName("Pepe");
+        this.user.setPassword("1234");
+        this.user.setUsername("pepe23");
+        this.user.setEmail("pepe@pepe.com");
+        this.user.setSurename("lopez");
+        this.user.setSecondSurename("guti"); 
+        
+        UserDAO userDAO;
+        userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        userDAO.create(this.user);        
+    }   
+    
     @Test
     public void nameValidator1() {
         ProjectDAO projectDAO;
         projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        final ProjectEntity project = new ProjectEntity();
         int numInt; 
         numInt= 2;
         project.setChosenNumIteration(numInt);
@@ -32,7 +55,8 @@ public class TestCreateProjectValidatorBean {
         project.setEstimatedNumIteration(numInt);
         project.setName("Project1");
         project.setWeekNumIteration(numInt);
-
+        project.setOwner(user);
+        
         projectDAO.create(project);
 
         CreateProjectValidatorBean cPVB;
@@ -44,7 +68,6 @@ public class TestCreateProjectValidatorBean {
     @Test
     public void nameValidator2() {
         final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        ProjectEntity project;
         int numInt;
         numInt = 2;
         project = new ProjectEntity();
@@ -55,6 +78,8 @@ public class TestCreateProjectValidatorBean {
         project.setEstimatedNumIteration(numInt);
         project.setName("Project2");
         project.setWeekNumIteration(numInt);
+        project.setOwner(user);
+        
 
         projectDAO.create(project);
         CreateProjectValidatorBean cPVB;

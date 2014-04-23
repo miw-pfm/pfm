@@ -7,11 +7,14 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -58,7 +61,7 @@ public class UserEntity implements Serializable {
     @Size(min=6,max=50)
     @Pattern(regexp="^.+@.+\\..+$")
     private String email;
-
+    
     public UserEntity(){ //NOPMD
         super();
     }
@@ -132,9 +135,7 @@ public class UserEntity implements Serializable {
     public void setEmail(final String email) {
         this.email = email;
     }
-    
-    
-
+      
     @Override
     public int hashCode() {
         int hash = 0;
