@@ -8,44 +8,98 @@ and open the template in the editor.
     Author     : aw0591
 */
 
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    font-size: 12px;
+}
+
 p, li, h2, a{
     color: #404040;
 }
 
 #container {
-    width: 1360px;
     margin: 0 auto;
+    overflow: auto;
+    width: 1024px;
     padding: 0px;
     background: #FFF;
+
+    
+    min-height: 100%;
 }
 
 #panelheader {
     clear: both;
-    display: block;
     margin: 0px;
-    padding: 0px;    
+    padding: 0px;
+    overflow: auto;
+}
+
+#logo {
+    float: left;
+    height: 85px;
+    width: 170px;
+}
+
+#pagetitle {
+    overflow: auto;
+
+}
+
+#pagetitle h1{
+    font-size: 26px;
+    text-align: right;
+    margin-right: 15px;
+    margin-top: 41px;
+}
+
+#logout {
+    float: right;
+    margin-right: 20px;
+    margin-top: 2px;
+    display: block;
+    clear: both;
 }
 
 #panelmenu {
-    min-height: 26px;
     clear: both;
-    display: block;
-}
-#panelmenu{
-    margin: 0px;
+    overflow: auto;
 }
 
 #panelmenu ul{
-    margin: 0px;
     padding: 0px;
 }
+
+
 #panelmenu li.opcgeneral{
-    width: 170px;
+    width: 128px;
     list-style: none;
     float: left;
     text-align: center;
-
     background: #F2F2F2;
+}
+
+#panelmenu li a{
+    font-size: 14px;
+    color: #A5A5A5;
+    text-decoration: none;
+    padding: 2px 0;
+    width: 128px;
+    border-bottom: 3px solid #FF0000;
+    display: block;
+}
+
+#panelmenu li a:hover{
+    color:#ffffff;
+    cursor: pointer;
 }
 
 #panelmenu li.opcgeneral:hover{
@@ -103,28 +157,26 @@ p, li, h2, a{
     background: #4F81BD;
 }
 
-#panelmenu li a{
-    font-size: 16px;
-    color: #A5A5A5;
-    text-decoration: none;
-    padding: 2px 0;
-    width: 170px;
-    border-bottom: 3px solid #FF0000;
-    display: block;
+#panelbody {
+    clear: both;
+    overflow: auto;
 }
 
-#panelmenu li a:hover{
-    color:#ffffff;
-    cursor: pointer;
+#title {
+    clear: both;
+    font-size: 24px;
+    margin: 0;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-top: 10px;
 }
-
 
 #panelsubmenu {
     clear: both;
     display: block;
     float: left;
     margin: 5px 0;
-    width: 170px;
+    width: 128px;
 }
 #panelsubmenu ul{
     padding: 0px;
@@ -144,75 +196,13 @@ p, li, h2, a{
     color: #404040;
     text-decoration: underline;
 }
-#panelbody {
-    clear: both;
-    display: block;
-    margin: 0px;
-    padding: 0px;  
-    overflow: auto;
-}
-
-#panelfooter {
-    min-height: 50px;
-    clear: both;
-    margin: 0px;
-    padding: 0px;    
-    background: #96CAED;
-    overflow: auto;
-}
-
-#panelfooter p {
-    margin-top: 15px;
-    color: #FFF;
-    text-align: center;    
-}
-
-#logo {
-    float: left;
-    height: 85px;
-    width: 170px;
-}
-
-#pagetitle {
-    height: 85px;
-    overflow: hidden;
-}
-
-
-#pagetitle h1{
-    font-size: 26px;
-    margin-top: 40px;
-    margin-bottom: 10px;
-    text-align: right;
-    margin-right: 15px;
-    clear: both;
-    display: block;
-}
-
-#logout {
-    float: right;
-    margin-right: 20px;
-    margin-top: 2px;
-}
-
-
 
 #wrap {
-    width: 1190px;
-    min-height: 400px;
+    width: 895px;
+    min-height: 500px;
     background: #fff;
     overflow: auto;
     padding-left: 15px;
-}
-
-#title {
-    clear: both;
-    display: block;
-    font-size: 24px;
-    margin: 0;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-top: 10px;
 }
 
 #subtitle {
@@ -225,4 +215,33 @@ p, li, h2, a{
 #tabmenu {
     font-size: 14px;
     background: #ffffff;
+}
+
+#panelfooter {
+    height: 50px; /* Altura del Footer en px*/ 
+    clear: both; 
+    background: #96CAED;
+    overflow: auto;
+}
+
+#panelfooter p {
+    margin-top: 15px;
+    color: #000;
+    text-align: center;    
+}
+
+#panelfooter p.footleft{
+    margin-top: 15px;
+    float: left;
+    text-align: center;
+    margin-left: 20px;
+}
+
+#panelfooter p.footright{
+    float: right;
+    margin-right: 20px;
+}
+
+#panelfooter p a:hover{
+    color: #404040;
 }
