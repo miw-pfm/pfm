@@ -32,7 +32,7 @@ public class I18nBean implements Serializable {
     }
 
     public void setLanguaje(final Languaje languaje) {
-        // assert languaje != null;
+        assert languaje != null;
         this.languaje = languaje;
         switch (languaje) {
             case ESPANOL:
@@ -47,18 +47,18 @@ public class I18nBean implements Serializable {
     }
 
     public void setLocale(final Locale locale) {
-        // assert locale != null;
+        assert locale != null;
         this.locale = locale;
     }
 
     private void change(final String languaje) {
-        //  assert languaje != null;
+        assert languaje != null;
         this.locale = new Locale(languaje);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
 
     public String msg(final String key) {
-        //assert key != null;
+        assert key != null;
         return ResourceBundle.getBundle("eui.miw.pfm.i18n.messages", this.locale).getString(key);
     }
 
