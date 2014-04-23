@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- Author: ppbust -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="nameprj">
+    </ui:define>    
+
+    <ui:define name="title">
+        Home
+    </ui:define>
+
+    <ui:define name="subtitle">
+        Configure Project
+    </ui:define>
+
+    <ui:define name="body">
+        <f:view locale="#{i18nBean.locale}">
+            <div align='center'>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="#{msgs.startDate}" />
+                        <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" />
+                        <h:outputText value="#{msgs.endDate}" />
+                        <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" />
+                        <h:outputText value="#{msgs.weekNumIteration}" />
+                        <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" />
+                        <h:outputText value="#{msgs.estimatedNumIteration}" />
+                        <h:outputText  value="#{confProjectBean.project.estimatedNumIteration}" />
+                        <h:outputText value="#{msgs.chosenNumIteration}" />
+                        <h:inputText value="#{confProjectBean.project.chosenNumIteration}" maxlength="5" />
+                        <h:commandButton value="#{msgs.submit}" action="responseConfProject" />
+                    </h:panelGrid>
+
+                </h:form>    
+            </div>
+        </f:view>
+    </ui:define>
+</ui:composition>
