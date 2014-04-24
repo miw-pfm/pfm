@@ -5,7 +5,7 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.CreateProjectValidatorEjb;
+import eui.miw.pfm.controllers.ejb.CreateProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
@@ -17,20 +17,18 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class CreateProjectValidatorBean extends Bean implements Serializable {
+public class CreateProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity projectEntity;
 
     /**
-     * Creates a new instance of CreateProjectValidatorBean
+     * Creates a new instance of CreateProjectBean
      */
-    public CreateProjectValidatorBean() {
-        super();
+    public CreateProjectBean() {//NOPMD 
         this.projectEntity = new ProjectEntity();
     }
 
-//function to validate that the suggested name doesn't exist already. 
     public ProjectEntity getProjectEntity() {
         return projectEntity;
     }
@@ -39,17 +37,12 @@ public class CreateProjectValidatorBean extends Bean implements Serializable {
         this.projectEntity = projectEntity;
     }
 
-    public boolean nameValidator() {
-        CreateProjectValidatorEjb cPVEjb;
-        cPVEjb = new CreateProjectValidatorEjb();
-        boolean nameExist; //name validation flag
-        nameExist = false;//NOPMD
-        for (ProjectEntity project : cPVEjb.nameValidator()) {         
-            if (project.getName().equals(this.projectEntity.getName())) {
-                nameExist = true;//NOPMD
-            }
-        }
-        return nameExist;
+    public void createProject() { //NOPMD
+        final CreateProjectEjb cPEjb = new CreateProjectEjb();
+        assert this.projectEntity != null;
+        assert cPEjb != null;
+        cPEjb.createProject(this.projectEntity);
+
     }
 
 }

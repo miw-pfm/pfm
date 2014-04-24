@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
 public class UserEntityTest {
     
     private UserEntity user;
+    private UserDAO userDAO;
+
     
     public UserEntityTest() {
     }
@@ -42,12 +44,16 @@ public class UserEntityTest {
         this.user.setSurename("lopez");
         this.user.setSecondSurename("guti");
         
-        UserDAO userDAO;
         userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         userDAO.create(this.user);
         
         assertTrue("fin test",true); // NOPMD
         
+    }
+    
+    @After
+    public void after() {
+        userDAO.delete(user);
     }
     /**
      * Test of getId method, of class UserEntity.

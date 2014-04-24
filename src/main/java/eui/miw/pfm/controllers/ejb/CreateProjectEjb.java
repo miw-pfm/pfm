@@ -8,19 +8,16 @@ package eui.miw.pfm.controllers.ejb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import java.util.List;
 
 /**
  *
  * @author César Martínez
  */
-public class CreateProjectValidatorEjb {
+public class CreateProjectEjb {
 
-    public List<ProjectEntity> nameValidator() {
-
+    public void createProject(final ProjectEntity project) {
         ProjectDAO projectDAO;
         projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-
-        return projectDAO.findAll();
+        projectDAO.create(project);
     }
 }
