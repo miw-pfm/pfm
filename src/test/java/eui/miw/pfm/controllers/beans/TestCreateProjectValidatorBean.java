@@ -11,6 +11,8 @@ import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import java.util.Date;
+import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,33 +23,34 @@ import org.junit.Test;
  */
 public class TestCreateProjectValidatorBean {
 
-    private UserEntity user;
-    private ProjectEntity project;        
-    
- 
+    private ProjectEntity project;
+    private ProjectEntity project2;
+    private UserEntity user1;
+
     @Before
-    public void before() {      
-        this.user = new UserEntity();
-        this.project = new ProjectEntity();
-        
-        this.user.setName("Pepe");
-        this.user.setPassword("1234");
-        this.user.setUsername("pepe23");
-        this.user.setEmail("pepe@pepe.com");
-        this.user.setSurename("lopez");
-        this.user.setSecondSurename("guti"); 
-        
-        UserDAO userDAO;
-        userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        userDAO.create(this.user);        
-    }   
-    
+    public void before() {
+        project = new ProjectEntity();
+        project2 = new ProjectEntity();
+        user1 = new UserEntity();
+
+        user1.setName("Pepe");
+        user1.setPassword("1234");
+        user1.setUsername("pepe23");
+        user1.setEmail("pepe@pepe.com");
+        user1.setSurename("lopez");
+        user1.setSecondSurename("guti");
+
+    }
+
     @Test
     public void nameValidator1() {
-        ProjectDAO projectDAO;
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        int numInt; 
-        numInt= 2;
+        int numInt;
+        numInt = 2;
+
+        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
+        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        userDAO.create(this.user1);
+
         project.setChosenNumIteration(numInt);
         project.setDescription("Prueba de nameValidator");
         project.setStartDate(new Date());
@@ -55,38 +58,45 @@ public class TestCreateProjectValidatorBean {
         project.setEstimatedNumIteration(numInt);
         project.setName("Project1");
         project.setWeekNumIteration(numInt);
-        project.setOwner(user);
-        
+        project.setOwner(user1);
+
         projectDAO.create(project);
+        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
 
         CreateProjectValidatorBean cPVB;
         cPVB = new CreateProjectValidatorBean();
-//        assertTrue("Ya existe y no lo valida correctamente", cPVB.nameValidator("Project1"));
-//        assertFalse("No existe y no lo Valida Correctamente", cPVB.nameValidator("Project2"));
+        cPVB.setProjectEntity(project);
+
+        assertTrue("Ya existe project y no lo valida correctamente", cPVB.nameValidator());
+
+        project2.setChosenNumIteration(numInt);
+        project2.setDescription("Prueba de nameValidator");
+        project2.setStartDate(new Date());
+        project2.setEndDate(new Date());
+        project2.setEstimatedNumIteration(numInt);
+        project2.setName("Project2");
+        project2.setWeekNumIteration(numInt);
+        project2.setOwner(user1);
+
+        cPVB.setProjectEntity(project2);
+        assertFalse("No existe project2 y no lo Valida Correctamente", cPVB.nameValidator());
+
+        projectDAO.create(project2);
+        assertTrue("Ya existe project2 y no lo valida correctamente", cPVB.nameValidator());
+
+        ProjectEntity project3 = new ProjectEntity();
+        project3.setName("Project3");
+        cPVB.setProjectEntity(project3);
+        assertFalse("No existe project3 y no lo Valida Correctamente", cPVB.nameValidator());
+
     }
 
-    @Test
-    public void nameValidator2() {
-        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        int numInt;
-        numInt = 2;
-        project = new ProjectEntity();
-        project.setChosenNumIteration(numInt);
-        project.setDescription("Prueba de nameValidator");
-        project.setStartDate(new Date());
-        project.setEndDate(new Date());
-        project.setEstimatedNumIteration(numInt);
-        project.setName("Project2");
-        project.setWeekNumIteration(numInt);
-        project.setOwner(user);
-        
-
-        projectDAO.create(project);
-        CreateProjectValidatorBean cPVB;
-        cPVB = new CreateProjectValidatorBean();
-
-//        assertTrue("Ya existe y no lo valida correctamente", cPVB.nameValidator("Project1"));
-//        assertTrue("Ya existe y no lo valida correctamente", cPVB.nameValidator("Project2"));
-//        assertFalse("No existe y no lo Valida Correctamente", cPVB.nameValidator("Project3"));
+    @After
+    public void destroy() {
+        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
+        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        projectDAO.delete(project);
+        projectDAO.delete(project2);
+        userDAO.delete(user1);
     }
 }

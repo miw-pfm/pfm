@@ -98,7 +98,6 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
     public List<T> find(final String[] attributes, final String[] values, final String order, final int index, final int size) {
         assert attributes != null;
         assert values != null;
-        assert order != null;
 
 // Se crea un criterio de consulta
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

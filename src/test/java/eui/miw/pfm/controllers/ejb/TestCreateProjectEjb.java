@@ -23,7 +23,10 @@ import org.junit.Test;
 public class TestCreateProjectEjb {
 
     private ProjectEntity project;
+    private ProjectDAO projectDAO;
+    private UserDAO userDAO;
     private UserEntity user;
+
 
     @Before
     public void before() {
@@ -40,13 +43,13 @@ public class TestCreateProjectEjb {
 
     @Test
     public void createProject() {
-        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();        
+        userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         userDAO.create(this.user);
-
+        
         int numInt;
         numInt = 2;
-
+        
         project.setChosenNumIteration(numInt);
         project.setDescription("Prueba de nameValidator");
         project.setStartDate(new Date());
@@ -55,7 +58,7 @@ public class TestCreateProjectEjb {
         project.setName("TestProject1111");
         project.setWeekNumIteration(numInt);
         project.setOwner(user);
-
+        
         projectDAO.create(project);
 
         String[] name = {"name"};
@@ -66,9 +69,7 @@ public class TestCreateProjectEjb {
 
     @After
     public void after() {
-        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         projectDAO.delete(project);
-        userDAO.delete(user);
+        userDAO.delete(user);        
     }
 }
