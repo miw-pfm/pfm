@@ -157,9 +157,15 @@ p, li, h2, a{
     background: #4F81BD;
 }
 
+#panelbody.general {
+    border-top: 3px solid #F2F2F2;    
+}
+
 #panelbody {
     clear: both;
     overflow: auto;
+    background: #FFF;
+    min-height: 400px;    
 }
 
 #title {
@@ -218,20 +224,20 @@ p, li, h2, a{
 }
 
 #panelfooter {
-    height: 50px; /* Altura del Footer en px*/ 
+    height: 30px; /* Altura del Footer en px*/ 
     clear: both; 
-    background: #96CAED;
+    background: #F2F2F2;
     overflow: auto;
 }
 
 #panelfooter p {
-    margin-top: 15px;
+    margin-top: 7px;
     color: #000;
     text-align: center;    
 }
 
 #panelfooter p.footleft{
-    margin-top: 15px;
+    margin-top: 7px;
     float: left;
     text-align: center;
     margin-left: 20px;

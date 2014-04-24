@@ -39,21 +39,9 @@
 
         <f:view>
             <h:panelGroup id="container" layout="block">
-                <h:panelGroup id="panelheader" layout="block">
-                    <h:panelGroup id="logo" layout="block">
-                        <h:graphicImage library="images" name="logo.jpg" alt="Aplicación Web para la Gestión de Proyectos de la Metodología RUP" width="170" height="85" />                        
-                    </h:panelGroup>
-                    <h:panelGroup id="pagetitle" layout="block">
-                        <h:panelGroup id="logout" layout="block">
-                            <p>Salir</p>
-                        </h:panelGroup>   
-                        <h1><ui:insert name="pagetitle"/></h1>
-                    </h:panelGroup>
-                </h:panelGroup>
+                <ui:include src="header.xhtml"/>
 
-                <h:panelGroup id="panelmenu" layout="block">
-                    <ui:include src="menu.xhtml"/>
-                </h:panelGroup> 
+                <ui:include src="menu.xhtml"/>
 
                 <h:panelGroup id="panelbody" layout="block">
                     <h1 id="title"><ui:insert name="title"/></h1>                                      
@@ -66,10 +54,7 @@
                     </h:panelGroup>                  
                 </h:panelGroup>
 
-                <h:panelGroup id="panelfooter" layout="block">
-                    <p class="footleft">Powered by MIW</p>
-                    <p class="footright"><h:link value="About" /></p>
-                </h:panelGroup>
+                <ui:include src="footer.xhtml"/>
             </h:panelGroup>
         </f:view>	
     </h:body>
