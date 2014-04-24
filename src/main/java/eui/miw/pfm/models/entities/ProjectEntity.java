@@ -29,17 +29,17 @@ public class ProjectEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "name")
-    private String name;
+    public String name;
 
     @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    private Date startDate; 
+    public Date startDate; 
 
     @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
-    private Date endDate;
+    public Date endDate;
     
     @Column(name = "week_num_iteration")
     private int weekNumIteration;
@@ -173,12 +173,9 @@ public class ProjectEntity implements Serializable {
         }
         return true;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "Projects[ id=" + id + " ]";
+        return "ProjectEntity{" + "id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", weekNumIteration=" + weekNumIteration + ", estimatedNumIteration=" + estimatedNumIteration + ", chosenNumIteration=" + chosenNumIteration + ", description=" + description + ", owner=" + owner + '}';
     }
-    
 }

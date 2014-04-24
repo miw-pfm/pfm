@@ -8,8 +8,8 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
-import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UserEntity;
 import java.util.List;
 
 /**
@@ -18,16 +18,11 @@ import java.util.List;
  */
 public class ListProjectsEjb {
     
-    public List<ProjectEntity> obtainProjects(final int userId){
+    public List<ProjectEntity> obtainProjects(final UserEntity user){
         ProjectDAO projectDAO;
         projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        String[] attributes = new String[1];
-        attributes[0] = "user";
-        String[] values = new String[1];
-        values[0] = ""+userId;
         String psql = "SELECT p FROM ProjectEntity p WHERE p.owner = ?1";
         
-        return projectDAO.find(psql, userDAO.read(userId));
+        return projectDAO.find(psql, user);
     }
 }

@@ -3,31 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ListProjectsEjb;
+import eui.miw.pfm.util.LazyProjectDataModel;
+import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
+import java.util.UUID;
+import javax.faces.bean.ManagedBean;
 
-/**
- *
- * @author Roberto Amor
- */
-@Named
-@SessionScoped
-public class ListProjectsBean extends Bean {
+
+import javax.servlet.ServletContext;
+
+import org.primefaces.model.LazyDataModel;
+
+@ManagedBean
+public class ListProjectsBean {
+
+    private LazyDataModel<ProjectEntity> lazyModel;
+
+    private ProjectEntity selectedProject;
+
     private List<ProjectEntity> projects;
-    private int pages; // number of pages to display
-
-    /**
-     * Creates a new instance of ViewProjectsBean
-     */
-    public ListProjectsBean() { // NOPMD
+    
+    public ListProjectsBean() {
+        ListProjectsEjb eaE; 
+        eaE = new ListProjectsEjb();
+        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        this.setProjects(eaE.obtainProjects(userDAO.read(1)));
+        lazyModel = new LazyProjectDataModel(this.projects);
     }
-
+    
     public List<ProjectEntity> getProjects() {
         return projects;
     }
@@ -36,18 +47,16 @@ public class ListProjectsBean extends Bean {
         this.projects = projects;
     }
 
-    public int getPages() {
-        return pages;
+    public LazyDataModel<ProjectEntity> getLazyModel() {
+        return lazyModel;
     }
 
-    public void setPages(final int pages) {
-        this.pages = pages;
+    public ProjectEntity getSelectedProject() {
+        return selectedProject;
     }
-    
-    public void obtainProjects(){
-        ListProjectsEjb eaE; 
-        eaE = new ListProjectsEjb();
-        this.setProjects(eaE.obtainProjects(1));
+
+    public void setSelectedProject(ProjectEntity selectedProject) {
+        this.selectedProject = selectedProject;
     }
     
     
