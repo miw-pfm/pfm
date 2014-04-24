@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T, ID> {
 
-    private final transient Class<T> persistentClass;
+    protected final transient Class<T> persistentClass;
 
     transient protected EntityManager entityManager;
 
@@ -209,6 +209,14 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
         if (entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().rollback();
         }
+    }
+
+    @Override
+    public List<T> find(String psql, Object entity) {
+        Query query = entityManager.createQuery(psql);
+        query.setParameter(1, (T) entity);
+        return (List<T>) query.getResultList();
+
     }
 
 }

@@ -12,5 +12,7 @@ public interface TransactionGenericDAO<T, ID> extends GenericDAO<T, ID> {
 
     public abstract List<T> find(String[] attributes, String[] values);
 
+    public abstract List<T> find(String psql, Object entity);
+
     public abstract List<T> find(String[] attributes, String[] values, String order, int index, int size);
 }

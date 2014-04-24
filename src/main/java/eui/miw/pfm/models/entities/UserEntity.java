@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
@@ -24,53 +23,55 @@ import javax.validation.constraints.Size;
  *
  * @author Roberto Amor
  */
-@Entity 
-@Table(name="users")
+@Entity
+@Table(name = "users")
 public class UserEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id; // NOPMD
-    
-    @Column(name="username", length=30)
+
+    @Column(name = "username", length = 30)
     @NotNull
-    @Size(min=4,max=30)
+    @Size(min = 4, max = 30)
     private String username;
-    
-    @Column(name="password", length=30)
+
+    @Column(name = "password", length = 30)
     @NotNull
-    @Size(min=8,max=30)
+    @Size(min = 8, max = 30)
     private String password;
-    
-    @Column(name="name", length=30)
+
+    @Column(name = "name", length = 30)
     @NotNull
-    @Size(min=1,max=30)
+    @Size(min = 1, max = 30)
     private String name;
-    
-    @Column(name="surename", length=30)
+
+    @Column(name = "surename", length = 30)
     @NotNull
-    @Size(min=1,max=30)
+    @Size(min = 1, max = 30)
     private String surename;
-    
-    @Column(name="second_surename", length=30)
-    @Size(min=0,max=30)
+
+    @Column(name = "second_surename", length = 30)
+    @Size(min = 0, max = 30)
     private String secondSurename;
-    
-    @Column(name="email", length=50)
+
+    @Column(name = "email", length = 50)
     @NotNull
-    @Size(min=6,max=50)
-    @Pattern(regexp="^.+@.+\\..+$")
+    @Size(min = 6, max = 50)
+    @Pattern(regexp = "^.+@.+\\..+$")
     private String email;
-    
-    public UserEntity(){ //NOPMD
+
+    public UserEntity() { //NOPMD
         super();
     }
-    
+
     public UserEntity(final Integer id) { //NOPMD
         this.id = id;
     }
-    
-    public UserEntity(final Integer id , final String username, final String password, final String name, final String surename, final String secondSurename, final String email) { //NOPMD
+
+    public UserEntity(final Integer id, final String username, final String password, final String name, final String surename, final String secondSurename, final String email) { //NOPMD
         this.id = id;
         this.username = username;
         this.password = password;
@@ -79,7 +80,7 @@ public class UserEntity implements Serializable {
         this.secondSurename = secondSurename;
         this.email = email;
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -135,7 +136,7 @@ public class UserEntity implements Serializable {
     public void setEmail(final String email) {
         this.email = email;
     }
-      
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -160,5 +161,5 @@ public class UserEntity implements Serializable {
     public String toString() {
         return "eui.miw.pfm.models.entities.UserEntity[ id=" + id + " ]";
     }
-    
+
 }
