@@ -55,7 +55,7 @@ public class TestCreateProjectEjb {
         project.setStartDate(new Date());
         project.setEndDate(new Date());
         project.setEstimatedNumIteration(numInt);
-        project.setName("TestProject1111");
+        project.setName("TestProject");
         project.setWeekNumIteration(numInt);
         project.setOwner(user);
         
@@ -63,7 +63,7 @@ public class TestCreateProjectEjb {
 
         String[] name = {"name"};
         String[] values = {"TestProject"};
-        assertNotNull(projectDAO.find(name, values));
+        assertNotNull(projectDAO.find(name, values).get(0));
 
     }
 
