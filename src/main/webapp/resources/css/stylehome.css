@@ -10,3 +10,63 @@
     background: #FF9981;
     color: #FFF;
 }
+
+
+/***************************************************/
+/* openproject
+/***************************************************/
+#openproject {
+    overflow: auto;
+
+}
+
+#openproject h3 {
+    margin: 0px;
+    padding: 0px;
+}
+
+#openproject #participants {
+    float: left;
+    width: 410px;   
+    margin-right: 10px;
+    margin-bottom: 30px;
+}
+
+#openproject #participants ul {
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #FF9981;
+}
+
+#openproject #participants ul li {
+    list-style-type: circle;
+    margin: 2px 15px;
+}
+
+#openproject #actualIteration {
+    float: right;
+    width: 200px;
+    margin-right: 20px;
+    margin-bottom: 30px;    
+}
+
+#openproject #actualIteration p {
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #FF9981;
+    font-size: 20pt;
+    vertical-align: middle;
+    text-align: center; 
+}
+
+#openproject #description {
+    clear: both;
+    display: block;
+    margin-right: 20px;
+}
+
+#openproject #description p {
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #FF9981;
+}

@@ -211,6 +211,10 @@ p, li, h2, a{
     padding-left: 15px;
 }
 
+#body h1 {
+    margin-bottom: 35px;
+}
+
 #subtitle {
     clear: both;
     display: block;
