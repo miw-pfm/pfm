@@ -12,19 +12,21 @@
     </ui:define>    
 
     <ui:define name="title">
-        Project Creation
+        Home
     </ui:define>
     <ui:define name="subtitle">
 
     </ui:define>	
     <ui:define name="body">
-        <div align='center'>
+        <h:panelGroup id="createproject" layout="block">
             <h2>Enter name of the project:</h2>
+
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:inputText value="#{createProjectBean.projectEntity.name}" maxlength="100" />
-                <p:commandButton value="Submit" action="#{createProjectBean.createProject()}" update="growl" />
+                <p:commandButton value="Submit" action="#{createProjectBean.createProject()}" update="growl" styleClass="btn btn-success"/>
+
             </h:form>    
-        </div>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

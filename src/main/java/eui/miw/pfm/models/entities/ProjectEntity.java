@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,16 +31,23 @@ public class ProjectEntity implements Serializable {
     @NotNull
     @Size(min = 3, max = 100)
     @Column(name = "name")
-    public String name;
+    private String name;
 
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    public Date startDate;
+    private Date startDate; 
+    
+    @Transient
+    public String stringStartDate;
+
 
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
-    public Date endDate;
-
+    private Date endDate;
+    
+    @Transient
+    public String stringEndDate;
+    
     @Column(name = "week_num_iteration")
     private int weekNumIteration;
 
@@ -98,6 +106,17 @@ public class ProjectEntity implements Serializable {
     public Date getStartDate() {
         return startDate;
     }
+    
+    public String getStringStartDate(){
+        return this.stringStartDate;
+    }
+    
+    public void updateStringDates(){
+        java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("MM-dd-yyyy");
+        this.stringStartDate = sdf.format(this.startDate);
+        this.stringEndDate = sdf.format(this.endDate);
+    }
+    
 
     public void setStartDate(final Date startDate) {
         this.startDate = startDate;

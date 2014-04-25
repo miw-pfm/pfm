@@ -27,15 +27,15 @@
                     <h:outputText value="#{project.name}" />
                 </p:column>
 
-                <p:column headerText="Start Date" sortBy="startDate" filterBy="#{project.startDate}">
+                <p:column headerText="Start Date" sortBy="startDate" filterBy="#{project.stringStartDate}">
                     <h:outputText value="#{project.startDate}">
-                        <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                        <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
                     </h:outputText>
                 </p:column>
 
-                <p:column headerText="End Date" sortBy="endDate" filterBy="#{project.endDate}">
+                <p:column headerText="End Date" sortBy="endDate" filterBy="#{project.stringEndDate}">
                     <h:outputText value="#{project.endDate}">
-                        <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                        <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
                     </h:outputText>
 
                 </p:column>

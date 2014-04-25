@@ -7,9 +7,10 @@ package eui.miw.pfm.util;
 
 /**
  *
- * @author bk0805
+ * @author mrrm & Roberto Amor
  */
 import eui.miw.pfm.models.entities.ProjectEntity;
+import java.lang.reflect.Field;
 import java.util.Comparator;
 import org.primefaces.model.SortOrder;
 
@@ -27,11 +28,13 @@ public class LazyProjectSorter implements Comparator<ProjectEntity> {
     public int compare(ProjectEntity p1, ProjectEntity p2) {
         System.out.println(p1.toString());
         try {
-            Object value1 = ProjectEntity.class.getField(this.sortField).get(p1);
-            //ProjectEntity.class.getField(this.sortField).
-            System.out.println(value1);
-            Object value2 = ProjectEntity.class.getField(this.sortField).get(p2);
-            System.out.println(value2);
+            Field f = ProjectEntity.class.getDeclaredField(this.sortField);
+            f.setAccessible(true);
+            Object value1 = f.get(p1);
+            System.out.println(f);
+            f = ProjectEntity.class.getDeclaredField(this.sortField);
+            f.setAccessible(true);
+            Object value2 = f.get(p2);
 
             int value = ((Comparable) value1).compareTo(value2);
 
