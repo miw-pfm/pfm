@@ -8,6 +8,7 @@
                 template="/templates/template.xhtml">
 
     <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
     </ui:define>    
 
     <ui:define name="title">
@@ -20,24 +21,37 @@
 
     <ui:define name="body">
         <h:panelGroup id="confproject" layout="block">
-            <h:form>
-                    <h:panelGrid columns="2">
-                        <h:outputText value="#{msgs.startDate}" />
-                        <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" />
-                        <h:outputText value="#{msgs.endDate}" />
-                        <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" />
-                        <h:outputText value="#{msgs.weekNumIteration}" />
-                        <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" />
-                        <h:outputText value="#{msgs.estimatedNumIteration}" />
-                        <h:inputText  value="#{confProjectBean.project.estimatedNumIteration}" disabled="true" />
-                        <h:outputText value="#{msgs.chosenNumIteration}" />
-                        <h:inputText value="#{confProjectBean.project.chosenNumIteration}" maxlength="5" />
-                        <h:outputText value="#{msgs.description}" />
-                        <h:inputTextarea value="#{confProjectBean.project.description}" cols="5" />
-                        <h:outputText />                        
-                        <h:commandButton value="#{msgs.submit}" action="responseConfProject" styleClass="btn btn-success" />
-                    </h:panelGrid>
-                </h:form>    
+            <h:form id="form">
+                <h:panelGrid columns="3">
+                    <h:outputText value="#{msgs.startDate}" />
+                    <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true">                            
+                        <p:ajax event="dateSelect" update="beginCal"/>
+                    </p:calendar>
+                    <h:message for="beginCal" style="color:red" />
+                    <h:outputText value="#{msgs.endDate}" />
+                    <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" binding="#{endCalen}" required="true">
+                        <p:ajax event="dateSelect" update="endCal"/>
+                    </p:calendar>
+                    <h:message for="endCal" style="color:red" />
+                    <h:outputText value="#{msgs.weekNumIteration}"/>
+                    <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" id="weeIter" binding="#{weekNum}" required="true">                            
+                        <p:ajax event="blur" update="stIter" listener="#{confProjectBean.stimateIter}"/>                             
+                    </h:inputText>
+                    <h:message for="weeIter" style="color:red" />
+                    <h:outputText value="#{msgs.estimatedNumIteration}" />
+                    <h:inputText  value="#{confProjectBean.project.estimatedNumIteration}" id="stIter" disabled="true" />
+                    <h:outputText />
+                    <h:outputText value="#{msgs.chosenNumIteration}" />
+                    <h:inputText value="#{confProjectBean.project.chosenNumIteration}" id="chNumIter" maxlength="5" required="true"/>
+                    <h:message for="chNumIter" style="color:red" />
+                    <h:outputText value="#{msgs.description}" />
+                    <h:inputTextarea value="#{confProjectBean.project.description}" cols="5" id="desc" required="true"/>
+                    <h:message for="desc" style="color:red" />
+                    <h:outputText />                        
+                    <h:commandButton value="#{msgs.submit}" action="#{confProjectBean.update}" styleClass="btn btn-success" />
+                    <h:message for="form" style="color:red" />
+                </h:panelGrid>
+            </h:form>    
         </h:panelGroup>
     </ui:define>
 </ui:composition>

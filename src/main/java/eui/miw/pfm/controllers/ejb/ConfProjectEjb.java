@@ -15,24 +15,13 @@ import eui.miw.pfm.models.entities.ProjectEntity;
  * @author Jose Angel
  */
 public class ConfProjectEjb {
-    
-    public ProjectEntity getProject(final int projId) //NOPMD
+        
+    public void update(final ProjectEntity project)
     {
         ProjectDAO ProjectDAO;        
         ProjectDAO = AbstractDAOFactory.getFactory().getProjectDAO();    	            
         
-        ProjectEntity project;
-        project = ProjectDAO.read(projId);        
-        
-        assert project != null;
-        
-        return project;
-    }
-
-    public void update(final ProjectEntity project) {
-        ProjectDAO ProjectDAO;
-        ProjectDAO = AbstractDAOFactory.getFactory().getProjectDAO();    	
-        
-        ProjectDAO.update(project); 
+        assert project != null;        
+        ProjectDAO.update(project);
     }
 }

@@ -161,7 +161,7 @@ public class ProjectEntity implements Serializable {
         return estimatedNumIteration;
     }
 
-    public void setEstimatedNumIteration(final int estimatedNumIteration) { //NOPMD
+    public void setEstimatedNumIteration(final float estimatedNumIteration) { //NOPMD
         this.estimatedNumIteration = estimatedNumIteration;
     }
 

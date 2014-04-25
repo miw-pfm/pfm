@@ -1,12 +1,8 @@
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
-import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UserEntity;
 import java.util.Date;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,21 +10,12 @@ import org.junit.Test;
 public class TestConfProjectBean {
 
     private ConfProjectBean confProjectBean;
-    private UserEntity user;
     private ProjectEntity project;
 
     @Before
     public void init() {
-        this.confProjectBean = new ConfProjectBean();
+        this.confProjectBean = new ConfProjectBean(); 
         this.project = new ProjectEntity();
-        this.user = new UserEntity();
-        
-        this.user.setName("Pepe");
-        this.user.setPassword("1234");
-        this.user.setUsername("pepe23");
-        this.user.setEmail("pepe@pepe.com");
-        this.user.setSurename("lopez");
-        this.user.setSecondSurename("guti");                 
     }
 
     @Test
@@ -58,38 +45,17 @@ public class TestConfProjectBean {
         assertTrue("Valid Dates", confProjectBean.validDates(start, end));
 
     }
+    
+     @Test
+    public void testStimateIter() {
 
-    @Test
-    public void edit() {
-
-        ProjectDAO projectDAO;
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        
-        UserDAO userDAO;
-        userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        userDAO.create(this.user);        
-        
-        project.setChosenNumIteration(3);
-        project.setStartDate(new Date());
-        project.setEndDate(new Date());
-        project.setEstimatedNumIteration(3);
-        project.setName("Project1");
-        project.setWeekNumIteration(3);
-        project.setDescription("Test edit");
-        project.setOwner(user);
-
-        projectDAO.create(project);
-
-        ConfProjectBean confBean;
-        confBean = new ConfProjectBean();
-
-        confBean.edit(project.getId());
-
-        assertTrue("Project exist", confBean.getProject().equals(project));
-        assertFalse("Project dosn't exist", confBean.getProject().equals(new ProjectEntity()));
-        
-        projectDAO.delete(project);
-        userDAO.delete(user);
-        
+//        this.project.setStartDate(new Date("9/2/13"));
+//        this.project.setEndDate(new Date("12/27/14"));
+//        this.project.setWeekNumIteration(3);
+//        confProjectBean.setProject(project);
+//        
+//        confProjectBean.stimateIter();
+//        assertSame("Correct", this.project.getEstimatedNumIteration() ,22.9 );
     }
+
 }

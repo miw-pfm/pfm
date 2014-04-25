@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -18,49 +20,46 @@ import javax.inject.Named;
 public class ConfProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private ProjectEntity project;
-    //private final SessionMap sessionMap;//NOPMD
+    private ProjectEntity project;//NOPMD
+    private final SessionMap sessionMap;//NOPMD
+    private final ConfProjectEjb confProjectEjb;//NOPMD
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
 
     public ConfProjectBean() {
         super();
         project = new ProjectEntity();
-        //this.sessionMap = new SessionMap();
-    }
+        this.sessionMap = new SessionMap();
+        confProjectEjb = new ConfProjectEjb();
 
-    public void edit(final int projId) {
-        ConfProjectEjb ejb;
-        ejb = new ConfProjectEjb();
-        setProject(ejb.getProject(projId));
-    }
-
-    public ProjectEntity getProject() {
-        return project;
+        try {
+            this.project = ((ProjectEntity) this.sessionMap.get("project"));
+        } catch (Exception e) {
+            LOG.warning("No session exist");
+        }
     }
 
     public void setProject(final ProjectEntity project) {
         this.project = project;
     }
+        
+    public ProjectEntity getProject() {
+        return project;
+    }
 
-    //TODO: Replace static text with bundle variable
     public String update() {
-        ConfProjectEjb ejb;
         String result;
 
-        if (validFields()) {
-            ejb = new ConfProjectEjb();
-            ejb.update(project);
-            result = "correct";
+        if (validDates(project.getStartDate(), project.getEndDate())) {
+            confProjectEjb.update(project);
+            result = "list_project";
         } else {
-            result = "error";
+            LOG.warning("Not valid dates");
+            final FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("form", new FacesMessage("WARNING!!!", "Verify the chosen dates"));
+            result = "confProject";
         }
 
         return result;
-    }
-
-    //TODO
-    private boolean validFields() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public boolean validDates(final Date start, final Date end) {
@@ -74,8 +73,13 @@ public class ConfProjectBean extends Bean implements Serializable {
         return validDates;
     }
 
-//    public String getProjectName() {
-//        return ((ProjectEntity) this.sessionMap.get("project")).getName();
-//    }
+    public void stimateIter() {
+        
+        final double mils = (project.getEndDate().getTime() - project.getStartDate().getTime() + 1) / 7 * 5;
+        final double weeks = ((mils / (1000 * 60 * 60 * 24))) / 5;
+        double sugIte;
+        sugIte = weeks / project.getWeekNumIteration();
 
+        project.setEstimatedNumIteration((float) ((float) Math.round(sugIte * 100.0) / 100.0));        
+    }
 }
