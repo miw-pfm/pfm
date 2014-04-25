@@ -7,6 +7,7 @@
 package eui.miw.pfm.util;
 
 import eui.miw.pfm.models.entities.ProjectEntity;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -56,7 +57,11 @@ public class LazyProjectDataModel extends LazyDataModel<ProjectEntity> {
                         project.updateStringDates();
                     }
                     String filterValue = filters.get(filterProperty);
-                    String fieldValue = String.valueOf(project.getClass().getField(filterProperty).get(project));
+                    System.out.println(filterProperty);
+                    Field f = project.getClass().getDeclaredField(filterProperty);
+                    System.out.println("hola"+f);
+                    f.setAccessible(true);
+                    String fieldValue = String.valueOf(f.get(project));
 
                     if(filterValue == null || fieldValue.startsWith(filterValue)) {
                         match = true;

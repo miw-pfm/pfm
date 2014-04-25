@@ -31,6 +31,7 @@ public class LazyProjectSorter implements Comparator<ProjectEntity> {
             Field f = ProjectEntity.class.getDeclaredField(this.sortField);
             f.setAccessible(true);
             Object value1 = f.get(p1);
+            System.out.println(f);
             f = ProjectEntity.class.getDeclaredField(this.sortField);
             f.setAccessible(true);
             Object value2 = f.get(p2);
