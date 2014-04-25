@@ -15,6 +15,7 @@
 /***************************************************/
 /* openproject
 /***************************************************/
+
 #openproject {
     overflow: auto;
 
@@ -23,6 +24,18 @@
 #openproject h3 {
     margin: 0px;
     padding: 0px;
+    font-size: 18px;
+}
+
+#openproject p, #openproject ul {
+    border-radius: 3px;
+    border: 1px solid #FF9981;   
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 2px 2px #FCD5B4 inset;
+    color: #313131; 
+    margin: 10px 0;
+    padding: 5px;    
+    vertical-align: middle;    
 }
 
 #openproject #participants {
@@ -30,12 +43,6 @@
     width: 410px;   
     margin-right: 10px;
     margin-bottom: 30px;
-}
-
-#openproject #participants ul {
-    margin: 10px 0;
-    padding: 5px;
-    border: 1px solid #FF9981;
 }
 
 #openproject #participants ul li {
@@ -51,11 +58,7 @@
 }
 
 #openproject #actualIteration p {
-    margin: 10px 0;
-    padding: 5px;
-    border: 1px solid #FF9981;
     font-size: 20pt;
-    vertical-align: middle;
     text-align: center; 
 }
 
@@ -65,8 +68,75 @@
     margin-right: 20px;
 }
 
-#openproject #description p {
-    margin: 10px 0;
-    padding: 5px;
+
+/***************************************************/
+/* estilos formularios especificos
+/***************************************************/
+
+input, textarea {
+    margin: 5px 10px;
+    width: 200px;
+    vertical-align: middle;     
+    padding: 4px;
+    border-radius: 3px;
+    border: 1px solid #FF9981;   
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 2px 2px #FCD5B4 inset;
+    color: #313131;    
+}
+
+input.hasDatepicker {
+    border: 1px solid #FF9981;   
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 2px 2px #FCD5B4 inset;
+    color: #313131;  
+}
+
+input[disabled="disabled"] {
+    background-color: #F2F2F2;
+}
+
+input[type=submit].btn-success {
+    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;
+}
+
+/***************************************************/
+/* confproject
+/***************************************************/
+
+
+#confproject {
+    overflow: auto;
+    margin: 0 auto;
+    width: 500px;
+}
+
+/***************************************************/
+/* createproject
+/***************************************************/
+
+
+#createproject {
+    overflow: auto;
+    margin: 0 auto;
+    width: 500px;
+}
+
+/***************************************************/
+/* dataTable
+/***************************************************/
+
+#form div.ui-paginator {
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #FCD5B4;
+    border: 1px solid #FF9981;
+}
+
+#form thead th, #form span.ui-state-default, #form select.ui-paginator-rpp-options {
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #FDE9D9; 
+    border: 1px solid #FF9981;   
+}
+
+#form tbody.ui-datatable-data {
     border: 1px solid #FF9981;
 }

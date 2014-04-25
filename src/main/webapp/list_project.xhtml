@@ -6,20 +6,23 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
 
-    <ui:define name="nameprj">
-
-    </ui:define>    
-
     <ui:define name="pagetitle">
+        RUP Management System
+    </ui:define> 
+
+    <ui:define name="title">
         #{msgs.list_project_subtitle}
     </ui:define>
 
+    <ui:define name="subtitle">
+    </ui:define>    
+    
     <ui:define name="body">
         <h:form id="form">
 
             <p:dataTable var="project" value="#{listProjectsBean.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listProjectsBean.selectedProject}" id="projectTable" lazy="true">
+                         rowsPerPageTemplate="1,5,10,15" selectionMode="single" selection="#{listProjectsBean.selectedProject}" id="projectTable" lazy="true">
 
 <!--                <p:ajax event="rowSelect" listener="#{listProjectsBean.onRowSelect}" update=":form:display" oncomplete="PF('carDialog').show()" />-->
 

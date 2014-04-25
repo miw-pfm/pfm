@@ -12,18 +12,18 @@
     </ui:define>    
 
     <ui:define name="title">
-        Project Creation
+        Home
     </ui:define>
     <ui:define name="subtitle">
-        
+        Create Project
     </ui:define>	
     <ui:define name="body">
-        <div align='center'>
+        <h:panelGroup id="createproject" layout="block">
             <h2>Enter name of the project:</h2>
             <h:form>
-                <h:inputText value="#{projectBean.projectName}" maxlength="100" />
-                <h:commandButton value="Submit" action="confProject" />
+                <h:inputText value="#{projectBean.projectName}" />
+                <h:commandButton value="Submit" action="confProject" styleClass="btn btn-success" />
             </h:form>    
-        </div>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

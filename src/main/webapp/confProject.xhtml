@@ -7,7 +7,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
 
-    <ui:define name="nameprj">
+    <ui:define name="pagetitle">
+        Project's name
     </ui:define>    
 
     <ui:define name="title">
@@ -19,9 +20,8 @@
     </ui:define>
 
     <ui:define name="body">
-        <f:view locale="#{i18nBean.locale}">
-            <div align='center'>
-                <h:form>
+        <h:panelGroup id="confproject" layout="block">
+            <h:form>
                     <h:panelGrid columns="2">
                         <h:outputText value="#{msgs.startDate}" />
                         <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" />
@@ -30,14 +30,15 @@
                         <h:outputText value="#{msgs.weekNumIteration}" />
                         <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" />
                         <h:outputText value="#{msgs.estimatedNumIteration}" />
-                        <h:outputText  value="#{confProjectBean.project.estimatedNumIteration}" />
+                        <h:inputText  value="#{confProjectBean.project.estimatedNumIteration}" disabled="true" />
                         <h:outputText value="#{msgs.chosenNumIteration}" />
                         <h:inputText value="#{confProjectBean.project.chosenNumIteration}" maxlength="5" />
-                        <h:commandButton value="#{msgs.submit}" action="responseConfProject" />
+                        <h:outputText value="#{msgs.description}" />
+                        <h:inputTextarea value="#{confProjectBean.project.description}" cols="5" />
+                        <h:outputText />                        
+                        <h:commandButton value="#{msgs.submit}" action="responseConfProject" styleClass="btn btn-success" />
                     </h:panelGrid>
-
                 </h:form>    
-            </div>
-        </f:view>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>
