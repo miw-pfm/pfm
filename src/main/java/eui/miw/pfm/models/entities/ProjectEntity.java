@@ -19,28 +19,27 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "projects")
 public class ProjectEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id; //NOPMD
-    
+
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 3, max = 100)
     @Column(name = "name")
     public String name;
 
-    @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    public Date startDate; 
+    public Date startDate;
 
-    @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     public Date endDate;
-    
+
     @Column(name = "week_num_iteration")
     private int weekNumIteration;
 
@@ -49,17 +48,17 @@ public class ProjectEntity implements Serializable {
 
     @Column(name = "chosen_num_iteration")
     private int chosenNumIteration; //NOPMD 
-    
+
     @Column(name = "description")
     private String description; //NOPMD 
- 
+
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     // NOTA: mediante el joinColumn explicitamos que el nombre de la FK de esta tabla
     //         (ProjetEntity) se llamara user_id y la PK de la tabla UserEntity a
     //         la cual hara referencia esta FK se llama id (segun el @column de UserEntity)           
     private UserEntity owner;
-    
+
     public ProjectEntity() {
         super();
     }
@@ -135,23 +134,23 @@ public class ProjectEntity implements Serializable {
     public void setChosenNumIteration(final int chosenNumIteration) { //NOPMD
         this.chosenNumIteration = chosenNumIteration;
     }
-    
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(final String description) {
         this.description = description;
-    }    
+    }
 
-   public UserEntity getOwner() {
+    public UserEntity getOwner() {
         return owner;
     }
 
     public void setOwner(final UserEntity owner) {
         this.owner = owner;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

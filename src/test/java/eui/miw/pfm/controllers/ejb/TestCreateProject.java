@@ -20,17 +20,16 @@ import org.junit.Test;
  *
  * @author Cesar Martinez
  */
-public class TestCreateProjectEjb {
+public class TestCreateProject {
 
-    private ProjectEntity project;
-    private ProjectDAO projectDAO;
-    private UserDAO userDAO;
-    private UserEntity user;
-
+    private transient ProjectEntity project;
+    private transient CreateProjectEjb createProjectEjb;
+    private transient UserEntity user;
 
     @Before
     public void before() {
         project = new ProjectEntity();
+        createProjectEjb = new CreateProjectEjb();
 
         user = new UserEntity();
         user.setName("Pepe");
@@ -43,13 +42,13 @@ public class TestCreateProjectEjb {
 
     @Test
     public void createProject() {
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();        
-        userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
         userDAO.create(this.user);
-        
+
         int numInt;
         numInt = 2;
-        
+
         project.setChosenNumIteration(numInt);
         project.setDescription("Prueba de nameValidator");
         project.setStartDate(new Date());
@@ -58,8 +57,8 @@ public class TestCreateProjectEjb {
         project.setName("TestProject");
         project.setWeekNumIteration(numInt);
         project.setOwner(user);
-        
-        projectDAO.create(project);
+
+        createProjectEjb.createProject(project);
 
         String[] name = {"name"};
         String[] values = {"TestProject"};
@@ -69,7 +68,9 @@ public class TestCreateProjectEjb {
 
     @After
     public void after() {
+        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
+        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         projectDAO.delete(project);
-        userDAO.delete(user);        
+        userDAO.delete(user);
     }
 }

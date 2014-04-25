@@ -1,62 +1,38 @@
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.util.logging.Logger;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Clemencio Morales
  */
-@ManagedBean
 @SessionScoped
+@Named
 public class ProjectBean extends Bean implements Serializable {
 
-    private String projectName;
-    private int currentIteration;
-    private int numberOfIterations;//NOPMD
-    private String description;
-    private List<String> participants = new ArrayList<>();
+    private static final Logger LOG = Logger.getLogger(ProjectBean.class.getName());
 
-    public String getProjectName() {
-        return projectName;
+    private static final long serialVersionUID = 1L;
+    private ProjectEntity projectEntity;
+
+    public ProjectBean() {
+        super();
     }
 
-    public void setProjectName(String projectName) {//NOPMD
-        this.projectName = projectName;
+    public ProjectEntity getProjectEntity() {
+        return projectEntity;
     }
 
-    public int getCurrentIteration() {
-        return currentIteration;
+    public void setProjectEntity(final ProjectEntity projectEntity) {
+        this.projectEntity = projectEntity;
     }
 
-    public void setCurrentIteration(int currentIteration) {
-        this.currentIteration = currentIteration;
+    public String getName() {
+        return this.projectEntity.getName();
     }
 
-    public int getNumberOfIterations() {
-        return numberOfIterations;
-    }
-
-    public void setNumberOfIterations(int numberOfIterations) {
-        this.numberOfIterations = numberOfIterations;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
-    }
 }

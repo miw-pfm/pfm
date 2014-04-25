@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eui.miw.pfm.controllers.beans;
+package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
@@ -12,7 +12,6 @@ import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import java.util.Date;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,17 +20,19 @@ import org.junit.Test;
  *
  * @author Cesar Martinez
  */
-public class TestCreateProjectValidatorBean {
+public class TestNameProjectValidator {
 
-    private ProjectEntity project;
-    private ProjectEntity project2;
-    private UserEntity user1;
+    private transient ProjectEntity project;
+    private transient ProjectEntity project2;
+    private transient UserEntity user1;
+    private transient  CreateProjectEjb createProjectEjb;
 
     @Before
     public void before() {
         project = new ProjectEntity();
         project2 = new ProjectEntity();
         user1 = new UserEntity();
+        createProjectEjb = new CreateProjectEjb();
 
         user1.setName("Pepe");
         user1.setPassword("1234");
@@ -47,8 +48,8 @@ public class TestCreateProjectValidatorBean {
         int numInt;
         numInt = 2;
 
-        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+
+        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         userDAO.create(this.user1);
 
         project.setChosenNumIteration(numInt);
@@ -60,14 +61,11 @@ public class TestCreateProjectValidatorBean {
         project.setWeekNumIteration(numInt);
         project.setOwner(user1);
 
-        projectDAO.create(project);
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
+        createProjectEjb.createProject(project);
 
-        CreateProjectValidatorBean cPVB;
-        cPVB = new CreateProjectValidatorBean();
-        cPVB.setProjectEntity(project);
 
-        assertTrue("Ya existe project y no lo valida correctamente", cPVB.nameValidator());
+      
+        assertFalse("Ya existe project y no lo valida correctamente", createProjectEjb.nameProjectValidator(project));
 
         project2.setChosenNumIteration(numInt);
         project2.setDescription("Prueba de nameValidator");
@@ -78,25 +76,25 @@ public class TestCreateProjectValidatorBean {
         project2.setWeekNumIteration(numInt);
         project2.setOwner(user1);
 
-        cPVB.setProjectEntity(project2);
-        assertFalse("No existe project2 y no lo Valida Correctamente", cPVB.nameValidator());
+  
+        assertTrue("No existe project2 y no lo Valida Correctamente", createProjectEjb.nameProjectValidator(project2));
 
-        projectDAO.create(project2);
-        assertTrue("Ya existe project2 y no lo valida correctamente", cPVB.nameValidator());
+        createProjectEjb.createProject(project2);
+        assertFalse("Ya existe project2 y no lo valida correctamente", createProjectEjb.nameProjectValidator(project2));
 
-        ProjectEntity project3 = new ProjectEntity();
+        final ProjectEntity project3 = new ProjectEntity();
         project3.setName("Project3");
-        cPVB.setProjectEntity(project3);
-        assertFalse("No existe project3 y no lo Valida Correctamente", cPVB.nameValidator());
+        assertTrue("No existe project3 y no lo Valida Correctamente", createProjectEjb.nameProjectValidator(project3));
 
     }
 
     @After
     public void destroy() {
-        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
+        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         projectDAO.delete(project);
         projectDAO.delete(project2);
         userDAO.delete(user1);
     }
+
 }
