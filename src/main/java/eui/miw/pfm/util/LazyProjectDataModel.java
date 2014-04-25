@@ -52,6 +52,9 @@ public class LazyProjectDataModel extends LazyDataModel<ProjectEntity> {
             for(Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
                 try {
                     String filterProperty = it.next();
+                    if(filterProperty.equals("stringStartDate") || filterProperty.equals("stringEndDate")) {
+                        project.updateStringDates();
+                    }
                     String filterValue = filters.get(filterProperty);
                     String fieldValue = String.valueOf(project.getClass().getField(filterProperty).get(project));
 

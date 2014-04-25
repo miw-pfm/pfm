@@ -29,9 +29,7 @@ public class LazyProjectSorter implements Comparator<ProjectEntity> {
         try {
             Object value1 = ProjectEntity.class.getField(this.sortField).get(p1);
             //ProjectEntity.class.getField(this.sortField).
-            System.out.println(value1);
             Object value2 = ProjectEntity.class.getField(this.sortField).get(p2);
-            System.out.println(value2);
 
             int value = ((Comparable) value1).compareTo(value2);
 

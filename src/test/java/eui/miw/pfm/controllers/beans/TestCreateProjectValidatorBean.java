@@ -70,33 +70,28 @@ public class TestCreateProjectValidatorBean {
         assertTrue("Ya existe project y no lo valida correctamente", cPVB.nameValidator());
 
         project2.setChosenNumIteration(numInt);
-        project2.setDescription("Prueba de nameValidator");
+        project2.setDescription("Prueba de nameValidator2");
         project2.setStartDate(new Date());
         project2.setEndDate(new Date());
         project2.setEstimatedNumIteration(numInt);
         project2.setName("Project2");
         project2.setWeekNumIteration(numInt);
         project2.setOwner(user1);
-
+projectDAO.create(project2);
         cPVB.setProjectEntity(project2);
         assertFalse("No existe project2 y no lo Valida Correctamente", cPVB.nameValidator());
 
-        projectDAO.create(project2);
+        
         assertTrue("Ya existe project2 y no lo valida correctamente", cPVB.nameValidator());
 
         ProjectEntity project3 = new ProjectEntity();
         project3.setName("Project3");
         cPVB.setProjectEntity(project3);
         assertFalse("No existe project3 y no lo Valida Correctamente", cPVB.nameValidator());
-
-    }
-
-    @After
-    public void destroy() {
-        ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         projectDAO.delete(project);
         projectDAO.delete(project2);
         userDAO.delete(user1);
     }
+
+ 
 }
