@@ -7,25 +7,25 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
 
-    <ui:define name="pagetitle">
-        Project's name
-    </ui:define>    
+    <ui:param name="project" value="#{openProjectBean.openProject()}"/>
+    <ui:define name="pagetitle" >
+        RUP Management System
+    </ui:define>      
 
     <ui:define name="title">
-        Home
+        Opened Project
     </ui:define>
     <ui:define name="subtitle">
-        Opened Project
-    </ui:define>	
+        #{project.name}
+    </ui:define>
     <ui:define name="body">
         <h:panelGroup id="openproject" layout="block">
             <h:panelGroup layout="block">
                 <h:panelGroup id="participants" layout="block">
                     <h3>Participants</h3>
-                    <ul>
-                        <li>Dennis Ritchie</li>
-                        <li>Brian Kernighan</li>
-                    </ul>
+                    <p:dataList id="participants" var="participant" value="#{openProjectBean.participants}" itemType="participant">  
+                    #{participant.name}  
+                    </p:dataList>
                 </h:panelGroup>
 
 
@@ -36,7 +36,7 @@
 
                 <h:panelGroup id="description" layout="block">
                     <h3>Project's description</h3>
-                    <p>Management system for an on-line book store</p>
+                    <p>#{project.description}</p>
                 </h:panelGroup>
             </h:panelGroup>
         </h:panelGroup>
