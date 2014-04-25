@@ -23,8 +23,8 @@ import javax.validation.constraints.Size;
  * @author Roberto Amor
  */
 @Entity
-@Table(name="usercases")
-public class UserCaseEntity implements Serializable {
+@Table(name="usecases")
+public class UseCaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,15 +44,15 @@ public class UserCaseEntity implements Serializable {
     @JoinColumn(name="project_id", referencedColumnName="id", nullable = false)
     private ProjectEntity project;
 
-    public UserCaseEntity() {
+    public UseCaseEntity() {
         super();
     }
 
-    public UserCaseEntity(Long id) {
+    public UseCaseEntity(Long id) {
         this.id = id;
     }
 
-    public UserCaseEntity(final Long id, final String name, final String description, final ProjectEntity project) {
+    public UseCaseEntity(final Long id, final String name, final String description, final ProjectEntity project) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -63,7 +63,7 @@ public class UserCaseEntity implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -71,7 +71,7 @@ public class UserCaseEntity implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -79,7 +79,7 @@ public class UserCaseEntity implements Serializable {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -94,10 +94,10 @@ public class UserCaseEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserCaseEntity)) {
+        if (!(object instanceof UseCaseEntity)) {
             return false;
         }
-        UserCaseEntity other = (UserCaseEntity) object;
+        UseCaseEntity other = (UseCaseEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -106,7 +106,7 @@ public class UserCaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "UserCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + project + '}';
+        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + project + '}';
     }
 
     
