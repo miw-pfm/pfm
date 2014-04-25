@@ -1,8 +1,10 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,6 +69,11 @@ public class ProjectEntity implements Serializable {
     //         (ProjetEntity) se llamara user_id y la PK de la tabla UserEntity a
     //         la cual hara referencia esta FK se llama id (segun el @column de UserEntity)           
     private UserEntity owner;
+
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projects")
+    private ArrayList<UseCaseEntity> useCases;
+    
 
     public ProjectEntity() {
         super();
@@ -169,6 +177,23 @@ public class ProjectEntity implements Serializable {
     public void setOwner(final UserEntity owner) {
         this.owner = owner;
     }
+
+    public String getStringEndDate() {
+        return stringEndDate;
+    }
+
+    public void setStringEndDate(final String stringEndDate) {
+        this.stringEndDate = stringEndDate;
+    }
+
+    public ArrayList<UseCaseEntity> getUserCases() {
+        return useCases;
+    }
+
+    public void setUserCases(final ArrayList<UseCaseEntity> userCases) {
+        this.useCases = userCases;
+    }
+    
 
     @Override
     public int hashCode() {
