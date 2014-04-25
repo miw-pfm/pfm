@@ -30,12 +30,12 @@ public class ProjectEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "name")
-    public String name;
+    private String name;
 
     @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    public Date startDate; 
+    private Date startDate; 
     
     @Transient
     public String stringStartDate;
@@ -43,7 +43,7 @@ public class ProjectEntity implements Serializable {
     @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
-    public Date endDate;
+    private Date endDate;
     
     @Transient
     public String stringEndDate;
