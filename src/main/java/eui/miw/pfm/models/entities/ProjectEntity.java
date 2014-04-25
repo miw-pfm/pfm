@@ -42,14 +42,14 @@ public class ProjectEntity implements Serializable {
     private Date startDate; 
     
     @Transient
-    public String stringStartDate;
+    private String stringStartDate;
 
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
     
     @Transient
-    public String stringEndDate;
+    private String stringEndDate;
     
     @Column(name = "week_num_iteration")
     private int weekNumIteration;

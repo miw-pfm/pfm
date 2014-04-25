@@ -67,13 +67,15 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
 
     // entity debe estar en estado de "Managed"
     @Override
-    public void delete(final T entity) {
+    public void delete(T entity) {
         Logger.getLogger(JPATransactionGenericDAO.class).info("delete: " + entity);
         if (entityManager.getTransaction().isActive()) {
+            entity = entityManager.merge(entity);
             entityManager.remove(entity);
         } else {
             entityManager.getTransaction().begin();
             try {
+                entity = entityManager.merge(entity);               
                 entityManager.remove(entity);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {

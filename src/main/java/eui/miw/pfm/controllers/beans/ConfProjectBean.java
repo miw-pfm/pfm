@@ -19,13 +19,13 @@ public class ConfProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity project;
-    private final SessionMap sessionMap;//NOPMD
+    //private final SessionMap sessionMap;//NOPMD
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
 
     public ConfProjectBean() {
         super();
         project = new ProjectEntity();
-        this.sessionMap = new SessionMap();
+        //this.sessionMap = new SessionMap();
     }
 
     public void edit(final int projId) {
@@ -74,8 +74,8 @@ public class ConfProjectBean extends Bean implements Serializable {
         return validDates;
     }
 
-    public String getProjectName() {
-        return ((ProjectEntity) this.sessionMap.get("project")).getName();
-    }
+//    public String getProjectName() {
+//        return ((ProjectEntity) this.sessionMap.get("project")).getName();
+//    }
 
 }
