@@ -42,7 +42,7 @@ public class UseCaseEntity implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="project_id", referencedColumnName="id", nullable = false)
-    private ProjectEntity project;
+    private ProjectEntity projects;
 
     public UseCaseEntity() {
         super();
@@ -56,7 +56,7 @@ public class UseCaseEntity implements Serializable {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.project = project;
+        this.projects = project;
     }
     
     public Long getId() {
@@ -106,7 +106,7 @@ public class UseCaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + project + '}';
+        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + projects + '}';
     }
 
     

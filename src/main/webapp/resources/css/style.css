@@ -46,14 +46,13 @@ p, li, h2, a{
 #logo {
     float: left;
     height: 85px;
-    width: 170px;
+    width: 250px;
 }
 
 #pagetitle {
     overflow: auto;
-
 }
-
+ 
 #pagetitle h1{
     font-size: 26px;
     text-align: right;
@@ -158,7 +157,33 @@ p, li, h2, a{
 }
 
 #panelbody.general {
-    border-top: 3px solid #F2F2F2;    
+    border-top: 3px solid #F2F2F2;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#panelbody.general #body {
+    text-align: left;
+    width: 100%;    
+}
+
+#panelbody.general #body a.btn-success {
+    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;
+}
+
+#panelbody.general #body a.btn-success:hover, #panelbody.general #body a.btn-success:focus  {
+    background-image: none;
+    background-color: #FCD5B4;    
+}
+
+#panelbody.general #body h1 {
+    padding: 0px;
+    margin: 20px 0px;
+}
+
+#panelbody.general #createnewproject {
+    margin: 20px 5px;
 }
 
 #panelbody {
@@ -260,10 +285,6 @@ p, li, h2, a{
 /* Estilos basicos de los formularios
 /*********************************************************/
 
-#form {
-    width: 860px;
-}
-
 input, textarea {
     margin: 5px 10px;
     width: 200px;
@@ -279,4 +300,36 @@ input, textarea {
 input.hasDatepicker {
     margin: 5px 10px;
     width: 200px; 
+}
+
+input[disabled="disabled"] {
+    background-color: #F2F2F2;
+}
+
+input[type=submit].btn-success {
+    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;
+}
+
+input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
+    background-image: none;
+    background-color: #FCD5B4;    
+}
+
+/***************************************************/
+/* dataTable
+/***************************************************/
+
+#form div.ui-paginator {
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #FCD5B4;
+    border: 1px solid #FF9981;
+}
+
+#form thead th, #form span.ui-state-default, #form select.ui-paginator-rpp-options {
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #FDE9D9; 
+    border: 1px solid #FF9981;   
+}
+
+#form tbody.ui-datatable-data {
+    border: 1px solid #FF9981;
 }

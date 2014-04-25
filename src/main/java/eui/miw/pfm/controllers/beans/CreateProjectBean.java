@@ -33,7 +33,7 @@ public class CreateProjectBean extends Bean implements Serializable {
      * Creates a new instance of CreateProjectBean
      */
     public CreateProjectBean() {//NOPMD 
-        this.projectEntity = new ProjectEntity();
+        this.projectEntity = new ProjectEntity();        
         this.sessionMap = new SessionMap();
         this.createProjectEjb = new CreateProjectEjb();
     }

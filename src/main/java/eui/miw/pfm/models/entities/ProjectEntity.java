@@ -3,7 +3,9 @@ package eui.miw.pfm.models.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,14 +25,13 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "projects")
 public class ProjectEntity implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id; //NOPMD
-
+    
     @NotNull
     @Size(min = 3, max = 100)
     @Column(name = "name")
@@ -42,7 +43,6 @@ public class ProjectEntity implements Serializable {
     
     @Transient
     public String stringStartDate;
-
 
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
@@ -59,22 +59,33 @@ public class ProjectEntity implements Serializable {
 
     @Column(name = "chosen_num_iteration")
     private int chosenNumIteration; //NOPMD 
-
+    
     @Column(name = "description")
     private String description; //NOPMD 
-
+ 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name="user_id", referencedColumnName="id")
     // NOTA: mediante el joinColumn explicitamos que el nombre de la FK de esta tabla
     //         (ProjetEntity) se llamara user_id y la PK de la tabla UserEntity a
     //         la cual hara referencia esta FK se llama id (segun el @column de UserEntity)           
     private UserEntity owner;
-
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projects")
-    private ArrayList<UseCaseEntity> useCases;
-    
+    private Set<UseCaseEntity> useCases = new HashSet<UseCaseEntity>();
 
+    public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, float estimatedNumIteration, int chosenNumIteration, String description, UserEntity owner) {
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.stringStartDate = stringStartDate;
+        this.endDate = endDate;
+        this.stringEndDate = stringEndDate;
+        this.weekNumIteration = weekNumIteration;
+        this.estimatedNumIteration = estimatedNumIteration;
+        this.chosenNumIteration = chosenNumIteration;
+        this.description = description;
+        this.owner = owner;
+    }
     public ProjectEntity() {
         super();
     }
@@ -161,16 +172,16 @@ public class ProjectEntity implements Serializable {
     public void setChosenNumIteration(final int chosenNumIteration) { //NOPMD
         this.chosenNumIteration = chosenNumIteration;
     }
-
+    
     public String getDescription() {
         return description;
     }
 
     public void setDescription(final String description) {
         this.description = description;
-    }
+    }    
 
-    public UserEntity getOwner() {
+   public UserEntity getOwner() {
         return owner;
     }
 
@@ -185,16 +196,15 @@ public class ProjectEntity implements Serializable {
     public void setStringEndDate(final String stringEndDate) {
         this.stringEndDate = stringEndDate;
     }
-
-    public ArrayList<UseCaseEntity> getUserCases() {
+    
+    public Set<UseCaseEntity> getUseCases() {
         return useCases;
     }
 
-    public void setUserCases(final ArrayList<UseCaseEntity> userCases) {
-        this.useCases = userCases;
+    public void setUseCases(Set<UseCaseEntity> useCases) {
+        this.useCases = useCases;
     }
     
-
     @Override
     public int hashCode() {
         int hash = 7;

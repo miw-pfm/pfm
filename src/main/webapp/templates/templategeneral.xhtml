@@ -19,8 +19,10 @@
                 <ui:include src="header.xhtml"/>
 
                 <h:panelGroup id="panelbody" class="general" layout="block">
-                    <h1 id="title"></h1>                                                          
-                    <h:panelGroup id="body" layout="block"><ui:insert name="body"/></h:panelGroup>                  
+                    <h:panelGroup id="body" layout="block">
+                        <h1 id="title"><ui:insert name="title"/></h1>                        
+                        <ui:insert name="body"/>
+                    </h:panelGroup>                  
                 </h:panelGroup>
 
                 <ui:include src="footer.xhtml"/>

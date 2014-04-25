@@ -92,14 +92,7 @@ input.hasDatepicker {
     color: #313131;  
 }
 
-input[disabled="disabled"] {
-    background-color: #F2F2F2;
-}
 
-input[type=submit].btn-success {
-    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
-    border-color: #FF9981;
-}
 
 /***************************************************/
 /* confproject
@@ -121,22 +114,4 @@ input[type=submit].btn-success {
     overflow: auto;
     margin: 0 auto;
     width: 500px;
-}
-
-/***************************************************/
-/* dataTable
-/***************************************************/
-
-#form div.ui-paginator {
-    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #FCD5B4;
-    border: 1px solid #FF9981;
-}
-
-#form thead th, #form span.ui-state-default, #form select.ui-paginator-rpp-options {
-    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #FDE9D9; 
-    border: 1px solid #FF9981;   
-}
-
-#form tbody.ui-datatable-data {
-    border: 1px solid #FF9981;
 }
