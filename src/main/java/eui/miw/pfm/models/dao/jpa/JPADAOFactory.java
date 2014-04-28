@@ -2,6 +2,7 @@ package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
+import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -35,4 +36,9 @@ public class JPADAOFactory extends AbstractDAOFactory {
         return new JPAUserDAO();
     }
 
+    @Override
+    public UseCaseDAO getUseCaseDAO() {
+        return new JPAUseCaseDAO();
+    }
+    
 }
