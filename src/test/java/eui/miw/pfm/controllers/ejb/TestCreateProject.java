@@ -61,7 +61,7 @@ public class TestCreateProject {
         createProjectEjb.createProject(project);
 
         String[] name = {"name"};
-        String[] values = {"TestProject"};
+        String[] values = {"TestProject"}; 
         assertNotNull(projectDAO.find(name, values).get(0));
 
     }

@@ -20,9 +20,15 @@ public class UseCaseEjb {
         super();
     }
     
-    public String update(UseCaseEntity usecase){
+    public void update(UseCaseEntity usecase){
         UseCaseDAO usecaseDAO;
         usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
-        return "";
+        usecaseDAO.update(usecase);
+    }
+    
+    public void delete(final UseCaseEntity usecase){
+        UseCaseDAO usecaseDAO;
+        usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
+        usecaseDAO.delete(usecase);
     }
 }

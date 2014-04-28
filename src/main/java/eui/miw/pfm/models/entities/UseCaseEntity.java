@@ -28,7 +28,7 @@ public class UseCaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     
     @Column(name = "name", length = 140)
     @NotNull
@@ -42,28 +42,28 @@ public class UseCaseEntity implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="project_id", referencedColumnName="id", nullable = false)
-    private ProjectEntity projects;
+    private ProjectEntity project;
 
     public UseCaseEntity() {
         super();
     }
 
-    public UseCaseEntity(Long id) {
+    public UseCaseEntity(Integer id) {
         this.id = id;
     }
 
-    public UseCaseEntity(final Long id, final String name, final String description, final ProjectEntity project) {
+    public UseCaseEntity(final Integer id, final String name, final String description, final ProjectEntity project) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.projects = project;
+        this.project = project;
     }
     
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -83,6 +83,13 @@ public class UseCaseEntity implements Serializable {
         this.description = description;
     }
 
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(final ProjectEntity project) {
+        this.project = project;
+    }
     
     @Override
     public int hashCode() {
@@ -106,7 +113,7 @@ public class UseCaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + projects + '}';
+        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + project + '}';
     }
     
     

@@ -70,7 +70,7 @@ public class ProjectEntity implements Serializable {
     //         la cual hara referencia esta FK se llama id (segun el @column de UserEntity)           
     private UserEntity owner;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projects")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<UseCaseEntity> useCases = new HashSet<UseCaseEntity>();
 
     public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, float estimatedNumIteration, int chosenNumIteration, String description, UserEntity owner) {
