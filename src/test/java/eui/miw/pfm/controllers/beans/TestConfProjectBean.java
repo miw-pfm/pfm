@@ -72,7 +72,7 @@ public class TestConfProjectBean {
         confProjectBean.setProject(project);
 
         confProjectBean.stimateIter();
-        assertEquals("Correct", Double.valueOf(Math.round(this.project.getEstimatedNumIteration() * 100.0) / 100.0), Double.valueOf(22.9));
+        assertEquals("Correct", Double.valueOf(Math.round(this.project.getEstimatedNumIteration() * 100.0) / 100.0), Double.valueOf(22.91));
     }
 
 }
