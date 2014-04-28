@@ -8,5 +8,4 @@ public class JPAUserDAO extends JPATransactionGenericDAO<UserEntity, Integer> im
     public JPAUserDAO() {
         super(UserEntity.class);
     }
-    
 }
