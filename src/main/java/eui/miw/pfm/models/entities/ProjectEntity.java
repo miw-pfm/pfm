@@ -205,13 +205,13 @@ public class ProjectEntity implements Serializable {
         this.useCases = useCases;
     }
     
-//    public void addUseCase(UseCaseEntity useCaseEntity){
-//        this.useCases.add(useCaseEntity);
-//    }
-//    
-//    public void removeUseCase(UseCaseEntity useCaseEntity){
-//        this.useCases.remove(useCaseEntity);
-//    }
+    public void addUseCases(UseCaseEntity usecases) {
+        this.useCases.add(usecases);
+    }
+
+    public void removeUseCases(UseCaseEntity usecases) {
+        this.useCases.remove(usecases);
+    }
     
     @Override
     public int hashCode() {
