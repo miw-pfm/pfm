@@ -6,6 +6,7 @@
 
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.UseCaseEntity;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
