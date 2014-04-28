@@ -13,6 +13,8 @@ import eui.miw.pfm.models.entities.UseCaseEntity;
 /**
  *
  * @author Roberto Amor
+ * @author Clemencio Morales Lucas
+ * @author Manuel Rodríguez Momediano
  */
 public class UseCaseEjb {
     
@@ -30,5 +32,11 @@ public class UseCaseEjb {
         UseCaseDAO usecaseDAO;
         usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
         usecaseDAO.delete(usecase);
+    }
+    
+    public void create (final UseCaseEntity useCaseEntity){
+        UseCaseDAO useCaseDAO;
+        useCaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
+        useCaseDAO.create(useCaseEntity);
     }
 }

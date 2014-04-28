@@ -40,5 +40,5 @@ public class JPADAOFactory extends AbstractDAOFactory {
     public UseCaseDAO getUseCaseDAO() {
         return new JPAUseCaseDAO();
     }
-
+    
 }

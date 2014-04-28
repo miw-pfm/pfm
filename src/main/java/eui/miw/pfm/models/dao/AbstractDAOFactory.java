@@ -26,6 +26,6 @@ public abstract class AbstractDAOFactory {
     public abstract ProjectDAO getProjectDAO();
     
     public abstract UserDAO getUserDAO();
-    
+
     public abstract UseCaseDAO getUseCaseDAO();
 }

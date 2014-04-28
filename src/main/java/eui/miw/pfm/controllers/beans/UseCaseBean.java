@@ -40,10 +40,18 @@ public class UseCaseBean extends Bean implements Serializable {
     }
     
     public String update(){
-        String result = "";
+        String result;
         UseCaseEjb ejb = new UseCaseEjb();
         ejb.update(this.usecase);
-        result = "list_useCases";
+        result = "list_usecases";
+        return result;
+    }
+    
+    public String create(){
+        String result;
+        UseCaseEjb ejb = new UseCaseEjb();
+        ejb.create(this.usecase);
+        result = "list_usecases";
         return result;
     }
     
