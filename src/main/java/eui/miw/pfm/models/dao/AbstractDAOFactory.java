@@ -1,6 +1,7 @@
 package eui.miw.pfm.models.dao;
 
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
+import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.dao.jpa.JPADAOFactory;
 import org.apache.log4j.Logger;
@@ -25,4 +26,6 @@ public abstract class AbstractDAOFactory {
     public abstract ProjectDAO getProjectDAO();
     
     public abstract UserDAO getUserDAO();
+
+    public abstract UseCaseDAO getUseCaseDAO();
 }

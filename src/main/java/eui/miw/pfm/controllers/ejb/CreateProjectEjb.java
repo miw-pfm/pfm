@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class CreateProjectEjb {
 
-    private static final Logger LOG = Logger.getLogger(CreateProjectBean.class.getName());//NOPMD
+    private static final Logger LOG = Logger.getLogger(CreateProjectEjb.class.getName());//NOPMD
 
     public void createProject(final ProjectEntity project) {
         ProjectDAO projectDAO;

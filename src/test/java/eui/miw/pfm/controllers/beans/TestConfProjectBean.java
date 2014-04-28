@@ -1,11 +1,18 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.util.moks.ContextMocker;
 import java.util.Date;
-import static org.junit.Assert.assertSame;
+import java.util.HashMap;
+import java.util.Map;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestConfProjectBean {
 
@@ -14,8 +21,18 @@ public class TestConfProjectBean {
 
     @Before
     public void init() {
-        this.confProjectBean = new ConfProjectBean(); 
-        this.project = new ProjectEntity();
+        FacesContext context = ContextMocker.mockFacesContext();
+        try {
+            Map<String, Object> session = new HashMap<String, Object>();
+            ExternalContext ext = mock(ExternalContext.class);
+            when(ext.getSessionMap()).thenReturn(session);
+            when(context.getExternalContext()).thenReturn(ext);
+            this.confProjectBean = new ConfProjectBean();
+            this.project = new ProjectEntity();
+
+        } finally {
+            context.release();
+        }
     }
 
     @Test
@@ -45,17 +62,17 @@ public class TestConfProjectBean {
         assertTrue("Valid Dates", confProjectBean.validDates(start, end));
 
     }
-    
-     @Test
+
+    @Test
     public void testStimateIter() {
 
-//        this.project.setStartDate(new Date("9/2/13"));
-//        this.project.setEndDate(new Date("12/27/14"));
-//        this.project.setWeekNumIteration(3);
-//        confProjectBean.setProject(project);
-//        
-//        confProjectBean.stimateIter();
-//        assertSame("Correct", this.project.getEstimatedNumIteration() ,22.9 );
+        this.project.setStartDate(new Date("9/2/13"));
+        this.project.setEndDate(new Date("12/27/14"));
+        this.project.setWeekNumIteration(3);
+        confProjectBean.setProject(project);
+
+        confProjectBean.stimateIter();
+        assertEquals("Correct", Double.valueOf(Math.round(this.project.getEstimatedNumIteration() * 100.0) / 100.0), Double.valueOf(22.91));
     }
 
 }
