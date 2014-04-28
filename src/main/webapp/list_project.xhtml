@@ -45,7 +45,10 @@
 <!--                <p:ajax event="rowSelect" listener="#{listProjectsBean.onRowSelect}" update=":form:display" oncomplete="PF('carDialog').show()" />-->
 
                 <p:column headerText="Name" sortBy="name" filterBy="#{project.name}">
-                    <h:outputText value="#{project.name}" />
+                    <h:outputLink value="openProject.xhtml">
+                        <h:outputText value="#{project.name}" />
+                        <f:param name="projectId" value="#{project.id}" />
+                    </h:outputLink>
                 </p:column>
 
                 <p:column headerText="Start Date" sortBy="startDate" filterBy="#{project.stringStartDate}">
