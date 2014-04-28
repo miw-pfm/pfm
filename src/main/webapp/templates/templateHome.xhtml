@@ -13,27 +13,7 @@
         <h:outputStylesheet library="css" name="style.css"  />
         <h:outputStylesheet library="css" name="stylehome.css" />
 
-        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-
-        <h:outputScript target="head">
-            $ = jQuery;
-            $(document).ready(function() {
-            $("#panelmenu a").click(function(e){
-            e.preventDefault();                
-            var urlStyle = $(this).attr("type");
-            var newURLStyle = "/pfm/faces/javax.faces.resource/"+urlStyle+".css?ln=css";                    
-            var olrUrlStyle = $(document).find("link[href*='stylehome']").attr("href");
-
-            if (typeof olrUrlStyle === "undefined") {
-            var olrUrlStyle = $(document).find("link[href*='styleopc']").attr("href");
-            $(document).find("link[href*='styleopc']").attr("href",newURLStyle);
-            } else {
-            $(document).find("link[href*='stylehome']").attr("href",newURLStyle);                    
-            }
-            }) 
-            });
-        </h:outputScript>   
-
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" /> 
     </h:head>
     <h:body>
 
@@ -43,10 +23,10 @@
 
                 <ui:include src="menu.xhtml"/>
 
-                <h:panelGroup id="panelbody" layout="block">
+                <h:panelGroup id="panelbodyHome" layout="block">
                     <h1 id="title"><ui:insert name="title"/></h1>                                      
 
-                    <ui:include src="submenu.xhtml"/>
+                    <ui:include src="submenuHome.xhtml"/>
 
                     <h:panelGroup id="wrap" layout="block">
                         <h2 id="subtitle"><ui:insert name="subtitle"/></h2> 

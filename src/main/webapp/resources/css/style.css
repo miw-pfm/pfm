@@ -32,7 +32,7 @@ p, li, h2, a{
     padding: 0px;
     background: #FFF;
 
-    
+
     min-height: 100%;
 }
 
@@ -52,7 +52,7 @@ p, li, h2, a{
 #pagetitle {
     overflow: auto;
 }
- 
+
 #pagetitle h1{
     font-size: 26px;
     text-align: right;
@@ -170,6 +170,7 @@ p, li, h2, a{
 #panelbody.general #body a.btn-success {
     background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
     border-color: #FF9981;
+    float: left;
 }
 
 #panelbody.general #body a.btn-success:hover, #panelbody.general #body a.btn-success:focus  {
@@ -183,7 +184,7 @@ p, li, h2, a{
 }
 
 #panelbody.general #createnewproject {
-    margin: 20px 5px;
+    margin: 12px 5px;
 }
 
 #panelbody {
@@ -332,4 +333,117 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
 
 #form tbody.ui-datatable-data {
     border: 1px solid #FF9981;
+}
+
+#createnewproject, #createnewusecase{
+    margin: 0;
+    overflow: auto;
+    display: block;
+    width: 460px;
+}
+
+#createnewusecase{
+    width: 800px;
+}
+
+
+#createnewproject tr, #createnewusecase tr{
+    display: block;
+    float: left;
+
+}
+
+#j_idt28 div{
+    border: 1px solid #FCD5B4;
+    width: 460px;
+    overflow: auto;
+    padding: 10px;
+}
+
+#j_idt28{
+    margin-left: 20px;
+}
+
+#j_idt28 div span{
+    float: right;
+}
+
+#j_idt28 div table{
+    float: left;
+    clear: none;
+}
+
+#createnewproject td span.nameOfTheProject, #createnewusecase td span.nameOfTheProject{
+    display: block;
+    padding-top: 9px;
+}
+
+#j_idt28 .ui-button{
+    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;
+    margin-top: 6px;
+}
+#j_idt28 .ui-button:hover{
+    background-image: none;
+    background-color: #FCD5B4; 
+}
+
+#j_idt28 .ui-button span{
+    padding: 1px 12px;
+}
+
+#useCasesListing{
+    margin-top: 20px;
+}
+#useCasesListing li{
+    list-style: none;
+    border-bottom: 1px solid #8DB4E3;
+    clear: both;
+    overflow: auto;
+    border-left: 1px solid #8DB4E3;
+}
+
+#useCasesListing li span, #useCasesListing li a{
+    display: block;
+    padding: 3px 0;
+    float:left;
+}
+#useCasesListing li span.nameUseCase{
+    width: 250px;
+    padding-left: 5px;
+}
+#useCasesListing li span.descriptionUseCase{
+    width: 513px;
+}
+
+#useCasesListing li button{
+    text-align: center;
+    width: 58px;
+    color: #8DB4E3;
+    cursor: pointer;
+    border: 0px;
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    background: none;
+    font-size: 12px;
+    padding-left: 5px;
+}
+#useCasesListing #modalDialogButton{
+    text-align: center;
+    color: #8DB4E3;
+    cursor: pointer;
+}
+#useCasesListing li button:hover{
+    background-image: none;
+    background-color: #FFF;  
+    box-shadow: none;
+    text-decoration: underline;
+    color: red;
+}
+
+li.headerUseCasesListing span{
+    font-weight: bold;
+    padding-left: 5px;
+    display: block;
 }

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateRiskPlan.xhtml">
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.riskplan_title}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.list_usecase_subtitle}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:outputScript target="head">
+            $ = jQuery;
+            $(document).ready(function() {
+            $("#submitcreateusecase").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewusecase").attr("style") == "display: none;") {
+            $("#createnewusecase").attr("style","display: block;" );                   
+            } else $("#createnewusecase").attr("style","display: none;"); 
+            }) 
+
+            $("#cancelcreateusecase").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewusecase").attr("style") == "display: none;") {
+            $("#createnewusecase").attr("style","display: block;" );                   
+            } else $("#createnewusecase").attr("style","display: none;"); 
+            })
+            });
+        </h:outputScript> 
+
+
+
+
+        <h:link value="#{msgs.create_usecase}" styleClass="btn btn-success" id="submitcreateusecase"/>
+        <h:panelGroup id="createnewusecase" layout="block" style="display: none;"  >
+            <h:form>
+                <h:panelGroup layout="block">
+                    <h:panelGroup layout="span" styleClass="btn" style="float: right;" ><h:link value="X" id="cancelcreateusecase" /></h:panelGroup>
+
+                    <h:panelGrid columns="4">                            
+                        <h:outputText value="#{msgs.enter_name_usecase}" />                
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <h:inputText value="" maxlength="100" />
+                        <h:outputText value="#{msgs.enter_description_usecase}" />                
+                        <p:growl id="growl2" showDetail="true" sticky="true" />
+                        <h:inputText value="" maxlength="100" />
+                        <h:outputText />                      
+                        <p:commandButton value="Submit" update="growl" styleClass="btn btn-success"/>                    
+                    </h:panelGrid>                    
+                </h:panelGroup>                    
+            </h:form>              
+        </h:panelGroup>
+
+
+        <h:form>  
+            <p:growl id="messages" showDetail="true" /> 
+
+            <ul id="useCasesListing">
+                <li class="headerUseCasesListing">
+                    <span class="nameUseCase">Name</span>
+                    <span class="descriptionUseCase">Description</span>
+                    <span class="editUseCase"></span>
+                    <span class="deleteUseCase"></span>
+                </li>
+                <li>
+                    <span class="nameUseCase">Probando</span>
+                    <span class="descriptionUseCase">Descr</span>
+                    <p:commandButton id="modalDialogButton" value="Edit" onclick="PF('dlg2').show();" type="button"/>  
+                    <p:commandButton value="Delete" actionListener="#{buttonBean.destroyWorld}" update="messages">
+                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
+                    </p:commandButton>  
+                </li>
+            </ul>
+
+
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+            </p:confirmDialog>  
+
+        </h:form>
+
+        <p:dialog id="modalDialog" header="Edit Use Case" widgetVar="dlg2" modal="true" height="200">  
+            <h:form>
+                <h:panelGroup layout="block">
+                    <h:panelGrid columns="4">                            
+                        <h:outputText value="#{msgs.enter_name_usecase}" />                
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <h:inputText value="" maxlength="100" />
+                        <h:outputText value="#{msgs.enter_description_usecase}" />                
+                        <p:growl id="growl2" showDetail="true" sticky="true" />
+                        <h:inputText value="" maxlength="100" />
+                        <h:outputText />                      
+                        <p:commandButton value="Edit" update="growl" styleClass="btn btn-success"/>                    
+                    </h:panelGrid>                    
+                </h:panelGroup>                    
+            </h:form> 
+        </p:dialog>  
+
+
+    </ui:define>
+</ui:composition>

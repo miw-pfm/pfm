@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title><ui:insert name="title">Aplicación Web para la Gestión de Proyectos de la Metodología RUP</ui:insert></title>
+        <h:outputStylesheet library="css" name="bootstrap.css"  />
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"  />
+        <h:outputStylesheet library="css" name="style.css"  />
+        <h:outputStylesheet library="css" name="styleRiskPlan.css" />
+
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" /> 
+    </h:head>
+    <h:body>
+
+        <f:view locale="#{i18nBean.locale}">
+            <h:panelGroup id="container" layout="block">
+                <ui:include src="header.xhtml"/>
+
+                <ui:include src="menu.xhtml"/>
+
+                <h:panelGroup id="panelbodyRiskPlan" layout="block">
+                    <h1 id="title"><ui:insert name="title"/></h1>                                      
+
+                    <ui:include src="submenuRiskPlan.xhtml"/>
+
+                    <h:panelGroup id="wrap" layout="block">
+                        <h2 id="subtitle"><ui:insert name="subtitle"/></h2> 
+                        <h:panelGroup id="body" layout="block"><ui:insert name="body"/></h:panelGroup>                  
+                    </h:panelGroup>                  
+                </h:panelGroup>
+
+                <ui:include src="footer.xhtml"/>
+            </h:panelGroup>
+        </f:view>	
+    </h:body>
+</html>
