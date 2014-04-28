@@ -8,6 +8,7 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.OpenProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.util.SessionMap;
 import eui.miw.pfm.util.moks.Participant;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,16 +29,17 @@ public class OpenProjectBean  extends Bean implements Serializable{
     private static final long serialVersionUID = 1L;
     private ProjectEntity project;
     private List<Participant> participants ;
-    
+    private final SessionMap sessionMap;//NOPMD
     
     public OpenProjectBean() {
         super();
-        project = new ProjectEntity();
-        participants = new ArrayList<Participant>();
+        this.project = new ProjectEntity();
+        this.participants = new ArrayList<Participant>();
         this.participants.add(new Participant(1,"participante 1"));
         this.participants.add(new Participant(2,"participante 2"));
         this.participants.add(new Participant(3,"participante 3"));
         this.participants.add(new Participant(4,"participante 4"));
+        this.sessionMap = new SessionMap();
        // this.openProject(2);
     }
     
@@ -53,8 +55,14 @@ public class OpenProjectBean  extends Bean implements Serializable{
         OpenProjectEjb opEJB ; 
         opEJB = new OpenProjectEjb();
         project = opEJB.openProject(projectId);
-             System.out.println("Project : " + project);
         assert project != null;
+        assert this.sessionMap != null;
+//        this.sessionMap.add("project", this.project);
+        try{
+            this.sessionMap.add("project", this.project);
+        }catch(Exception e){
+            
+        }
         return project;
        
     }

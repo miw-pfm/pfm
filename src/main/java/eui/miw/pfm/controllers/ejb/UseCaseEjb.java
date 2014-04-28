@@ -25,6 +25,13 @@ public class UseCaseEjb {
     public void update(UseCaseEntity usecase){
         UseCaseDAO usecaseDAO;
         usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
+        usecaseDAO.update(usecase);
+    }
+    
+    public void delete(final UseCaseEntity usecase){
+        UseCaseDAO usecaseDAO;
+        usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
+        usecaseDAO.delete(usecase);
     }
     
     public void create (final UseCaseEntity useCaseEntity){
