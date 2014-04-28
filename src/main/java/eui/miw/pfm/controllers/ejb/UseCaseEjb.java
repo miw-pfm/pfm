@@ -9,19 +9,25 @@ package eui.miw.pfm.controllers.ejb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.entities.UseCaseEntity;
-import org.apache.log4j.Logger;
-
-
 
 /**
  *
- * @author Manuel Rodríguez Momediano
+ * @author Roberto Amor
  * @author Clemencio Morales Lucas
+ * @author Manuel Rodríguez Momediano
  */
-public class CreateUseCaseEjb {
-    private static final Logger LOG = Logger.getLogger(CreateUseCaseEjb.class.getName());//NOPMD
+public class UseCaseEjb {
     
-    public void createUseCase (final UseCaseEntity useCaseEntity){
+    public UseCaseEjb() {
+        super();
+    }
+    
+    public void update(UseCaseEntity usecase){
+        UseCaseDAO usecaseDAO;
+        usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
+    }
+    
+    public void create (final UseCaseEntity useCaseEntity){
         UseCaseDAO useCaseDAO;
         useCaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
         useCaseDAO.create(useCaseEntity);

@@ -108,6 +108,6 @@ public class UseCaseEntity implements Serializable {
     public String toString() {
         return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + projects + '}';
     }
-
+    
     
 }
