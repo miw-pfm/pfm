@@ -25,25 +25,27 @@
                 <h:panelGrid columns="3">
                     <h:outputText value="#{msgs.startDate}" />
                     <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true">                            
-                        <p:ajax event="dateSelect" update="beginCal"/>
+                        <p:ajax event="dateSelect" update="beginCal stIter choseN" listener="#{confProjectBean.stimateIter}"/>
                     </p:calendar>
                     <h:message for="beginCal" style="color:red" />
                     <h:outputText value="#{msgs.endDate}" />
                     <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" binding="#{endCalen}" required="true">
-                        <p:ajax event="dateSelect" update="endCal"/>
+                        <p:ajax event="dateSelect" update="endCal stIter choseN" listener="#{confProjectBean.stimateIter}"/>
                     </p:calendar>
                     <h:message for="endCal" style="color:red" />
                     <h:outputText value="#{msgs.weekNumIteration}"/>
                     <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" id="weeIter" binding="#{weekNum}" required="true">                            
-                        <p:ajax event="blur" update="stIter" listener="#{confProjectBean.stimateIter}"/>                             
+                        <p:ajax event="blur" update="stIter choseN" listener="#{confProjectBean.stimateIter}"/>     
                     </h:inputText>
                     <h:message for="weeIter" style="color:red" />
                     <h:outputText value="#{msgs.estimatedNumIteration}" />
                     <h:inputText  value="#{confProjectBean.project.estimatedNumIteration}" id="stIter" disabled="true" />
                     <h:outputText />
                     <h:outputText value="#{msgs.chosenNumIteration}" />
-                    <h:inputText value="#{confProjectBean.project.chosenNumIteration}" id="chNumIter" maxlength="5" required="true"/>
-                    <h:message for="chNumIter" style="color:red" />
+                    <p:selectOneMenu id="choseN"  value="#{confProjectBean.project.chosenNumIteration}">
+                        <f:selectItems value="#{confProjectBean.chosenList}"  />
+                    </p:selectOneMenu>
+                    <h:message for="choseN" style="color:red" />
                     <h:outputText value="#{msgs.description}" />
                     <h:inputTextarea value="#{confProjectBean.project.description}" cols="5" id="desc" required="true"/>
                     <h:message for="desc" style="color:red" />
