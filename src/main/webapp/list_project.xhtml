@@ -42,13 +42,10 @@
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listProjectsBean.selectedProject}" id="projectTable" lazy="true">
 
-<!--                <p:ajax event="rowSelect" listener="#{listProjectsBean.onRowSelect}" update=":form:display" oncomplete="PF('carDialog').show()" />-->
+               <p:ajax event="rowSelect" listener="#{listProjectsBean.onRowSelect}"  />
 
                <p:column headerText="Name" sortBy="name" filterBy="#{project.name}">
-                     <h:outputLink value="openProject.xhtml">
-                         <h:outputText value="#{project.name}" />
-                         <f:param name="projectId" value="#{project.id}" />
-                     </h:outputLink>
+                   <h:outputText value="#{project.name}" />
                </p:column>
 
                 <p:column headerText="Start Date" sortBy="startDate" filterBy="#{project.stringStartDate}">

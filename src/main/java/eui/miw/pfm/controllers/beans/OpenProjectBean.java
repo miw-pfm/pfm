@@ -44,12 +44,27 @@ public class OpenProjectBean  extends Bean implements Serializable{
        // this.openProject(2);
     }
     
-     public ProjectEntity openProject(){ //NOPMD
+     public String openProject(){ //NOPMD
         
         Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 	String projectId = params.get("projectId");
-        return openProject(Integer.parseInt(projectId));
+        openProject(Integer.parseInt(projectId));
+       // return openProject(Integer.parseInt(projectId));
+        return "confProject";
     }
+     
+     public String showOpenProject(ProjectEntity project) {
+        
+        assert project != null;
+        assert this.sessionMap != null;
+//        this.sessionMap.add("project", this.project);
+        try{
+            this.sessionMap.add("project", project);
+        }catch(Exception e){
+            
+        }
+        return "openProject"; 
+     }
     
      public ProjectEntity openProject(int projectId){ //NOPMD
         
@@ -108,6 +123,8 @@ public class OpenProjectBean  extends Bean implements Serializable{
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
+
+    
     
     
    
