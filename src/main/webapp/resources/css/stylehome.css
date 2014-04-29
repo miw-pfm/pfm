@@ -105,6 +105,10 @@ input.hasDatepicker {
     width: 500px;
 }
 
+#confproject .ui-selectonemenu{
+    margin-left: 10px;
+}
+
 /***************************************************/
 /* createproject
 /***************************************************/

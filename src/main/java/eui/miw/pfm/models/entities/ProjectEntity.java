@@ -32,9 +32,9 @@ public class ProjectEntity implements Serializable {
     @Column(name = "id")
     private Integer id; //NOPMD
     
+    @Column(name = "name")
     @NotNull
     @Size(min = 3, max = 100)
-    @Column(name = "name")
     private String name;
 
     @Column(name = "start_date")
@@ -64,10 +64,7 @@ public class ProjectEntity implements Serializable {
     private String description; //NOPMD 
  
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName="id")
-    // NOTA: mediante el joinColumn explicitamos que el nombre de la FK de esta tabla
-    //         (ProjetEntity) se llamara user_id y la PK de la tabla UserEntity a
-    //         la cual hara referencia esta FK se llama id (segun el @column de UserEntity)           
+    @JoinColumn(name="user_id", referencedColumnName="id")           
     private UserEntity owner;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")

@@ -6,6 +6,7 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.CreateProjectEjb;
+import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class CreateProjectBean extends Bean implements Serializable {
      * Creates a new instance of CreateProjectBean
      */
     public CreateProjectBean() {//NOPMD 
-        this.projectEntity = new ProjectEntity();        
+        this.projectEntity = new ProjectEntity();
         this.sessionMap = new SessionMap();
         this.createProjectEjb = new CreateProjectEjb();
     }
@@ -47,7 +48,7 @@ public class CreateProjectBean extends Bean implements Serializable {
     }
 
     public boolean nameProjectValidator() {
-        return this.createProjectEjb.nameProjectValidator(projectEntity);
+        return this.createProjectEjb.nameProjectValidator(projectEntity, AbstractDAOFactory.getFactory().getUserDAO().read(1));
     }
 
     public String createProject() { //NOPMD
@@ -55,6 +56,7 @@ public class CreateProjectBean extends Bean implements Serializable {
 
         if (nameProjectValidator()) {//NOPMD
             assert this.projectEntity != null;
+            this.projectEntity.setOwner(AbstractDAOFactory.getFactory().getUserDAO().read(1));
             this.createProjectEjb.createProject(this.projectEntity);
             this.sessionMap.add("project", this.projectEntity);
             view = "confProject";
