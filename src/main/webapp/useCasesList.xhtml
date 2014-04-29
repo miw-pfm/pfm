@@ -37,29 +37,24 @@
             });
         </h:outputScript> 
 
-
-
-
         <h:link value="#{msgs.create_usecase}" styleClass="btn btn-success" id="submitcreateusecase"/>
         <h:panelGroup id="createnewusecase" layout="block" style="display: none;"  >
-            <h:form>
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:panelGroup layout="block">
                     <h:panelGroup layout="span" styleClass="btn" style="float: right;" ><h:link value="X" id="cancelcreateusecase" /></h:panelGroup>
 
-                    <h:panelGrid columns="4">                            
+                    <h:panelGrid columns="5">                            
                         <h:outputText value="#{msgs.enter_name_usecase}" />                
-                        <p:growl id="growl" showDetail="true" sticky="true" />
                         <h:inputText value="#{useCaseBean.usecase.name}" maxlength="100" />
                         <h:outputText value="#{msgs.enter_description_usecase}" />                
-                        <p:growl id="growl2" showDetail="true" sticky="true" />
                         <h:inputText value="#{useCaseBean.usecase.description}" maxlength="100" />
-                        <h:outputText />                      
-                        <p:commandButton value="Submit" action="#{useCaseBean.create()}" update="growl" styleClass="btn btn-success"/>                    
+                        <h:outputText/>                      
+                        <h:commandButton value="Submit" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
                     </h:panelGrid>                    
                 </h:panelGroup>                    
             </h:form>              
         </h:panelGroup>
-
 
         <h:form>  
             <p:growl id="messages" showDetail="true" /> 
@@ -80,7 +75,6 @@
                     </p:commandButton>  
                 </li>
             </ul>
-
 
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
@@ -106,7 +100,6 @@
                 </h:panelGroup>                    
             </h:form> 
         </p:dialog>  
-
 
     </ui:define>
 </ui:composition>

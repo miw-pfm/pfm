@@ -10,3 +10,24 @@
     background: #8DB4E3;
     color: #FFF;
 }
+
+#submitcreateusecase, #createnewusecase input.btn-success{
+    background-image: linear-gradient(to bottom, #C5D9F1 0%, #8DB4E3 100%);
+    border-color: #8DB4E3;
+}
+
+#submitcreateusecase:hover, #submitcreateusecase:active, #submitcreateusecase:focus, #createnewusecase input.btn-success:hover, #createnewusecase input.btn-success:active, #createnewusecase input.btn-success:focus{
+    background-color: #C5D9F1;
+    background-image: linear-gradient(to bottom, #C5D9F1 0%, #C5D9F1 100%);
+}
+#createnewusecase input{
+    width: 190px;
+}
+
+#createnewusecase input.btn-success{
+    font-size: 14px;
+    margin-left: 0;
+    padding: 3px;
+    width: 68px;
+}
+
