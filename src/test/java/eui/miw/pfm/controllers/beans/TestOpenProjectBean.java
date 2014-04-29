@@ -10,14 +10,21 @@ import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
+import eui.miw.pfm.util.moks.ContextMocker;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -31,11 +38,21 @@ public class TestOpenProjectBean {
 
     @Before
     public void init() {
+        
+         FacesContext context = ContextMocker.mockFacesContext();
+        try {
+            Map<String, Object> session = new HashMap<String, Object>();
+            ExternalContext ext = mock(ExternalContext.class);
+            when(ext.getSessionMap()).thenReturn(session);
+            when(context.getExternalContext()).thenReturn(ext);
+            this.openProjectBean = new OpenProjectBean();
+            userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+            projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
 
-        this.openProjectBean = new OpenProjectBean();
-        userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-
+        } finally {
+            context.release();
+        }
+        
     }
 
     @Test

@@ -8,6 +8,7 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.OpenProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.util.SessionMap;
 import eui.miw.pfm.util.moks.Participant;
 import java.io.Serializable;
@@ -55,6 +56,17 @@ public class OpenProjectBean  extends Bean implements Serializable{
         OpenProjectEjb opEJB ; 
         opEJB = new OpenProjectEjb();
         project = opEJB.openProject(projectId);
+        
+        //This entity should be filled with the user in session
+        /*
+        UserEntity sessionUser;
+        sessionUser = new UserEntity(1);
+        if(project.getOwner().getId() != sessionUser.getId()){
+        
+            project = null;
+        
+        }*/
+        
         assert project != null;
         assert this.sessionMap != null;
 //        this.sessionMap.add("project", this.project);
