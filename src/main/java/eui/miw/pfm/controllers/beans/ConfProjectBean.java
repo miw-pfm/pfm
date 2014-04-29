@@ -4,7 +4,9 @@ import eui.miw.pfm.controllers.ejb.ConfProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -24,6 +26,7 @@ public class ConfProjectBean extends Bean implements Serializable {
     private final SessionMap sessionMap;//NOPMD
     private final ConfProjectEjb confProjectEjb;//NOPMD
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
+    private static final List<Integer> chosenList = new ArrayList<>();
 
     public ConfProjectBean() {
         super();
@@ -41,7 +44,7 @@ public class ConfProjectBean extends Bean implements Serializable {
     public void setProject(final ProjectEntity project) {
         this.project = project;
     }
-        
+
     public ProjectEntity getProject() {
         return project;
     }
@@ -74,12 +77,31 @@ public class ConfProjectBean extends Bean implements Serializable {
     }
 
     public void stimateIter() {
-        
+
         final double mils = (project.getEndDate().getTime() - project.getStartDate().getTime() + 1) / 7 * 5;
         final double weeks = ((mils / (1000 * 60 * 60 * 24))) / 5;
         double sugIte;
         sugIte = weeks / project.getWeekNumIteration();
 
-        project.setEstimatedNumIteration((float) ((float) Math.round(sugIte * 100.0) / 100.0));        
+        if (!Double.isInfinite(sugIte)) {
+            float estimate;
+            estimate = (float) ((float) Math.round(sugIte * 100.0) / 100.0);
+            project.setEstimatedNumIteration(estimate);
+
+            final int roundEst = Math.round(estimate);
+            chosenList.clear();
+
+            if (roundEst > 1) {
+                chosenList.add((roundEst - 1));
+            }
+
+            chosenList.add(roundEst);
+            chosenList.add((roundEst + 1));
+        }
     }
+
+    public List<Integer> getChosenList() {
+        return chosenList;
+    }
+
 }
