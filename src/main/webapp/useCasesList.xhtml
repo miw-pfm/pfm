@@ -49,12 +49,12 @@
                     <h:panelGrid columns="4">                            
                         <h:outputText value="#{msgs.enter_name_usecase}" />                
                         <p:growl id="growl" showDetail="true" sticky="true" />
-                        <h:inputText value="" maxlength="100" />
+                        <h:inputText value="#{useCaseBean.usecase.name}" maxlength="100" />
                         <h:outputText value="#{msgs.enter_description_usecase}" />                
                         <p:growl id="growl2" showDetail="true" sticky="true" />
-                        <h:inputText value="" maxlength="100" />
+                        <h:inputText value="#{useCaseBean.usecase.description}" maxlength="100" />
                         <h:outputText />                      
-                        <p:commandButton value="Submit" update="growl" styleClass="btn btn-success"/>                    
+                        <p:commandButton value="Submit" action="#{useCaseBean.create()}" update="growl" styleClass="btn btn-success"/>                    
                     </h:panelGrid>                    
                 </h:panelGroup>                    
             </h:form>              
