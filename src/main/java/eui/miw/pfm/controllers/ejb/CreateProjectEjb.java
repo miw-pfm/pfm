@@ -9,6 +9,7 @@ import eui.miw.pfm.controllers.beans.CreateProjectBean;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UserEntity;
 import java.util.logging.Logger;
 
 /**
@@ -25,11 +26,18 @@ public class CreateProjectEjb {
         projectDAO.create(project);
     }
 
-    public boolean nameProjectValidator(final ProjectEntity projectEntity) {
-        final String[] name = {"name"};
-        final String[] value = {projectEntity.getName()};
+    public boolean nameProjectValidator(final ProjectEntity projectEntity, final UserEntity userEntity) {
         ProjectDAO projectDAO;
         projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        return projectDAO.find(name, value).isEmpty();
+        String psql = "SELECT p FROM ProjectEntity p WHERE p.owner = ?1";
+        for (ProjectEntity pe : projectDAO.find(psql, userEntity)) {
+            if (pe.getName().equals(projectEntity.getName())) {
+                return false;
+            }
+        }
+        return true;
+        //return projectDAO.find(name, value).isEmpty();
+
+        // return projectDAO.find(psql, user);
     }
 }

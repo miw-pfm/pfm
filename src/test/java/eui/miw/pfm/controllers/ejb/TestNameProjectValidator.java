@@ -25,7 +25,7 @@ public class TestNameProjectValidator {
     private transient ProjectEntity project;
     private transient ProjectEntity project2;
     private transient UserEntity user1;
-    private transient  CreateProjectEjb createProjectEjb;
+    private transient CreateProjectEjb createProjectEjb;
 
     @Before
     public void before() {
@@ -48,8 +48,8 @@ public class TestNameProjectValidator {
         int numInt;
         numInt = 2;
 
-
         final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
         userDAO.create(this.user1);
 
         project.setChosenNumIteration(numInt);
@@ -61,11 +61,9 @@ public class TestNameProjectValidator {
         project.setWeekNumIteration(numInt);
         project.setOwner(user1);
 
-        createProjectEjb.createProject(project);
+        projectDAO.create(project);
 
-
-      
-        assertFalse("Ya existe project y no lo valida correctamente", createProjectEjb.nameProjectValidator(project));
+        assertFalse("Ya existe project y no lo valida correctamente", createProjectEjb.nameProjectValidator(project, user1));
 
         project2.setChosenNumIteration(numInt);
         project2.setDescription("Prueba de nameValidator");
@@ -76,25 +74,25 @@ public class TestNameProjectValidator {
         project2.setWeekNumIteration(numInt);
         project2.setOwner(user1);
 
-  
-        assertTrue("No existe project2 y no lo Valida Correctamente", createProjectEjb.nameProjectValidator(project2));
+        assertTrue("No existe project2 y no lo Valida Correctamente", createProjectEjb.nameProjectValidator(project2, user1));
 
         createProjectEjb.createProject(project2);
-        assertFalse("Ya existe project2 y no lo valida correctamente", createProjectEjb.nameProjectValidator(project2));
+        assertFalse("Ya existe project2 y no lo valida correctamente", createProjectEjb.nameProjectValidator(project2, user1));
 
         final ProjectEntity project3 = new ProjectEntity();
         project3.setName("Project3");
-        assertTrue("No existe project3 y no lo Valida Correctamente", createProjectEjb.nameProjectValidator(project3));
-
-    }
-
-    @After
-    public void destroy() {
-        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+        assertTrue("No existe project3 y no lo Valida Correctamente", createProjectEjb.nameProjectValidator(project3, user1));
         projectDAO.delete(project);
         projectDAO.delete(project2);
         userDAO.delete(user1);
     }
 
+//    @After
+//    public void destroy() {
+//        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
+//        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
+//        projectDAO.delete(project);
+//        projectDAO.delete(project2);
+//        userDAO.delete(user1);
+//    }
 }

@@ -34,7 +34,7 @@ public class CreateProjectBean extends Bean implements Serializable {
      * Creates a new instance of CreateProjectBean
      */
     public CreateProjectBean() {//NOPMD 
-        this.projectEntity = new ProjectEntity();        
+        this.projectEntity = new ProjectEntity();
         this.sessionMap = new SessionMap();
         this.createProjectEjb = new CreateProjectEjb();
     }
@@ -48,7 +48,7 @@ public class CreateProjectBean extends Bean implements Serializable {
     }
 
     public boolean nameProjectValidator() {
-        return this.createProjectEjb.nameProjectValidator(projectEntity);
+        return this.createProjectEjb.nameProjectValidator(projectEntity, AbstractDAOFactory.getFactory().getUserDAO().read(1));
     }
 
     public String createProject() { //NOPMD
