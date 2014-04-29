@@ -8,6 +8,7 @@ package eui.miw.pfm;
 import eui.miw.pfm.controllers.beans.TestConfProjectBean;
 import eui.miw.pfm.controllers.ejb.TestNameProjectValidator;
 import eui.miw.pfm.controllers.ejb.TestCreateProject;
+import eui.miw.pfm.controllers.ejb.TestCreateUseCase;
 import eui.miw.pfm.models.entities.UserEntityTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,7 +18,7 @@ import org.junit.runners.Suite;
  * @author bk0823
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestConfProjectBean.class, TestNameProjectValidator.class, TestCreateProject.class, UserEntityTest.class})
+@Suite.SuiteClasses({TestConfProjectBean.class, TestNameProjectValidator.class, TestCreateProject.class, UserEntityTest.class, TestCreateUseCase.class})
 public class AllTest {
 
 }
