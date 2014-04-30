@@ -27,10 +27,13 @@ import org.junit.Test;
 public class TestCreateUseCase {
     
     private transient ProjectEntity project;
-    private transient UseCaseEjb useCaseEjb;
-    private transient UseCaseEntity useCaseEntity;
+    private transient UseCaseEntity usecase;
     private transient UserEntity user;
+    
+    private transient UseCaseEjb useCaseEjb;
+    
     private transient ProjectDAO projectDAO;
+    private transient UseCaseDAO usecaseDAO;
     private transient UserDAO userDAO;
     
     //Input data for UseCase
@@ -52,12 +55,32 @@ public class TestCreateUseCase {
     private transient final String SECOND_SURENAME = "guti";
     
     @Before
-    public void before() {
-        project = new ProjectEntity();
-        useCaseEjb = new UseCaseEjb();
+    public void before() {        
+        
         userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-       
+        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO(); 
+        usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
+        
+        useCaseEjb = new UseCaseEjb();
+        
+        fill_userentity();
+        fill_projectentity();
+        fill_usecaseentity();        
+        userDAO.create(user);                
+        projectDAO.create(project);                                
+    }
+    public void fill_userentity() {
+        this.user = new UserEntity();
+        this.user.setName(NAME);
+        this.user.setPassword(PASSWORD);
+        this.user.setUsername(USERNAME);
+        this.user.setEmail(EMAIL);
+        this.user.setSurename(SURENAME);
+        this.user.setSecondSurename(SECOND_SURENAME);
+    }
+
+    public void fill_projectentity() {
+        project = new ProjectEntity();
         project.setChosenNumIteration(NUMBER_OF_ITERATIONS);
         project.setDescription(PROJECT_DESCRIPTION);
         project.setStartDate(new Date());
@@ -65,53 +88,31 @@ public class TestCreateUseCase {
         project.setEstimatedNumIteration(NUMBER_OF_ITERATIONS);
         project.setName(PROJECT_NAME);
         project.setWeekNumIteration(NUMBER_OF_WEEKS);
-        
-        user = new UserEntity();
-        user.setName(NAME);
-        user.setPassword(PASSWORD);
-        user.setUsername(USERNAME);
-        user.setEmail(EMAIL);
-        user.setSurename(SURENAME);
-        user.setSecondSurename(SECOND_SURENAME);
-        userDAO.create(user);
-        
         project.setOwner(user);
-        projectDAO.create(project);
-        
-        useCaseEntity = new UseCaseEntity();
-        useCaseEntity.setName(UC_NAME);
-        useCaseEntity.setDescription(UC_DESCRIPTION);
-        useCaseEntity.setProject(project);
-        
-        projectDAO.update(project);
+    }
+
+    public void fill_usecaseentity() {
+        usecase = new UseCaseEntity();
+        usecase.setName(UC_NAME);
+        usecase.setDescription(UC_DESCRIPTION);
+        usecase.setProject(project);
     }
     
     @Test
-     public void createUseCase() {
-        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        final UseCaseDAO useCaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
-        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        useCaseDAO.create(this.useCaseEntity);
-        useCaseEjb.create(useCaseEntity);
-        
+     public void createUseCase() {               
+        usecaseDAO.create(usecase);
+        useCaseEjb.create(usecase);       
         String[] name = {"name"};
-        String[] values = {"Caso de Uso 1"};
-        
-        UseCaseEntity recoveredUC = useCaseDAO.read(1);
-        
-        assertEquals(recoveredUC.getName(), useCaseEntity.getName());
-        assertEquals(recoveredUC.getDescription(), useCaseEntity.getDescription());
+        String[] values = {UC_NAME};        
+        UseCaseEntity recoveredUC = usecaseDAO.read(usecase.getId());        
+        assertEquals(recoveredUC.getName(), usecase.getName());
+        assertEquals(recoveredUC.getDescription(), usecase.getDescription());
      }
     
     @After
-    public void after() {
-        final ProjectDAO projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
-        final UseCaseDAO useCaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
-        final UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-
-        useCaseDAO.delete(useCaseEntity);
+    public void after() {                      
+        usecaseDAO.delete(usecase);
         projectDAO.delete(project);
-        userDAO.delete(user);
-        
+        userDAO.delete(user);        
     }
 }
