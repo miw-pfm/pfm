@@ -28,12 +28,14 @@ public class TestListCaseUse {
     private ProjectDAO projectDAO;
     private UserEntity user;
     private ProjectEntity project;
+    private ListUseCaseEjb listUCEjb;
     
     
     @Before
     public void before() {
         this.user = new UserEntity();
         this.project = new ProjectEntity();
+        this.listUCEjb = new ListUseCaseEjb();
 
         this.user.setName("usuario");
         this.userDAO = AbstractDAOFactory.getFactory().getUserDAO();
@@ -75,24 +77,24 @@ public class TestListCaseUse {
         
         listUC.addAll(project.getUseCases());
         
-        assertTrue("Recupera uc1 y uc2 correctamente",ListUseCaseEjb.obtainUseCase(this.project).containsAll(listUC));
+        assertTrue("Recupera uc1 y uc2 correctamente",this.listUCEjb.obtainUseCase(this.project).containsAll(listUC));
         listUC.clear();
         
         this.project.addUseCases(uc3);
         listUC.addAll(project.getUseCases());
         
-        assertFalse("Recupera uc1 y uc2 correctamente, uc3 NO está en la BD",ListUseCaseEjb.obtainUseCase(this.project).containsAll(listUC));
+        assertFalse("Recupera uc1 y uc2 correctamente, uc3 NO está en la BD",this.listUCEjb.obtainUseCase(this.project).containsAll(listUC));
         listUC.clear();
         
         this.projectDAO.update(project);
         listUC.addAll(project.getUseCases());
         
-        assertTrue("Recupera uc1, uc2 y uc3 correctamente",ListUseCaseEjb.obtainUseCase(this.project).containsAll(listUC));
+        assertTrue("Recupera uc1, uc2 y uc3 correctamente",this.listUCEjb.obtainUseCase(this.project).containsAll(listUC));
     }
 
     @After
     public void after() {
-        this.projectDAO.delete(project);
-        this.userDAO.delete(user);
+       // this.projectDAO.delete(project);
+       // this.userDAO.delete(user);
     }
 }

@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.ListUseCaseEjb;
 import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
 import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 /**
@@ -21,17 +22,18 @@ import javax.inject.Named;
  * @author Clemencio Morales
  * @author Manuel Rodríguez
  */
-@SessionScoped
+@RequestScoped
 @Named
 public class UseCaseBean extends Bean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    private UseCaseEntity usecase;
+
+    private UseCaseEntity usecase = new UseCaseEntity();
     private ProjectEntity project;
     private SessionMap sessionMap;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
-    
-    public UseCaseBean(){
+
+    public UseCaseBean() {
         super();
         project = new ProjectEntity();
         this.sessionMap = new SessionMap();
@@ -42,8 +44,8 @@ public class UseCaseBean extends Bean implements Serializable {
             LOG.warning("No session exist");
         }
     }
-    
-    public UseCaseBean(final UseCaseEntity usecase){
+
+    public UseCaseBean(final UseCaseEntity usecase) {
         this.usecase = usecase;
     }
 
@@ -53,30 +55,40 @@ public class UseCaseBean extends Bean implements Serializable {
 
     public void setUsecase(final UseCaseEntity usecase) {
         this.usecase = usecase;
+        LOG.info(this.usecase.toString());
     }
-    
-    public String update(){
-        String result;
+
+    public String update() {
         UseCaseEjb ejb = new UseCaseEjb();
+        this.usecase.setProject(project);
+        LOG.info(this.usecase.toString());
+
         ejb.update(this.usecase);
-        result = "list_usecases";
-        return result;
+        return "useCasesList";
     }
-    
-    public String create(){
-        String result;
+
+    public String create() {
         UseCaseEjb ejb = new UseCaseEjb();
         ejb.create(this.usecase);
-        result = "list_usecases";
-        return result;
-        
+        return null;
     }
-    
-    public String delete(){
-        String view = "list_useCases";
+
+    public String delete(final UseCaseEntity useCaseEntity) {
         UseCaseEjb ejb = new UseCaseEjb();
+        this.usecase.setProject(project);
+         this.usecase = useCaseEntity;
+        LOG.info(this.usecase.toString());       
         ejb.delete(usecase);
-        return view;
+        return null;
     }
-  
+
+    public List<UseCaseEntity> getUseCases() {
+        ListUseCaseEjb listejb = new ListUseCaseEjb();
+        return listejb.obtainUseCase(this.project);
+    }
+
+    public String editUseCase(final UseCaseEntity useCaseEntity) {
+        this.usecase = useCaseEntity;
+        return "useCasesedit";
+    }
 }

@@ -17,9 +17,9 @@ import java.util.Set;
  *
  * @author aw0591
  */
-class ListUseCaseEjb {
+public class ListUseCaseEjb {
 
-    static List<UseCaseEntity> obtainUseCase(ProjectEntity project) {        
+    public List<UseCaseEntity> obtainUseCase(ProjectEntity project) {        
         UseCaseDAO usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();        
         String psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1";
         return usecaseDAO.find(psql, project);        
