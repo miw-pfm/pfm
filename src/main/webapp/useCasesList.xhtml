@@ -38,30 +38,26 @@
             });            
         </h:outputScript> 
 
-
-
-
         <h:link value="#{msgs.create_usecase}" styleClass="btn btn-success" id="submitcreateusecase"/>
         <h:panelGroup id="createnewusecase" layout="block" style="display: none;"  >
-            <h:form>
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:panelGroup layout="block">
                     <h:panelGroup layout="span" styleClass="btn" style="float: right;" ><h:link value="X" id="cancelcreateusecase" /></h:panelGroup>
 
-                    <h:panelGrid columns="4">                            
+                    <h:panelGrid columns="5">                            
                         <h:outputText value="#{msgs.enter_name_usecase}" />                
-                        <p:growl id="growl_create" showDetail="true" sticky="true" />
-                        <h:inputText value=""  />
-                        <h:outputText value="#{msgs.enter_description_usecase}" />                
-                        <h:inputText value=""  />
-                        <h:outputText />                      
-                        <p:commandButton value="Submit" update="growl_create" styleClass="btn btn-success"/>                    
+                        <h:inputText value="#{useCaseBean.usecase.name}" maxlength="100" />
+                        <h:outputText value="#{msgs.enter_description_usecase}" />                                
+                        <h:inputText value="#{useCaseBean.usecase.description}" maxlength="100" />
+                        <h:outputText/>                      
+                        <h:commandButton value="Submit" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
                     </h:panelGrid>                    
                 </h:panelGroup>                    
             </h:form>              
         </h:panelGroup>
 
-
-        <h:form id="form">              
+        <h:form id="form_edit">              
             <p:growl id="messages" showDetail="true" /> 
             <ul id="useCasesListing">
                 <li class="headerUseCasesListing">
@@ -78,13 +74,12 @@
                         <p:commandButton id="uc#{uc.id}" styleClass="modalDialogButton" value="Edit" action="#{useCaseBean.editUseCase(uc)}">
                         </p:commandButton>
 
-                        <p:commandButton value="Delete" actionListener="#{useCaseBean.delete(uc)}" update="form">
+                        <p:commandButton value="Delete" actionListener="#{useCaseBean.delete(uc)}" update="form_edit">
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
                         </p:commandButton>  
                     </li>
                 </c:forEach>                    
             </ul>
-
 
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >  

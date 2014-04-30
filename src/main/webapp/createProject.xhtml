@@ -25,7 +25,6 @@
                 <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:inputText value="#{createProjectBean.projectEntity.name}" maxlength="100" />
                 <p:commandButton value="Submit" action="#{createProjectBean.createProject()}" update="growl" styleClass="btn btn-success"/>
-
             </h:form>    
         </h:panelGroup>
     </ui:define>

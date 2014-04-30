@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -22,8 +24,9 @@ import javax.inject.Named;
  * @author Clemencio Morales
  * @author Manuel Rodríguez
  */
-@RequestScoped
+
 @Named
+@RequestScoped
 public class UseCaseBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,6 +39,7 @@ public class UseCaseBean extends Bean implements Serializable {
     public UseCaseBean() {
         super();
         project = new ProjectEntity();
+        usecase = new UseCaseEntity();
         this.sessionMap = new SessionMap();
 
         try {
@@ -63,13 +67,16 @@ public class UseCaseBean extends Bean implements Serializable {
         this.usecase.setProject(project);
         LOG.info(this.usecase.toString());
 
-        ejb.update(this.usecase);
+        ejb.update(this.usecase);                  
         return "useCasesList";
     }
 
     public String create() {
+        this.usecase.setProject(this.project);
         UseCaseEjb ejb = new UseCaseEjb();
         ejb.create(this.usecase);
+        final FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage("form", new FacesMessage("Use Case Created","Use Case Created"));
         return null;
     }
 
@@ -79,6 +86,8 @@ public class UseCaseBean extends Bean implements Serializable {
          this.usecase = useCaseEntity;
         LOG.info(this.usecase.toString());       
         ejb.delete(usecase);
+        final FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage("form_edit", new FacesMessage("Use Case Deleted","Use Case Deleted"));        
         return null;
     }
 

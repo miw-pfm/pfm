@@ -350,8 +350,26 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
 #createnewproject tr, #createnewusecase tr{
     display: block;
     float: left;
-
 }
+
+#j_idt30{
+    margin-left: 10px;
+}
+
+#j_idt30 .ui-button, #createnewusecase .ui-button{
+    font-size: 12px;
+    height: 25px;
+    margin-top: 5px;
+}
+
+#j_idt30 .ui-button:hover, #submitcreateusecase:hover, #submitcreateusecase:focus{
+    background-image: none;
+    background-color: #FCD5B4; 
+}
+
+.btn-success{
+    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;}
 
 #j_idt28 div{
     border: 1px solid #FCD5B4;
@@ -446,4 +464,9 @@ li.headerUseCasesListing span{
     font-weight: bold;
     padding-left: 5px;
     display: block;
+}
+
+button.btn-succes:hover, button.btn-succes:active, button.btn-succes:focus, button.btn-succes.active, button.ui-state-hover, button.ui-state-hover:hover{
+    background-color: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;
 }
