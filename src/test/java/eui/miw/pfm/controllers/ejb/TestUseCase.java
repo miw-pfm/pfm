@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
@@ -17,6 +16,8 @@ import java.util.Date;
 import org.junit.After;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ import org.junit.Test;
  * @author Roberto Amor
  */
 public class TestUseCase {
-    
+
     private transient UseCaseEntity usecase;
     private transient UseCaseEjb usecaseEjb;
     private transient ProjectDAO projectDAO;
@@ -34,15 +35,15 @@ public class TestUseCase {
     private transient UserDAO userDAO;
     private transient UserEntity user;
     private transient ProjectEntity project;
-     private transient final String UC_NAME = "Caso de Uso 1";
+    private transient final String UC_NAME = "Caso de Uso 1";
     private transient final String UC_DESCRIPTION = "First UC";
-    
+
     //Input data for Project
     private transient final int NUMBER_OF_ITERATIONS = 2;
     private transient final int NUMBER_OF_WEEKS = 3;
     private transient final String PROJECT_DESCRIPTION = "First project";
     private transient final String PROJECT_NAME = "Project 1";
-    
+
     //Input data for User
     private transient final String NAME = "Pepe";
     private transient final String PASSWORD = "1234";
@@ -50,25 +51,25 @@ public class TestUseCase {
     private transient final String EMAIL = "pepe@pepe.com";
     private transient final String SURENAME = "lopez";
     private transient final String SECOND_SURENAME = "guti";
-    
+
     @Before
     public void before() {
         userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO(); 
+        projectDAO = AbstractDAOFactory.getFactory().getProjectDAO();
         usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();
-        
+
         usecaseEjb = new UseCaseEjb();
-        
+
         fill_userentity();
         fill_projectentity();
-        fill_usecaseentity();      
-        
-        userDAO.create(user);                
-        projectDAO.create(project); 
+        fill_usecaseentity();
+
+        userDAO.create(user);
+        projectDAO.create(project);
     }
-    
+
     @Test
-    public void updateTest(){        
+    public void updateTest() {
         usecaseDAO.create(usecase); // se guarda en la base de datos
         usecase.setDescription("UseCase de ejemplo modificado");
         usecase.setName("UseCase 1 Modificado");
@@ -76,18 +77,26 @@ public class TestUseCase {
         UseCaseEntity usecase2 = usecaseDAO.read(usecase.getId()); // se obtiene de la BD        
         assertTrue("Modified", usecase2.getDescription().equals("UseCase de ejemplo modificado") && usecase2.getName().equals("UseCase 1 Modificado"));
     }
-    
+
     @Test
-     public void createUseCase() {               
+    public void createUseCase() {
         usecaseDAO.create(usecase);
-        usecaseEjb.create(usecase);       
+        usecaseEjb.create(usecase);
         String[] name = {"name"};
-        String[] values = {UC_NAME};        
-        UseCaseEntity recoveredUC = usecaseDAO.read(usecase.getId());        
+        String[] values = {UC_NAME};
+        UseCaseEntity recoveredUC = usecaseDAO.read(usecase.getId());
         assertEquals(recoveredUC.getName(), usecase.getName());
         assertEquals(recoveredUC.getDescription(), usecase.getDescription());
-     }
-    
+    }
+
+    @Test
+    public void testDelete() {
+        usecaseDAO.create(usecase);        
+        assertNotNull("", usecaseDAO.read(usecase.getId()));
+        usecaseEjb.delete(usecase);
+        assertNull("This project still exists after deleted", usecaseDAO.read(usecase.getId()));
+    }
+
     public void fill_userentity() {
         this.user = new UserEntity();
         this.user.setName(NAME);
@@ -116,11 +125,11 @@ public class TestUseCase {
         usecase.setDescription(UC_DESCRIPTION);
         usecase.setProject(project);
     }
-    
+
     @After
-    public void after() {                      
+    public void after() {
         usecaseDAO.delete(usecase);
         projectDAO.delete(project);
-        userDAO.delete(user);        
+        userDAO.delete(user);
     }
 }
