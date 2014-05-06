@@ -49,9 +49,9 @@ public class CalendarEntityTest {
         assertTrue("fin test",true); // NOPMD  
     }
     
-    @After
-    public void after() {
-        calendarDao.delete(calendar);
-    }
+//    @After
+//    public void after() {
+//        calendarDao.delete(calendar);
+//    }
     
 }
