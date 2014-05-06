@@ -7,6 +7,9 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -24,6 +29,7 @@ import javax.validation.constraints.Size;
  * @author Roberto Amor
  */
 @Entity
+@Table(name = "workers")
 public class WorkerEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,6 +51,12 @@ public class WorkerEntity implements Serializable {
     @Size(min = 2, max = 10)
     private String dni;
     
+    @Column(name = "email", length = 255)
+    @NotNull
+    @Size(min = 6, max = 50)
+    @Pattern(regexp = "^.+@.+\\..+$")
+    private String email;
+    
     @Column(name = "git_user", length = 100)
     @NotNull
     @Size(min = 2, max = 100)
@@ -55,7 +67,7 @@ public class WorkerEntity implements Serializable {
       name="projects_workers",
       joinColumns={@JoinColumn(name="worker_id", referencedColumnName="id")},
       inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})
-    private Set<ProjectEntity> projects;
+    private List<ProjectEntity> projects = new ArrayList<ProjectEntity>();
 
     public WorkerEntity() {
     }
@@ -104,6 +116,14 @@ public class WorkerEntity implements Serializable {
         this.dni = dni;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getGitUser() {
         return gitUser;
     }
@@ -112,14 +132,21 @@ public class WorkerEntity implements Serializable {
         this.gitUser = gitUser;
     }
 
-    public Set<ProjectEntity> getProjects() {
+    public List<ProjectEntity> getProjects() {
         return projects;
     }
 
-    public void setProjects(final Set<ProjectEntity> projects) {
+    public void setProjects(final List<ProjectEntity> projects) {
         this.projects = projects;
     }
 
+    public void addProject(final ProjectEntity p){
+        this.projects.add(p);
+    }
+    
+    public void deleteProject(final ProjectEntity p){
+        this.projects.remove(p);
+    }
     
     @Override
     public int hashCode() {
@@ -135,10 +162,10 @@ public class WorkerEntity implements Serializable {
             return false;
         }
         WorkerEntity other = (WorkerEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+        if (this.id.equals(other.getId())){
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
