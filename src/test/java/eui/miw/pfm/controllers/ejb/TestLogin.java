@@ -33,22 +33,22 @@ public class TestLogin {
         userEntity1.setPassword("123456789");
         userEntity1.setEmail("fred@gmail.com");
         userEntity1.setName("Fred");
-        userEntity1.setSecondSurename("Pena");
-        userEntity1.setSurename("Ant");
+        userEntity1.setSecondSurname("Pena");
+        userEntity1.setSurname("Ant");
 
         userEntity2.setUsername("fred2");
         userEntity2.setPassword("123456789");
         userEntity2.setEmail("fred@gmail.com");
         userEntity2.setName("Fred");
-        userEntity2.setSecondSurename("Pena");
-        userEntity2.setSurename("Ant");
+        userEntity2.setSecondSurname("Pena");
+        userEntity2.setSurname("Ant");
 
         userEntity3.setUsername("fred3");
         userEntity3.setPassword("123456789");
         userEntity3.setEmail("fred@gmail.com");
         userEntity3.setName("Fred");
-        userEntity3.setSecondSurename("Pena");
-        userEntity3.setSurename("Ant");
+        userEntity3.setSecondSurname("Pena");
+        userEntity3.setSurname("Ant");
 
         AbstractDAOFactory.getFactory().getUserDAO().create(userEntity1);
         AbstractDAOFactory.getFactory().getUserDAO().create(userEntity2);
