@@ -9,7 +9,6 @@ import eui.miw.pfm.controllers.ejb.ListUseCaseEjb;
 import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
-import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -33,17 +32,15 @@ public class UseCaseBean extends Bean implements Serializable {
 
     private UseCaseEntity usecase = new UseCaseEntity();
     private ProjectEntity project;
-    private SessionMap sessionMap;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
 
     public UseCaseBean() {
         super();
         project = new ProjectEntity();
         usecase = new UseCaseEntity();
-        this.sessionMap = new SessionMap();
 
         try {
-            this.project = ((ProjectEntity) this.sessionMap.get("project"));
+            this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOG.warning("No session exist");
         }

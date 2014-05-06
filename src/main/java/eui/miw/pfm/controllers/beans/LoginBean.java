@@ -22,7 +22,7 @@ import org.primefaces.context.RequestContext;
  */
 @RequestScoped
 @Named
-public class LoginBean extends Bean implements Serializable {
+public class LoginBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     

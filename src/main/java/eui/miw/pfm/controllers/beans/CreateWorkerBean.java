@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 @RequestScoped
 @Named
-public class CreateWorkerBean implements Serializable{
+public class CreateWorkerBean extends Bean implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private String name;

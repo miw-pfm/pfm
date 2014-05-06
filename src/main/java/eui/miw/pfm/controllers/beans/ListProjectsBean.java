@@ -9,7 +9,6 @@ import eui.miw.pfm.controllers.ejb.ListProjectsEjb;
 import eui.miw.pfm.util.LazyProjectDataModel;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
-import eui.miw.pfm.util.SessionMap;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -26,20 +25,18 @@ import org.primefaces.model.LazyDataModel;
 
 @Named
 @RequestScoped
-public class ListProjectsBean implements Serializable{
+public class ListProjectsBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(ListProjectsBean.class.getName());//NOPMD
     private final LazyDataModel<ProjectEntity> lazyModel;
-    private final SessionMap sessionMap;
     private ProjectEntity selectedProject;
     private List<ProjectEntity> projects;
     private UserEntity userEntity;
 
-    public ListProjectsBean() {
-        this.sessionMap = new SessionMap();
+    public ListProjectsBean() {        
         try {
-            this.userEntity = ((UserEntity) this.sessionMap.get("UserLogIn"));
+            this.userEntity = ((UserEntity) sessionMap.get("UserLogIn"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }

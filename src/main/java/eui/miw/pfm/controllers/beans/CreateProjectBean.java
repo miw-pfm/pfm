@@ -8,7 +8,6 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.CreateProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
-import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -27,7 +26,6 @@ public class CreateProjectBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
     private ProjectEntity projectEntity;
     private UserEntity userEntity;
-    private final SessionMap sessionMap;//NOPMD
     private final CreateProjectEjb createProjectEjb;//NOPMD
     private static final Logger LOGGER = Logger.getLogger(CreateProjectBean.class.getName());//NOPMD
 
@@ -36,11 +34,10 @@ public class CreateProjectBean extends Bean implements Serializable {
      */
     public CreateProjectBean() {//NOPMD 
         this.projectEntity = new ProjectEntity();
-        this.sessionMap = new SessionMap();
         this.createProjectEjb = new CreateProjectEjb();
 
         try {
-            this.userEntity = ((UserEntity) this.sessionMap.get("UserLogIn"));
+            this.userEntity = ((UserEntity) sessionMap.get("UserLogIn"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
