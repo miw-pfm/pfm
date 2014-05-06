@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author Yiyi
+ * @author Fred Peña
  */
 @SessionScoped
 @Named

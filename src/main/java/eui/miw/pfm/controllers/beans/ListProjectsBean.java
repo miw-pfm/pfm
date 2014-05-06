@@ -7,14 +7,15 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ListProjectsEjb;
 import eui.miw.pfm.util.LazyProjectDataModel;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UserEntity;
+import eui.miw.pfm.util.SessionMap;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.faces.context.ExternalContext;
 
 import javax.faces.context.FacesContext;
@@ -22,21 +23,28 @@ import org.primefaces.event.SelectEvent;
 
 import org.primefaces.model.LazyDataModel;
 
-@ManagedBean
-public class ListProjectsBean {
+@Named
+public class ListProjectsBean implements Serializable {
 
-    private LazyDataModel<ProjectEntity> lazyModel;
-
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(ListProjectsBean.class.getName());//NOPMD
+    private final LazyDataModel<ProjectEntity> lazyModel;
+    private final SessionMap sessionMap;
     private ProjectEntity selectedProject;
-
     private List<ProjectEntity> projects;
+    private UserEntity userEntity;
 
     public ListProjectsBean() {
-        ListProjectsEjb eaE;
-        eaE = new ListProjectsEjb();
-        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-        this.setProjects(eaE.obtainProjects(userDAO.read(1)));
-        lazyModel = new LazyProjectDataModel(this.projects);
+        this.sessionMap = new SessionMap();
+        try {
+            this.userEntity = ((UserEntity) this.sessionMap.get("UserLogIn"));
+        } catch (Exception e) {
+            LOGGER.warning("No session exist");
+        }
+        ListProjectsEjb eaE = new ListProjectsEjb();
+        this.projects = eaE.obtainProjects(this.userEntity);
+        this.lazyModel = new LazyProjectDataModel(this.projects);
+
     }
 
     public List<ProjectEntity> getProjects() {
@@ -61,17 +69,17 @@ public class ListProjectsBean {
 
     public void onRowSelect(SelectEvent event) {//NOPMD
         //FacesMessage msg = new FacesMessage("Project Selected", (ProjectEntity) event.getObject());
-        ProjectEntity project ;
+        ProjectEntity project;
         project = (ProjectEntity) event.getObject();
         OpenProjectBean opJSF;
         opJSF = new OpenProjectBean();
         opJSF.showOpenProject(project);
-        FacesContext facesContext ;
+        FacesContext facesContext;
         facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext ;
+        ExternalContext externalContext;
         externalContext = facesContext.getExternalContext();
         try {
-            externalContext.redirect(opJSF.showOpenProject(project )  + ".xhtml");
+            externalContext.redirect(opJSF.showOpenProject(project) + ".xhtml");
         } catch (IOException ex) {
             Logger.getLogger(ListProjectsBean.class.getName()).log(Level.SEVERE, null, ex);
         }

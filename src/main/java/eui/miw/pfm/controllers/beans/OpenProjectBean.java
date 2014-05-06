@@ -8,7 +8,6 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.OpenProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.util.SessionMap;
 import eui.miw.pfm.util.moks.Participant;
 import java.io.Serializable;
