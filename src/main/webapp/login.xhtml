@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templategeneral.xhtml">
+
+
+    <ui:define name="title">
+    </ui:define>    
+
+    <ui:define name="pagetitle">
+        #{msgs.namerup}        
+    </ui:define>
+
+    <ui:define name="body">
+        <h:outputScript target="head">
+            $ = jQuery;
+            $(document).ready(function() {
+            $("#submitcreateproject").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewproject").attr("style") == "display: none;") {
+            $("#createnewproject").attr("style","display: block;" );                   
+            } else $("#createnewproject").attr("style","display: none;"); 
+            }) 
+
+            $("#cancelcreateproject").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewproject").attr("style") == "display: none;") {
+            $("#createnewproject").attr("style","display: block;" );                   
+            } else $("#createnewproject").attr("style","display: none;"); 
+            })
+            });
+        </h:outputScript> 
+
+        <h:form id="formlogin">
+
+            <p:growl id="growl" showDetail="true" life="3000" />
+
+            <p:panel header="#{msgs.login}" styleClass="login">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="username" value="Username:" />
+                    <h:inputText value="#{loginBeanMock.username}"
+                                 id="username" required="true" label="username" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <h:inputSecret value="#{loginBeanMock.password}"
+                                   id="password" required="true" label="password" />
+
+                    <f:facet name="footer">
+                        <p:commandButton id="loginButton" value="Login" update="growl"
+                                         actionListener="#{loginBeanMock.login}"
+                                         oncomplete="manejarLogin(xhr, status, args)"/>
+                    </f:facet>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+
+
+        <script type="text/javascript">
+            //<![CDATA[
+            function manejarLogin(xhr, status, args) {
+                if (!args.validationFailed && args.loggedIn) {
+                    setTimeout(function() {
+                        window.location = args.view;
+                    }, 500);
+                }
+            }
+            //]]>
+        </script>
+
+    </ui:define>
+</ui:composition>

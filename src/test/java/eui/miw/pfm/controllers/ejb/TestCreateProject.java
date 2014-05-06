@@ -36,8 +36,8 @@ public class TestCreateProject {
         user.setPassword("1234");
         user.setUsername("pepe23");
         user.setEmail("pepe@pepe.com");
-        user.setSurename("lopez");
-        user.setSecondSurename("guti");
+        user.setSurname("lopez");
+        user.setSecondSurname("guti");
     }
 
     @Test
@@ -53,7 +53,6 @@ public class TestCreateProject {
         project.setDescription("Prueba de nameValidator");
         project.setStartDate(new Date());
         project.setEndDate(new Date());
-        project.setEstimatedNumIteration(numInt);
         project.setName("TestProject");
         project.setWeekNumIteration(numInt);
         project.setOwner(user);
