@@ -23,44 +23,44 @@ import org.primefaces.context.RequestContext;
 @RequestScoped
 @Named
 public class LoginBean extends Bean implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     private String username;
     private String password;
     private transient boolean loggedIn = false;    
     private transient final SessionMap sessionMap;
-
+    
     public LoginBean() {
         super();
         this.sessionMap = new SessionMap();
     }
-
+    
     public String getUsername() {
         return username;
     }
-
+    
     public void setUsername(final String username) {
         this.username = username;
     }
-
+    
     public String getPassword() {
         return password;
     }
-
+    
     public void setPassword(final String password) {
         this.password = password;
     }
-
+    
     public void login(final ActionEvent actionEvent) {
         final RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
         UserEntity userEntity;
-
+        
         if (this.getUsername() != null && this.getPassword() != null) { //NOPMD
             final LoginEjb loginEjb = new LoginEjb();
             userEntity = loginEjb.findUser(getUsername(), getPassword());
-
+            
             if (userEntity != null) { //NOPMD
                 loggedIn = true;
                 this.sessionMap.add("UserLogIn", userEntity);                
@@ -75,10 +75,10 @@ public class LoginBean extends Bean implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
                     "Invalid credentials");
         }
-
+        
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
-
+        
         if (loggedIn) {
             context.addCallbackParam("view", "list_project.xhtml");
         }

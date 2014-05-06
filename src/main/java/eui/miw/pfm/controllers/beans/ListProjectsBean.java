@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.faces.context.ExternalContext;
 
@@ -24,7 +25,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 @Named
-public class ListProjectsBean implements Serializable {
+@RequestScoped
+public class ListProjectsBean implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(ListProjectsBean.class.getName());//NOPMD
