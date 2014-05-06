@@ -74,7 +74,6 @@ public class TestOpenProjectBean {
         project.setDescription("'");
         project.setStartDate(new Date());
         project.setEndDate(new Date());
-        project.setEstimatedNumIteration(2);
         project.setName("ProjectTest");
         project.setWeekNumIteration(2);
         project.setOwner(user);

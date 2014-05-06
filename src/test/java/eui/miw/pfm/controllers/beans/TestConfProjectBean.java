@@ -63,16 +63,16 @@ public class TestConfProjectBean {
 
     }
 
-    @Test
-    public void testStimateIter() {
-
-        this.project.setStartDate(new Date("9/2/13"));
-        this.project.setEndDate(new Date("12/27/14"));
-        this.project.setWeekNumIteration(3);
-        confProjectBean.setProject(project);
-
-        confProjectBean.stimateIter();
-        assertEquals("Correct", Double.valueOf(Math.round(this.project.getEstimatedNumIteration() * 100.0) / 100.0), Double.valueOf(22.91));
-    }
+//    @Test
+//    public void testStimateIter() {
+//
+//        this.project.setStartDate(new Date("9/2/13"));
+//        this.project.setEndDate(new Date("12/27/14"));
+//        this.project.setWeekNumIteration(3);
+//        confProjectBean.setProject(project);
+//
+//        confProjectBean.stimateIter();
+//        assertEquals("Correct", Double.valueOf(Math.round(this.project.getEstimatedNumIteration() * 100.0) / 100.0), Double.valueOf(22.91));
+//    }
 
 }
