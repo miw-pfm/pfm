@@ -103,8 +103,8 @@ public class TestUseCase {
         this.user.setPassword(PASSWORD);
         this.user.setUsername(USERNAME);
         this.user.setEmail(EMAIL);
-        this.user.setSurename(SURENAME);
-        this.user.setSecondSurename(SECOND_SURENAME);
+        this.user.setSurname(SURENAME);
+        this.user.setSecondSurname(SECOND_SURENAME);
     }
 
     public void fill_projectentity() {
@@ -113,7 +113,6 @@ public class TestUseCase {
         project.setDescription(PROJECT_DESCRIPTION);
         project.setStartDate(new Date());
         project.setEndDate(new Date());
-        project.setEstimatedNumIteration(NUMBER_OF_ITERATIONS);
         project.setName(PROJECT_NAME);
         project.setWeekNumIteration(NUMBER_OF_WEEKS);
         project.setOwner(user);
