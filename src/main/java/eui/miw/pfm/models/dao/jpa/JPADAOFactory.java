@@ -1,6 +1,8 @@
 package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
+import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
@@ -40,5 +42,16 @@ public class JPADAOFactory extends AbstractDAOFactory {
     public UseCaseDAO getUseCaseDAO() {
         return new JPAUseCaseDAO();
     }
+
+    @Override
+    public CalendarDAO getCalendarDAO() {
+        return new JPACalendarDAO();
+    }
+
+    @Override
+    public CalendarTemplateDAO getCalendarTemplateDAO() {
+        return new JPACalendarTemplateDAO();
+    }
+
     
 }

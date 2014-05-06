@@ -1,5 +1,7 @@
 package eui.miw.pfm.models.dao;
 
+import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
+import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
@@ -28,4 +30,8 @@ public abstract class AbstractDAOFactory {
     public abstract UserDAO getUserDAO();
 
     public abstract UseCaseDAO getUseCaseDAO();
+    
+    public abstract CalendarDAO getCalendarDAO();
+    
+    public abstract CalendarTemplateDAO getCalendarTemplateDAO();
 }
