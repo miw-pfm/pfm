@@ -41,8 +41,8 @@ public class UserEntityTest {
         this.user.setPassword("1234");
         this.user.setUsername("pepe23");
         this.user.setEmail("pepe@pepe.com");
-        this.user.setSurename("lopez");
-        this.user.setSecondSurename("guti");
+        this.user.setSurname("lopez");
+        this.user.setSecondSurname("guti");
         
         userDAO = AbstractDAOFactory.getFactory().getUserDAO();
         userDAO.create(this.user);

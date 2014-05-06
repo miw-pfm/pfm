@@ -5,12 +5,13 @@ import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
+import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import eui.miw.pfm.models.dao.jpa.JPADAOFactory;
 import org.apache.log4j.Logger;
 
 public abstract class AbstractDAOFactory {
 
-    public static AbstractDAOFactory factory = null;
+    private static AbstractDAOFactory factory = null;
 
     public static void setFactory(final AbstractDAOFactory factory) {
         AbstractDAOFactory.factory = factory;
@@ -24,9 +25,9 @@ public abstract class AbstractDAOFactory {
         }
         return AbstractDAOFactory.factory;
     }
-    
+
     public abstract ProjectDAO getProjectDAO();
-    
+
     public abstract UserDAO getUserDAO();
 
     public abstract UseCaseDAO getUseCaseDAO();
@@ -34,4 +35,6 @@ public abstract class AbstractDAOFactory {
     public abstract CalendarDAO getCalendarDAO();
     
     public abstract CalendarTemplateDAO getCalendarTemplateDAO();
+
+    public abstract WorkerDAO getWorkerDAO();
 }

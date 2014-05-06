@@ -6,6 +6,7 @@ import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
+import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -53,5 +54,10 @@ public class JPADAOFactory extends AbstractDAOFactory {
         return new JPACalendarTemplateDAO();
     }
 
+    
+    @Override
+    public WorkerDAO getWorkerDAO() {
+        return new JPAWorkerDAO();
+    }
     
 }

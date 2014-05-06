@@ -6,14 +6,11 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -48,14 +45,14 @@ public class UserEntity implements Serializable {
     @Size(min = 1, max = 30)
     private String name;
 
-    @Column(name = "surename", length = 30)
+    @Column(name = "suname", length = 30)
     @NotNull
     @Size(min = 1, max = 30)
-    private String surename;
+    private String surname;
 
-    @Column(name = "second_surename", length = 30)
+    @Column(name = "second_surname", length = 30)
     @Size(min = 0, max = 30)
-    private String secondSurename;
+    private String secondSurname;
 
     @Column(name = "email", length = 50)
     @NotNull
@@ -71,13 +68,13 @@ public class UserEntity implements Serializable {
         this.id = id;
     }
 
-    public UserEntity(final Integer id, final String username, final String password, final String name, final String surename, final String secondSurename, final String email) { //NOPMD
+    public UserEntity(final Integer id, final String username, final String password, final String name, final String surname, final String secondSurname, final String email) { //NOPMD
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
-        this.surename = surename;
-        this.secondSurename = secondSurename;
+        this.surname = surname;
+        this.secondSurname = secondSurname;
         this.email = email;
     }
 
@@ -113,20 +110,20 @@ public class UserEntity implements Serializable {
         this.name = name;
     }
 
-    public String getSurename() {
-        return surename;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurename(final String surename) {
-        this.surename = surename;
+    public void setSurname(final String surname) {
+        this.surname = surname;
     }
 
-    public String getSecondSurename() {
-        return secondSurename;
+    public String getSecondSurname() {
+        return secondSurname;
     }
 
-    public void setSecondSurename(final String secondSurename) {
-        this.secondSurename = secondSurename;
+    public void setSecondSurname(final String secondSurname) {
+        this.secondSurname = secondSurname;
     }
 
     public String getEmail() {
