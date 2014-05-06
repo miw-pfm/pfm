@@ -119,3 +119,23 @@ input.hasDatepicker {
     margin: 0 auto;
     width: 500px;
 }
+
+/***************************************************/
+/* calendarOfProject
+/***************************************************/
+
+#infoCalendar{
+    overflow: auto;
+}
+
+#infoCalendar p{
+    float: left;
+}
+
+#formCalendar{
+    
+}
+
+#calProject{
+    display: block;
+}

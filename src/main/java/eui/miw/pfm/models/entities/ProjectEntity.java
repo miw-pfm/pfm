@@ -1,7 +1,6 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -13,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -51,12 +51,13 @@ public class ProjectEntity implements Serializable {
     @Transient
     private String stringEndDate;
     
-    @Column(name = "week_num_iteration")
+    @Column(name = "week_per_iteration")
     private int weekNumIteration;
 
-    @Column(name = "estimated_num_iteration")
-    private float estimatedNumIteration;  //NOPMD
-
+    @Transient
+    private float estimatedNumIteration;
+    
+    
     @Column(name = "chosen_num_iteration")
     private int chosenNumIteration; //NOPMD 
     
@@ -69,8 +70,11 @@ public class ProjectEntity implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<UseCaseEntity> useCases = new HashSet<UseCaseEntity>();
+    
+    @ManyToMany(mappedBy="projects")
+    private Set<WorkerEntity> workers;
 
-    public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, float estimatedNumIteration, int chosenNumIteration, String description, UserEntity owner) {
+    public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, int chosenNumIteration, String description, UserEntity owner) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -78,7 +82,6 @@ public class ProjectEntity implements Serializable {
         this.endDate = endDate;
         this.stringEndDate = stringEndDate;
         this.weekNumIteration = weekNumIteration;
-        this.estimatedNumIteration = estimatedNumIteration;
         this.chosenNumIteration = chosenNumIteration;
         this.description = description;
         this.owner = owner;
@@ -91,13 +94,12 @@ public class ProjectEntity implements Serializable {
         this.id = id;
     }
 
-    public ProjectEntity(final Integer id, final String name, final Date startDate, final Date endDate, final int weekNumIteration, final int estimatedNumIteration, final int chosenNumIteration, final String description, final UserEntity owner) {  //NOPMD
+    public ProjectEntity(final Integer id, final String name, final Date startDate, final Date endDate, final int weekNumIteration, final int chosenNumIteration, final String description, final UserEntity owner) {  //NOPMD
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.weekNumIteration = weekNumIteration;
-        this.estimatedNumIteration = estimatedNumIteration;
         this.chosenNumIteration = chosenNumIteration;
         this.description = description;
         this.owner = owner;
@@ -158,10 +160,10 @@ public class ProjectEntity implements Serializable {
         return estimatedNumIteration;
     }
 
-    public void setEstimatedNumIteration(final float estimatedNumIteration) { //NOPMD
+    public void setEstimatedNumIteration(float estimatedNumIteration) {
         this.estimatedNumIteration = estimatedNumIteration;
     }
-
+    
     public int getChosenNumIteration() {
         return chosenNumIteration;
     }
@@ -209,6 +211,14 @@ public class ProjectEntity implements Serializable {
     public void removeUseCases(UseCaseEntity usecases) {
         this.useCases.remove(usecases);
     }
+
+    public Set<WorkerEntity> getWorkers() {
+        return workers;
+    }
+
+    public void setWorkers(final Set<WorkerEntity> workers) {
+        this.workers = workers;
+    }
     
     @Override
     public int hashCode() {
@@ -234,6 +244,6 @@ public class ProjectEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ProjectEntity{" + "id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", weekNumIteration=" + weekNumIteration + ", estimatedNumIteration=" + estimatedNumIteration + ", chosenNumIteration=" + chosenNumIteration + ", description=" + description + ", owner=" + owner + '}';
+        return "ProjectEntity{" + "id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", weekNumIteration=" + weekNumIteration + ", chosenNumIteration=" + chosenNumIteration + ", description=" + description + ", owner=" + owner + '}';
     }
 }

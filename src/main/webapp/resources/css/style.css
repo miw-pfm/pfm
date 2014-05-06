@@ -470,3 +470,16 @@ button.btn-succes:hover, button.btn-succes:active, button.btn-succes:focus, butt
     background-color: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
     border-color: #FF9981;
 }
+
+#formlogin .login {
+    width: 485px;
+    padding: 5px;
+}
+
+#formlogin .ui-panel .ui-panel-content {
+    padding: 0px;
+}
+
+#formlogin input {
+    margin: 10px 5px 5px 0px;
+}

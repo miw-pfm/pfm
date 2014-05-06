@@ -38,8 +38,8 @@ public class TestNameProjectValidator {
         user1.setPassword("1234");
         user1.setUsername("pepe23");
         user1.setEmail("pepe@pepe.com");
-        user1.setSurename("lopez");
-        user1.setSecondSurename("guti");
+        user1.setSurname("lopez");
+        user1.setSecondSurname("guti");
 
     }
 
@@ -56,7 +56,6 @@ public class TestNameProjectValidator {
         project.setDescription("Prueba de nameValidator");
         project.setStartDate(new Date());
         project.setEndDate(new Date());
-        project.setEstimatedNumIteration(numInt);
         project.setName("Project1");
         project.setWeekNumIteration(numInt);
         project.setOwner(user1);
@@ -69,7 +68,6 @@ public class TestNameProjectValidator {
         project2.setDescription("Prueba de nameValidator");
         project2.setStartDate(new Date());
         project2.setEndDate(new Date());
-        project2.setEstimatedNumIteration(numInt);
         project2.setName("Project2");
         project2.setWeekNumIteration(numInt);
         project2.setOwner(user1);
