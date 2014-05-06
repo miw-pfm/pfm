@@ -5,6 +5,9 @@
  */
 package eui.miw.pfm.util.moks;
 
+import eui.miw.pfm.controllers.ejb.LoginEjb;
+import eui.miw.pfm.models.entities.UserEntity;
+import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -25,7 +28,14 @@ public class LoginBeanMock implements Serializable {
 
     private String username;
     private String password;
-    private boolean loggedIn = false;    
+    private boolean loggedIn = false;
+    private final SessionMap sessionMap;
+    
+    public LoginBeanMock() {
+        super();
+        this.sessionMap = new SessionMap();
+    }
+    
 
     public String getUsername() {
         return username;
@@ -46,19 +56,30 @@ public class LoginBeanMock implements Serializable {
     public void login(final ActionEvent actionEvent) {
         final RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
-        
-        if (username != null && username.equals("admin") && password != null
-                && password.equals("admin")) {
-            loggedIn = true;
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
+        final UserEntity userEntity;
+
+        if (username != null && password != null) {
+            LoginEjb loginEjb = new LoginEjb();
+            userEntity = loginEjb.findUser(getUsername(), getPassword());
+
+            if (userEntity != null) {
+                loggedIn = true;
+                this.sessionMap.add("UserLogIn", userEntity);                
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
+            } else {
+                loggedIn = false;
+                message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
+                        "Invalid credentials");
+            }
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
                     "Invalid credentials");
         }
+
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
-        
+
         if (loggedIn) {
             context.addCallbackParam("view", "list_project.xhtml");
         }
