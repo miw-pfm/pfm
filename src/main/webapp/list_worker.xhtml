@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateHome.xhtml">
+
+
+    <ui:define name="title">
+        #{msgs.listWorker_subtitle}
+
+    </ui:define>    
+
+    <ui:define name="pagetitle">
+        #{msgs.namerup}        
+    </ui:define>
+
+    <ui:define name="body">
+        <h:outputScript target="head">
+            $ = jQuery;
+            $(document).ready(function() {
+            $("#submitcreateworker").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewworker").attr("style") == "display: none;") {
+            $("#createnewworker").attr("style","display: block;" );                   
+            } else $("#createnewworker").attr("style","display: none;"); 
+            }) 
+
+            $("#cancelcreateworker").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewworker").attr("style") == "display: none;") {
+            $("#createnewworker").attr("style","display: block;" );                   
+            } else $("#createnewworker").attr("style","display: none;"); 
+            })
+            });
+        </h:outputScript> 
+
+        <h:form id="form">
+
+            <p:dataTable var="workerEntityMock" value="#{listWorkersBeanMock.lazyModel}" paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listWorkersBeanMock.selectedWorker}" id="projectTable" lazy="true">
+
+               <p:ajax event="rowSelect" listener="#{listWorkersBeanMock.onRowSelect}"  />
+
+               <p:column headerText="Surname" sortBy="surname" filterBy="#{workerEntityMock.surname}">
+                   <h:outputText value="#{workerEntityMock.surname}" />
+               </p:column>
+               
+               <p:column headerText="DNI" sortBy="dni" filterBy="#{workerEntityMock.dni}">
+                   <h:outputText value="#{workerEntityMock.dni}" />
+               </p:column>
+               
+               <p:column headerText="Email" sortBy="email" filterBy="#{workerEntityMock.email}">
+                   <h:outputText value="#{workerEntityMock.email}" />
+               </p:column>
+               
+            </p:dataTable>
+
+        </h:form>
+        <p></p>
+        <h:link value="Add a new worker" outcome="createWorker" />
+        
+    </ui:define>
+</ui:composition>
