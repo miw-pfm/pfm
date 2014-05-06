@@ -6,6 +6,8 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.LoginEjb;
+import eui.miw.pfm.models.entities.UserEntity;
+import eui.miw.pfm.util.SessionMap;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.logging.Logger;
@@ -26,14 +28,13 @@ public class LogintBean extends Bean implements Serializable {
 
     private String username;
     private String password;
+    private final SessionMap sessionMap;
 
-    private static final Logger LOGGER = Logger.getLogger(LogintBean.class.getName());//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(LogintBean.class.getName());
 
-    /**
-     * Creates a new instance of CreateProjectBean
-     */
     public LogintBean() {
         super();
+        this.sessionMap = new SessionMap();
     }
 
     public String getUsername() {
@@ -55,19 +56,24 @@ public class LogintBean extends Bean implements Serializable {
     public String login(ActionEvent actionEvent) { //NOPMD
         final FacesContext context = FacesContext.getCurrentInstance();
         String view = null;
+        final UserEntity userEntity;
 
         if (getUsername() != null && getPassword() != null) {
             LoginEjb loginEjb = new LoginEjb();
-            if (loginEjb.findUser(username, password) != null) {
+            userEntity = loginEjb.findUser(getUsername(), getPassword());
+            if (userEntity != null) {
+                this.sessionMap.add("UserLogIn", userEntity);
                 LOGGER.warning("Valid credentials");
                 context.addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", getUsername()));
                 view = "";
+            } else {
+                LOGGER.warning("Invalid credentials");
+                context.addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Invalid credentials"));
             }
         } else {
             LOGGER.warning("Invalid credentials");
             context.addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Invalid credentials"));
         }
-
         return view;
     }
 
