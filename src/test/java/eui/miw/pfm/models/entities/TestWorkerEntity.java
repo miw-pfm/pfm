@@ -49,6 +49,18 @@ public class TestWorkerEntity {
 
         assertTrue("fin test",true); // NOPMD
         
+        WorkerEntity w2 = TestWorkerEntity.wd.read(1);
+        
+        for(ProjectEntity pr : w2.getProjects()){
+            System.out.println("proyecto: "+pr.getName());
+        }
+        
+        ProjectEntity pro = pd.read(1);
+        for(WorkerEntity worker : pro.getWorkers()){
+            System.out.println("worker: "+worker.getName());
+        }
+        
+        
     }
     
     @Test
@@ -56,7 +68,6 @@ public class TestWorkerEntity {
         ProjectDAO pd = AbstractDAOFactory.getFactory().getProjectDAO();
         ProjectEntity p = pd.read(1);
         TestWorkerEntity.worker.deleteProject(p);
-        System.out.println("name: "+TestWorkerEntity.worker.getName());
         wd = AbstractDAOFactory.getFactory().getWorkerDAO();
         this.wd.update(TestWorkerEntity.worker);
         assertTrue("fin test",true); // NOPMD

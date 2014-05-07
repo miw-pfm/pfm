@@ -1,8 +1,10 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -72,7 +74,7 @@ public class ProjectEntity implements Serializable {
     private Set<UseCaseEntity> useCases = new HashSet<UseCaseEntity>();
     
     @ManyToMany(mappedBy="projects")
-    private Set<WorkerEntity> workers;
+    private List<WorkerEntity> workers = new ArrayList<WorkerEntity>();
 
     public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, int chosenNumIteration, String description, UserEntity owner) {
         this.id = id;
@@ -212,12 +214,20 @@ public class ProjectEntity implements Serializable {
         this.useCases.remove(usecases);
     }
 
-    public Set<WorkerEntity> getWorkers() {
+    public List<WorkerEntity> getWorkers() {
         return workers;
     }
 
-    public void setWorkers(final Set<WorkerEntity> workers) {
+    public void setWorkers(final List<WorkerEntity> workers) {
         this.workers = workers;
+    }
+    
+    public void addWorker(final WorkerEntity w){
+        this.workers.add(w);
+    }
+    
+    public void deleteWorker(final WorkerEntity w){
+        this.workers.remove(w);
     }
     
     @Override
