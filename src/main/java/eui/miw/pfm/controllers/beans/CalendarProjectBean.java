@@ -92,4 +92,12 @@ public class CalendarProjectBean extends Bean implements Serializable {
         //FacesContext facesContext = FacesContext.getCurrentInstance();
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
+    
+    public String[] getHolidays() {
+        String[] a= new String[3];
+        a[0]="May 8, 2014";
+        a[1]="May 15, 2014";
+        a[2]="May 23, 2014";
+        return a;
+    }
 }
