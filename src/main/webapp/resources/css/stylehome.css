@@ -139,3 +139,16 @@ input.hasDatepicker {
 #calProject{
     display: block;
 }
+
+
+/***************************************************/
+/* dataTable: workerTable
+/***************************************************/
+
+#form {
+    width: 860px;
+}
+
+#form td.edit {
+    width: 135px;
+}
