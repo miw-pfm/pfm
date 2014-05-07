@@ -8,7 +8,6 @@ package eui.miw.pfm.controllers.ejb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import org.junit.After;
-import org.junit.Assert;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,9 +64,9 @@ public class TestCRUDWorker {
         workerEntity3.setDni("234567890");
         workerEntity3.setEmail("pepe3@gmail.com");
 
-        workerEjb.updateWorker(workerEntity1);
-        workerEjb.updateWorker(workerEntity2);
-        workerEjb.updateWorker(workerEntity3);
+        workerEjb.update(workerEntity1);
+        workerEjb.update(workerEntity2);
+        workerEjb.update(workerEntity3);
 
         assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity1.getId()).equals(workerEntity1));
         assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity2.getId()).equals(workerEntity2));

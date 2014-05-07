@@ -13,10 +13,14 @@ import eui.miw.pfm.models.entities.WorkerEntity;
  * @author Fred Peña
  */
 public class WorkerEjb {
-    
-    public void updateWorker(final WorkerEntity workerEntity1) {
-        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity1);
-        
+
+    public WorkerEjb() {
+        super();
     }
-    
+
+    public void update(final WorkerEntity workerEntity1) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity1);
+
+    }
+
 }
