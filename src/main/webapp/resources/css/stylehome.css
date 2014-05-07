@@ -126,17 +126,20 @@ input.hasDatepicker {
 
 #infoCalendar{
     overflow: auto;
+    margin-top: 25px;
 }
 
 #infoCalendar p.CalendarFrom{
     float: left;
+    font-size: 14px;
     margin-left: 10px;
-    margin-right: 196px;
+    margin-right: 142px;
 }
 
 #infoCalendar p.CalendarTo{
     float: left;
     margin-right: 60px;
+    font-size: 14px;
 }
 
 #infoCalendar p.CalendarFrom span, #infoCalendar p.CalendarTo span{
@@ -145,27 +148,38 @@ input.hasDatepicker {
 }
 
 #infoCalendar p.workingDays{
-    
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 118px;
+    overflow: auto;
+    width: 297px;
 }
 
-#infoCalendar p.workingDays span{
-
+#infoCalendar p.totalDays{
+    border: 1px solid #FCD5B4;
+    color: #404040;
+    float: right;
+    font-size: 21px;
+    margin-right: 230px;
+    padding: 2px 8px;
+    margin-bottom: 0px
 }
 
-#j_idt36 div.ui-datepicker{
+#formCalendar div.ui-datepicker{
     width: 400px;
 }
 
-#j_idt36 div.ui-datepicker a{
+#formCalendar div.ui-datepicker td a, #formCalendar div.ui-datepicker td span{
     text-align: center;
     font-size: 13px;
 }
 
-#j_idt36 div.ui-datepicker-header{
+#formCalendar div.ui-datepicker-header{
     padding: 5px 0;
 }
 
-#j_idt36 div.ui-datepicker-header select{
+#formCalendar div.ui-datepicker-header select{
     margin-right: 13px;
     width: 150px;
 }
