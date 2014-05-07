@@ -36,7 +36,7 @@ public class ListProjectsBean extends Bean implements Serializable {
 
     public ListProjectsBean() {        
         try {
-            this.userEntity = ((UserEntity) sessionMap.get("UserLogIn"));
+            this.userEntity = ((UserEntity) sessionMap.get("userlogin"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }

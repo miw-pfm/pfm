@@ -41,7 +41,7 @@ public class CreateProjectBean extends Bean implements Serializable {
         this.createProjectEjb = new CreateProjectEjb();
 
         try {
-            this.userEntity = ((UserEntity) sessionMap.get("UserLogIn"));
+            this.userEntity = ((UserEntity) sessionMap.get("userlogin"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
@@ -64,7 +64,7 @@ public class CreateProjectBean extends Bean implements Serializable {
 
         if (nameProjectValidator()) {//NOPMD
             assert this.projectEntity != null;
-            this.projectEntity.setOwner((UserEntity) this.sessionMap.get("UserLogIn"));
+            this.projectEntity.setOwner((UserEntity) this.sessionMap.get("userlogin"));
             this.createProjectEjb.createProject(this.projectEntity);
             this.sessionMap.add("project", this.projectEntity);
             load_holidays();

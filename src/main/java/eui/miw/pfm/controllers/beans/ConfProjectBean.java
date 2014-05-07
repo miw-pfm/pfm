@@ -54,7 +54,7 @@ public class ConfProjectBean extends Bean implements Serializable {
         } else {
             LOG.warning("Not valid dates");
             final FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("form", new FacesMessage("WARNING!!!", "Verify the chosen dates"));
+            context.addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verify the chosen dates",""));
             result = "confProject";
         }
 

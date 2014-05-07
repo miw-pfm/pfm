@@ -3,56 +3,46 @@ package eui.miw.pfm.util.moks;
 /*
 @author Clemencio Morales
 */
-import eui.miw.pfm.controllers.ejb.ListProjectsEjb;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.UserDAO;
-import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.LazyProjectDataModel;
-import eui.miw.pfm.util.moks.WorkerEntityMock;
-import java.io.IOException;
+
+import eui.miw.pfm.models.entities.WorkerEntity;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
-@ManagedBean(name="listWorkersBeanMock")
+@Named
+@RequestScoped
 public class ListWorkersBeanMock {
 
-    private LazyDataModel<WorkerEntityMock> lazyModel;
-
-    private WorkerEntityMock selectedWorker;
-
-    private List<WorkerEntityMock> workers;
+    private transient final LazyDataModel<WorkerEntity> lazyModel;
+    private WorkerEntity selectedWorker;
+    private List<WorkerEntity> workers;
 
     public ListWorkersBeanMock() {
-//        ListProjectsEjb eaE;
-//        eaE = new ListProjectsEjb();
-//        UserDAO userDAO = AbstractDAOFactory.getFactory().getUserDAO();
-//        this.setProjects(eaE.obtainProjects(userDAO.read(1)));
-//        lazyModel = new LazyProjectDataModel(this.projects);
+        ListWorkersEjbMock eaE;
+        eaE = new ListWorkersEjbMock();
+        this.workers = eaE.obtainWorker();
+        lazyModel = new LazyWorkerDataModelMock(workers);
     }
 
-    public List<WorkerEntityMock> getWorkers() {
+    public List<WorkerEntity> getWorkers() {
         return workers;
     }
 
-    public void setWorkers(final List<WorkerEntityMock> workers) {
+    public void setWorkers(final List<WorkerEntity> workers) {
         this.workers = workers;
     }
 
-    public LazyDataModel<WorkerEntityMock> getLazyModel() {
+    public LazyDataModel<WorkerEntity> getLazyModel() {
         return lazyModel;
     }
 
-  public WorkerEntityMock getSelectedWorker() {
+  public WorkerEntity getSelectedWorker() {
         return selectedWorker;
     }
 
-    public void setSelectedWorker(WorkerEntityMock selectedWorker) {
+    public void setSelectedWorker(final WorkerEntity selectedWorker) {
         this.selectedWorker = selectedWorker;
     }
 
