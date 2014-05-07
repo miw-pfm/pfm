@@ -142,11 +142,6 @@ input.hasDatepicker {
     font-size: 14px;
 }
 
-
-
-
-
-
 #infoCalendar p.CalendarFrom span, #infoCalendar p.CalendarTo span{
     margin-right: 2px;
     font-weight: bold;
@@ -191,4 +186,20 @@ input.hasDatepicker {
 
 #formCalendar .holiday a{
   color: #FF0000;
+}
+
+#formCalendar .holiday a{
+  color: #FF0000;
+}
+
+/***************************************************/
+/* dataTable: workerTable
+/***************************************************/
+
+#form {
+    width: 860px;
+}
+
+#form td.edit {
+    width: 135px;
 }

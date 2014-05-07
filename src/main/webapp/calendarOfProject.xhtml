@@ -34,15 +34,15 @@
 
         </h:outputScript> 
         <div id="infoCalendar">
-            <p class="CalendarFrom"><span>Since:</span> 00/00/0000</p>
-            <p class="CalendarTo"><span>Until:</span> 00/00/0000</p>
+            <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
+            <p class="CalendarTo"><span>Until:</span>#{calendarProjectBean.endDate}</p>
             <p class="workingDays">Working days:</p>
-            <p class="totalDays">30</p>
+            <p class="totalDays">#{calendarProjectBean.workingDays}</p>
         </div>
         <div id="formCalendar">
             <h:form>
                 <p:growl id="growl" showDetail="true"/>
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" beforeShowDay="markHolidaysAndReportedDays" mindate="1/1/12" maxdate="5/31/12">
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
                 </p:calendar>
             </h:form>
