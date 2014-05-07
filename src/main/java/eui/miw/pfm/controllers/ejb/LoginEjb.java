@@ -10,7 +10,7 @@ import eui.miw.pfm.models.entities.UserEntity;
 
 /**
  *
- * @author bk0804
+ * @author Fred Peña
  */
 public class LoginEjb {
 
