@@ -6,16 +6,17 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.entities.UserEntity;
+import eui.miw.pfm.models.entities.WorkerEntity;
 
 /**
  *
  * @author Fred Peña
  */
-public class LoginEjb {
-
-    public UserEntity findUser(String userName, String password) {
-        return AbstractDAOFactory.getFactory().getUserDAO().findUser(userName, password);
+public class WorkerEjb {
+    
+    public void updateWorker(final WorkerEntity workerEntity1) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity1);
+        
     }
-
+    
 }
