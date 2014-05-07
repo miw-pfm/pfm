@@ -5,7 +5,11 @@
  */
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.CalendarProjectEjb;
+import eui.miw.pfm.controllers.ejb.CalendarTemplateEjb;
 import eui.miw.pfm.controllers.ejb.CreateProjectEjb;
+import eui.miw.pfm.models.entities.CalendarEntity;
+import eui.miw.pfm.models.entities.CalendarTemplateEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import java.io.Serializable;
@@ -63,6 +67,7 @@ public class CreateProjectBean extends Bean implements Serializable {
             this.projectEntity.setOwner((UserEntity) this.sessionMap.get("UserLogIn"));
             this.createProjectEjb.createProject(this.projectEntity);
             this.sessionMap.add("project", this.projectEntity);
+            load_holidays();
             view = "confProject";
         } else {
             LOGGER.warning("Not a valid name");
@@ -70,5 +75,20 @@ public class CreateProjectBean extends Bean implements Serializable {
             context.addMessage("form", new FacesMessage("WARNING!!!", this.projectEntity.getName() + " is not a valid name"));
         }
         return view;
+    }
+    
+    public void load_holidays()
+    {
+        CalendarProjectEjb cpe= new CalendarProjectEjb();
+        CalendarTemplateEjb cte=new CalendarTemplateEjb();
+        for (CalendarTemplateEntity ct: cte.obtainHolidays())
+        {
+            CalendarEntity ce= new CalendarEntity();
+            ce.setName(ct.getName());
+            ce.setDescription(ct.getName());
+            ce.setHoliday(ct.getHoliday());
+            ce.setProject(projectEntity);
+            cpe.create(ce);
+        }
     }
 }
