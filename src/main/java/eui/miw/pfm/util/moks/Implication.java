@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Player {
+public class Implication {
 
     private String name;
 
-     private List<Stats> stats = new ArrayList<>();
+    private List<Tasks> tasks = new ArrayList<>();
 
-    public List<Stats> getStats() {
-        return stats;
+    public List<Tasks> getTasks() {
+        return tasks;
     }
 
-    public void setStats(List<Stats> stats) {
-        this.stats = stats;
+    public void setTasks(List<Tasks> tasks) {
+        this.tasks = tasks;
     }
 
-    public Player() {
+    public Implication() {
     }
 
-    public Player(String name) {
+    public Implication(String name) {
         this.name = name;
     }
 

@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import org.junit.After;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,21 +14,35 @@ import org.junit.Test;
 /**
  *
  * @author Fred Peña
+ * @author Jose M Villar
  */
 public class TestCRUDWorker {
 
-    private WorkerEntity workerEntity1;
-    private WorkerEntity workerEntity2;
-    private WorkerEntity workerEntity3;
+    private transient WorkerEntity workerEntity1;
+    private transient WorkerEntity workerEntity2;
+    private transient WorkerEntity workerEntity3;
 
     @Before
     public void init() {
+        UserEntity user;
+        ProjectEntity project;
+
+        user = new UserEntity();
+        user.setName("usuario");
+        AbstractDAOFactory.getFactory().getUserDAO().create(user);
+
+        project = new ProjectEntity();
+        project.setName("Projecto prueba Worker");
+        project.setOwner(user);
+        AbstractDAOFactory.getFactory().getProjectDAO().create(project);
+
         workerEntity1 = new WorkerEntity();
         workerEntity1.setDni("12345678");
         workerEntity1.setEmail("pepe1@pepe.com");
-        workerEntity1.setGitUser("pepe");
-        workerEntity1.setName("Pepe");
+        workerEntity1.setGitUser("pepe");  //NOPMD
+        workerEntity1.setName("Pepe");  //NOPMD
         workerEntity1.setSurname("Pepe");
+        workerEntity1.addProject(project);
 
         workerEntity2 = new WorkerEntity();
         workerEntity2.setDni("098765432");
@@ -37,23 +50,34 @@ public class TestCRUDWorker {
         workerEntity2.setGitUser("pepe");
         workerEntity2.setName("Pepe");
         workerEntity2.setSurname("Pepe");
+        workerEntity2.addProject(project);
 
         workerEntity3 = new WorkerEntity();
-        workerEntity3.setDni("234567890");
+        workerEntity3.setDni("234567890"); //NOPMD
         workerEntity3.setEmail("pepe3@pepe.com");
         workerEntity3.setGitUser("pepe");
         workerEntity3.setName("Pepe");
         workerEntity3.setSurname("Pepe");
+        workerEntity3.addProject(project);
 
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity1);
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity2);
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity3);
 
+        project.addWorker(workerEntity1);
+        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
+
+        project.addWorker(workerEntity2);
+        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
+
+        project.addWorker(workerEntity3);
+        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
+
     }
 
     @Test
     public void testUpdate() {
-        WorkerEjb workerEjb = new WorkerEjb();
+        final WorkerEjb workerEjb = new WorkerEjb();
 
         workerEntity1.setDni("qwerty");
         workerEntity1.setEmail("pepe1@gmail.com");
@@ -76,10 +100,10 @@ public class TestCRUDWorker {
 
     @Test
     public void testCreate() {
-        WorkerEjb workerEjb = new WorkerEjb();
-        WorkerEntity workerEntity4 = new WorkerEntity();
-        WorkerEntity workerEntity5 = new WorkerEntity();
-        WorkerEntity workerEntity6 = new WorkerEntity();
+        final WorkerEjb workerEjb = new WorkerEjb();
+        final WorkerEntity workerEntity4 = new WorkerEntity();
+        final WorkerEntity workerEntity5 = new WorkerEntity();
+        final WorkerEntity workerEntity6 = new WorkerEntity();
 
         workerEntity4.setDni("12345678");
         workerEntity4.setEmail("pepecreate@pepe.com");
@@ -110,6 +134,16 @@ public class TestCRUDWorker {
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity4);
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity5);
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity6);
+    }
+
+    @Test
+    public void testDelete() {
+
+        assertNotNull("No existe el trabajador antes de borrar", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity1.getId()));
+
+        final WorkerEjb workerEjb = new WorkerEjb();
+        workerEjb.delete(workerEntity1);
+        assertNull("Todavia existe el trabajador despues de borrar", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity1.getId()));
     }
 
     @After

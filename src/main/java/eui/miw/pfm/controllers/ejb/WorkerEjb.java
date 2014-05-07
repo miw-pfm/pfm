@@ -11,11 +11,12 @@ import eui.miw.pfm.models.entities.WorkerEntity;
 /**
  *
  * @author Fred Peña
+ * @author Jose M Villar
  */
 public class WorkerEjb {
 
-    public WorkerEjb() {
-        super();
+    public void delete(final WorkerEntity workerEntity) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity);
     }
 
     public void update(final WorkerEntity workerEntity) {
@@ -23,8 +24,7 @@ public class WorkerEjb {
 
     }
 
-    public void create(WorkerEntity workerEntity) {
+    public void create(final WorkerEntity workerEntity) {
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity);
     }
-
 }
