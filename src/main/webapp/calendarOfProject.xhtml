@@ -21,16 +21,15 @@
 
     <ui:define name="body">
         <div id="infoCalendar">
-            <p><span>From:</span> ---</p>
-            <p><span>To:</span> ---</p>
-            <p>Working days:</p>
-            <p>---</p>
+            <p class="CalendarFrom"><span>From:</span> 00/00/0000</p>
+            <p class="CalendarTo"><span>To:</span> 00/00/0000</p>
+            <p class="workingDays">Working days:<span>30</span></p>
         </div>
         <div id="formCalendar">
-            <h:form >
+            <h:form>
                 <p:growl id="growl" showDetail="true"/>
 
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline">
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="1/1/12" maxdate="5/31/12">
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
                 </p:calendar>
             </h:form>

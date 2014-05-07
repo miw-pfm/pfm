@@ -128,14 +128,44 @@ input.hasDatepicker {
     overflow: auto;
 }
 
-#infoCalendar p{
+#infoCalendar p.CalendarFrom{
     float: left;
+    margin-left: 10px;
+    margin-right: 196px;
 }
 
-#formCalendar{
+#infoCalendar p.CalendarTo{
+    float: left;
+    margin-right: 60px;
+}
+
+#infoCalendar p.CalendarFrom span, #infoCalendar p.CalendarTo span{
+    margin-right: 2px;
+    font-weight: bold;
+}
+
+#infoCalendar p.workingDays{
     
 }
 
-#calProject{
-    display: block;
+#infoCalendar p.workingDays span{
+
+}
+
+#j_idt36 div.ui-datepicker{
+    width: 400px;
+}
+
+#j_idt36 div.ui-datepicker a{
+    text-align: center;
+    font-size: 13px;
+}
+
+#j_idt36 div.ui-datepicker-header{
+    padding: 5px 0;
+}
+
+#j_idt36 div.ui-datepicker-header select{
+    margin-right: 13px;
+    width: 150px;
 }
