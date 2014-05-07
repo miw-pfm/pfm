@@ -79,7 +79,13 @@ public class CalendarProjectBean extends Bean implements Serializable {
         this.calendar = Calendar.getInstance();
         this.calendar.setTime(date1);
         SimpleDateFormat format = new SimpleDateFormat("d/M/yyyy");
-
+        CalendarEntity calendarEntity= new CalendarEntity();
+        CalendarProjectEjb calendarProjectEjb= new CalendarProjectEjb();
+        calendarEntity.setHoliday(calendar);
+        calendarEntity.setDescription("dd");
+        calendarEntity.setName("nn");
+        calendarEntity.setProject(project);
+        calendarProjectEjb.create(calendarEntity);
         //Así se recupera la fecha seleccionada
         // format.format(calendar.getTime())
         //--- Para mostrar el mensaje con la fecha
