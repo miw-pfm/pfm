@@ -22,30 +22,25 @@
     <ui:define name="body">
         <h:panelGroup id="confproject" layout="block">
             <h:form id="form">
-                <h:panelGrid columns="3">
+                 <p:growl id="message"  sticky="true" />
+                <h:panelGrid columns="2">
 
                     <h:outputText value="#{msgs.nameWorker}"/>
                     <h:inputText value="#{workerBean.workerEntity.name}" maxlength="25" id="nameWorker" binding="#{nameWorker}" required="true" />
-                    <h:message for="nameWorker" style="color:red" />
 
                     <h:outputText value="#{msgs.surnameWorker}"/>
                     <h:inputText value="#{workerBean.workerEntity.surname}" maxlength="25" id="surnameWorker" binding="#{surnameWorker}" required="true" />
-                    <h:message for="surnameWorker" style="color:red" />
 
                     <h:outputText value="#{msgs.dniWorker}"/>
                     <h:inputText value="#{workerBean.workerEntity.dni}" maxlength="9" id="dniWorker" binding="#{dniWorker}" required="true" />
-                    <h:message for="dniWorker" style="color:red" />
 
                     <h:outputText value="#{msgs.emailWorker}"/>
                     <h:inputText value="#{workerBean.workerEntity.email}" maxlength="60" id="emailWorker" binding="#{emailWorker}" required="true" />
-                    <h:message for="emailWorker" style="color:red" />
 
                     <h:outputText value="#{msgs.gitUserWorker}"/>
                     <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUserWorker}" required="true" />
-                    <h:message for="gitUserWorker" style="color:red" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{workerBean.create()}" styleClass="btn btn-success" />
-                    <h:message for="form" style="color:red" />
                 </h:panelGrid>
             </h:form>    
         </h:panelGroup>

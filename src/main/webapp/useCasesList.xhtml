@@ -40,10 +40,12 @@
 
         <h:link value="#{msgs.create_usecase}" styleClass="btn btn-success" id="submitcreateusecase"/>
         <h:panelGroup id="createnewusecase" layout="block" style="display: none;"  >
-            <h:form id="form">
+            <h:form id="form_create">
                 <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:panelGroup layout="block">
-                    <h:panelGroup layout="span" styleClass="btn" style="float: right;" ><h:link value="X" id="cancelcreateusecase" /></h:panelGroup>
+                    <h:panelGroup layout="span" styleClass="btn" style="float: right;" >
+                        <h:link  value="Cancel" id="cancelcreateusecase" />
+                    </h:panelGroup>
 
                     <h:panelGrid columns="5">                            
                         <h:outputText value="#{msgs.enter_name_usecase}" />                
@@ -57,7 +59,7 @@
             </h:form>              
         </h:panelGroup>
 
-        <h:form id="form_edit">              
+        <h:form id="form_list">              
             <p:growl id="messages" showDetail="true" /> 
             <ul id="useCasesListing">
                 <li class="headerUseCasesListing">
@@ -74,7 +76,7 @@
                         <p:commandButton id="uc#{uc.id}" styleClass="modalDialogButton" value="Edit" action="#{useCaseBean.editUseCase(uc)}">
                         </p:commandButton>
 
-                        <p:commandButton value="Delete" actionListener="#{useCaseBean.delete(uc)}" update="form_edit">
+                        <p:commandButton value="Delete" actionListener="#{useCaseBean.delete(uc)}" update="form_list">
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
                         </p:commandButton>  
                     </li>

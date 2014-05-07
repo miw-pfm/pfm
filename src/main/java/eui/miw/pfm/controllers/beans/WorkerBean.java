@@ -5,6 +5,8 @@ import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -47,6 +49,7 @@ public class WorkerBean extends Bean implements Serializable {
         LOGGER.info(this.workerEntity.toString());
         final WorkerEjb workerEjb = new WorkerEjb();
         workerEjb.create(this.workerEntity);
+        FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
         return null;
     }
 
