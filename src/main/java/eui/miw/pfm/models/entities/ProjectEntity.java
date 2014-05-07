@@ -246,4 +246,8 @@ public class ProjectEntity implements Serializable {
     public String toString() {
         return "ProjectEntity{" + "id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", weekNumIteration=" + weekNumIteration + ", chosenNumIteration=" + chosenNumIteration + ", description=" + description + ", owner=" + owner + '}';
     }
+
+    public void addWorker(WorkerEntity woker) {
+      this.workers.add(woker);
+    }
 }

@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 public class Bean {
 
     private String errors;
-    protected final SessionMap sessionMap;
+    protected transient final SessionMap sessionMap;
 
     public Bean() {
         this.sessionMap = new SessionMap();
@@ -33,7 +33,7 @@ public class Bean {
     }
 
     private void redirectionLogin() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
             externalContext.redirect("login.xhtml");
         } catch (IOException ex) {
