@@ -335,6 +335,9 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     border: 1px solid #FF9981;
 }
 
+/*******************************************************/
+/*******************************************************/
+
 #createnewproject, #createnewusecase{
     margin: 0;
     overflow: auto;

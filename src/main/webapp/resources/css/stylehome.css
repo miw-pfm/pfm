@@ -136,6 +136,23 @@ input.hasDatepicker {
     
 }
 
+#formCalendar .holiday a{
+  color: #FF0000;
+}
+
 #calProject{
     display: block;
+}
+
+
+/***************************************************/
+/* dataTable: workerTable
+/***************************************************/
+
+#form {
+    width: 860px;
+}
+
+#form td.edit {
+    width: 135px;
 }
