@@ -7,6 +7,8 @@
 package eui.miw.pfm.util;
 
 import eui.miw.pfm.models.entities.WorkerEntity;
+import eui.miw.pfm.util.moks.LazyWorkerDataModelMock;
+import eui.miw.pfm.util.moks.LazyWorkerSorterMock;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;

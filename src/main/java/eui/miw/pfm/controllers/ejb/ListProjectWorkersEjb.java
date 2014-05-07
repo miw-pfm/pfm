@@ -16,6 +16,12 @@ import java.util.List;
  */
 public class ListProjectWorkersEjb {
     public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {
+        for(WorkerEntity worker : project.getWorkers()){
+            System.out.println("worker: "+worker.getName());
+        }
+        //return null;
+        
         return project.getWorkers();
+        //return new ArrayList<WorkerEntity>();
     }
 }

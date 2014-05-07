@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -43,5 +44,45 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         this.workers = eaE.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
 
+    }
+
+    public WorkerEntity getSelectedWorker() {
+        return selectedWorker;
+    }
+
+    public void setSelectedWorker(WorkerEntity selectedWorker) {
+        this.selectedWorker = selectedWorker;
+    }
+
+    public List<WorkerEntity> getWorkers() {
+        return workers;
+    }
+
+    public void setWorkers(List<WorkerEntity> workers) {
+        this.workers = workers;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
+    }
+
+    public LazyDataModel<WorkerEntity> getLazyModel() {
+        return lazyModel;
+    }
+    
+    public void onRowSelect(SelectEvent event) {//NOPMD
+        // TODO
     }
 }

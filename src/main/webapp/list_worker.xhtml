@@ -41,11 +41,11 @@
         <h:form id="form">
             <p:growl id="messages" showDetail="true" /> 
 
-            <p:dataTable var="worker" value="#{listWorkersBeanMock.lazyModel}" paginator="true" rows="10"
+            <p:dataTable var="worker" value="#{listProjectWorkersBean.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listWorkersBeanMock.selectedWorker}" id="workerTable" lazy="true">
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listProjectWorkersBean.selectedWorker}" id="workerTable" lazy="true">
 
-                <p:ajax event="rowSelect" listener="#{listWorkersBeanMock.onRowSelect}"  />
+                <p:ajax event="rowSelect" listener="#{listProjectWorkersBean.onRowSelect}"  />
 
                 <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}">
                     <h:outputText value="#{worker.name}" />
