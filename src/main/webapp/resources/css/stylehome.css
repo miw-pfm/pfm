@@ -142,6 +142,11 @@ input.hasDatepicker {
     font-size: 14px;
 }
 
+
+
+
+
+
 #infoCalendar p.CalendarFrom span, #infoCalendar p.CalendarTo span{
     margin-right: 2px;
     font-weight: bold;
@@ -182,4 +187,8 @@ input.hasDatepicker {
 #formCalendar div.ui-datepicker-header select{
     margin-right: 13px;
     width: 150px;
+}
+
+#formCalendar .holiday a{
+  color: #FF0000;
 }

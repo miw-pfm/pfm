@@ -36,31 +36,40 @@
             });
         </h:outputScript> 
 
+        <h:panelGroup layout="block" style="margin-bottom: 5px;"><h:link value="#{msgs.create_worker}" outcome="createWorker" styleClass="btn btn-success"/></h:panelGroup>
+        
         <h:form id="form">
+            <p:growl id="messages" showDetail="true" /> 
 
-            <p:dataTable var="workerEntityMock" value="#{listWorkersBeanMock.lazyModel}" paginator="true" rows="10"
+            <p:dataTable var="worker" value="#{listWorkersBeanMock.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listWorkersBeanMock.selectedWorker}" id="projectTable" lazy="true">
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listWorkersBeanMock.selectedWorker}" id="workerTable" lazy="true">
 
-               <p:ajax event="rowSelect" listener="#{listWorkersBeanMock.onRowSelect}"  />
+                <p:ajax event="rowSelect" listener="#{listWorkersBeanMock.onRowSelect}"  />
 
-               <p:column headerText="Surname" sortBy="surname" filterBy="#{workerEntityMock.surname}">
-                   <h:outputText value="#{workerEntityMock.surname}" />
-               </p:column>
-               
-               <p:column headerText="DNI" sortBy="dni" filterBy="#{workerEntityMock.dni}">
-                   <h:outputText value="#{workerEntityMock.dni}" />
-               </p:column>
-               
-               <p:column headerText="Email" sortBy="email" filterBy="#{workerEntityMock.email}">
-                   <h:outputText value="#{workerEntityMock.email}" />
-               </p:column>
-               
+                <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}">
+                    <h:outputText value="#{worker.name}" />
+                </p:column>
+
+                <p:column headerText="Surname" sortBy="surname" filterBy="#{worker.surname}">
+                    <h:outputText value="#{worker.surname}" />
+                </p:column>
+
+                <p:column headerText="DNI" sortBy="dni" filterBy="#{worker.dni}">
+                    <h:outputText value="#{worker.dni}" />
+                </p:column>
+
+                <p:column headerText="Email" sortBy="email" filterBy="#{worker.email}">
+                    <h:outputText value="#{worker.email}" />
+                </p:column>
+
+                <p:column styleClass="edit">
+                    <h:link value="#{msgs.edit}" styleClass="btn btn-sm btn-default" style="margin-right: 10px"/>                   
+                    <h:link value="#{msgs.delete}" styleClass="btn btn-sm btn-default"/>
+                </p:column>
+
             </p:dataTable>
 
         </h:form>
-        <p></p>
-        <h:link value="Add a new worker" outcome="createWorker" />
-        
     </ui:define>
 </ui:composition>
