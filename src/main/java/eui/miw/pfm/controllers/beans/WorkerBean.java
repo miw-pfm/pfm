@@ -46,4 +46,12 @@ public class WorkerBean extends Bean implements Serializable {
         return null;
     }
 
+    public String create() {
+        assert this.workerEntity != null;
+        LOGGER.info(this.workerEntity.toString());
+        WorkerEjb workerEjb = new WorkerEjb();
+        workerEjb.create(this.workerEntity);
+        return null;
+    }
+
 }
