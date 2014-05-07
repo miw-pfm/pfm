@@ -5,11 +5,8 @@
  */
 package eui.miw.pfm.util;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -20,8 +17,8 @@ import javax.faces.context.FacesContext;
 public class SessionMap implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-    private final Map<String, Object> map = context.getSessionMap();
+    private transient final ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    private transient final Map<String, Object> map = context.getSessionMap();
 
     public SessionMap() {//NOPMD
 
@@ -33,15 +30,6 @@ public class SessionMap implements Serializable {
 
     public Object get(final String key) {
         return map.get(key);
-    }
-
-    public void clean() {        
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 }
