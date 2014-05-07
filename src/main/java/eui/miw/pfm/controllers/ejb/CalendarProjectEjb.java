@@ -10,6 +10,7 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.entities.CalendarEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import java.util.Date;
 import java.util.List;
 
 /**
