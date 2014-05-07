@@ -1,28 +1,60 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.entities.WorkerEntity;
+import java.io.Serializable;
+import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 /**
  *
- * @author aw0591
+ * @author Fred Peña
+ * @author Jose M Villar
  */
-public class WorkerBean {
+@RequestScoped
+@Named
+public class WorkerBean extends Bean implements Serializable {
 
-    private transient final WorkerEntity worker;
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(WorkerBean.class.getName());
+
+    private WorkerEntity workerEntity;
+
     public WorkerBean() {
-        worker = new WorkerEntity();        
+        super();
+        workerEntity = new WorkerEntity();
     }
-       
-    public String deleteWorker(){
-        final WorkerEjb wejb = new WorkerEjb();
-        wejb.delete(worker);
+
+    public WorkerEntity getWorkerEntity() {
+        return workerEntity;
+    }
+
+    public void setWorkerEntity(final WorkerEntity workerEntity) {
+        this.workerEntity = workerEntity;
+    }
+
+    public String update() {
+        assert this.workerEntity != null;
+        LOGGER.info(this.workerEntity.toString());
+        final WorkerEjb workerEjb = new WorkerEjb();
+        workerEjb.update(this.workerEntity);
+        return null;
+    }
+
+    public String create() {
+        assert this.workerEntity != null;
+        LOGGER.info(this.workerEntity.toString());
+        final WorkerEjb workerEjb = new WorkerEjb();
+        workerEjb.create(this.workerEntity);
+        return null;
+    }
+
+    public String delete() {
+        assert this.workerEntity != null;
+        LOGGER.info(this.workerEntity.toString());
+        final WorkerEjb workerEjb = new WorkerEjb();
+        workerEjb.delete(this.workerEntity);
         return null;
     }
 }

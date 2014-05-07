@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
@@ -11,12 +10,22 @@ import eui.miw.pfm.models.entities.WorkerEntity;
 
 /**
  *
- * @author aw0591
+ * @author Fred Peña
+ * @author Jose M Villar
  */
 public class WorkerEjb {
 
-    public void delete(WorkerEntity worker) {
-        AbstractDAOFactory.getFactory().getWorkerDAO().delete(worker);
+    public void delete(final WorkerEntity workerEntity) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity);
     }
-    
+
+    public void update(final WorkerEntity workerEntity) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity);
+
+    }
+
+    public void create(final WorkerEntity workerEntity) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity);
+    }
+
 }
