@@ -17,8 +17,10 @@ import javax.faces.context.FacesContext;
  * @author Roberto Amor
  */
 public class Bean {
-    
+
+
 //    private String errors;
+
     protected transient final SessionMap sessionMap;
 
     public Bean() {
