@@ -8,7 +8,7 @@
                 template="/templates/templateHome.xhtml">
 
     <ui:define name="pagetitle">
-        #{confProjectBean.project.name} 
+        #{confProjectBean.project.name}
     </ui:define>    
 
     <ui:define name="title">
@@ -16,37 +16,36 @@
     </ui:define>
 
     <ui:define name="subtitle">
-        oiajsodjasdjaiosdj
         #{msgs.workerProfile_subtitle}
     </ui:define>
 
     <ui:define name="body">
-        <h:panelGroup id="confproject" layout="block">
+        <h:panelGroup id="workerprofile" layout="block">
             <h:form id="form">
-                <p:dataTable id="playersTable" var="player" value="#{tableBean.players}">
+                <p:dataTable id="workersTable" var="implication" value="#{workerProfileBean.implications}">
 
                     <f:facet name="header">
-                        FCB Statistics
+                        #{msgs.workerProfile_tablename}
                     </f:facet>
 
                     <p:columnGroup type="header">
                         <p:row>
-                            <p:column headerText="Tasks" />
-                            <p:column headerText="Time" />
+                            <p:column headerText="#{msgs.workerProfile_tasks}" />
+                            <p:column headerText="#{msgs.workerProfile_time}" />
                         </p:row>
                     </p:columnGroup>
 
-                    <p:subTable var="stats" value="#{player.stats}">
+                    <p:subTable var="tasks" value="#{implication.tasks}">
                         <f:facet name="header">
-                            #{player.name} 
+                            #{implication.name} 
                         </f:facet>
 
                         <p:column>
-                            #{stats.season}
+                            #{tasks.name}
                         </p:column>
 
                         <p:column>
-                            #{stats.goals}
+                            #{tasks.time}
                         </p:column>
                        
                     </p:subTable>

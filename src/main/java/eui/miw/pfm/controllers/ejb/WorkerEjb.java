@@ -27,5 +27,4 @@ public class WorkerEjb {
     public void create(final WorkerEntity workerEntity) {
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity);
     }
-
 }
