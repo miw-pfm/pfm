@@ -2,7 +2,6 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ConfProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.SessionMap;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +22,6 @@ public class ConfProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity project;//NOPMD
-    private final SessionMap sessionMap;//NOPMD
     private final ConfProjectEjb confProjectEjb;//NOPMD
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
     private static final List<Integer> chosenList = new ArrayList<>();
@@ -31,11 +29,9 @@ public class ConfProjectBean extends Bean implements Serializable {
     public ConfProjectBean() {
         super();
         project = new ProjectEntity();
-        this.sessionMap = new SessionMap();
         confProjectEjb = new ConfProjectEjb();
-
         try {
-            this.project = ((ProjectEntity) this.sessionMap.get("project"));
+            this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOG.warning("No session exist");
         }

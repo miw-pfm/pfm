@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- Author: ppbust -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateHome.xhtml">
+
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name} 
+    </ui:define>    
+
+    <ui:define name="title">
+        Home
+    </ui:define>
+
+    <ui:define name="subtitle">
+        oiajsodjasdjaiosdj
+        #{msgs.workerProfile_subtitle}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:panelGroup id="confproject" layout="block">
+            <h:form id="form">
+                <p:dataTable id="playersTable" var="player" value="#{tableBean.players}">
+
+                    <f:facet name="header">
+                        FCB Statistics
+                    </f:facet>
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="Tasks" />
+                            <p:column headerText="Time" />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:subTable var="stats" value="#{player.stats}">
+                        <f:facet name="header">
+                            #{player.name} 
+                        </f:facet>
+
+                        <p:column>
+                            #{stats.season}
+                        </p:column>
+
+                        <p:column>
+                            #{stats.goals}
+                        </p:column>
+                       
+                    </p:subTable>
+                </p:dataTable>
+            </h:form>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

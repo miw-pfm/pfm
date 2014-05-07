@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -19,10 +16,9 @@ import java.util.Set;
  */
 public class ListUseCaseEjb {
 
-    public List<UseCaseEntity> obtainUseCase(ProjectEntity project) {        
-        UseCaseDAO usecaseDAO = AbstractDAOFactory.getFactory().getUseCaseDAO();        
+    public List<UseCaseEntity> obtainUseCase(ProjectEntity project) {
         String psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1";
-        return usecaseDAO.find(psql, project);        
+        return AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, project);
     }
-    
+
 }

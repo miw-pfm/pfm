@@ -39,20 +39,19 @@
             <p:growl id="growl" showDetail="true" life="3000" />
 
             <p:panel header="#{msgs.login}" styleClass="login">
-                <h:panelGrid columns="2">
-                    <h:outputLabel for="username" value="Username:" />
-                    <h:inputText value="#{loginBeanMock.username}"
+                <p:watermark for="username" value="#{msgs.username}" />  
+                <p:watermark for="password" value="#{msgs.password}" />  
+
+                <h:panelGrid columns="3">
+                    <h:inputText value="#{loginBean.username}"
                                  id="username" required="true" label="username" />
 
-                    <h:outputLabel for="password" value="Password:" />
-                    <h:inputSecret value="#{loginBeanMock.password}"
+                    <h:inputSecret value="#{loginBean.password}"
                                    id="password" required="true" label="password" />
 
-                    <f:facet name="footer">
-                        <p:commandButton id="loginButton" value="Login" update="growl"
-                                         actionListener="#{loginBeanMock.login}"
-                                         oncomplete="manejarLogin(xhr, status, args)"/>
-                    </f:facet>
+                    <p:commandButton id="loginButton" value="Login" update="growl"
+                                     actionListener="#{loginBean.login}"
+                                     oncomplete="manejarLogin(xhr, status, args)"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>

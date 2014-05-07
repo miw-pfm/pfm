@@ -471,14 +471,15 @@ button.btn-succes:hover, button.btn-succes:active, button.btn-succes:focus, butt
     border-color: #FF9981;
 }
 
-#formlogin tfoot {
-    padding: 5px;
-}
-
 #formlogin .login {
-    width: 300px;
+    width: 485px;
+    padding: 5px;
 }
 
 #formlogin .ui-panel .ui-panel-content {
     padding: 0px;
+}
+
+#formlogin input {
+    margin: 10px 5px 5px 0px;
 }

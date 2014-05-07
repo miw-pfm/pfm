@@ -6,9 +6,8 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.CreateProjectEjb;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.SessionMap;
+import eui.miw.pfm.models.entities.UserEntity;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -26,17 +25,22 @@ public class CreateProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity projectEntity;
-    private final SessionMap sessionMap;//NOPMD
+    private UserEntity userEntity;
     private final CreateProjectEjb createProjectEjb;//NOPMD
-    private static final Logger LOG = Logger.getLogger(CreateProjectBean.class.getName());//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(CreateProjectBean.class.getName());//NOPMD
 
     /**
      * Creates a new instance of CreateProjectBean
      */
     public CreateProjectBean() {//NOPMD 
         this.projectEntity = new ProjectEntity();
-        this.sessionMap = new SessionMap();
         this.createProjectEjb = new CreateProjectEjb();
+
+        try {
+            this.userEntity = ((UserEntity) sessionMap.get("UserLogIn"));
+        } catch (Exception e) {
+            LOGGER.warning("No session exist");
+        }
     }
 
     public ProjectEntity getProjectEntity() {
@@ -48,7 +52,7 @@ public class CreateProjectBean extends Bean implements Serializable {
     }
 
     public boolean nameProjectValidator() {
-        return this.createProjectEjb.nameProjectValidator(projectEntity, AbstractDAOFactory.getFactory().getUserDAO().read(1));
+        return this.createProjectEjb.nameProjectValidator(projectEntity, this.userEntity);
     }
 
     public String createProject() { //NOPMD
@@ -56,12 +60,12 @@ public class CreateProjectBean extends Bean implements Serializable {
 
         if (nameProjectValidator()) {//NOPMD
             assert this.projectEntity != null;
-            this.projectEntity.setOwner(AbstractDAOFactory.getFactory().getUserDAO().read(1));
+            this.projectEntity.setOwner((UserEntity) this.sessionMap.get("UserLogIn"));
             this.createProjectEjb.createProject(this.projectEntity);
             this.sessionMap.add("project", this.projectEntity);
             view = "confProject";
         } else {
-            LOG.warning("Not a valid name");
+            LOGGER.warning("Not a valid name");
             final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("form", new FacesMessage("WARNING!!!", this.projectEntity.getName() + " is not a valid name"));
         }
