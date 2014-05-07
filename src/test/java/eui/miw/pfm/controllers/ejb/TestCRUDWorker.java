@@ -74,6 +74,44 @@ public class TestCRUDWorker {
 
     }
 
+    @Test
+    public void testCreate() {
+        WorkerEjb workerEjb = new WorkerEjb();
+        WorkerEntity workerEntity4 = new WorkerEntity();
+        WorkerEntity workerEntity5 = new WorkerEntity();
+        WorkerEntity workerEntity6 = new WorkerEntity();
+
+        workerEntity4.setDni("12345678");
+        workerEntity4.setEmail("pepecreate@pepe.com");
+        workerEntity4.setGitUser("pepe");
+        workerEntity4.setName("Pepe");
+        workerEntity4.setSurname("Pepe");
+
+        workerEntity5.setDni("098765432");
+        workerEntity5.setEmail("pepecreate@pepe.com");
+        workerEntity5.setGitUser("pepe");
+        workerEntity5.setName("Pepe");
+        workerEntity5.setSurname("Pepe");
+
+        workerEntity6.setDni("234567890");
+        workerEntity6.setEmail("pepecreate@pepe.com");
+        workerEntity6.setGitUser("pepe");
+        workerEntity6.setName("Pepe");
+        workerEntity6.setSurname("Pepe");
+
+        workerEjb.create(workerEntity4);
+        workerEjb.create(workerEntity5);
+        workerEjb.create(workerEntity6);
+
+        assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity4.getId()).equals(workerEntity4));
+        assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity5.getId()).equals(workerEntity5));
+        assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity6.getId()).equals(workerEntity6));
+
+        AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity4);
+        AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity5);
+        AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity6);
+    }
+
     @After
     public void finish() {
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity1);

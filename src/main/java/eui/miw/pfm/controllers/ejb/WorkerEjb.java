@@ -18,9 +18,13 @@ public class WorkerEjb {
         super();
     }
 
-    public void update(final WorkerEntity workerEntity1) {
-        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity1);
+    public void update(final WorkerEntity workerEntity) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity);
 
+    }
+
+    public void create(WorkerEntity workerEntity) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity);
     }
 
 }
