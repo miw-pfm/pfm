@@ -46,6 +46,7 @@
 
                 <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="" maxdate="" beforeShowDay="markHolidaysAndReportedDays">
 
+
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
                 </p:calendar>
             </h:form>
