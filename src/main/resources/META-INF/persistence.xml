@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL">
-    <class>eui.miw.pfm.models.entities.ProjectEntity</class>
-    <class>eui.miw.pfm.models.entities.UserEntity</class>
-    <class>eui.miw.pfm.models.entities.UseCaseEntity</class>
-    <class>eui.miw.pfm.models.entities.WorkerEntity</class>
-    <class>eui.miw.pfm.models.entities.CalendarEntity</class>
-    <class>eui.miw.pfm.models.entities.CalendarTemplateEntity</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
-    <validation-mode>NONE</validation-mode>
-    <properties>
-      <!--<property name="eclipselink.ddl-generation" value="create-tables" />-->
-      <!--LOCAL-->
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/pfm"/>
-      <property name="javax.persistence.jdbc.user" value="miw"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <!--REMOTE-->
-      <!--            
+    <persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL">
+        <class>eui.miw.pfm.models.entities.ProjectEntity</class>
+        <class>eui.miw.pfm.models.entities.UserEntity</class>
+        <class>eui.miw.pfm.models.entities.UseCaseEntity</class>
+        <class>eui.miw.pfm.models.entities.WorkerEntity</class>
+        <class>eui.miw.pfm.models.entities.CalendarEntity</class>
+        <class>eui.miw.pfm.models.entities.CalendarTemplateEntity</class>
+        <class>eui.miw.pfm.util.moks.profile.TasksEntityMock</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <validation-mode>NONE</validation-mode>
+        <properties>
+            <property name="eclipselink.ddl-generation" value="create-tables" />
+            <!--LOCAL-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/pfm"/>
+            <property name="javax.persistence.jdbc.user" value="miw"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <!--REMOTE-->
+            <!--            
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://37.187.93.117:3306/pfm"/>
             <property name="javax.persistence.jdbc.user" value="miw"/>
             <property name="javax.persistence.jdbc.password" value="jbslt2014"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> -->
-    </properties>
-  </persistence-unit>
+        </properties>
+    </persistence-unit>
 </persistence>
