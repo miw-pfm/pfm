@@ -41,15 +41,16 @@
             <h:form>
                 <p:growl id="growl" showDetail="true"/>
                 <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">                    
+                    <p:ajax event="dateSelect" oncomplete="add.enable()" />
                 </p:calendar>
                 
                 <p:watermark for="nameDate" value="#{msgs.name}" />
                 <p:watermark for="descriptionDate" value="#{msgs.description}" />  
                 <h:panelGrid columns="1" id="tableHolidayForm">
-                    <h:inputText id="nameDate" label="Name" />
-                    <h:inputText id="descriptionDate" label="Description" />
+                    <h:inputText id="nameDate" label="Name" value="#{calendarProjectBean.name}"/>
+                    <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" />
                     
-                    <p:commandButton id="addHoliday" value="Add Holiday" action="#{calendarProjectBean.handleDateSelect}"/>
+                    <p:commandButton id="addHoliday" value="Add Holiday" action="#{calendarProjectBean.handleDateSelect}" widgetVar="add" onclick="add.disable()" />
                     <p:commandButton id="editdate" value="Edit" />
                     <p:commandButton id="removeHoliday" value="Remove Holiday" />
                 </h:panelGrid>

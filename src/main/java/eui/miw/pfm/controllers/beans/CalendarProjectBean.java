@@ -28,8 +28,9 @@ public class CalendarProjectBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final CalendarEntity calendarEntity;
-    private ProjectEntity project;
-    private SessionMap sessionMap;
+    private ProjectEntity project;    
+    private String name;
+    private String description;
     private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
@@ -37,14 +38,28 @@ public class CalendarProjectBean extends Bean implements Serializable {
     public CalendarProjectBean() {
         super();
         project = new ProjectEntity();
-        calendarEntity = new CalendarEntity();
-        this.sessionMap = new SessionMap();
-
+        calendarEntity = new CalendarEntity();        
         try {
-            this.project = ((ProjectEntity) this.sessionMap.get("project"));
+            this.project = ((ProjectEntity) new SessionMap().get("project"));
         } catch (Exception e) {
             LOG.warning("No session exist");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDate1() {
@@ -109,20 +124,20 @@ public class CalendarProjectBean extends Bean implements Serializable {
         }
         return count;
     }
-
-    public void handleDateSelect(final SelectEvent event) {
-        Calendar calendar;
-        calendar = Calendar.getInstance();
+    
+    //Manuel Rodríguez
+    public void handleDateSelect() {
+        Calendar calendar= Calendar.getInstance();
         calendar.setTime(date1);
-        CalendarEntity calendarentity;
-        calendarentity = new CalendarEntity();
+        CalendarEntity calendarentity=new CalendarEntity();      
         calendarentity.setHoliday(calendar);
-        calendarentity.setDescription("dd");
-        calendarentity.setName("nn");
+        calendarentity.setDescription(description);
+        calendarentity.setName(name);
         calendarentity.setProject(project);
         new CalendarProjectEjb().create(calendarentity);
     }
 
+    //Manuel Rodríguez
     public String[] getHolidays() {
         CalendarProjectEjb calendarProjectEjb = new CalendarProjectEjb();
         List<CalendarEntity> holidays = calendarProjectEjb.obtainHolidays(project);
