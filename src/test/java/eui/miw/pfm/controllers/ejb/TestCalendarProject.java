@@ -47,10 +47,10 @@ public class TestCalendarProject {
     @Test
     public void testUpdateCalendar() {
         CalendarDAO cd = AbstractDAOFactory.getFactory().getCalendarDAO();
-        CalendarEntity calendar2 = cd.read(10);
+        CalendarEntity calendar2 = cd.read(12);
         calendar2.setName("ChristmaChanged");
         calendar2.setDescription("NotFree");
-        calendarProjectEJB.update(this.calendar);
+        calendarProjectEJB.update(calendar2);
         assertTrue("fin test", true); // NOPMD  
     }
 

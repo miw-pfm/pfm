@@ -48,9 +48,9 @@
                     </h:panelGroup>
 
                     <h:panelGrid columns="5">                            
-                        <h:outputText value="#{msgs.enter_name_usecase}" />                
+                        <h:outputText value="#{msgs.name}" />                
                         <h:inputText value="#{useCaseBean.usecase.name}" maxlength="100" />
-                        <h:outputText value="#{msgs.enter_description_usecase}" />                                
+                        <h:outputText value="#{msgs.description}" />                                
                         <h:inputText value="#{useCaseBean.usecase.description}" maxlength="100" />
                         <h:outputText/>                      
                         <h:commandButton value="Submit" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
