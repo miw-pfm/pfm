@@ -9,7 +9,6 @@ import eui.miw.pfm.util.SessionMap;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -31,15 +30,14 @@ public class Bean {
     }
 
     private boolean notLogin() {
-        return sessionMap.get("UserLogIn") == null;
+        return sessionMap.get("userlogin") == null;
     }
 
     private void redirectionLogin() {
-        final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect("login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         } catch (IOException ex) {
-            Logger.getLogger(Bean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

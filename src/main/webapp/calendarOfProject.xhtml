@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!-- Author: ppbust -->
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/templateHome.xhtml">
 
@@ -20,17 +21,28 @@
     </ui:define>
 
     <ui:define name="body">
+        <h:outputScript target="head">
+
+            function markHolidaysAndReportedDays(date) {               
+            var holidays = ["May 8, 2014", "May 17, 2014", "May 25, 2014"];
+            for (var i = 0; i &#60; holidays.length; i++) {
+            if(date.getTime() == new Date(holidays[i]).getTime())             
+            return [true,'holiday'];                                    
+            }
+            return [true, ''];
+            }
+
+        </h:outputScript> 
         <div id="infoCalendar">
-            <p><span>From:</span> ---</p>
-            <p><span>To:</span> ---</p>
-            <p>Working days:</p>
-            <p>---</p>
+            <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
+            <p class="CalendarTo"><span>Until:</span>#{calendarProjectBean.endDate}</p>
+            <p class="workingDays">Working days:</p>
+            <p class="totalDays">#{calendarProjectBean.workingDays}</p>
         </div>
         <div id="formCalendar">
-            <h:form >
+            <h:form>
                 <p:growl id="growl" showDetail="true"/>
-
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline">
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
                 </p:calendar>
             </h:form>

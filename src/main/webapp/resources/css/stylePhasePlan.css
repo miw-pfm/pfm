@@ -1,0 +1,20 @@
+#title{
+    background: #F3D5BC;
+    color: #F79646;
+}
+
+#panelbodyPhasePlan {
+    background: #F79646;
+}
+
+/***************************************************/
+/* dataTable: workerTable
+/***************************************************/
+
+#form {
+    width: 860px;
+}
+
+#form td.edit {
+    width: 135px;
+}

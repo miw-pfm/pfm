@@ -23,7 +23,6 @@ import javax.inject.Named;
  * @author Clemencio Morales
  * @author Manuel Rodríguez
  */
-
 @Named
 @RequestScoped
 public class UseCaseBean extends Bean implements Serializable {
@@ -63,28 +62,30 @@ public class UseCaseBean extends Bean implements Serializable {
         UseCaseEjb ejb = new UseCaseEjb();
         this.usecase.setProject(project);
         LOG.info(this.usecase.toString());
-
-        ejb.update(this.usecase);                  
+        ejb.update(this.usecase);
+        FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
         return "useCasesList";
     }
 
     public String create() {
+        if (this.project == null) {
+            FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_WARN, "No project selected", ""));
+            return null;
+        }
         this.usecase.setProject(this.project);
         UseCaseEjb ejb = new UseCaseEjb();
         ejb.create(this.usecase);
-        final FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage("form", new FacesMessage("Use Case Created","Use Case Created"));
+        FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
         return null;
     }
 
     public String delete(final UseCaseEntity useCaseEntity) {
         UseCaseEjb ejb = new UseCaseEjb();
         this.usecase.setProject(project);
-         this.usecase = useCaseEntity;
-        LOG.info(this.usecase.toString());       
+        this.usecase = useCaseEntity;
+        LOG.info(this.usecase.toString());
         ejb.delete(usecase);
-        final FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage("form_edit", new FacesMessage("Use Case Deleted","Use Case Deleted"));        
+        FacesContext.getCurrentInstance().addMessage("form_list", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Deleted", ""));
         return null;
     }
 

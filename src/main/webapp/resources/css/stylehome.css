@@ -126,20 +126,71 @@ input.hasDatepicker {
 
 #infoCalendar{
     overflow: auto;
+    margin-top: 25px;
 }
 
-#infoCalendar p{
+#infoCalendar p.CalendarFrom{
     float: left;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 142px;
 }
 
-#formCalendar{
-    
+#infoCalendar p.CalendarTo{
+    float: left;
+    margin-right: 60px;
+    font-size: 14px;
 }
 
-#calProject{
-    display: block;
+#infoCalendar p.CalendarFrom span, #infoCalendar p.CalendarTo span{
+    margin-right: 2px;
+    font-weight: bold;
 }
 
+#infoCalendar p.workingDays{
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 118px;
+    overflow: auto;
+    width: 297px;
+}
+
+#infoCalendar p.totalDays{
+    border: 1px solid #FCD5B4;
+    color: #404040;
+    float: right;
+    font-size: 21px;
+    margin-right: 230px;
+    padding: 2px 8px;
+    margin-bottom: 0px
+}
+
+#formCalendar div.ui-datepicker{
+    width: 400px;
+}
+
+#formCalendar div.ui-datepicker td a, #formCalendar div.ui-datepicker td span{
+    text-align: center;
+    font-size: 13px;
+}
+
+#formCalendar div.ui-datepicker-header{
+    padding: 5px 0;
+}
+
+#formCalendar div.ui-datepicker-header select{
+    margin-right: 13px;
+    width: 150px;
+}
+
+#formCalendar .holiday a{
+  color: #FF0000;
+}
+
+#formCalendar .holiday a{
+  color: #FF0000;
+}
 
 /***************************************************/
 /* dataTable: workerTable

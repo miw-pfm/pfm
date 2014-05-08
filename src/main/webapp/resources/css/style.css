@@ -215,13 +215,18 @@ p, li, h2, a{
 }
 #panelsubmenu li{
     list-style: none;
-    margin-left: 15px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
+#panelsubmenu li.divisorSubMenu{
+    border-top: 3px solid #FDE9D9;
+    padding-top: 5px;
+}
+
 #panelsubmenu li a{
     text-decoration: none;
+    margin-left: 15px;
 }
 #panelsubmenu li a:hover{
     cursor: pointer;
@@ -252,6 +257,9 @@ p, li, h2, a{
     font-size: 14px;
     background: #ffffff;
 }
+
+/* Estilos basicos del FOOT
+/*********************************************************/
 
 #panelfooter {
     height: 30px; /* Altura del Footer en px*/ 
@@ -355,24 +363,33 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     float: left;
 }
 
-#j_idt30{
-    margin-left: 10px;
-}
-
-#j_idt30 .ui-button, #createnewusecase .ui-button{
+#createnewusecase .ui-button{ 
     font-size: 12px;
     height: 25px;
     margin-top: 5px;
 }
 
-#j_idt30 .ui-button:hover, #submitcreateusecase:hover, #submitcreateusecase:focus{
+ #submitcreateusecase:hover, #submitcreateusecase:focus{
     background-image: none;
     background-color: #FCD5B4; 
 }
 
+#createproject form{
+    margin-left: 20px;
+}
+
 .btn-success{
     background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
-    border-color: #FF9981;}
+    border-color: #FF9981;
+}
+
+.btn-success:hover, .btn-success:focus{
+    background-image: none;
+    background-color: #FCD5B4;
+}
+
+/* j_idt28 es el id del formulario de crear proyecto
+/*********************************************************/
 
 #j_idt28 div{
     border: 1px solid #FCD5B4;
@@ -406,7 +423,7 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
 }
 #j_idt28 .ui-button:hover{
     background-image: none;
-    background-color: #FCD5B4; 
+    background-color: #FCD5B4;
 }
 
 #j_idt28 .ui-button span{
@@ -475,14 +492,37 @@ button.btn-succes:hover, button.btn-succes:active, button.btn-succes:focus, butt
 }
 
 #formlogin .login {
-    width: 485px;
+    border: 1px solid #ED8136;
+    margin: 120px auto 0;
     padding: 5px;
+    width: 530px;
+    padding-bottom: 9px;
+
 }
 
-#formlogin .ui-panel .ui-panel-content {
+#formlogin div.ui-widget-header{
+    background: #FFFFFF;
+    border: 0;
+}
+
+#formlogin div.ui-widget-header span{
+    font-size: 17px;
+}
+
+#formlogin .ui-panel div.ui-panel-content {
     padding: 0px;
 }
 
-#formlogin input {
-    margin: 10px 5px 5px 0px;
+#formlogin .ui-panel div.ui-panel-content td button{
+    background: none repeat scroll 0 0 #136FB4;
+    border: 1px solid #136FB4;
+    box-shadow: none;
+    color: #FFFFFF;
+    float: right;
+    font-size: 13px;
+    margin-right: 25px;
+}
+
+#formlogin .ui-panel div.ui-panel-content td button:hover{
+    color: #C2C3C5;
 }

@@ -12,13 +12,13 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author yiyi
+ * @author Fred Peña
  */
 public class SessionMap implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();//NOPMD
-    private final Map<String, Object> map = context.getSessionMap();//NOPMD
+    private transient final ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    private transient final Map<String, Object> map = context.getSessionMap();
 
     public SessionMap() {//NOPMD
 
