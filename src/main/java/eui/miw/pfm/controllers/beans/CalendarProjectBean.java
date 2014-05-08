@@ -33,7 +33,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
     private Calendar calendar = new GregorianCalendar();
     private Calendar startdate = new GregorianCalendar();
     private Calendar enddate = new GregorianCalendar();
-    private SimpleDateFormat format = new SimpleDateFormat("d/M/yyyy");
+    private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
 
@@ -102,23 +102,22 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
             startDate.add(Calendar.DATE, 1);
         }
-        // this.getRealholidays();
-
+        diffDays = diffDays - this.getRealholidays();
         return diffDays;
     }
 
-    //Pendiente por terminar
-    public void getRealholidays() {
+    public int getRealholidays() {
         int count = 0;
         CalendarProjectEjb ejb = new CalendarProjectEjb();
         List<CalendarEntity> holidays = ejb.obtainHolidays(this.project);
 
         for (CalendarEntity holiday : holidays) {
-            if (holiday.getHoliday().after(this.project.getStartDate()) && holiday.getHoliday().before(this.project.getEndDate())) {
+            Date date = holiday.getHoliday().getTime();
+            if (this.project.getStartDate().before(date) && this.project.getEndDate().after(date)) {
                 count++;
             }
         }
-        System.out.println(count);
+        return count;
     }
 
     public void handleDateSelect(SelectEvent event) {

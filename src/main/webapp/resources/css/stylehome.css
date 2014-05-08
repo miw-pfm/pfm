@@ -99,10 +99,9 @@ input.hasDatepicker {
 /***************************************************/
 
 
-#confproject {
+#confproject table{
     overflow: auto;
     margin: 0 auto;
-    width: 500px;
 }
 
 #confproject .ui-selectonemenu{
@@ -161,7 +160,7 @@ input.hasDatepicker {
     color: #404040;
     float: right;
     font-size: 21px;
-    margin-right: 230px;
+    margin-right: 291px;
     padding: 2px 8px;
     margin-bottom: 0px
 }

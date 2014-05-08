@@ -33,15 +33,23 @@
         <div id="infoCalendar">
             <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
             <p class="CalendarTo"><span>Until:</span>#{calendarProjectBean.endDate}</p>
-            <p class="workingDays">Working days:</p>
+            <p class="workingDays">Working days</p>
             <p class="totalDays">#{calendarProjectBean.workingDays}</p>
         </div>
+        
         <div id="formCalendar">
             <h:form>
                 <p:growl id="growl" showDetail="true"/>
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="" maxdate="" beforeShowDay="markHolidaysAndReportedDays">
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
                 </p:calendar>
+                
+                <p:watermark for="nameDate" value="#{msgs.name}" />
+                <p:watermark for="descriptionDate" value="#{msgs.description}" />  
+                <h:panelGrid columns="2">
+                    <h:inputText id="nameDate" label="Name" />
+                    <h:inputText id="descriptionDate" label="Description" />
+                </h:panelGrid>
             </h:form>
         </div>
     </ui:define>
