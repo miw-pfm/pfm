@@ -17,7 +17,9 @@ import javax.faces.context.FacesContext;
  */
 public class Bean {
 
-    private String errors;
+
+//    private String errors;
+
     protected transient final SessionMap sessionMap;
 
     public Bean() {
@@ -39,24 +41,24 @@ public class Bean {
         }
     }
 
-    public String getErrors() {
-        return errors;
-    }
-
-    public void setErrors(final String errors) {
-        this.errors = errors;
-    }
-
-    public boolean hasErrors() {
-        return !this.errors.equals("");
-    }
-
-    public void addFieldError(final String fieldError) {
-        if (this.hasErrors()) {
-            this.errors += "; " + fieldError;
-        } else {
-            this.errors = fieldError;
-
-        }
-    }
+//    public String getErrors() {
+//        return errors;
+//    }
+//
+//    public void setErrors(final String errors) {
+//        this.errors = errors;
+//    }
+//
+//    public boolean hasErrors() {
+//        return !this.errors.equals("");
+//    }
+//
+//    public void addFieldError(final String fieldError) {
+//        if (this.hasErrors()) {
+//            this.errors += "; " + fieldError;
+//        } else {
+//            this.errors = fieldError;
+//
+//        }
+//    }
 }

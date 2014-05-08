@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import org.primefaces.event.SelectEvent;
 /**
  *
  * @author Manuel Álvarez
+ * @code added Manuel Rodríguez
  */
 @RequestScoped
 @Named
@@ -137,11 +139,16 @@ public class CalendarProjectBean extends Bean implements Serializable {
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
-    public String[] getHolidays() {
-        String[] a= new String[3];
-        a[0]="May 8, 2014";
-        a[1]="May 15, 2014";
-        a[2]="May 23, 2014";
+    public String[] getHolidays() {       
+        CalendarProjectEjb calendarProjectEjb = new CalendarProjectEjb();
+        List<CalendarEntity> holidays= calendarProjectEjb.obtainHolidays(project);
+        String[] a= new String[holidays.size()];
+        SimpleDateFormat formato=new SimpleDateFormat("MMMM d, yyyy", Locale.UK);
+        for (int i=0;i<holidays.size();i++)
+            {
+          a[i]="'"+formato.format(holidays.get(i).getHoliday().getTime())+"'";
+          System.out.println(a[i]+"-");
+          }     
         return a;
     }
 }
