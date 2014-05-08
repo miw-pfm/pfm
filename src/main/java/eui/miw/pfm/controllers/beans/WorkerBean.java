@@ -38,8 +38,10 @@ public class WorkerBean extends Bean implements Serializable {
 
     public String update() {
         assert this.workerEntity != null;
-        LOGGER.info(this.workerEntity.toString());
         final WorkerEjb workerEjb = new WorkerEjb();
+
+        LOGGER.info("Update: "+this.workerEntity.toString());
+        
         workerEjb.update(this.workerEntity);
         return null;
     }
@@ -58,6 +60,13 @@ public class WorkerBean extends Bean implements Serializable {
         LOGGER.info(this.workerEntity.toString());
         final WorkerEjb workerEjb = new WorkerEjb();
         workerEjb.delete(this.workerEntity);
-        return null;
+        return "list_worker";
     }
+    
+    public String editWorker(final WorkerEntity worker) {
+        this.workerEntity = worker;
+        LOGGER.info("Edit: "+this.workerEntity.toString());
+        
+        return "editWorker";
+    }    
 }

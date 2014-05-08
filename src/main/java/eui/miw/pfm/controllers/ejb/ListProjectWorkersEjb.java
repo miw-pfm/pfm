@@ -6,6 +6,7 @@
 
 package eui.miw.pfm.controllers.ejb;
 
+import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import java.util.List;
@@ -23,5 +24,12 @@ public class ListProjectWorkersEjb {
         
         return project.getWorkers();
         //return new ArrayList<WorkerEntity>();
+    }       
+
+    public void remove(final ProjectEntity project, final WorkerEntity worker) {
+        project.deleteWorker(worker);
+        worker.deleteProject(project);
+        AbstractDAOFactory.getFactory().getProjectDAO().update(project);        
+        AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
     }
 }

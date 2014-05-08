@@ -35,13 +35,17 @@
             })
             });
         </h:outputScript> 
-        <h:panelGroup layout="block" style="margin-bottom: 5px;"><h:link value="#{msgs.create_worker}" outcome="createWorker" styleClass="btn btn-success"/></h:panelGroup>
+        <h:panelGroup layout="block" style="margin-bottom: 5px;"><h:link value="#{msgs.add_worker}" outcome="createWorker" styleClass="btn btn-success"/></h:panelGroup>
         <h:form id="form">
             <p:growl id="messages" showDetail="true" /> 
 
             <p:dataTable var="worker" value="#{listProjectWorkersBean.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listProjectWorkersBean.selectedWorker}" id="workerTable" lazy="true">
+                         rowsPerPageTemplate="5,10,15" 
+                         rowKey="#{worker.id}" 
+                         selection="#{listProjectWorkersBean.selectedWorker}" 
+                         rendered="true"
+                         id="workerTable" lazy="true">
 
                 <p:ajax event="rowSelect" listener="#{listProjectWorkersBean.onRowSelect}"  />
 
@@ -62,12 +66,10 @@
                 </p:column>
 
                 <p:column styleClass="edit">
-                    <h:link value="#{msgs.edit}" styleClass="btn btn-sm btn-default" style="margin-right: 10px"/>                   
-                    <h:link value="#{msgs.delete}" styleClass="btn btn-sm btn-default"/>
+                    <p:commandButton value="#{msgs.delete}" styleClass="btn btn-sm btn-default" action="#{listProjectWorkersBean.remove(worker)}" update=":form:workerTable" />
                 </p:column>
-
             </p:dataTable>
 
-        </h:form>
+        </h:form>        
     </ui:define>
 </ui:composition>
