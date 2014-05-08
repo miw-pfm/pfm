@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -72,13 +73,19 @@ public class ProjectEntity implements Serializable {
     private UserEntity owner;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private Set<UseCaseEntity> useCases = new HashSet<UseCaseEntity>();
+    private Set<UseCaseEntity> useCases = new HashSet<>();
 
-    @ManyToMany(mappedBy = "projects")
-    private List<WorkerEntity> workers = new ArrayList<WorkerEntity>();
+    @ManyToMany
+    @JoinTable(
+            name = "projects_workers",
+            joinColumns = {
+                @JoinColumn(name = "worker_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "project_id", referencedColumnName = "id")})
+    private List<WorkerEntity> workers = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private Set<TasksEntityMock> taskMock = new HashSet<TasksEntityMock>();
+    private List<TasksEntityMock> taskMock = new ArrayList<>();
 
     public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, int chosenNumIteration, String description, UserEntity owner) {
         this.id = id;
@@ -218,20 +225,20 @@ public class ProjectEntity implements Serializable {
         this.useCases.remove(usecases);
     }
 
-    public Set<TasksEntityMock> getTaskMock() {
+    public void addTask(final TasksEntityMock t) {
+        this.taskMock.add(t);
+    }
+
+    public void deleteTask(final TasksEntityMock t) {
+        this.taskMock.remove(t);
+    }
+
+    public List<TasksEntityMock> getTaskMock() {
         return taskMock;
     }
 
-    public void setTaskMock(final Set<TasksEntityMock> taskMock) {
+    public void setTaskMock(final List<TasksEntityMock> taskMock) {
         this.taskMock = taskMock;
-    }
-
-    public void addTaskMock(final TasksEntityMock taskMock) {
-        this.taskMock.add(taskMock);
-    }
-
-    public void removeTaskMock(final TasksEntityMock usecases) {
-        this.taskMock.remove(usecases);
     }
 
     public List<WorkerEntity> getWorkers() {

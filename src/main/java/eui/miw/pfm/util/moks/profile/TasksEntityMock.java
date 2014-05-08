@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 /**
  *
  * @author Fred Peña
@@ -26,6 +27,7 @@ public class TasksEntityMock implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name", length = 140)
@@ -37,11 +39,11 @@ public class TasksEntityMock implements Serializable {
     @NotNull
     private int time;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false)
     private WorkerEntity worker;
 
@@ -118,7 +120,7 @@ public class TasksEntityMock implements Serializable {
 
     @Override
     public String toString() {
-        return "TasksEntityMock{" + "id=" + id + ", name=" + name + ", time=" + time + ", project=" + project + ", worker=" + worker + '}';
+        return "TasksEntityMock{" + "id=" + id + ", name=" + name + ", time=" + time + ", project=" + project + '}';
     }
 
 }
