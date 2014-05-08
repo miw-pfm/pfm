@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import org.primefaces.event.SelectEvent;
 /**
  *
  * @author Manuel Álvarez
+ * @code added Manuel Rodríguez
  */
 @RequestScoped
 @Named
@@ -31,7 +33,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
     private Calendar calendar = new GregorianCalendar();
     private Calendar startdate = new GregorianCalendar();
     private Calendar enddate = new GregorianCalendar();
-    private SimpleDateFormat format = new SimpleDateFormat("d/M/yyyy");
+    private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
 
@@ -100,23 +102,22 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
             startDate.add(Calendar.DATE, 1);
         }
-        // this.getRealholidays();
-
+        diffDays = diffDays - this.getRealholidays();
         return diffDays;
     }
 
-    //Pendiente por terminar
-    public void getRealholidays() {
+    public int getRealholidays() {
         int count = 0;
         CalendarProjectEjb ejb = new CalendarProjectEjb();
         List<CalendarEntity> holidays = ejb.obtainHolidays(this.project);
 
         for (CalendarEntity holiday : holidays) {
-            if (holiday.getHoliday().after(this.project.getStartDate()) && holiday.getHoliday().before(this.project.getEndDate())) {
+            Date date = holiday.getHoliday().getTime();
+            if (this.project.getStartDate().before(date) && this.project.getEndDate().after(date)) {
                 count++;
             }
         }
-        System.out.println(count);
+        return count;
     }
 
     public void handleDateSelect(SelectEvent event) {
@@ -137,11 +138,16 @@ public class CalendarProjectBean extends Bean implements Serializable {
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
-    public String[] getHolidays() {
-        String[] a= new String[3];
-        a[0]="May 8, 2014";
-        a[1]="May 15, 2014";
-        a[2]="May 23, 2014";
+    public String[] getHolidays() {       
+        CalendarProjectEjb calendarProjectEjb = new CalendarProjectEjb();
+        List<CalendarEntity> holidays= calendarProjectEjb.obtainHolidays(project);
+        String[] a= new String[holidays.size()];
+        SimpleDateFormat formato=new SimpleDateFormat("MMMM d, yyyy", Locale.UK);
+        for (int i=0;i<holidays.size();i++)
+            {
+          a[i]="'"+formato.format(holidays.get(i).getHoliday().getTime())+"'";
+          System.out.println(a[i]+"-");
+          }     
         return a;
     }
 }

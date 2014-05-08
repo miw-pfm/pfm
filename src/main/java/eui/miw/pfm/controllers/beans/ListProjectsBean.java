@@ -34,14 +34,15 @@ public class ListProjectsBean extends Bean implements Serializable {
     private List<ProjectEntity> projects;
     private UserEntity userEntity;
 
-    public ListProjectsBean() {        
+    public ListProjectsBean() {   
+        super();
         try {
             this.userEntity = ((UserEntity) sessionMap.get("userlogin"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
         ListProjectsEjb eaE = new ListProjectsEjb();
-        this.projects = eaE.obtainProjects(this.userEntity);
+        this.projects = new ListProjectsEjb().obtainProjects(this.userEntity);
         this.lazyModel = new LazyProjectDataModel(this.projects);
 
     }
@@ -62,23 +63,23 @@ public class ListProjectsBean extends Bean implements Serializable {
         return selectedProject;
     }
 
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+    
     public void setSelectedProject(ProjectEntity selectedProject) {
         this.selectedProject = selectedProject;
     }
 
     public void onRowSelect(SelectEvent event) {//NOPMD
-        //FacesMessage msg = new FacesMessage("Project Selected", (ProjectEntity) event.getObject());
-        ProjectEntity project;
-        project = (ProjectEntity) event.getObject();
-        OpenProjectBean opJSF;
-        opJSF = new OpenProjectBean();
-        opJSF.showOpenProject(project);
-        FacesContext facesContext;
-        facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext;
-        externalContext = facesContext.getExternalContext();
+        //FacesMessage msg = new FacesMessage("Project Selected", (ProjectEntity) event.getObject());        
+        final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect(opJSF.showOpenProject(project) + ".xhtml");
+            externalContext.redirect(new OpenProjectBean().showOpenProject((ProjectEntity) event.getObject()) + ".xhtml");
         } catch (IOException ex) {
             Logger.getLogger(ListProjectsBean.class.getName()).log(Level.SEVERE, null, ex);
         }

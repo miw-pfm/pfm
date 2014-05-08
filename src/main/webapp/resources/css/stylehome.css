@@ -99,10 +99,9 @@ input.hasDatepicker {
 /***************************************************/
 
 
-#confproject {
+#confproject table{
     overflow: auto;
     margin: 0 auto;
-    width: 500px;
 }
 
 #confproject .ui-selectonemenu{
@@ -161,7 +160,7 @@ input.hasDatepicker {
     color: #404040;
     float: right;
     font-size: 21px;
-    margin-right: 230px;
+    margin-right: 291px;
     padding: 2px 8px;
     margin-bottom: 0px
 }
@@ -185,13 +184,33 @@ input.hasDatepicker {
 }
 
 #formCalendar .holiday a{
-  color: #FF0000;
+    color: #FF0000;
 }
 
 #formCalendar .holiday a{
-  color: #FF0000;
+    color: #FF0000;
 }
 
+/* j_idt39 es id del formulario del calendario del proyecto
+/***************************************************/
+
+#j_idt39 span{
+    float: left;
+}
+
+#j_idt39\:nameDate{
+    margin-top: 60px;
+}
+
+#j_idt39\:tableHolidayForm button{
+    float: right;
+    margin-bottom: 6px;
+    margin-right: 11px;
+}
+
+#j_idt39\:calProject_inline{
+    margin-right: 50px;
+}
 /***************************************************/
 /* dataTable: workerTable
 /***************************************************/
