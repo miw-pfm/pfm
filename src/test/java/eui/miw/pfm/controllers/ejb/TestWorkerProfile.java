@@ -13,8 +13,10 @@ import eui.miw.pfm.util.moks.profile.TasksEntityMock;
 import java.util.Date;
 import java.util.List;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -25,17 +27,17 @@ import org.junit.Test;
  */
 public class TestWorkerProfile {
 
-    private transient ProjectEntity projectEntity1;
-    private transient ProjectEntity projectEntity2;
-    private transient WorkerEntity workerEntity1;
-    private transient WorkerEntity workerEntity2;
-    private transient UserEntity userEntity;
-    private transient TasksEntityMock tasksEntityMock1;
-    private transient TasksEntityMock tasksEntityMock2;
-    private transient TasksEntityMock tasksEntityMock3;
+    private transient static ProjectEntity projectEntity1;
+    private transient static ProjectEntity projectEntity2;
+    private transient static WorkerEntity workerEntity1;
+    private transient static WorkerEntity workerEntity2;
+    private transient static UserEntity userEntity;
+    private transient static TasksEntityMock tasksEntityMock1;
+    private transient static TasksEntityMock tasksEntityMock2;
+    private transient static TasksEntityMock tasksEntityMock3;
 
-    @Before
-    public void init() {
+    @BeforeClass
+    public static void init() {
         userEntity = new UserEntity();
         userEntity.setEmail("pepe@gmail.com");
         userEntity.setName("Pepe");
@@ -143,8 +145,8 @@ public class TestWorkerProfile {
         }
     }
 
-    @After
-    public void finish() {
+    @AfterClass
+    public static void finish() {
         AbstractDAOFactory.getFactory().getTaskDAO().delete(tasksEntityMock1);
         AbstractDAOFactory.getFactory().getTaskDAO().delete(tasksEntityMock2);
         AbstractDAOFactory.getFactory().getTaskDAO().delete(tasksEntityMock3);

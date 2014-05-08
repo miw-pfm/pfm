@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @author Fred Peña
  * @author Clemencio Morales
+ * @author Pepe Bustamante
  */
 public class WorkerProfileEjb {
 
