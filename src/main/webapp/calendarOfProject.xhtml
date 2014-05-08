@@ -40,8 +40,7 @@
         <div id="formCalendar">
             <h:form>
                 <p:growl id="growl" showDetail="true"/>
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">
-                    <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">                    
                 </p:calendar>
                 
                 <p:watermark for="nameDate" value="#{msgs.name}" />
@@ -50,7 +49,8 @@
                     <h:inputText id="nameDate" label="Name" />
                     <h:inputText id="descriptionDate" label="Description" />
                     
-                    <p:commandButton id="addHoliday" value="Add Holiday" />
+                    <p:commandButton id="addHoliday" value="Add Holiday" action="#{calendarProjectBean.handleDateSelect}"/>
+                    <p:commandButton id="editdate" value="Edit" />
                     <p:commandButton id="removeHoliday" value="Remove Holiday" />
                 </h:panelGrid>
             </h:form>
