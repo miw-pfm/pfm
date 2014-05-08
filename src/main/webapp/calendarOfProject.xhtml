@@ -6,6 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"                
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/templates/templateHome.xhtml">
 
     <ui:define name="pagetitle">
@@ -22,16 +23,12 @@
 
     <ui:define name="body">
         <h:outputScript target="head">
-
-            function markHolidaysAndReportedDays(date) {               
-            var holidays = ["May 8, 2014", "May 17, 2014", "May 25, 2014"];
-            for (var i = 0; i &#60; holidays.length; i++) {
-            if(date.getTime() == new Date(holidays[i]).getTime())             
-            return [true,'holiday'];                                    
-            }
-            return [true, ''];
-            }
-
+            function markHolidaysAndReportedDays(date) { 
+            var holidays = new Array(#{fn:join(calendarProjectBean.getHolidays(), ',')}); 
+            for (var i = 0; i &#60; holidays.length; i++) 
+            { if(date.getTime() == new Date(holidays[i]).getTime()) 
+            return [true,'holiday']; } 
+            return [true, '']; }
         </h:outputScript> 
         <div id="infoCalendar">
             <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
@@ -42,7 +39,7 @@
         <div id="formCalendar">
             <h:form>
                 <p:growl id="growl" showDetail="true"/>
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="" maxdate="" beforeShowDay="markHolidaysAndReportedDays">
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.handleDateSelect}" update="growl" />
                 </p:calendar>
             </h:form>
