@@ -16,12 +16,7 @@ import java.util.List;
  * @author Roberto Amor
  */
 public class ListProjectWorkersEjb {
-    public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {
-        for(WorkerEntity worker : project.getWorkers()){
-            System.out.println("worker: "+worker.getName());
-        }
-        //return null;
-        
+    public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {       
         return project.getWorkers();
         //return new ArrayList<WorkerEntity>();
     }       

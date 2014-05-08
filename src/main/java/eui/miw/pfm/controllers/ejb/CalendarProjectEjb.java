@@ -31,7 +31,7 @@ public class CalendarProjectEjb {
         AbstractDAOFactory.getFactory().getCalendarDAO().create(calendarEntity);
     }
     
-    public List<CalendarEntity> obtainHolidays(ProjectEntity project) {        
+    public List<CalendarEntity> obtainHolidays(final ProjectEntity project) {        
         CalendarDAO calendarDAO = AbstractDAOFactory.getFactory().getCalendarDAO();
         String psql = "SELECT ca FROM CalendarEntity ca WHERE ca.project = ?1";
         return calendarDAO.find(psql, project);        
