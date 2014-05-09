@@ -18,6 +18,18 @@ import java.util.List;
 public class WorkerProfileEjb {
 
     public List<ProjectEntity> findProjects(final WorkerEntity worker) {
+
+//        final List<ProjectEntity> projects = worker.getProjects();
+//        for (ProjectEntity pe : projects) {
+//            for (TasksEntityMock te : pe.getTaskMock()) {
+//                pe.getTaskMock().clear();
+//                if (te.getWorker().equals(worker)) {
+//                    pe.addTask(te);
+//                }
+//            }
+//            projects.add(pe);
+//        }
         return worker.getProjects();
     }
+
 }

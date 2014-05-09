@@ -16,16 +16,17 @@
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.workerProfile_subtitle}
+        #{msgs.workerProfile_subtitle} -- #{workerProfileBean.workerEntity.name}
     </ui:define>
 
     <ui:define name="body">
         <h:panelGroup id="workerprofile" layout="block">
             <h:form id="form">
-                <p:dataTable id="workersTable" var="implication" value="#{workerProfileBean.implications}">
+                <p:growl id="message"  sticky="true" />
+                <p:dataTable id="workersTable" var="project" value="#{workerProfileBean.projects}">
 
                     <f:facet name="header">
-                        #{msgs.workerProfile_tablename}
+                        #{msgs.workerProfile_tablename}  
                     </f:facet>
 
                     <p:columnGroup type="header">
@@ -35,19 +36,19 @@
                         </p:row>
                     </p:columnGroup>
 
-                    <p:subTable var="tasks" value="#{implication.tasks}">
+                    <p:subTable var="task" value="#{project.taskMock}">
                         <f:facet name="header">
-                            #{implication.name} 
+                            #{project.name} 
                         </f:facet>
 
                         <p:column>
-                            #{tasks.name}
+                            #{task.name}
                         </p:column>
 
                         <p:column>
-                            #{tasks.time}
+                            #{task.time}
                         </p:column>
-                       
+
                     </p:subTable>
                 </p:dataTable>
             </h:form>

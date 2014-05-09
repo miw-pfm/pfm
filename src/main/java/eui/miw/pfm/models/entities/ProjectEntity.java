@@ -75,13 +75,10 @@ public class ProjectEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<UseCaseEntity> useCases = new HashSet<>();
 
+    @JoinTable(name = "projects_workers", joinColumns = {
+        @JoinColumn(name = "project_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "worker_id", referencedColumnName = "id")})
     @ManyToMany
-    @JoinTable(
-            name = "projects_workers",
-            joinColumns = {
-                @JoinColumn(name = "worker_id", referencedColumnName = "id")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "project_id", referencedColumnName = "id")})
     private List<WorkerEntity> workers = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
@@ -229,7 +226,7 @@ public class ProjectEntity implements Serializable {
         this.taskMock.add(t);
     }
 
-    public void deleteTask(final TasksEntityMock t) {
+    public void removeTask(final TasksEntityMock t) {
         this.taskMock.remove(t);
     }
 
@@ -253,7 +250,7 @@ public class ProjectEntity implements Serializable {
         this.workers.add(w);
     }
 
-    public void deleteWorker(final WorkerEntity w) {
+    public void removeWorker(final WorkerEntity w) {
         this.workers.remove(w);
     }
 

@@ -25,10 +25,10 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class WorkerProfileBean extends Bean implements Serializable {
+public class WorkerProfileBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(WorkerProfileBean.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(WorkerProfileBean.class.getName());//NOPMD
 
     private List<ProjectEntity> projects;
     private WorkerEntity workerEntity;
@@ -36,6 +36,13 @@ public class WorkerProfileBean extends Bean implements Serializable {
     public WorkerProfileBean() {
         super();
         this.workerEntity = AbstractDAOFactory.getFactory().getWorkerDAO().read(1);
+
+        if (workerEntity != null) {//NOPMD
+            final WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
+            projects = workerProfileEjb.findProjects(workerEntity);
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Worker not selected", ""));
+        }
     }
 
     public List<ProjectEntity> getProjects() {
@@ -52,16 +59,5 @@ public class WorkerProfileBean extends Bean implements Serializable {
 
     public void setWorkerEntity(final WorkerEntity workerEntity) {
         this.workerEntity = workerEntity;
-    }
-
-    public String projects() {
-        if (workerEntity != null) {
-            WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
-            projects = workerProfileEjb.findProjects(workerEntity);
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Worker not selected", ""));
-        }
-        return null;
-
     }
 }

@@ -12,10 +12,8 @@ import eui.miw.pfm.models.entities.WorkerEntity;
 import eui.miw.pfm.util.moks.profile.TasksEntityMock;
 import java.util.Date;
 import java.util.List;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,11 +38,11 @@ public class TestWorkerProfile {
     public static void init() {
         userEntity = new UserEntity();
         userEntity.setEmail("pepe@gmail.com");
-        userEntity.setName("Pepe");
+        userEntity.setName("Pepe1");
         userEntity.setPassword("123456789");
-        userEntity.setSecondSurname("Pepe");
-        userEntity.setSurname("Pepe");
-        userEntity.setUsername("pepe");
+        userEntity.setSecondSurname("Pepe2");
+        userEntity.setSurname("Pepe3");
+        userEntity.setUsername("pepe4");
         AbstractDAOFactory.getFactory().getUserDAO().create(userEntity);
 
         workerEntity1 = new WorkerEntity();
@@ -115,24 +113,24 @@ public class TestWorkerProfile {
 
     @Test
     public void testWorker1() {
-        WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
-        List<ProjectEntity> projectEntities = workerProfileEjb.findProjects(AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity1.getId()));
+        final WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
+        final List<ProjectEntity> projectEntities = workerProfileEjb.findProjects(AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity1.getId()));
 
         for (ProjectEntity pe : projectEntities) {
-            Assert.assertTrue("No exist", workerEntity1.getProjects().contains(projectEntity1));
-            Assert.assertTrue("No exist", workerEntity1.getProjects().contains(projectEntity2));
+            Assert.assertTrue("No exist project 1", workerEntity1.getProjects().contains(projectEntity1));
+            Assert.assertTrue("No exist project 2", workerEntity1.getProjects().contains(projectEntity2));
             for (TasksEntityMock te : pe.getTaskMock()) {
-                Assert.assertTrue("No exist", workerEntity1.getTaskMock().contains(tasksEntityMock1));
+                Assert.assertTrue("No exist task 1", workerEntity1.getTaskMock().contains(tasksEntityMock1));
                 Assert.assertTrue("No exist", workerEntity1.getTaskMock().contains(tasksEntityMock3));
-                Assert.assertFalse("Exist", workerEntity1.getTaskMock().contains(tasksEntityMock2));
+                Assert.assertFalse("Exist task 2", workerEntity1.getTaskMock().contains(tasksEntityMock2));
             }
         }
     }
 
     @Test
     public void testWorker2() {
-        WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
-        List<ProjectEntity> projectEntities = workerProfileEjb.findProjects(AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity2.getId()));
+        final WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
+        final List<ProjectEntity> projectEntities = workerProfileEjb.findProjects(AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity2.getId()));
 
         for (ProjectEntity pe : projectEntities) {
             Assert.assertTrue("No exist", workerEntity2.getProjects().contains(projectEntity1));

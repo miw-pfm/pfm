@@ -9,6 +9,7 @@ import eui.miw.pfm.util.moks.profile.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,13 +65,10 @@ public class WorkerEntity implements Serializable {
     @Size(min = 2, max = 100)
     private String gitUser;
 
+    @JoinTable(name = "projects_workers", joinColumns = {
+        @JoinColumn(name = "worker_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "project_id", referencedColumnName = "id")})
     @ManyToMany
-    @JoinTable(
-            name = "projects_workers",
-            joinColumns = {
-                @JoinColumn(name = "worker_id", referencedColumnName = "id")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "project_id", referencedColumnName = "id")})
     private List<ProjectEntity> projects = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "worker")
@@ -151,7 +149,7 @@ public class WorkerEntity implements Serializable {
         this.projects.add(p);
     }
 
-    public void deleteProject(final ProjectEntity p) {
+    public void removeProject(final ProjectEntity p) {
         this.projects.remove(p);
     }
 
@@ -159,7 +157,7 @@ public class WorkerEntity implements Serializable {
         this.taskMock.add(t);
     }
 
-    public void deleteTask(final TasksEntityMock t) {
+    public void removeTask(final TasksEntityMock t) {
         this.taskMock.remove(t);
     }
 
@@ -179,16 +177,18 @@ public class WorkerEntity implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WorkerEntity)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        WorkerEntity other = (WorkerEntity) object;
-        if (this.id.equals(other.getId())) {
-            return true;
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-        return false;
+        final WorkerEntity other = (WorkerEntity) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
