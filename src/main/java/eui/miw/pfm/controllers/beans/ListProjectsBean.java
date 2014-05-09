@@ -34,7 +34,7 @@ public class ListProjectsBean extends Bean implements Serializable {
     private List<ProjectEntity> projects;
     private UserEntity userEntity;
 
-    public ListProjectsBean() {   
+    public ListProjectsBean() {
         super();
         try {
             this.userEntity = ((UserEntity) sessionMap.get("userlogin"));
@@ -70,7 +70,7 @@ public class ListProjectsBean extends Bean implements Serializable {
     public void setUserEntity(final UserEntity userEntity) {
         this.userEntity = userEntity;
     }
-    
+
     public void setSelectedProject(final ProjectEntity selectedProject) {
         this.selectedProject = selectedProject;
     }

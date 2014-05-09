@@ -20,10 +20,9 @@ import javax.validation.constraints.Size;
 /**
  *
  * @author Jean Mubaied
- * @author Fred Pena
  */
 @Entity
-@Table(name = "calendartemplate")
+@Table (name="calendartemplate")
 public class CalendarTemplateEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

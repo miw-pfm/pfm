@@ -41,7 +41,7 @@ public class ListWorkerBean extends Bean implements Serializable {
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
-        final  ListWorkersEjb workersEjb = new ListWorkersEjb();
+        final ListWorkersEjb workersEjb = new ListWorkersEjb();
         this.workers = workersEjb.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
