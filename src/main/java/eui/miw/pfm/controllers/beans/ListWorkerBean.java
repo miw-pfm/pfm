@@ -12,6 +12,7 @@ import eui.miw.pfm.models.entities.WorkerEntity;
 import eui.miw.pfm.util.LazyWorkerDataModel;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
@@ -26,6 +27,7 @@ public class ListWorkerBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private transient LazyDataModel<WorkerEntity> lazyModel;
+    private static final Logger LOGGER = Logger.getLogger(ListWorkerBean.class.getName());//NOPMD
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
     private UserEntity user;
@@ -37,9 +39,11 @@ public class ListWorkerBean extends Bean implements Serializable {
             this.user = ((UserEntity) sessionMap.get("UserLogIn"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
+            LOGGER.warning("No session exist");
         }
-        final ListWorkersEjb eaE = new ListWorkersEjb();
-        this.workers = eaE.obtainWorkers(this.project);
+
+        final ListWorkersEjb workersEjb = new ListWorkersEjb();
+        this.workers = workersEjb.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -88,4 +92,5 @@ public class ListWorkerBean extends Bean implements Serializable {
         this.workers = eaE.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
+
 }

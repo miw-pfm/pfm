@@ -67,7 +67,7 @@ public class TestWorkerEntity {
     public void testDeleteProjectWorker(){
         ProjectDAO pd = AbstractDAOFactory.getFactory().getProjectDAO();
         ProjectEntity p = pd.read(1);
-        TestWorkerEntity.worker.deleteProject(p);
+        TestWorkerEntity.worker.removeProject(p);
         wd = AbstractDAOFactory.getFactory().getWorkerDAO();
         this.wd.update(TestWorkerEntity.worker);
         assertTrue("fin test",true); // NOPMD

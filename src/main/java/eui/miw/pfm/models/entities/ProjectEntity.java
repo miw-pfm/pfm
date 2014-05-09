@@ -1,5 +1,6 @@
 package eui.miw.pfm.models.entities;
 
+import eui.miw.pfm.util.moks.profile.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,13 +29,14 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "projects")
 public class ProjectEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id; //NOPMD
-    
+
     @Column(name = "name")
     @NotNull
     @Size(min = 3, max = 100)
@@ -41,40 +44,45 @@ public class ProjectEntity implements Serializable {
 
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    private Date startDate; 
-    
+    private Date startDate;
+
     @Transient
     private String stringStartDate;
 
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    
+
     @Transient
     private String stringEndDate;
-    
+
     @Column(name = "week_per_iteration")
     private int weekNumIteration;
 
     @Transient
     private float estimatedNumIteration;
-    
-    
+
     @Column(name = "chosen_num_iteration")
     private int chosenNumIteration; //NOPMD 
-    
+
     @Column(name = "description")
     private String description; //NOPMD 
- 
+
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName="id")           
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity owner;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private Set<UseCaseEntity> useCases = new HashSet<UseCaseEntity>();
-    
-    @ManyToMany(mappedBy="projects")
-    private List<WorkerEntity> workers = new ArrayList<WorkerEntity>();
+    private Set<UseCaseEntity> useCases = new HashSet<>();
+
+    @JoinTable(name = "projects_workers", joinColumns = {
+        @JoinColumn(name = "project_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "worker_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<WorkerEntity> workers = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+    private List<TasksEntityMock> taskMock = new ArrayList<>();
 
     public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, int chosenNumIteration, String description, UserEntity owner) {
         this.id = id;
@@ -88,6 +96,7 @@ public class ProjectEntity implements Serializable {
         this.description = description;
         this.owner = owner;
     }
+
     public ProjectEntity() {
         super();
     }
@@ -126,17 +135,16 @@ public class ProjectEntity implements Serializable {
     public Date getStartDate() {
         return startDate;
     }
-    
-    public String getStringStartDate(){
+
+    public String getStringStartDate() {
         return this.stringStartDate;
     }
-    
-    public void updateStringDates(){
-        java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("MM-dd-yyyy");
+
+    public void updateStringDates() {
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM-dd-yyyy");
         this.stringStartDate = sdf.format(this.startDate);
         this.stringEndDate = sdf.format(this.endDate);
     }
-    
 
     public void setStartDate(final Date startDate) {
         this.startDate = startDate;
@@ -165,7 +173,7 @@ public class ProjectEntity implements Serializable {
     public void setEstimatedNumIteration(float estimatedNumIteration) {
         this.estimatedNumIteration = estimatedNumIteration;
     }
-    
+
     public int getChosenNumIteration() {
         return chosenNumIteration;
     }
@@ -173,16 +181,16 @@ public class ProjectEntity implements Serializable {
     public void setChosenNumIteration(final int chosenNumIteration) { //NOPMD
         this.chosenNumIteration = chosenNumIteration;
     }
-    
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(final String description) {
         this.description = description;
-    }    
+    }
 
-   public UserEntity getOwner() {
+    public UserEntity getOwner() {
         return owner;
     }
 
@@ -197,21 +205,37 @@ public class ProjectEntity implements Serializable {
     public void setStringEndDate(final String stringEndDate) {
         this.stringEndDate = stringEndDate;
     }
-    
+
     public Set<UseCaseEntity> getUseCases() {
         return useCases;
     }
 
-    public void setUseCases(Set<UseCaseEntity> useCases) {
+    public void setUseCases(final Set<UseCaseEntity> useCases) {
         this.useCases = useCases;
     }
-    
-    public void addUseCases(UseCaseEntity usecases) {
+
+    public void addUseCases(final UseCaseEntity usecases) {
         this.useCases.add(usecases);
     }
 
-    public void removeUseCases(UseCaseEntity usecases) {
+    public void removeUseCases(final UseCaseEntity usecases) {
         this.useCases.remove(usecases);
+    }
+
+    public void addTask(final TasksEntityMock t) {
+        this.taskMock.add(t);
+    }
+
+    public void removeTask(final TasksEntityMock t) {
+        this.taskMock.remove(t);
+    }
+
+    public List<TasksEntityMock> getTaskMock() {
+        return taskMock;
+    }
+
+    public void setTaskMock(final List<TasksEntityMock> taskMock) {
+        this.taskMock = taskMock;
     }
 
     public List<WorkerEntity> getWorkers() {
@@ -221,15 +245,15 @@ public class ProjectEntity implements Serializable {
     public void setWorkers(final List<WorkerEntity> workers) {
         this.workers = workers;
     }
-    
-    public void addWorker(final WorkerEntity w){
+
+    public void addWorker(final WorkerEntity w) {
         this.workers.add(w);
     }
-    
-    public void deleteWorker(final WorkerEntity w){
+
+    public void removeWorker(final WorkerEntity w) {
         this.workers.remove(w);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

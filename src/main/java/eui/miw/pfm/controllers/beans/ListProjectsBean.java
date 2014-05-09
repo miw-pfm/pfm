@@ -29,19 +29,19 @@ public class ListProjectsBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(ListProjectsBean.class.getName());//NOPMD
-    private final LazyDataModel<ProjectEntity> lazyModel;
+    private final LazyDataModel<ProjectEntity> lazyModel;//NOPMD
     private ProjectEntity selectedProject;
     private List<ProjectEntity> projects;
     private UserEntity userEntity;
 
-    public ListProjectsBean() {   
+    public ListProjectsBean() {
         super();
         try {
             this.userEntity = ((UserEntity) sessionMap.get("userlogin"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
-        ListProjectsEjb eaE = new ListProjectsEjb();
+        final ListProjectsEjb projectsEjb = new ListProjectsEjb();//NOPMD
         this.projects = new ListProjectsEjb().obtainProjects(this.userEntity);
         this.lazyModel = new LazyProjectDataModel(this.projects);
 
@@ -67,11 +67,11 @@ public class ListProjectsBean extends Bean implements Serializable {
         return userEntity;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
+    public void setUserEntity(final UserEntity userEntity) {
         this.userEntity = userEntity;
     }
-    
-    public void setSelectedProject(ProjectEntity selectedProject) {
+
+    public void setSelectedProject(final ProjectEntity selectedProject) {
         this.selectedProject = selectedProject;
     }
 

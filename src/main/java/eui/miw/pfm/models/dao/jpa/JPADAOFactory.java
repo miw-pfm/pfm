@@ -4,6 +4,7 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
+import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
 import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
@@ -31,7 +32,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
 
     @Override
     public ProjectDAO getProjectDAO() {
-  	return new JPAProjectDAO();
+        return new JPAProjectDAO();
     }
 
     @Override
@@ -54,10 +55,14 @@ public class JPADAOFactory extends AbstractDAOFactory {
         return new JPACalendarTemplateDAO();
     }
 
-    
     @Override
     public WorkerDAO getWorkerDAO() {
         return new JPAWorkerDAO();
     }
-    
+
+    @Override
+    public TaskDAO getTaskDAO() {
+        return new JPATaskDAO();
+    }
+
 }

@@ -29,6 +29,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private transient final LazyDataModel<WorkerEntity> lazyModel;
+
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
     private UserEntity user;
@@ -44,9 +45,11 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
             this.user = ((UserEntity) sessionMap.get("UserLogIn"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
+            LOGGER.warning("No session exist");
         }
-        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
-        this.workers = eaE.obtainWorkers(this.project);
+
+        final ListProjectWorkersEjb workersEjb = new ListProjectWorkersEjb();
+        this.workers = workersEjb.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -112,11 +115,12 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         eaE.add(project, worker);
 
         this.listWorkerBean.reload();
-        
+
         return "list_worker";
     }
 
     public ListWorkerBean getListWorkerBean() {
         return listWorkerBean;
+
     }
 }

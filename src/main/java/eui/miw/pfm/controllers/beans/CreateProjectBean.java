@@ -29,7 +29,7 @@ public class CreateProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity projectEntity;
-    private UserEntity userEntity;
+    private transient UserEntity userEntity;
     private final CreateProjectEjb createProjectEjb;//NOPMD
     private static final Logger LOGGER = Logger.getLogger(CreateProjectBean.class.getName());//NOPMD
 
@@ -78,15 +78,15 @@ public class CreateProjectBean extends Bean implements Serializable {
     }
 
     public void load_holidays() {
-        CalendarProjectEjb cpe = new CalendarProjectEjb();
-        CalendarTemplateEjb cte = new CalendarTemplateEjb();
-        for (CalendarTemplateEntity ct : cte.obtainHolidays()) {
-            CalendarEntity ce = new CalendarEntity();
-            ce.setName(ct.getName());
-            ce.setDescription(ct.getName());
-            ce.setHoliday(ct.getHoliday());
-            ce.setProject(projectEntity);
-            cpe.create(ce);
+        final CalendarProjectEjb calProjectEjb = new CalendarProjectEjb();
+        final CalendarTemplateEjb calTemplateEjb = new CalendarTemplateEjb();
+        for (CalendarTemplateEntity ct : calTemplateEjb.obtainHolidays()) {
+            final CalendarEntity calendarEntity = new CalendarEntity();
+            calendarEntity.setName(ct.getName());
+            calendarEntity.setDescription(ct.getName());
+            calendarEntity.setHoliday(ct.getHoliday());
+            calendarEntity.setProject(projectEntity);
+            calProjectEjb.create(calendarEntity);
         }
     }
 }

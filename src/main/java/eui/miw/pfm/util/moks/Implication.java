@@ -1,5 +1,6 @@
 package eui.miw.pfm.util.moks;
 
+import eui.miw.pfm.util.moks.profile.TasksEntityMock;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,13 +9,13 @@ public class Implication {
 
     private String name;
 
-    private List<Tasks> tasks = new ArrayList<>();
+    private List<TasksEntityMock> tasks = new ArrayList<>();
 
-    public List<Tasks> getTasks() {
+    public List<TasksEntityMock> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Tasks> tasks) {
+    public void setTasks(List<TasksEntityMock> tasks) {
         this.tasks = tasks;
     }
 

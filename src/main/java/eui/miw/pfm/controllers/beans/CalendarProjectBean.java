@@ -14,7 +14,6 @@ import java.util.Locale;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -27,12 +26,10 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private CalendarEntity calendarEntity;
-    private ProjectEntity project;
-    private SessionMap sessionMap;
-    private Calendar calendar = new GregorianCalendar();
-    private Calendar startdate = new GregorianCalendar();
-    private Calendar enddate = new GregorianCalendar();
+    private final CalendarEntity calendarEntity;
+    private ProjectEntity project;    
+    private String name;
+    private String description;
     private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
@@ -40,41 +37,52 @@ public class CalendarProjectBean extends Bean implements Serializable {
     public CalendarProjectBean() {
         super();
         project = new ProjectEntity();
-        calendarEntity = new CalendarEntity();
-        this.sessionMap = new SessionMap();
-
+        calendarEntity = new CalendarEntity();        
         try {
-            this.project = ((ProjectEntity) this.sessionMap.get("project"));
+            this.project = ((ProjectEntity) new SessionMap().get("project"));
         } catch (Exception e) {
             LOG.warning("No session exist");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDate1() {
         return date1;
     }
 
-    public void setDate1(Date date1) {
+    public void setDate1(final Date date1) {
         this.date1 = date1;
     }
 
     public String create() {
         this.calendarEntity.setProject(project);
-        CalendarProjectEjb ejb = new CalendarProjectEjb();
-        ejb.create(this.calendarEntity);
+        new CalendarProjectEjb().create(this.calendarEntity);
         return null;
     }
 
     public String update() {
-        CalendarProjectEjb ejb = new CalendarProjectEjb();
         this.calendarEntity.setProject(project);
-        ejb.update(this.calendarEntity);
+        new CalendarProjectEjb().update(this.calendarEntity);
         return null;
     }
 
     public String delete() {
-        CalendarProjectEjb ejb = new CalendarProjectEjb();
-        ejb.delete(this.calendarEntity);
+        new CalendarProjectEjb().delete(this.calendarEntity);
         return null;
     }
 
@@ -87,67 +95,57 @@ public class CalendarProjectBean extends Bean implements Serializable {
     }
 
     public int getWorkingDays() {
-        Calendar startDate = new GregorianCalendar();
-        Calendar endDate = new GregorianCalendar();
+        final Calendar startDate;
+        startDate = new GregorianCalendar();
+        final Calendar endDate;
+        endDate = new GregorianCalendar();
         startDate.setTime(this.project.getStartDate());
         endDate.setTime(this.project.getEndDate());
-
         int diffDays = 0;
         while (startDate.before(endDate) || startDate.equals(endDate)) {
-
             if (startDate.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && startDate.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
-
                 diffDays++;
             }
-
             startDate.add(Calendar.DATE, 1);
         }
-        diffDays = diffDays - this.getRealholidays();
+        diffDays = diffDays - this.getRealHolidays();
         return diffDays;
     }
 
-    public int getRealholidays() {
-        int count = 0;
-        CalendarProjectEjb ejb = new CalendarProjectEjb();
-        List<CalendarEntity> holidays = ejb.obtainHolidays(this.project);
-
-        for (CalendarEntity holiday : holidays) {
-            Date date = holiday.getHoliday().getTime();
-            if (this.project.getStartDate().before(date) && this.project.getEndDate().after(date)) {
+    public int getRealHolidays() {
+        int count;
+        count = 0;
+        final CalendarProjectEjb ejb = new CalendarProjectEjb();
+        for (CalendarEntity holiday : ejb.obtainHolidays(this.project)) {
+            if (this.project.getStartDate().before(holiday.getHoliday().getTime()) && this.project.getEndDate().after(holiday.getHoliday().getTime())) {
                 count++;
             }
         }
         return count;
     }
-
-    public void handleDateSelect(SelectEvent event) {
-        this.calendar = Calendar.getInstance();
-        this.calendar.setTime(date1);
-        SimpleDateFormat format = new SimpleDateFormat("d/M/yyyy");
-        CalendarEntity calendarEntity = new CalendarEntity();
-        CalendarProjectEjb calendarProjectEjb = new CalendarProjectEjb();
-        calendarEntity.setHoliday(calendar);
-        calendarEntity.setDescription("dd");
-        calendarEntity.setName("nn");
-        calendarEntity.setProject(project);
-        calendarProjectEjb.create(calendarEntity);
-        //Así se recupera la fecha seleccionada
-        // format.format(calendar.getTime())
-        //--- Para mostrar el mensaje con la fecha
-        //FacesContext facesContext = FacesContext.getCurrentInstance();
-        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
     
-    public String[] getHolidays() {       
+    //Manuel Rodríguez
+    public void handleDateSelect() {
+        Calendar calendar= Calendar.getInstance();
+        calendar.setTime(date1);
+        CalendarEntity calendarentity=new CalendarEntity();      
+        calendarentity.setHoliday(calendar);
+        calendarentity.setDescription(description);
+        calendarentity.setName(name);
+        calendarentity.setProject(project);
+        new CalendarProjectEjb().create(calendarentity);
+    }
+
+    //Manuel Rodríguez
+    public String[] getHolidays() {
         CalendarProjectEjb calendarProjectEjb = new CalendarProjectEjb();
-        List<CalendarEntity> holidays= calendarProjectEjb.obtainHolidays(project);
-        String[] a= new String[holidays.size()];
-        SimpleDateFormat formato=new SimpleDateFormat("MMMM d, yyyy", Locale.UK);
-        for (int i=0;i<holidays.size();i++)
-            {
-          a[i]="'"+formato.format(holidays.get(i).getHoliday().getTime())+"'";
-          System.out.println(a[i]+"-");
-          }     
+        List<CalendarEntity> holidays = calendarProjectEjb.obtainHolidays(project);
+        String[] a = new String[holidays.size()];
+        SimpleDateFormat formato = new SimpleDateFormat("MMMM d, yyyy", Locale.UK);
+        for (int i = 0; i < holidays.size(); i++) {
+            a[i] = "'" + formato.format(holidays.get(i).getHoliday().getTime()) + "'";
+            System.out.println(a[i] + "-");
+        }
         return a;
     }
 }

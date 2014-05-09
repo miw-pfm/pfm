@@ -194,7 +194,7 @@ input.hasDatepicker {
 /* j_idt39 es id del formulario del calendario del proyecto
 /***************************************************/
 
-#j_idt39 span{
+#j_idt39\:calProject{
     float: left;
 }
 
