@@ -3,21 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ListProjectWorkersEjb;
-import eui.miw.pfm.controllers.ejb.ListProjectsEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.LazyProjectDataModel;
 import eui.miw.pfm.util.LazyWorkerDataModel;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -27,21 +24,25 @@ import org.primefaces.model.LazyDataModel;
 @Named
 @SessionScoped
 public class ListProjectWorkersBean extends Bean implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private final LazyDataModel<WorkerEntity> lazyModel;
+    private static final Logger LOGGER = Logger.getLogger(ListProjectWorkersBean.class.getName());//NOPMD
+    private final LazyDataModel<WorkerEntity> lazyModel;//NOPMD
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
     private UserEntity user;
     private ProjectEntity project;
-    
-    public ListProjectWorkersBean() {        
+
+    public ListProjectWorkersBean() {
+        super();
         try {
             this.user = ((UserEntity) sessionMap.get("UserLogIn"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
+            LOGGER.warning("No session exist");
         }
-        ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
-        this.workers = eaE.obtainWorkers(this.project);
+        final ListProjectWorkersEjb workersEjb = new ListProjectWorkersEjb();
+        this.workers = workersEjb.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
 
     }
@@ -50,7 +51,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         return selectedWorker;
     }
 
-    public void setSelectedWorker(WorkerEntity selectedWorker) {
+    public void setSelectedWorker(final WorkerEntity selectedWorker) {
         this.selectedWorker = selectedWorker;
     }
 
@@ -58,7 +59,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         return workers;
     }
 
-    public void setWorkers(List<WorkerEntity> workers) {
+    public void setWorkers(final List<WorkerEntity> workers) {
         this.workers = workers;
     }
 
@@ -66,7 +67,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(final UserEntity user) {
         this.user = user;
     }
 
@@ -74,15 +75,11 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(final ProjectEntity project) {
         this.project = project;
     }
 
     public LazyDataModel<WorkerEntity> getLazyModel() {
         return lazyModel;
-    }
-    
-    public void onRowSelect(SelectEvent event) {//NOPMD
-        // TODO
     }
 }

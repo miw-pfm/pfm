@@ -30,8 +30,8 @@ public class UseCaseBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private UseCaseEntity usecase = new UseCaseEntity();
-    private ProjectEntity project;
-    private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
+    private transient ProjectEntity project;
+    private static final Logger LOGGER = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
 
     public UseCaseBean() {
         super();
@@ -41,11 +41,12 @@ public class UseCaseBean extends Bean implements Serializable {
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
-            LOG.warning("No session exist");
+            LOGGER.warning("No session exist");
         }
     }
 
     public UseCaseBean(final UseCaseEntity usecase) {
+        super();
         this.usecase = usecase;
     }
 
@@ -55,14 +56,14 @@ public class UseCaseBean extends Bean implements Serializable {
 
     public void setUsecase(final UseCaseEntity usecase) {
         this.usecase = usecase;
-        LOG.info(this.usecase.toString());
+        LOGGER.info(this.usecase.toString());
     }
 
     public String update() {
-        UseCaseEjb ejb = new UseCaseEjb();
+        final UseCaseEjb useCaseEjb = new UseCaseEjb();
         this.usecase.setProject(project);
-        LOG.info(this.usecase.toString());
-        ejb.update(this.usecase);
+        LOGGER.info(this.usecase.toString());
+        useCaseEjb.update(this.usecase);
         FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
         return "useCasesList";
     }
@@ -70,27 +71,27 @@ public class UseCaseBean extends Bean implements Serializable {
     public String create() {
         if (this.project == null) {
             FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_WARN, "No project selected", ""));
-            return null;
+            return null;//NOPMD
         }
         this.usecase.setProject(this.project);
-        UseCaseEjb ejb = new UseCaseEjb();
-        ejb.create(this.usecase);
+        final UseCaseEjb useCaseEjb = new UseCaseEjb();
+        useCaseEjb.create(this.usecase);
         FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
         return null;
     }
 
     public String delete(final UseCaseEntity useCaseEntity) {
-        UseCaseEjb ejb = new UseCaseEjb();
+        final UseCaseEjb useCaseEjb = new UseCaseEjb();
         this.usecase.setProject(project);
         this.usecase = useCaseEntity;
-        LOG.info(this.usecase.toString());
-        ejb.delete(usecase);
+        LOGGER.info(this.usecase.toString());
+        useCaseEjb.delete(usecase);
         FacesContext.getCurrentInstance().addMessage("form_list", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Deleted", ""));
         return null;
     }
 
     public List<UseCaseEntity> getUseCases() {
-        ListUseCaseEjb listejb = new ListUseCaseEjb();
+        final ListUseCaseEjb listejb = new ListUseCaseEjb();
         return listejb.obtainUseCase(this.project);
     }
 
