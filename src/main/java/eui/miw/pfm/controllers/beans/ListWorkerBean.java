@@ -20,6 +20,8 @@ import org.primefaces.model.LazyDataModel;
 /**
  *
  * @author Roberto Amor
+ *
+ * Refactoring : Fred Peña & Jose M Villar
  */
 @Named
 @SessionScoped
@@ -36,14 +38,13 @@ public class ListWorkerBean extends Bean implements Serializable {
     public ListWorkerBean() {
         super();
         try {
-            this.user = ((UserEntity) sessionMap.get("UserLogIn"));
+            this.user = ((UserEntity) sessionMap.get("userlogin"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
 
-        final ListWorkersEjb workersEjb = new ListWorkersEjb();
-        this.workers = workersEjb.obtainWorkers(this.project);
+        this.workers = new ListWorkersEjb().obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -88,8 +89,7 @@ public class ListWorkerBean extends Bean implements Serializable {
      * @author Jose M Villar
      */
     public void reload() {
-        final ListWorkersEjb eaE = new ListWorkersEjb();
-        this.workers = eaE.obtainWorkers(this.project);
+        this.workers = new ListWorkersEjb().obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 

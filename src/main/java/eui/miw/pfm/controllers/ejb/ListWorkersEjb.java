@@ -13,6 +13,8 @@ import java.util.List;
 /**
  *
  * @author Roberto Amor
+ *
+ * Refactoring : Fred Peña & Jose M Villar
  */
 public class ListWorkersEjb {
 
