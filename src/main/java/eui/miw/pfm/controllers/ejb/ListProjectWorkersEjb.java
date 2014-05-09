@@ -23,8 +23,8 @@ public class ListProjectWorkersEjb {
     }       
 
     public void remove(final ProjectEntity project, final WorkerEntity worker) {
-        project.deleteWorker(worker);
-        worker.deleteProject(project);
+        project.removeWorker(worker);
+        worker.removeProject(project);
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);        
         AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
     }
