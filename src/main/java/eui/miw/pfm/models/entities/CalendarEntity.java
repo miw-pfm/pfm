@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,14 +22,17 @@ import javax.validation.constraints.Size;
 /**
  *
  * @author Jean Mubaied
+ * @author Fred Pena
  */
 @Entity
+@Table(name = "calendar")
 public class CalendarEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer id;//NOPMD
 
     @Column(name = "holiday")
     @NotNull
@@ -48,12 +52,12 @@ public class CalendarEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private ProjectEntity project;
-    
+
     public CalendarEntity() {
         super();
     }
-    
-    public CalendarEntity(Integer id, Calendar holiday, String name, String description, ProjectEntity project) {
+
+    public CalendarEntity(final Integer id, final Calendar holiday, final String name, final String description, final ProjectEntity project) {//NOPMD
         this.id = id;
         this.holiday = holiday;
         this.name = name;
@@ -65,7 +69,7 @@ public class CalendarEntity implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {//NOPMD
         this.id = id;
     }
 
@@ -104,19 +108,19 @@ public class CalendarEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);//NOPMD
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof CalendarEntity)) {
-            return false;
+            return false;//NOPMD
         }
-        CalendarEntity other = (CalendarEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+        final CalendarEntity other = (CalendarEntity) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {//NOPMD
+            return false;//NOPMD
         }
         return true;
     }

@@ -17,7 +17,7 @@ import java.util.List;
 public class ListProjectsEjb {
 
     public List<ProjectEntity> obtainProjects(final UserEntity user) {
-        String psql = "SELECT p FROM ProjectEntity p WHERE p.owner = ?1";
+        final String psql = "SELECT p FROM ProjectEntity p WHERE p.owner = ?1";//NOPMD
         return AbstractDAOFactory.getFactory().getProjectDAO().find(psql, user);
     }
 }

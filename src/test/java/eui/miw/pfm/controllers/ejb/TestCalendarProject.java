@@ -34,7 +34,7 @@ public class TestCalendarProject {
         this.calendar.setHoliday(new GregorianCalendar(2014, 11, 25));
         this.calendar.setName("Christmas");
         this.calendar.setDescription("Free");
-        this.calendar.setProject(pd.read(1));
+        this.calendar.setProject(pd.read(12));
         this.calendarProjectEJB = new CalendarProjectEjb();
     }
 
@@ -47,18 +47,17 @@ public class TestCalendarProject {
     @Test
     public void testUpdateCalendar() {
         CalendarDAO cd = AbstractDAOFactory.getFactory().getCalendarDAO();
-        CalendarEntity calendar2 = cd.read(10);
+        CalendarEntity calendar2 = cd.read(12);
         calendar2.setName("ChristmaChanged");
         calendar2.setDescription("NotFree");
-        calendarProjectEJB.update(this.calendar);
+        calendarProjectEJB.update(calendar2);
         assertTrue("fin test", true); // NOPMD  
     }
 
 //    @Test
 //    public void testFindHolidays() {
 //        ProjectDAO pd = AbstractDAOFactory.getFactory().getProjectDAO();
-//        System.out.println(calendarProjectEJB.obtainHolidays(pd.read(1)));
-//        assertNotNull(calendarProjectEJB.obtainHolidays(pd.read(1)));
+//        assertNotNull(calendarProjectEJB.obtainHolidays(pd.read(12)));
 //    }
 
     @After

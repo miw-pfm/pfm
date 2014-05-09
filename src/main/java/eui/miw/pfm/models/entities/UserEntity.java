@@ -137,7 +137,7 @@ public class UserEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);//NOPMD
         return hash;
     }
 
@@ -145,11 +145,11 @@ public class UserEntity implements Serializable {
     public boolean equals(final Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof UserEntity)) {
-            return false;
+            return false;//NOPMD
         }
-        UserEntity other = (UserEntity) object;
+        final UserEntity other = (UserEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+            return false;//NOPMD
         }
         return true;
     }

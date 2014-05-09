@@ -16,11 +16,7 @@ import eui.miw.pfm.models.entities.UseCaseEntity;
  */
 public class UseCaseEjb {
 
-    public UseCaseEjb() {
-        super();
-    }
-
-    public void update(final UseCaseEntity usecase) {
+      public void update(final UseCaseEntity usecase) {
         AbstractDAOFactory.getFactory().getUseCaseDAO().update(usecase);
     }
 

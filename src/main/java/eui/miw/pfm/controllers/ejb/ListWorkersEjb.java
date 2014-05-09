@@ -7,18 +7,19 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UseCaseEntity;
+import eui.miw.pfm.models.entities.WorkerEntity;
 import java.util.List;
 
 /**
  *
- * @author Jose M Villar
+ * @author Roberto Amor
  */
-public class ListUseCaseEjb {
+public class ListWorkersEjb {
 
-    public List<UseCaseEntity> obtainUseCase(final ProjectEntity project) {
-        final String psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, project);
+    public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {
+        final List<WorkerEntity> listAll = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
+        listAll.removeAll(project.getWorkers());
+        return listAll;
     }
 
 }

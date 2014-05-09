@@ -6,18 +6,15 @@
 
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.ListProjectWorkersEjb;
-import eui.miw.pfm.controllers.ejb.ListProjectsEjb;
+import eui.miw.pfm.controllers.ejb.ListWorkersEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.LazyProjectDataModel;
 import eui.miw.pfm.util.LazyWorkerDataModel;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 /**
@@ -26,7 +23,7 @@ import org.primefaces.model.LazyDataModel;
  */
 @Named
 @SessionScoped
-public class ListProjectWorkersBean extends Bean implements Serializable {
+public class ListWorkerBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
     private final LazyDataModel<WorkerEntity> lazyModel;
     private WorkerEntity selectedWorker;
@@ -34,16 +31,15 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
     private UserEntity user;
     private ProjectEntity project;
     
-    public ListProjectWorkersBean() {        
+    public ListWorkerBean() {        
         try {
             this.user = ((UserEntity) sessionMap.get("UserLogIn"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
         }
-        ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
+        ListWorkersEjb eaE = new ListWorkersEjb();
         this.workers = eaE.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
-
     }
 
     public WorkerEntity getSelectedWorker() {
@@ -76,13 +72,5 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
 
     public void setProject(ProjectEntity project) {
         this.project = project;
-    }
-
-    public LazyDataModel<WorkerEntity> getLazyModel() {
-        return lazyModel;
-    }
-    
-    public void onRowSelect(SelectEvent event) {//NOPMD
-        // TODO
-    }
+    }  
 }
