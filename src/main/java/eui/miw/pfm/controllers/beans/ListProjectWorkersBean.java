@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ListProjectWorkersEjb;
@@ -15,17 +14,19 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 /**
  *
  * @author Roberto Amor
+ * @author Jose Mª Villar
  */
 @Named
 @SessionScoped
 public class ListProjectWorkersBean extends Bean implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private transient final LazyDataModel<WorkerEntity> lazyModel;
     private WorkerEntity selectedWorker;
@@ -33,19 +34,20 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
     private UserEntity user;
     private ProjectEntity project;
     private static final Logger LOGGER = Logger.getLogger(ListProjectWorkersBean.class.getName());
-    
-    
-    public ListProjectWorkersBean() { 
+
+    @ManagedProperty(value = "#{listWorkerBean}")
+    private transient ListWorkerBean listWorkerBean = new ListWorkerBean();
+
+    public ListProjectWorkersBean() {
         super();
         try {
             this.user = ((UserEntity) sessionMap.get("UserLogIn"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
         }
-        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();        
+        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
         this.workers = eaE.obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
-
     }
 
     public WorkerEntity getSelectedWorker() {
@@ -83,23 +85,38 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
     public LazyDataModel<WorkerEntity> getLazyModel() {
         return lazyModel;
     }
-    
+
     public String remove(final WorkerEntity worker) {
         assert worker != null;
         assert this.project != null;
-        
+
         LOGGER.info(worker.toString());
-        LOGGER.info(this.project.toString());        
-        
-        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();        
+        LOGGER.info(this.project.toString());
+
+        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
         eaE.remove(project, worker);
+
+        this.listWorkerBean.reload();
+
         return "list_worker";
-    }    
-    
-    public void onRowSelect(SelectEvent event) {//NOPMD
-        // TODO
-        LOGGER.info("Entra");
-        
     }
 
+    public String add(final WorkerEntity worker) {
+        assert worker != null;
+        assert this.project != null;
+
+        LOGGER.info(worker.toString());
+        LOGGER.info(this.project.toString());
+
+        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
+        eaE.add(project, worker);
+
+        this.listWorkerBean.reload();
+        
+        return "list_worker";
+    }
+
+    public ListWorkerBean getListWorkerBean() {
+        return listWorkerBean;
+    }
 }

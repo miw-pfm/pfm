@@ -35,8 +35,12 @@
             })
             });
         </h:outputScript> 
-        <h:panelGroup layout="block" style="margin-bottom: 5px;"><h:link value="#{msgs.add_worker}" outcome="createWorker" styleClass="btn btn-success"/></h:panelGroup>
+
         <h:form id="form">
+            <h:panelGroup layout="block" style="margin-bottom: 5px;">
+                <p:commandButton id="workerBtn" value="#{msgs.add_worker}" onclick="PF('workerPranel').show()" type="button"  styleClass="btn btn-success" />  
+            </h:panelGroup>
+
             <p:growl id="messages" showDetail="true" /> 
 
             <p:dataTable var="worker" value="#{listProjectWorkersBean.lazyModel}" paginator="true" rows="10"
@@ -44,10 +48,7 @@
                          rowsPerPageTemplate="5,10,15" 
                          rowKey="#{worker.id}" 
                          selection="#{listProjectWorkersBean.selectedWorker}" 
-                         rendered="true"
                          id="workerTable" lazy="true">
-
-                <p:ajax event="rowSelect" listener="#{listProjectWorkersBean.onRowSelect}"  />
 
                 <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}">
                     <h:outputText value="#{worker.name}" />
@@ -65,11 +66,42 @@
                     <h:outputText value="#{worker.email}" />
                 </p:column>
 
-                <p:column styleClass="edit">
-                    <p:commandButton value="#{msgs.delete}" styleClass="btn btn-sm btn-default" action="#{listProjectWorkersBean.remove(worker)}" update=":form:workerTable" />
+                <p:column styleClass="buttom">
+                    <p:commandButton value="#{msgs.remove}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" action="#{listProjectWorkersBean.remove(worker)}" update=":form" />
                 </p:column>
             </p:dataTable>
 
-        </h:form>        
+            <p:dialog id="workerPranel" header="#{msgs.add_worker}" widgetVar="workerPranel" hideEffect="fade" dynamic="true">            
+
+                <p:dataTable var="w" value="#{listProjectWorkersBean.listWorkerBean.lazyModel}" paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15" 
+                             rowKey="#{w.id}" 
+                             selection="#{listProjectWorkersBean.listWorkerBean.selectedWorker}" 
+                             id="addWorkerTable" lazy="true" widgetVar="dialog">
+
+                    <p:column headerText="Name" sortBy="surname" filterBy="#{w.name}">
+                        <h:outputText value="#{w.name}" />
+                    </p:column>
+
+                    <p:column headerText="Surname" sortBy="surname" filterBy="#{w.surname}">
+                        <h:outputText value="#{w.surname}" />
+                    </p:column>
+
+                    <p:column headerText="DNI" sortBy="dni" filterBy="#{w.dni}">
+                        <h:outputText value="#{w.dni}" />
+                    </p:column>
+
+                    <p:column headerText="Email" sortBy="email" filterBy="#{w.email}">
+                        <h:outputText value="#{w.email}" />
+                    </p:column>
+
+                    <p:column styleClass="buttom">
+                        <p:commandButton value="#{msgs.add}" styleClass="btn btn-sm btn-default" icon="ui-icon-check" action="#{listProjectWorkersBean.add(w)}" update=":form:workerTable, :form:addWorkerTable" />
+                    </p:column>
+                </p:dataTable> 
+            </p:dialog>
+        </h:form>
+
     </ui:define>
 </ui:composition>

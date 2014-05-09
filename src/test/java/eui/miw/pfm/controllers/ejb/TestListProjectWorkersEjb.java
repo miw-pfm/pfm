@@ -47,7 +47,6 @@ public class TestListProjectWorkersEjb {
         workerEntity1.setGitUser("pepe");  //NOPMD
         workerEntity1.setName("Pepe1");  //NOPMD
         workerEntity1.setSurname("Pepe");
-        workerEntity1.addProject(project);
 
         workerEntity2 = new WorkerEntity();
         workerEntity2.setDni("098765432");
@@ -55,7 +54,6 @@ public class TestListProjectWorkersEjb {
         workerEntity2.setGitUser("pepe");
         workerEntity2.setName("Pepe2");
         workerEntity2.setSurname("Pepe");
-        workerEntity2.addProject(project);
 
         workerEntity3 = new WorkerEntity();
         workerEntity3.setDni("234567890"); //NOPMD
@@ -63,41 +61,60 @@ public class TestListProjectWorkersEjb {
         workerEntity3.setGitUser("pepe");
         workerEntity3.setName("Pepe3");
         workerEntity3.setSurname("Pepe");
-        workerEntity3.addProject(project);
 
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity1);
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity2);
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity3);
 
-        project.addWorker(workerEntity1);
-        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
 
-        project.addWorker(workerEntity2);
-        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
-
-        project.addWorker(workerEntity3);
-        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
     }
+    
+    @Test
+    public void addWorker() {
+        final ListProjectWorkersEjb listWEjb = new ListProjectWorkersEjb();
+        List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
+        
+        
+        listWEjb.add(project, workerEntity1);
+        listPW.addAll(project.getWorkers()); 
+        System.out.println("add: "+listPW.toString());
+        
+        assertTrue("Recupera w1 correctamente", listWEjb.obtainWorkers(project).containsAll(listPW));
+        listPW.clear(); 
+        
+        listWEjb.add(project, workerEntity2);        
+        listWEjb.add(project, workerEntity3);
 
+        listPW.addAll(project.getWorkers()); 
+        System.out.println("add: "+listPW.toString());
+        
+        assertTrue("Recupera w1, w2 y w3 correctamente", listWEjb.obtainWorkers(project).containsAll(listPW));
+        listPW.clear();  
+        
+        listWEjb.remove(project, workerEntity1);
+        listWEjb.remove(project, workerEntity3);        
+        listWEjb.remove(project, workerEntity2);                        
+    }
+    
     @Test
     public void removeWorker() {
         final ListProjectWorkersEjb listWEjb = new ListProjectWorkersEjb();
         List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
 
-        listPW.addAll(project.getWorkers());
-        System.out.println(listPW.toString());
-        
-        assertTrue("Recupera w1, w2 y w3 correctamente", listWEjb.obtainWorkers(project).containsAll(listPW));
-        listPW.clear();
+        listWEjb.add(project, workerEntity1);
+        listWEjb.add(project, workerEntity2);        
+        listWEjb.add(project, workerEntity3);
         
         listWEjb.remove(project, workerEntity1);
         listWEjb.remove(project, workerEntity3);
         
         listPW.addAll(project.getWorkers());
-        System.out.println(listPW.toString());
-        
+        System.out.println("remove: "+listPW.toString());
+       
         assertTrue("Recupera w2 correctamente", listWEjb.obtainWorkers(project).containsAll(listPW));
-        listPW.clear();                
+        listPW.clear();          
+        
+        listWEjb.remove(project, workerEntity2);                
     }
     
     @After

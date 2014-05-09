@@ -16,10 +16,10 @@
 /* dataTable: workerTable
 /***************************************************/
 
-#form {
+#form{
     width: 860px;
 }
 
-#form td.edit {
-    width: 135px;
+#form td.buttom {
+    width: 80px;
 }
