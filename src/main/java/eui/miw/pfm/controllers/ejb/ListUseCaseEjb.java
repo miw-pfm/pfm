@@ -17,8 +17,7 @@ import java.util.List;
 public class ListUseCaseEjb {
 
     public List<UseCaseEntity> obtainUseCase(final ProjectEntity project) {
-        String psql;
-        psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1";
+        final String psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1";//NOPMD
         return AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, project);
     }
 

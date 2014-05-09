@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.entities.CalendarTemplateEntity;
-import eui.miw.pfm.models.entities.ProjectEntity;
 import java.util.List;
 
 /**
@@ -17,8 +14,8 @@ import java.util.List;
  * @author Manuel Rodriguez
  */
 public class CalendarTemplateEjb {
-    public List<CalendarTemplateEntity> obtainHolidays() {        
-        CalendarTemplateDAO calendarTemplateDAO = AbstractDAOFactory.getFactory().getCalendarTemplateDAO();        
-        return calendarTemplateDAO.findAll();
+
+    public List<CalendarTemplateEntity> obtainHolidays() {
+        return AbstractDAOFactory.getFactory().getCalendarTemplateDAO().findAll();
     }
 }

@@ -7,7 +7,6 @@ package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,8 @@ public class CalendarTemplateEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer id;//NOPMD
 
     @Column(name = "holiday")
     @NotNull
@@ -45,7 +45,7 @@ public class CalendarTemplateEntity implements Serializable {
         super();
     }
 
-    public CalendarTemplateEntity(Integer id, Calendar holiday, String name) {
+    public CalendarTemplateEntity(final Integer id, final Calendar holiday, final String name) {//NOPMD
         this.id = id;
         this.holiday = holiday;
         this.name = name;
@@ -63,34 +63,34 @@ public class CalendarTemplateEntity implements Serializable {
         return name;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {//NOPMD
         this.id = id;
     }
 
-    public void setHoliday(Calendar holiday) {
+    public void setHoliday(final Calendar holiday) {
         this.holiday = holiday;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);//NOPMD
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof CalendarTemplateEntity)) {
-            return false;
+            return false;//NOPMD
         }
-        CalendarTemplateEntity other = (CalendarTemplateEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+        final CalendarTemplateEntity other = (CalendarTemplateEntity) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {//NOPMD
+            return false;//NOPMD
         }
         return true;
     }

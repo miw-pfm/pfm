@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.models.entities;
 
+import eui.miw.pfm.util.moks.profile.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -31,11 +32,13 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "workers")
 public class WorkerEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    
+
     @Column(name = "name", length = 100)
     @NotNull
     @Size(min = 2, max = 100)
@@ -45,29 +48,31 @@ public class WorkerEntity implements Serializable {
     @NotNull
     @Size(min = 2, max = 100)
     private String surname;
-    
+
     @Column(name = "dni", length = 10)
     @NotNull
     @Size(min = 2, max = 10)
     private String dni;
-    
+
     @Column(name = "email", length = 255)
     @NotNull
     @Size(min = 6, max = 50)
     @Pattern(regexp = "^.+@.+\\..+$")
     private String email;
-    
+
     @Column(name = "git_user", length = 100)
     @NotNull
     @Size(min = 2, max = 100)
     private String gitUser;
-    
+
+    @JoinTable(name = "projects_workers", joinColumns = {
+        @JoinColumn(name = "worker_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "project_id", referencedColumnName = "id")})
     @ManyToMany
-    @JoinTable(
-      name="projects_workers",
-      joinColumns={@JoinColumn(name="worker_id", referencedColumnName="id")},
-      inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})
-    private List<ProjectEntity> projects = new ArrayList<ProjectEntity>();
+    private List<ProjectEntity> projects = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "worker")
+    private List<TasksEntityMock> taskMock = new ArrayList<>();
 
     public WorkerEntity() {
     }
@@ -83,7 +88,7 @@ public class WorkerEntity implements Serializable {
         this.dni = dni;
         this.gitUser = gitUser;
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -140,14 +145,30 @@ public class WorkerEntity implements Serializable {
         this.projects = projects;
     }
 
-    public void addProject(final ProjectEntity p){
+    public void addProject(final ProjectEntity p) {
         this.projects.add(p);
     }
-    
-    public void deleteProject(final ProjectEntity p){
+
+    public void removeProject(final ProjectEntity p) {
         this.projects.remove(p);
     }
-    
+
+    public void addTask(final TasksEntityMock t) {
+        this.taskMock.add(t);
+    }
+
+    public void removeTask(final TasksEntityMock t) {
+        this.taskMock.remove(t);
+    }
+
+    public List<TasksEntityMock> getTaskMock() {
+        return taskMock;
+    }
+
+    public void setTaskMock(final List<TasksEntityMock> taskMock) {
+        this.taskMock = taskMock;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -156,21 +177,23 @@ public class WorkerEntity implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WorkerEntity)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        WorkerEntity other = (WorkerEntity) object;
-        if (this.id.equals(other.getId())){
-            return true;
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-        return false;
+        final WorkerEntity other = (WorkerEntity) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         return "WorkerEntity{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", dni=" + dni + ", gitUser=" + gitUser + '}';
     }
-    
+
 }

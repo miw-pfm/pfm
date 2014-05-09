@@ -7,14 +7,19 @@
     background: #F79646;
 }
 
+#panelmenu li.opc2 a{
+    background: #F79646;
+    color: #FFF;
+}
+
 /***************************************************/
 /* dataTable: workerTable
 /***************************************************/
 
-#form {
+#form{
     width: 860px;
 }
 
-#form td.edit {
-    width: 135px;
+#form td.buttom {
+    width: 80px;
 }

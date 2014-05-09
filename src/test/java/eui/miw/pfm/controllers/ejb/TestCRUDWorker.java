@@ -22,11 +22,11 @@ public class TestCRUDWorker {
     private transient WorkerEntity workerEntity2;
     private transient WorkerEntity workerEntity3;
 
+    private transient UserEntity user;
+    private transient ProjectEntity project;
+    
     @Before
     public void init() {
-        UserEntity user;
-        ProjectEntity project;
-
         user = new UserEntity();
         user.setName("usuario");
         AbstractDAOFactory.getFactory().getUserDAO().create(user);
@@ -151,6 +151,9 @@ public class TestCRUDWorker {
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity1);
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity2);
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity3);
+        
+        AbstractDAOFactory.getFactory().getProjectDAO().delete(project);
+        AbstractDAOFactory.getFactory().getUserDAO().delete(user);
     }
 
 }

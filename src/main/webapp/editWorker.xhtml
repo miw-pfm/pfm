@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templatePhasePlan.xhtml">
+
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.phasePlan_title}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.editWorker_subtitle}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:panelGroup id="editWorker" layout="block">
+            <h:form id="form">
+                <h:inputHidden id="id" value="#{workerBean.workerEntity.id}" />
+
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel id="nameLabel" for="name" value="#{msgs.nameWorker}"/>
+                    <h:inputText id="name" value="#{workerBean.workerEntity.name}" maxlength="100"  required="true" />
+
+                    <h:outputLabel id="surnameLabel" for="surname"  value="#{msgs.surnameWorker}"/>
+                    <h:inputText id="surname" value="#{workerBean.workerEntity.surname}" maxlength="100"  />
+
+                    <h:outputLabel id="dniLabel" for="dni" value="#{msgs.dniWorker}"/>
+                    <h:inputText id="dni" value="#{workerBean.workerEntity.dni}" maxlength="10" required="true" />
+
+                    <h:outputLabel id="emailLabel" for="email" value="#{msgs.emailWorker}"/>
+                    <h:inputText id="email" value="#{workerBean.workerEntity.email}" maxlength="255"  />
+
+                    <h:outputLabel id="gitUserLabel" value="#{msgs.gitUserWorker}"/>
+                    <h:inputText id="gitUser" value="#{workerBean.workerEntity.gitUser}" maxlength="25" />
+
+                    <h:commandButton value="#{msgs.submit}" action="#{workerBean.update}" styleClass="btn btn-success" />
+                </h:panelGrid>
+            </h:form>    
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
+
