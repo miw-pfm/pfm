@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- Author: ppbust -->
+<!-- Author: manuel rodríguez& ppbust & manualvgar-->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -22,6 +22,7 @@
     </ui:define>
 
     <ui:define name="body">
+
         <h:outputScript target="head">
             function markHolidaysAndReportedDays(date) { 
             var holidays = new Array(#{fn:join(calendarProjectBean.getHolidays(), ',')}); 
@@ -30,31 +31,34 @@
             return [true,'holiday']; } 
             return [true, '']; }
         </h:outputScript> 
-        <div id="infoCalendar">
+        <h:panelGroup id="infoCalendar" layout="block">            
             <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
             <p class="CalendarTo"><span>Until:</span>#{calendarProjectBean.endDate}</p>
             <p class="workingDays">Working days</p>
             <p class="totalDays">#{calendarProjectBean.workingDays}</p>
-        </div>
-        
-        <div id="formCalendar">
-            <h:form>
+        </h:panelGroup>
+
+        <h:panelGroup id="formCalendar" layout="block">
+            <h:form id="form_calendario">
+
                 <p:growl id="growl" showDetail="true"/>
                 <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">                    
-                    <p:ajax event="dateSelect" oncomplete="add.enable()" />
+                    <p:ajax event="dateSelect" oncomplete="add.enable()" listener="#{calendarProjectBean.llena}" update="nameDate descriptionDate"/>
                 </p:calendar>
-                
+
                 <p:watermark for="nameDate" value="#{msgs.name}" />
                 <p:watermark for="descriptionDate" value="#{msgs.description}" />  
                 <h:panelGrid columns="1" id="tableHolidayForm">
-                    <h:inputText id="nameDate" label="Name" value="#{calendarProjectBean.name}"/>
+                    <h:inputText id="nameDate" label="Name" value="#{calendarProjectBean.name}" />
                     <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" />
-                    
-                    <p:commandButton id="addHoliday" value="Add Holiday" action="#{calendarProjectBean.handleDateSelect}" widgetVar="add" onclick="add.disable()" />
-                    <p:commandButton id="editdate" value="Edit" />
-                    <p:commandButton id="removeHoliday" value="Remove Holiday" />
+
+                    <p:commandButton id="addHoliday" value="Add Holiday" action="#{calendarProjectBean.handleDateSelect}" widgetVar="add" onclick="add.disable()" update=":infoCalendar" oncomplete="javascript:location.reload(true)"/>
+                    <p:commandButton id="editdate" value="Edit" action="#{calendarProjectBean.updateDateSelect}"/>
+                    <p:commandButton id="removeHoliday" value="Remove Holiday"  action="#{calendarProjectBean.deleteDateSelect}" oncomplete="javascript:location.reload(true)"/>
                 </h:panelGrid>
             </h:form>
-        </div>
+
+        </h:panelGroup>
+
     </ui:define>
 </ui:composition>
