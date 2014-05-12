@@ -126,8 +126,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
     //Manuel Rodríguez
     public void handleDateSelect() {        
-        new CalendarProjectEjb().create(readycalendarentity());
-        //return "calendarOfProject";
+        new CalendarProjectEjb().create(readycalendarentity());        
     }
     
     //Manuel Rodríguez
@@ -138,8 +137,10 @@ public class CalendarProjectBean extends Bean implements Serializable {
     
     //Manuel Rodríguez
     public void deleteDateSelect() {       
-        System.out.println("MANUEL");
-        new CalendarProjectEjb().delete(readycalendarentity());
+        CalendarProjectEjb c= new CalendarProjectEjb();        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);                       
+        c.delete(c.obtainHoliday(project, calendar));        
     }
     
     //Manuel Rodríguez
@@ -163,11 +164,9 @@ public class CalendarProjectBean extends Bean implements Serializable {
         for (CalendarEntity ce : ces) {
             String a = format.format(date1);
             String b = format.format(ce.getHoliday().getTime());
-
             if (a.equals(b)) {
                 name = ce.getName();
-                description = ce.getDescription();
-                //System.out.println(name+"---"+description);
+                description = ce.getDescription();                
             }
         }
         return null;
