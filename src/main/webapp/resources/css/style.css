@@ -535,3 +535,15 @@ button.btn-succes:hover, button.btn-succes:active, button.btn-succes:focus, butt
 #formlogin .ui-panel div.ui-panel-content td button:hover{
     color: #C2C3C5;
 }
+
+/***************************************************/
+/* dataTable: workerTable
+/***************************************************/
+
+form.dataTableList{
+    width: 860px;
+}
+
+form.dataTableList td.buttom {
+    width: 80px;
+}

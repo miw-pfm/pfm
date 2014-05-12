@@ -130,15 +130,15 @@ input.hasDatepicker {
 
 #infoCalendar p.CalendarFrom{
     float: left;
-    font-size: 14px;
+    font-size: 16px;
     margin-left: 10px;
-    margin-right: 142px;
+    margin-right: 180px;
 }
 
 #infoCalendar p.CalendarTo{
     float: left;
     margin-right: 60px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 #infoCalendar p.CalendarFrom span, #infoCalendar p.CalendarTo span{
@@ -160,7 +160,7 @@ input.hasDatepicker {
     color: #404040;
     float: right;
     font-size: 21px;
-    margin-right: 291px;
+    margin-right: 235px;
     padding: 2px 8px;
     margin-bottom: 0px
 }
@@ -191,34 +191,33 @@ input.hasDatepicker {
     color: #FF0000;
 }
 
-/* j_idt39 es id del formulario del calendario del proyecto
-/***************************************************/
-
-#j_idt39\:calProject{
+#form_calendario\:calProject{
     float: left;
 }
 
-#j_idt39\:nameDate{
-    margin-top: 60px;
+#form_calendario\:tableHolidayForm{
+    margin-top: 30px;
 }
 
-#j_idt39\:tableHolidayForm button{
-    float: right;
-    margin-bottom: 6px;
-    margin-right: 11px;
+#form_calendario\:tableHolidayForm td span.titTableFormCal{
+    display: block;
+    font-size: 15px;
 }
 
-#j_idt39\:calProject_inline{
+#form_calendario\:tableHolidayForm button{
+    float: left;
+    margin-left: 11px;
+    background-image: linear-gradient(to bottom, #FCD5B4 0%, #FF9981 100%);
+    border-color: #FF9981;
+    margin-top: 2px;
+}
+
+#form_calendario\:tableHolidayForm button span{
+    color: #fff;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+#form_calendario\:calProject_inline{
     margin-right: 50px;
-}
-/***************************************************/
-/* dataTable: workerTable
-/***************************************************/
-
-#form {
-    width: 860px;
-}
-
-#form td.edit {
-    width: 135px;
 }

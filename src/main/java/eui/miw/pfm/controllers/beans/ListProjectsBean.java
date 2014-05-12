@@ -23,6 +23,10 @@ import org.primefaces.event.SelectEvent;
 
 import org.primefaces.model.LazyDataModel;
 
+/**
+ * 
+ * @author Roberto Amor
+ */
 @Named
 @RequestScoped
 public class ListProjectsBean extends Bean implements Serializable {
@@ -41,7 +45,6 @@ public class ListProjectsBean extends Bean implements Serializable {
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
-        final ListProjectsEjb projectsEjb = new ListProjectsEjb();//NOPMD
         this.projects = new ListProjectsEjb().obtainProjects(this.userEntity);
         this.lazyModel = new LazyProjectDataModel(this.projects);
 

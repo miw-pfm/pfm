@@ -9,21 +9,36 @@
 
     <!--<ui:param name="project" value="#{openProjectBean.openProject.g}"/>-->
     <ui:define name="pagetitle" >
-        RUP Management System
+         #{project.name}
     </ui:define>      
 
     <ui:define name="title">
         Opened Project
     </ui:define>
-    <ui:define name="subtitle">
-        #{project.name}
-    </ui:define>
+
     <ui:define name="body">
         <h:panelGroup id="openproject" layout="block">
             <h:panelGroup layout="block">
+                <h:panelGroup id="description" layout="block">
+                    <h3>Project Config</h3>
+                    <p>
+                        <b><h:outputText value="#{msgs.startDate}" />: </b>
+                        <h:outputText value="#{project.startDate}">
+                            <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText><br />
+                        <b><h:outputText value="#{msgs.endDate}" />: </b>
+                        <h:outputText value="#{project.endDate}">
+                            <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText><br />
+                        <b><h:outputText value="#{msgs.weekNumIteration}"/>: </b>#{project.weekNumIteration} <br />
+                        <b><h:outputText value="#{msgs.chosenNumIteration}" />: </b>#{project.chosenNumIteration} <br />
+          
+                    </p>
+                </h:panelGroup>
+                
                 <h:panelGroup id="participants_pnl" layout="block">
-                    <h3>Participants</h3>
-                    <p:dataList id="participants" var="participant" value="#{openProjectBean.participants}" itemType="participant">  
+                    <h3>Workers</h3>
+                    <p:dataList id="participants" var="participant" value="#{openProjectBean.participants}" itemType="participant" >  
                     #{participant.name}  
                     </p:dataList>
                 </h:panelGroup>
@@ -42,54 +57,3 @@
         </h:panelGroup>
     </ui:define>
 </ui:composition>
-<!--<?xml version="1.0" encoding="ISO-8859-1" ?>
-
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                template="/templates/template.xhtml">
-
-    <ui:define name="nameprj">
-
-    </ui:define>    
-
-    <ui:define name="title">
-        Opened Project
-    </ui:define>
-
-    <ui:define name="body">
-        <h1>Project's name</h1>
-        <div  align='center' id="container" style="width:500px">
-            <div id="header" style="background-color:#FFA500;">
-                <h1 style="margin-bottom:0;">Current Iteration: X </h1>
-            </div>
-
-            <div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
-                <b>Menu</b><br/>
-                Function 1<br/>
-                Function 2<br/>
-                Function 3<br/>
-                Function 4<br/>
-                Function 5
-            </div>
-
-            <div id="content" style="background-color:#EEEEEE;height:200px;width:400px;float:left;">
-                Here goes project's description.
-                <br/><br/>
-                List of participants:
-                <br/>
-                Pepe Perez
-                <br/>
-                Manolo Diaz
-                <br/>
-            </div>
-            <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
-                RUP Management Aplication
-            </div>
-        </div>
-    </ui:define>
-</ui:composition>-->
-
-<!--s-->
