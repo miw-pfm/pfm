@@ -38,5 +38,4 @@ public class LogOutBean extends Bean implements Serializable {
         ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
     }
 
-
 }
