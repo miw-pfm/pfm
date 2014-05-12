@@ -77,6 +77,7 @@ public class UseCaseBean extends Bean implements Serializable {
         final UseCaseEjb useCaseEjb = new UseCaseEjb();
         useCaseEjb.create(this.usecase);
         FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
+        this.usecase = null; // para vaciar los campos edl formulario
         return null;
     }
 

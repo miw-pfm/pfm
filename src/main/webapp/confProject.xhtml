@@ -24,18 +24,18 @@
             <h:form id="form">
                 <h:panelGrid columns="3">
                     <h:outputText value="#{msgs.startDate}" />
-                    <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true">                            
+                    <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true" pattern="MM-dd-yyyy">                            
                         <p:ajax event="dateSelect" update="beginCal stIter choseN" listener="#{confProjectBean.stimateIter}"/>
                     </p:calendar>
                     <h:message for="beginCal" style="color:red" />
                     <h:outputText value="#{msgs.endDate}" />
-                    <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" binding="#{endCalen}" required="true">
+                    <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" binding="#{endCalen}" required="true" pattern="MM-dd-yyyy">
                         <p:ajax event="dateSelect" update="endCal stIter choseN" listener="#{confProjectBean.stimateIter}"/>
                     </p:calendar>
                     <h:message for="endCal" style="color:red" />
                     <h:outputText value="#{msgs.weekNumIteration}"/>
                     <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" id="weeIter" binding="#{weekNum}" required="true">                            
-                        <p:ajax event="blur" update="stIter choseN" listener="#{confProjectBean.stimateIter}"/>     
+                        <p:ajax event="blur" update="stIter choseN" listener="#{confProjectBean.stimateIter}"/>        
                     </h:inputText>
                     <h:message for="weeIter" style="color:red" />
                     <h:outputText value="#{msgs.estimatedNumIteration}" />

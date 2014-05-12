@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -50,7 +51,7 @@ public class ConfProjectBean extends Bean implements Serializable {
 
         if (validDates(project.getStartDate(), project.getEndDate())) {
             confProjectEjb.update(project);
-            result = "list_project";
+            result = "openProject";
         } else {
             LOG.warning("Not valid dates");
             final FacesContext context = FacesContext.getCurrentInstance();
@@ -76,6 +77,14 @@ public class ConfProjectBean extends Bean implements Serializable {
 
         final double mils = (project.getEndDate().getTime() - project.getStartDate().getTime() + 1) / 7 * 5;
         final double weeks = ((mils / (1000 * 60 * 60 * 24))) / 5;
+        
+        if(weeks<project.getWeekNumIteration()){
+            LOG.warning("Not valid time for project (weeks < weeks per iteration)");
+            final FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("form:weeIter", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verify project dates or week per iteration", ""));
+            return;
+        }
+        
         double sugIte;
         sugIte = weeks / project.getWeekNumIteration();
 
