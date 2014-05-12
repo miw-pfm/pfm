@@ -14,12 +14,11 @@ import javax.faces.context.FacesContext;
 /**
  *
  * @author Roberto Amor
+ * @author Fred Pena
  */
 public class Bean {
 
-
 //    private String errors;
-
     protected transient final SessionMap sessionMap;
 
     public Bean() {
@@ -35,9 +34,13 @@ public class Bean {
 
     private void redirectionLogin() {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IllegalStateException e) {
+            Logger.getLogger(Bean.class.getName()).info("Redirection Login");
         }
     }
 
