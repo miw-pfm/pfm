@@ -75,6 +75,13 @@ public class ProjectEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<UseCaseEntity> useCases = new HashSet<>();
 
+    /**
+     *
+     * @author César Martínez
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "risk")
+    private Set<RiskEntity> risk = new HashSet<>();
+
     @JoinTable(name = "projects_workers", joinColumns = {
         @JoinColumn(name = "project_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "worker_id", referencedColumnName = "id")})
@@ -220,6 +227,22 @@ public class ProjectEntity implements Serializable {
 
     public void removeUseCases(final UseCaseEntity usecases) {
         this.useCases.remove(usecases);
+    }
+
+    public Set<RiskEntity> getRisk() {
+        return risk;
+    }
+
+    public void setRisk(final Set<RiskEntity> risk) {
+        this.risk = risk;
+    }
+
+    public void addRisk(final RiskEntity risk) {
+        this.risk.add(risk);
+    }
+
+    public void removeRisk(final RiskEntity risk) {
+        this.risk.remove(risk);
     }
 
     public void addTask(final TasksEntityMock t) {
