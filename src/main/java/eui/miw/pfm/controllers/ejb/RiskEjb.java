@@ -7,6 +7,7 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.RiskEntity;
+import java.util.List;
 
 /**
  *
@@ -25,5 +26,9 @@ public class RiskEjb {
 
     public void create(final RiskEntity riskEntity) {
         AbstractDAOFactory.getFactory().getRiskDAO().create(riskEntity);
+    }
+    
+        public List<RiskEntity> findAll() {          
+        return AbstractDAOFactory.getFactory().getRiskDAO().findAll();
     }
 }

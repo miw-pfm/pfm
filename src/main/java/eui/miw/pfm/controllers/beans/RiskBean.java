@@ -3,6 +3,7 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.RiskEjb;
 import eui.miw.pfm.models.entities.RiskEntity;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -65,8 +66,12 @@ public class RiskBean extends Bean implements Serializable {
     public String editWorker(final RiskEntity risk) {
         this.riskEntity = risk;
         LOGGER.info("Edit: " + this.riskEntity.toString());
-
         return null;
+    }
+
+    public List<RiskEntity> getRisks() {
+        final RiskEjb ejb = new RiskEjb();
+        return ejb.findAll();
     }
 
 }
