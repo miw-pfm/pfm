@@ -43,7 +43,7 @@
 
                 <p:growl id="growl" showDetail="true"/>
                 <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">                    
-                    <p:ajax event="dateSelect" oncomplete="add.enable()" listener="#{calendarProjectBean.llena}" update="nameDate descriptionDate"/>
+                    <p:ajax event="dateSelect" listener="#{calendarProjectBean.llena}" update="nameDate descriptionDate addHoliday editdate removeHoliday"/>
                 </p:calendar>
 
                 <p:watermark for="nameDate" value="#{msgs.name}" />
@@ -54,9 +54,9 @@
                     <span class="titTableFormCal">Holiday's Description:</span>
                     <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" />
                     <h:panelGroup layout="block">
-                        <p:commandButton id="addHoliday" value="Add" action="#{calendarProjectBean.handleDateSelect}" widgetVar="add" onclick="add.disable()" update=":infoCalendar" oncomplete="javascript:location.reload(true)"/>
-                        <p:commandButton id="editdate" value="Edit" action="#{calendarProjectBean.updateDateSelect}"/>
-                        <p:commandButton id="removeHoliday" value="Remove"  action="#{calendarProjectBean.deleteDateSelect}" oncomplete="javascript:location.reload(true)"/>
+                        <p:commandButton id="addHoliday" value="Add" action="#{calendarProjectBean.addDateSelect()}" widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar" oncomplete="javascript:location.reload(true)"/>
+                        <p:commandButton id="editdate" value="Edit" action="#{calendarProjectBean.updateDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" oncomplete="javascript:location.reload(true)"/>
+                        <p:commandButton id="removeHoliday" value="Remove"  action="#{calendarProjectBean.deleteDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" oncomplete="javascript:location.reload(true)"/>
                     </h:panelGroup>
                 </h:panelGrid>
             </h:form>

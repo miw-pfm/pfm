@@ -19,6 +19,7 @@ import javax.inject.Named;
  *
  * @author Manuel Álvarez
  * @code added Manuel Rodríguez
+ * @code added Jean Mubaied
  */
 @RequestScoped
 @Named
@@ -33,6 +34,8 @@ public class CalendarProjectBean extends Bean implements Serializable {
     private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
+    private boolean disableAdd = false;
+    private boolean disableEditRemove = false;
 
     public CalendarProjectBean() {
         super();
@@ -49,7 +52,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -57,7 +60,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -69,21 +72,8 @@ public class CalendarProjectBean extends Bean implements Serializable {
         this.date1 = date1;
     }
 
-    public String create() {
-        this.calendarEntity.setProject(project);
-        new CalendarProjectEjb().create(this.calendarEntity);
-        return null;
-    }
-
-    public String update() {
-        this.calendarEntity.setProject(project);
-        new CalendarProjectEjb().update(this.calendarEntity);
-        return null;
-    }
-
-    public String delete() {
-        new CalendarProjectEjb().delete(this.calendarEntity);
-        return null;
+    public boolean isDisableEditRemove() {
+        return disableEditRemove;
     }
 
     public String getStartDate() {
@@ -124,37 +114,51 @@ public class CalendarProjectBean extends Bean implements Serializable {
         return count;
     }
 
-    //Manuel Rodríguez
-    public void handleDateSelect() {        
-        new CalendarProjectEjb().create(readycalendarentity());        
+    public String create() {
+        this.calendarEntity.setProject(project);
+        new CalendarProjectEjb().create(this.calendarEntity);
+        return null;
     }
-    
+
+    public String update() {
+        this.calendarEntity.setProject(project);
+        new CalendarProjectEjb().update(this.calendarEntity);
+        return null;
+    }
+
+    public String delete() {
+        new CalendarProjectEjb().delete(this.calendarEntity);
+        return null;
+    }
+
+    public Calendar fecha_seleccionada() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);
+        return calendar;
+    }
+
+    //Manuel Rodríguez
+    public void addDateSelect() {
+        new CalendarProjectEjb().create(readycalendarentity());
+    }
+
     //Manuel Rodríguez
     public void updateDateSelect() {
-        CalendarProjectEjb c= new CalendarProjectEjb();     
-        CalendarEntity ce= c.obtainHoliday(project, fecha_seleccionada());
+        CalendarProjectEjb c = new CalendarProjectEjb();
+        CalendarEntity ce = c.obtainHoliday(project, fecha_seleccionada());
         ce.setDescription(description);
-        ce.setName(name);        
-        c.update(ce);             
+        ce.setName(name);
+        c.update(ce);
     }
-    
+
     //Manuel Rodríguez
-    public void deleteDateSelect() {       
-        CalendarProjectEjb c= new CalendarProjectEjb();                                      
-        c.delete(c.obtainHoliday(project, fecha_seleccionada()));        
-    }      
-    
-    //Manuel Rodríguez
-    public Calendar fecha_seleccionada()
-    {
-       Calendar calendar = Calendar.getInstance();
-       calendar.setTime(date1);
-       return calendar;
+    public void deleteDateSelect() {
+        CalendarProjectEjb c = new CalendarProjectEjb();
+        c.delete(c.obtainHoliday(project, fecha_seleccionada()));
     }
-    
+
     //Manuel Rodríguez
-    public CalendarEntity readycalendarentity()
-    {        
+    public CalendarEntity readycalendarentity() {
         CalendarEntity calendarentity = new CalendarEntity();
         calendarentity.setHoliday(fecha_seleccionada());
         calendarentity.setDescription(description);
@@ -162,19 +166,25 @@ public class CalendarProjectBean extends Bean implements Serializable {
         calendarentity.setProject(project);
         return calendarentity;
     }
-    
+
     //Manuel Rodríguez
-    public String llena() {        
+    public String llena() {
         List<CalendarEntity> ces = new CalendarProjectEjb().obtainHolidays(project);
         for (CalendarEntity ce : ces) {
             String a = format.format(date1);
             String b = format.format(ce.getHoliday().getTime());
             if (a.equals(b)) {
                 name = ce.getName();
-                description = ce.getDescription();                
+                description = ce.getDescription();
+                this.disableAdd = true;
+                this.disableEditRemove = false;
             }
         }
         return null;
+    }
+
+    public boolean isDisableAdd() {
+        return disableAdd;
     }
 
     //Manuel Rodríguez
