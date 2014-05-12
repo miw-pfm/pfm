@@ -7,6 +7,7 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.WorkerEntity;
+import java.util.List;
 
 /**
  *
@@ -26,5 +27,9 @@ public class WorkerEjb {
 
     public void create(final WorkerEntity workerEntity) {
         AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity);
+    }
+    
+    public List<WorkerEntity> getWorkers() {          
+        return AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
     }
 }

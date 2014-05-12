@@ -3,6 +3,7 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -13,6 +14,7 @@ import javax.inject.Named;
  *
  * @author Fred Peña
  * @author Jose M Villar
+ * @author Jose Angel
  */
 @RequestScoped
 @Named
@@ -43,7 +45,7 @@ public class WorkerBean extends Bean implements Serializable {
         LOGGER.info("Update: "+this.workerEntity.toString());
         
         workerEjb.update(this.workerEntity);
-        return null;
+        return "workersList";
     }
 
     public String create() {
@@ -52,15 +54,15 @@ public class WorkerBean extends Bean implements Serializable {
         final WorkerEjb workerEjb = new WorkerEjb();
         workerEjb.create(this.workerEntity);
         FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
-        return null;
+        return "workersList";
     }
 
-    public String delete() {
+    public String delete(final WorkerEntity worker) {
         assert this.workerEntity != null;
         LOGGER.info(this.workerEntity.toString());
         final WorkerEjb workerEjb = new WorkerEjb();
-        workerEjb.delete(this.workerEntity);
-        return "list_worker";
+        workerEjb.delete(worker);
+        return "workersList";
     }
     
     public String editWorker(final WorkerEntity worker) {
@@ -68,5 +70,10 @@ public class WorkerBean extends Bean implements Serializable {
         LOGGER.info("Edit: "+this.workerEntity.toString());
         
         return "editWorker";
-    }    
+    }  
+    
+    public List<WorkerEntity> getWorkers() { 
+        final WorkerEjb ejb = new WorkerEjb();
+        return ejb.getWorkers();
+    }
 }
