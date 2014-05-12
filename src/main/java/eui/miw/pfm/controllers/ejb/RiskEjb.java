@@ -6,6 +6,7 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.RiskEntity;
 import java.util.List;
 
@@ -15,20 +16,20 @@ import java.util.List;
  */
 public class RiskEjb {
 
-    public void delete(final RiskEntity riskEntity) {
-        AbstractDAOFactory.getFactory().getRiskDAO().delete(riskEntity);
-    }
-
     public void update(final RiskEntity riskEntity) {
         AbstractDAOFactory.getFactory().getRiskDAO().update(riskEntity);
 
     }
 
-    public void create(final RiskEntity riskEntity) {
+    public void create(final RiskEntity riskEntity) {        
         AbstractDAOFactory.getFactory().getRiskDAO().create(riskEntity);
     }
-    
-        public List<RiskEntity> findAll() {          
-        return AbstractDAOFactory.getFactory().getRiskDAO().findAll();
+
+    public List<RiskEntity> findRisks(final ProjectEntity project) {
+        return project.getRisk();
+    }
+
+    public void delete(final RiskEntity risk) {             
+        AbstractDAOFactory.getFactory().getRiskDAO().delete(risk);
     }
 }

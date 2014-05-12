@@ -41,7 +41,7 @@ public class LazyRiskDataModel extends LazyDataModel<RiskEntity> {
 
     @Override
     public Object getRowKey(final RiskEntity object) {
-        return object.getName();
+        return object.getId();
     }
 
     @Override

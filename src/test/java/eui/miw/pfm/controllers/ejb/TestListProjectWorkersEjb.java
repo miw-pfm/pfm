@@ -7,7 +7,6 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UseCaseEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import java.util.ArrayList;

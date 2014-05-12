@@ -38,19 +38,13 @@
             })
             });
         </h:outputScript> 
-
         <h:form id="form">
-            <h:panelGroup layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="riskBtn" value="#{msgs.add_risk}" onclick="PF('riskPranel').show()" type="button"  styleClass="btn btn-success" />  
-            </h:panelGroup>
-
             <p:growl id="messages" showDetail="true" /> 
-
-            <p:dataTable var="risk" value="#{listProjectRisksBean.lazyModel}" paginator="true" rows="10"
+            <p:dataTable var="risk" value="#{riskBean.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="5,10,15" 
                          rowKey="#{risk.id}" 
-                         selection="#{listProjectRisksBean.selectedRisk}" 
+                         selection="#{riskBean.selectedRisk}" 
                          id="riskTable" lazy="true">
 
                 <p:column headerText="Name" sortBy="name" filterBy="#{risk.name}">
@@ -58,24 +52,12 @@
                 </p:column>
 
                 <p:column styleClass="buttom">
-                    <p:commandButton value="#{msgs.remove}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" action="#{listProjectRiskBean.remove(risk)}" update=":form" />
+                    <p:commandButton value="#{msgs.remove}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" actionListener="#{riskBean.delete(risk)}"  update=":form" />
+                </p:column>
+                <p:column styleClass="buttom">
+                    <p:commandButton value="Edit" styleClass="btn btn-sm btn-default" icon="ui-icon-pencil" action="#{riskBean.edit(risk)}" update=":form" />
                 </p:column>
             </p:dataTable>
-
-            <p:dialog id="riskPranel" header="#{msgs.add_risk}" widgetVar="riskPranel" hideEffect="fade" dynamic="true">            
-
-                <h:form id="form">
-                    <p:growl id="message"  sticky="true" />
-                    <h:panelGrid columns="1">
-
-                        <h:outputText value="#{msgs.enter_name_risk}"/>
-                        <h:inputText value="#{riskBean.riskEntity.name}" maxlength="25" id="nameRisk" binding="#{enter_name_risk}" required="true" />
-
-                        <h:commandButton value="#{msgs.submit}" action="#{riskBean.create()}" styleClass="btn btn-success" />
-                    </h:panelGrid>
-                </h:form>  
-
-            </p:dialog>
         </h:form>
 
     </ui:define>
