@@ -1,7 +1,10 @@
-package eui.miw.pfm.util.moks.profile;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package eui.miw.pfm.models.entities;
 
-import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -17,12 +20,11 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Fred Peña
- * @author Clemencio Morales
+ * @author César Martínez
  */
 @Entity
-@Table(name = "taskmock")
-public class TasksEntityMock implements Serializable {
+@Table(name = "risks")
+public class RiskEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -30,37 +32,33 @@ public class TasksEntityMock implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", length = 140)
+    @Column(name = "name", length = 100)
     @NotNull
-    @Size(min = 3, max = 140)
+    @Size(min = 2, max = 100)
     private String name;
 
-    @Column(name = "estimated_time")
-    @NotNull
-    private int time;
-
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false)
-    private WorkerEntity worker;
-
-    public TasksEntityMock() {
+    public RiskEntity() {
     }
 
-    public TasksEntityMock(Integer id, String name, int time) {
+    public RiskEntity(final Integer id) {
+        this.id = id;
+    }
+
+    public RiskEntity(Integer id, String name, ProjectEntity project) {
         this.id = id;
         this.name = name;
-        this.time = time;
+        this.project = project;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {//NOPMD
         this.id = id;
     }
 
@@ -68,38 +66,22 @@ public class TasksEntityMock implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 
     public ProjectEntity getProject() {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(final ProjectEntity project) {
         this.project = project;
-    }
-
-    public WorkerEntity getWorker() {
-        return worker;
-    }
-
-    public void setWorker(WorkerEntity worker) {
-        this.worker = worker;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -111,7 +93,7 @@ public class TasksEntityMock implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TasksEntityMock other = (TasksEntityMock) obj;
+        final RiskEntity other = (RiskEntity) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -120,7 +102,7 @@ public class TasksEntityMock implements Serializable {
 
     @Override
     public String toString() {
-        return "TasksEntityMock{" + "id=" + id + ", name=" + name + ", time=" + time + ", project=" + project + '}';
+        return "RiskEntity{" + "id=" + id + ", name=" + name + ", project=" + project + '}';
     }
 
 }

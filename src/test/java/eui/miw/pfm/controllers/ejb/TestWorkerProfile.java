@@ -9,7 +9,7 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.moks.profile.TasksEntityMock;
+import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.util.Date;
 import java.util.List;
 import org.junit.AfterClass;
