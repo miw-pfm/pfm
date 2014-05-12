@@ -1,4 +1,4 @@
-package eui.miw.pfm.util.moks.profile;
+package eui.miw.pfm.util.moks.entities;
 
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;

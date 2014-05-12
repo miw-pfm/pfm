@@ -1,6 +1,6 @@
 package eui.miw.pfm.models.entities;
 
-import eui.miw.pfm.util.moks.profile.TasksEntityMock;
+import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,7 +79,7 @@ public class ProjectEntity implements Serializable {
      *
      * @author César Martínez
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "risk")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<RiskEntity> risk = new HashSet<>();
 
     @JoinTable(name = "projects_workers", joinColumns = {
