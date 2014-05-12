@@ -1,6 +1,6 @@
 package eui.miw.pfm.util.moks;
 
-import eui.miw.pfm.util.moks.profile.TasksEntityMock;
+import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

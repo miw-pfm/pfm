@@ -7,7 +7,7 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.moks.profile.TasksEntityMock;
+import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

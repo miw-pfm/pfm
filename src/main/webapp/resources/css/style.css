@@ -430,10 +430,10 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     padding: 1px 12px;
 }
 
-#useCasesListing{
+#useCasesListing, #workerListing{
     margin-top: 20px;
 }
-#useCasesListing li{
+#useCasesListing li,#workerListing li{
     list-style: none;
     border-bottom: 1px solid #8DB4E3;
     clear: both;
@@ -441,7 +441,7 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     border-left: 1px solid #8DB4E3;
 }
 
-#useCasesListing li span, #useCasesListing li a{
+#useCasesListing li span, #useCasesListing li a, #workerListing li span ,#workerListing li a{
     display: block;
     padding: 3px 0;
     float:left;
@@ -454,7 +454,16 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     width: 513px;
 }
 
-#useCasesListing li button{
+#workerListing li span.name{
+    width: 150px;
+    padding-left: 5px;
+}
+
+#workerListing li span.surname, span.dni, span.email, span.git{
+    width: 150px;    
+}
+
+#useCasesListing li button,#workerListing li button {
     text-align: center;
     width: 58px;
     color: #8DB4E3;
@@ -467,12 +476,12 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     font-size: 12px;
     padding-left: 5px;
 }
-#useCasesListing .modalDialogButton{
+#useCasesListing .modalDialogButton, #workerListing .modalDialogButton{
     text-align: center;
     color: #8DB4E3;
     cursor: pointer;
 }
-#useCasesListing li button:hover{
+#useCasesListing li button:hover, #workerListing li button:hover{
     background-image: none;
     background-color: #FFF;  
     box-shadow: none;
@@ -480,7 +489,7 @@ input[type=submit].btn-success:hover, input[type=submit].btn-success:focus  {
     color: red;
 }
 
-li.headerUseCasesListing span{
+li.headerUseCasesListing span, li.headerWorkerListing span{
     font-weight: bold;
     padding-left: 5px;
     display: block;

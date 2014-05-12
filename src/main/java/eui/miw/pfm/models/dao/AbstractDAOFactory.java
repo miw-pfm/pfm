@@ -3,6 +3,7 @@ package eui.miw.pfm.models.dao;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
+import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
@@ -40,4 +41,6 @@ public abstract class AbstractDAOFactory {
     public abstract WorkerDAO getWorkerDAO();
 
     public abstract TaskDAO getTaskDAO();
+
+    public abstract RiskDAO getRiskDAO();
 }

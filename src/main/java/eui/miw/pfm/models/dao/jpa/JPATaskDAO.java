@@ -1,7 +1,7 @@
 package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
-import eui.miw.pfm.util.moks.profile.TasksEntityMock;
+import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 
 /**
  *
