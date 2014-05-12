@@ -30,7 +30,7 @@ public class ListRiskBean extends Bean implements Serializable {
     private transient LazyDataModel<RiskEntity> lazyModel;
     private static final Logger LOGGER = Logger.getLogger(ListRiskBean.class.getName());//NOPMD
     private RiskEntity selectedRisk;
-    private List<RiskEntity> lRisk;
+    private transient List<RiskEntity> lRisk;
     private UserEntity user;
     private ProjectEntity project;
 
@@ -47,12 +47,12 @@ public class ListRiskBean extends Bean implements Serializable {
         this.lazyModel = new LazyRiskDataModel(this.lRisk);
     }
 
-    public RiskEntity getSelectedWorker() {
+    public RiskEntity getSelectedRisk() {
         return selectedRisk;
     }
 
-    public void setSelectedWorker(final RiskEntity selectedWorker) {
-        this.selectedRisk = selectedWorker;
+    public void setSelectedRisk(final RiskEntity selectedRisk) {
+        this.selectedRisk = selectedRisk;
     }
 
     public List<RiskEntity> getlRisk() {
@@ -83,10 +83,6 @@ public class ListRiskBean extends Bean implements Serializable {
         return lazyModel;
     }
 
-    /**
-     *
-     * @author Jose M Villar
-     */
     public void reload() {
         this.lRisk = new ListRiskEjb().findRisks(this.project);
         this.lazyModel = new LazyRiskDataModel(this.lRisk);

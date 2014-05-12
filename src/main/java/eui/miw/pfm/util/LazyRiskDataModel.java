@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.util;
 
 import eui.miw.pfm.models.entities.RiskEntity;
@@ -22,36 +21,37 @@ import org.primefaces.model.SortOrder;
  *
  */
 public class LazyRiskDataModel extends LazyDataModel<RiskEntity> {
-    
-    private List<RiskEntity> datasource;
-    
-    public LazyRiskDataModel(List<RiskEntity> datasource) {
+
+    private final List<RiskEntity> datasource;
+
+    public LazyRiskDataModel(final List<RiskEntity> datasource) {
+        super();
         this.datasource = datasource;
     }
-    
-    @Override
-    public RiskEntity getRowData(String rowKey) {
-        for(RiskEntity object : datasource) {
-            if(object.getName().equals(rowKey))
-                return object;
-        }
 
+    @Override
+    public RiskEntity getRowData(final String rowKey) {
+        for (RiskEntity object : datasource) {
+            if (object.getName().equals(rowKey)) {
+                return object;
+            }
+        }
         return null;
     }
 
     @Override
-    public Object getRowKey(RiskEntity object) {
+    public Object getRowKey(final RiskEntity object) {
         return object.getName();
     }
 
     @Override
-    public List<RiskEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {
-        List<RiskEntity> data = new ArrayList<RiskEntity>();
+    public List<RiskEntity> load(final int first, final int pageSize, final String sortField, final SortOrder sortOrder, final Map<String, String> filters) {
+        final List<RiskEntity> data = new ArrayList<>();
 
-        for(RiskEntity object : datasource) {
+        for (RiskEntity object : datasource) {
             boolean match = true;
 
-            for(Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+            for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
                 try {
                     String filterProperty = it.next();
                     String filterValue = filters.get(filterProperty);
@@ -59,25 +59,24 @@ public class LazyRiskDataModel extends LazyDataModel<RiskEntity> {
                     f.setAccessible(true);
                     String fieldValue = String.valueOf(f.get(object));
 
-                    if(filterValue == null || fieldValue.startsWith(filterValue)) {
+                    if (filterValue == null || fieldValue.startsWith(filterValue)) {
                         match = true;
-                    }
-                    else {
+                    } else {
                         match = false;
                         break;
                     }
-                } catch(Exception e) {
+                } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
                     match = false;
-                } 
+                }
             }
 
-            if(match) {
+            if (match) {
                 data.add(object);
             }
         }
 
         //sort
-        if(sortField != null) {
+        if (sortField != null) {
             Collections.sort(data, new LazyGenericSorter<RiskEntity>(sortField, sortOrder));
         }
 
@@ -86,17 +85,14 @@ public class LazyRiskDataModel extends LazyDataModel<RiskEntity> {
         this.setRowCount(dataSize);
 
         //paginate
-        if(dataSize > pageSize) {
+        if (dataSize > pageSize) {
             try {
                 return data.subList(first, first + pageSize);
-            }
-            catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 return data.subList(first, first + (dataSize % pageSize));
             }
-        }
-        else {
+        } else {
             return data;
         }
     }
 }
-                    
