@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--Author: Pepe Bustamante--> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateRiskPlan.xhtml">
+
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.riskPlan_title}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.listRisk_subtitle}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:outputScript target="head">
+            $ = jQuery;
+            $(document).ready(function() {
+            $("#submitcreaterisk").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewrisk").attr("style") == "display: none;") {
+            $("#createnewrisk").attr("style","display: block;" );                   
+            } else $("#createnewrisk").attr("style","display: none;"); 
+            }) 
+
+            $("#cancelcreaterisk").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewrisk").attr("style") == "display: none;") {
+            $("#createnewrisk").attr("style","display: block;" );                   
+            } else $("#createnewrisk").attr("style","display: none;"); 
+            })
+            });
+        </h:outputScript> 
+
+        <h:form id="form">
+            <h:panelGroup layout="block" style="margin-bottom: 5px;">
+                <p:commandButton id="riskBtn" value="#{msgs.add_risk}" onclick="PF('riskPranel').show()" type="button"  styleClass="btn btn-success" />  
+            </h:panelGroup>
+
+            <p:growl id="messages" showDetail="true" /> 
+
+            <p:dataTable var="risk" value="#{listProjectRisksBean.lazyModel}" paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15" 
+                         rowKey="#{risk.id}" 
+                         selection="#{listProjectRisksBean.selectedRisk}" 
+                         id="riskTable" lazy="true">
+
+                <p:column headerText="Name" sortBy="name" filterBy="#{risk.name}">
+                    <h:outputText value="#{risk.name}" />
+                </p:column>
+
+                <p:column styleClass="buttom">
+                    <p:commandButton value="#{msgs.remove}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" action="#{listProjectRiskBean.remove(risk)}" update=":form" />
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog id="riskPranel" header="#{msgs.add_risk}" widgetVar="riskPranel" hideEffect="fade" dynamic="true">            
+
+                <p:dataTable var="r" value="#{listProjectRisksBean.listRiskBean.lazyModel}" paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15" 
+                             rowKey="#{r.id}" 
+                             selection="#{listProjectRisksBean.listRiskBean.selectedRisk}" 
+                             id="addRiskTable" lazy="true" widgetVar="dialog">
+
+                    <p:column headerText="Name" sortBy="name" filterBy="#{r.name}">
+                        <h:outputText value="#{r.name}" />
+                    </p:column>
+
+                    <p:column styleClass="buttom">
+                        <p:commandButton value="#{msgs.add}" styleClass="btn btn-sm btn-default" icon="ui-icon-check" action="#{listProjectRisksBean.add(r)}" update=":form:riskTable, :form:addRiskTable" />
+                    </p:column>
+                </p:dataTable> 
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

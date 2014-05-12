@@ -31,3 +31,26 @@
     width: 68px;
 }
 
+/* List Risk */
+
+#form\:riskTable{
+
+}
+
+#form\:riskTable_paginator_top, #form\:riskTable_paginator_bottom{
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #8DB4E3 !important;
+    border: 1px solid #8DB4E3 !important;
+}
+
+#form\:riskTable div.ui-datatable-tablewrapper{
+    border: 1px solid #8DB4E3 !important;
+}
+
+#form\:riskTable div.ui-datatable-tablewrapper input{
+    background:  #FFF !important;
+}
+
+#form\:riskTable .ui-state-default{
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #C5D9F1 !important;
+    border: 1px solid #C5D9F1 !important;
+}
