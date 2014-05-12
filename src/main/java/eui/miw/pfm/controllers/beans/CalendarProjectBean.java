@@ -131,25 +131,32 @@ public class CalendarProjectBean extends Bean implements Serializable {
     
     //Manuel Rodríguez
     public void updateDateSelect() {
-        
-        new CalendarProjectEjb().update(readycalendarentity());
+        CalendarProjectEjb c= new CalendarProjectEjb();     
+        CalendarEntity ce= c.obtainHoliday(project, fecha_seleccionada());
+        ce.setDescription(description);
+        ce.setName(name);        
+        c.update(ce);             
     }
     
     //Manuel Rodríguez
     public void deleteDateSelect() {       
-        CalendarProjectEjb c= new CalendarProjectEjb();        
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date1);                       
-        c.delete(c.obtainHoliday(project, calendar));        
+        CalendarProjectEjb c= new CalendarProjectEjb();                                      
+        c.delete(c.obtainHoliday(project, fecha_seleccionada()));        
+    }      
+    
+    //Manuel Rodríguez
+    public Calendar fecha_seleccionada()
+    {
+       Calendar calendar = Calendar.getInstance();
+       calendar.setTime(date1);
+       return calendar;
     }
     
     //Manuel Rodríguez
     public CalendarEntity readycalendarentity()
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date1);
+    {        
         CalendarEntity calendarentity = new CalendarEntity();
-        calendarentity.setHoliday(calendar);
+        calendarentity.setHoliday(fecha_seleccionada());
         calendarentity.setDescription(description);
         calendarentity.setName(name);
         calendarentity.setProject(project);
@@ -157,9 +164,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
     }
     
     //Manuel Rodríguez
-    public String llena() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date1);
+    public String llena() {        
         List<CalendarEntity> ces = new CalendarProjectEjb().obtainHolidays(project);
         for (CalendarEntity ce : ces) {
             String a = format.format(date1);
