@@ -64,21 +64,17 @@
 
             <p:dialog id="riskPranel" header="#{msgs.add_risk}" widgetVar="riskPranel" hideEffect="fade" dynamic="true">            
 
-                <p:dataTable var="r" value="#{listProjectRisksBean.listRiskBean.lazyModel}" paginator="true" rows="10"
-                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             rowsPerPageTemplate="5,10,15" 
-                             rowKey="#{r.id}" 
-                             selection="#{listProjectRisksBean.listRiskBean.selectedRisk}" 
-                             id="addRiskTable" lazy="true" widgetVar="dialog">
+                <h:form id="form">
+                    <p:growl id="message"  sticky="true" />
+                    <h:panelGrid columns="1">
 
-                    <p:column headerText="Name" sortBy="name" filterBy="#{r.name}">
-                        <h:outputText value="#{r.name}" />
-                    </p:column>
+                        <h:outputText value="#{msgs.enter_name_risk}"/>
+                        <h:inputText value="#{riskBean.riskEntity.name}" maxlength="25" id="nameRisk" binding="#{enter_name_risk}" required="true" />
 
-                    <p:column styleClass="buttom">
-                        <p:commandButton value="#{msgs.add}" styleClass="btn btn-sm btn-default" icon="ui-icon-check" action="#{listProjectRisksBean.add(r)}" update=":form:riskTable, :form:addRiskTable" />
-                    </p:column>
-                </p:dataTable> 
+                        <h:commandButton value="#{msgs.submit}" action="#{riskBean.create()}" styleClass="btn btn-success" />
+                    </h:panelGrid>
+                </h:form>  
+
             </p:dialog>
         </h:form>
 

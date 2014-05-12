@@ -26,7 +26,7 @@
 
                 <h:panelGrid columns="1">
 
-                    <h:outputLabel id="nameLabel" for="name" value="#{msgs.nameRisk}"/>
+                    <h:outputLabel id="nameLabel" for="name" value="#{msgs.enter_name_risk}"/>
                     <h:inputText id="name" value="#{riskBean.riskEntity.name}" maxlength="100"  required="true" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{riskBean.update}" styleClass="btn btn-success" />

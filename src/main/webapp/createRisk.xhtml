@@ -22,11 +22,11 @@
     <ui:define name="body">
         <h:panelGroup id="confproject" layout="block">
             <h:form id="form">
-                 <p:growl id="message"  sticky="true" />
+                <p:growl id="message"  sticky="true" />
                 <h:panelGrid columns="1">
 
                     <h:outputText value="#{msgs.enter_name_risk}"/>
-                    <h:inputText value="#{riskBean.riskEntity.name}" maxlength="25" id="nameRisk" binding="#{nameRisk}" required="true" />
+                    <h:inputText value="#{riskBean.riskEntity.name}" maxlength="25" id="nameRisk" binding="#{enter_name_risk}" required="true" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{riskBean.create()}" styleClass="btn btn-success" />
                 </h:panelGrid>
