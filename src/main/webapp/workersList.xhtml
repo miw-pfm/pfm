@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateHome.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.home}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.list_workers_subtitle}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:outputScript target="head">
+            $ = jQuery;
+            $(document).ready(function() {
+            $("#submitcreateworker").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewworker").attr("style") == "display: none;") {
+            $("#createnewworker").attr("style","display: block;" );                   
+            } else $("#createnewworker").attr("style","display: none;"); 
+            }) 
+
+            $("#cancelcreateworker").click(function(e){
+            e.preventDefault();                
+            if ($("#createnewworker").attr("style") == "display: none;") {
+            $("#createnewworker").attr("style","display: block;" );                   
+            } else $("#createnewworker").attr("style","display: none;"); 
+            })
+            });           
+        </h:outputScript> 
+
+        <h:link value="#{msgs.create_worker}" styleClass="btn btn-success" id="submitcreateworker"/>
+                <h:panelGroup id="createnewworker" layout="block" style="display: none;"  >
+            <h:form id="form_create">
+                 <p:growl id="growl" showDetail="true" sticky="true" />
+                 <h:panelGroup layout="block">
+                     <h:panelGroup layout="span" styleClass="btn" style="float: right;" >
+                        <h:link  value="Cancel" id="cancelcreateworker" />
+                    </h:panelGroup>
+                 <h:panelGrid columns="2">
+
+                    <h:outputText value="#{msgs.nameWorker}"/>
+                    <h:inputText value="#{workerBean.workerEntity.name}" maxlength="25" id="nameWorker" binding="#{nameWorker}" required="true" />
+
+                    <h:outputText value="#{msgs.surnameWorker}"/>
+                    <h:inputText value="#{workerBean.workerEntity.surname}" maxlength="25" id="surnameWorker" binding="#{surnameWorker}" required="true" />
+
+                    <h:outputText value="#{msgs.dniWorker}"/>
+                    <h:inputText value="#{workerBean.workerEntity.dni}" maxlength="9" id="dniWorker" binding="#{dniWorker}" required="true" />
+
+                    <h:outputText value="#{msgs.emailWorker}"/>
+                    <h:inputText value="#{workerBean.workerEntity.email}" maxlength="60" id="emailWorker" binding="#{emailWorker}" required="true" />
+
+                    <h:outputText value="#{msgs.gitUserWorker}"/>
+                    <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUserWorker}" required="true" />
+
+                    <h:commandButton value="#{msgs.submit}" action="#{workerBean.create()}" styleClass="btn btn-success" />
+                </h:panelGrid>
+                     </h:panelGroup>
+            </h:form>    
+        </h:panelGroup>
+
+        <h:form id="form_list">              
+            <p:growl id="messages" showDetail="true" /> 
+            <ul id="workerListing">
+                <li class="headerWorkerListing">
+                    <span class="name">Name</span>
+                    <span class="surname">Sure Name</span>
+                    <span class="dni">DNI</span>
+                    <span class="email">Email</span>
+                    <span class="git">Git User</span>
+                    <span class="editWorker"></span>
+                    <span class="deleteWorker"></span>
+                </li>
+
+                <c:forEach var="w" items="#{workerBean.workers}" >
+                    <li>                        
+                        <span class="name">#{w.name}</span>
+                        <span class="surname">#{w.surname}</span>
+                        <span class="dni">#{w.dni}</span>
+                        <span class="email">#{w.email}</span>
+                        <span class="git">#{w.gitUser}</span>
+                        <p:commandButton id="w#{w.id}" styleClass="modalDialogButton" value="Edit" action="#{workerBean.editWorker(w)}">
+                            
+                        </p:commandButton>
+                        <p:commandButton value="Delete" actionListener="#{workerBean.delete(w)}" update="form_list">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
+                        </p:commandButton>  
+                    </li>
+                </c:forEach>                    
+            </ul>
+
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >  
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+            </p:confirmDialog>  
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
