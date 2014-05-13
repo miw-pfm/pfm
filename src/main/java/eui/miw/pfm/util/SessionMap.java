@@ -24,7 +24,7 @@ public class SessionMap implements Serializable {
 
     }
 
-    public void add(final String key, final Object value) {
+    public void put(final String key, final Object value) {
         this.map.put(key, value);
     }
 

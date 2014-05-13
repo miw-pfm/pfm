@@ -52,9 +52,9 @@ public class OpenProjectBean extends Bean implements Serializable {
 
         assert project != null;
         assert sessionMap != null;
-//        this.sessionMap.add("project", this.project);
+//        this.sessionMap.put("project", this.project);
         try {
-            sessionMap.add("project", project);
+            sessionMap.put("project", project);
         } catch (Exception e) {
 
         }
@@ -78,9 +78,9 @@ public class OpenProjectBean extends Bean implements Serializable {
          }*/
         assert project != null;
         assert sessionMap != null;
-//        this.sessionMap.add("project", this.project);
+//        this.sessionMap.put("project", this.project);
         try {
-            sessionMap.add("project", this.project);
+            sessionMap.put("project", this.project);
         } catch (Exception e) {
 
         }
