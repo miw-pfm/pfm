@@ -24,14 +24,14 @@ public class ListProjectWorkersEjb {
 
     public void remove(final ProjectEntity project, final WorkerEntity worker) {
         project.removeWorker(worker);
-        worker.removeProject(project);
+        //worker.removeProject(project);
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);        
         AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
     }
 
     public void add(final ProjectEntity project, final WorkerEntity worker) {
         project.addWorker(worker);
-        worker.addProject(project);
+        //worker.addProject(project);
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);
         AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);        
     }

@@ -9,11 +9,10 @@
 
     <ui:define name="title">
         #{msgs.listWorker_subtitle}
-
     </ui:define>    
 
     <ui:define name="pagetitle">
-        #{msgs.namerup}        
+        #{confProjectBean.project.name}
     </ui:define>
 
     <ui:define name="body">
@@ -38,7 +37,7 @@
 
         <h:form id="form" class="dataTableList">
             <h:panelGroup layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="workerBtn" value="#{msgs.add_worker}" onclick="PF('workerPranel').show()" type="button"  styleClass="btn btn-success" />  
+                <p:commandButton id="workerBtn" value="#{msgs.add_worker}" actionListener="#{listProjectWorkersBean.reloadWorkerBean}" oncomplete="PF('workerPranel').show()" styleClass="btn btn-success" />
             </h:panelGroup>
 
             <p:growl id="messages" showDetail="true" /> 
