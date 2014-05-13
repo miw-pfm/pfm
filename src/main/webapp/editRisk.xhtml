@@ -20,16 +20,19 @@
     </ui:define>
 
     <ui:define name="body">
+
         <h:panelGroup id="editRisk" layout="block">
             <h:form id="form">
+                <p:growl id="messages" showDetail="true" /> 
+
                 <h:inputHidden id="id" value="#{riskBean.riskEntity.id}" />
 
-                <h:panelGrid columns="1">
+                <h:panelGrid columns="3">
 
                     <h:outputLabel id="nameLabel" for="name" value="#{msgs.enter_name_risk}"/>
                     <h:inputText id="name" value="#{riskBean.riskEntity.name}" maxlength="100"  required="true" />
 
-                    <h:commandButton value="#{msgs.submit}" action="#{riskBean.update}" styleClass="btn btn-success" />
+                    <h:commandButton value="#{msgs.submit}" action="#{riskBean.update()}" styleClass="btn btn-success" />
                 </h:panelGrid>
             </h:form>    
         </h:panelGroup>

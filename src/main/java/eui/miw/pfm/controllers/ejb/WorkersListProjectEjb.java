@@ -16,7 +16,7 @@ import java.util.List;
  * @author Roberto Amor
  * @author Jose M Villar
  */
-public class ListProjectWorkersEjb {
+public class WorkersListProjectEjb {
     public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {       
         return project.getWorkers();
         //return new ArrayList<WorkerEntity>();
@@ -24,14 +24,14 @@ public class ListProjectWorkersEjb {
 
     public void remove(final ProjectEntity project, final WorkerEntity worker) {
         project.removeWorker(worker);
-        worker.removeProject(project);
+        //worker.removeProject(project);
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);        
         AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
     }
 
     public void add(final ProjectEntity project, final WorkerEntity worker) {
         project.addWorker(worker);
-        worker.addProject(project);
+        //worker.addProject(project);
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);
         AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);        
     }

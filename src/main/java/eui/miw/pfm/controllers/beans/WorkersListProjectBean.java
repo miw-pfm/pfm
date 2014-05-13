@@ -5,7 +5,8 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.ListProjectWorkersEjb;
+import eui.miw.pfm.controllers.ejb.WorkersListProjectEjb;
+import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 
@@ -25,31 +27,32 @@ import org.primefaces.model.LazyDataModel;
  */
 @Named
 @SessionScoped
-public class ListProjectWorkersBean extends Bean implements Serializable {
+public class WorkersListProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private transient final LazyDataModel<WorkerEntity> lazyModel;
+
+    private transient LazyDataModel<WorkerEntity> lazyModel;
 
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
     private UserEntity user;
     private ProjectEntity project;
-    private static final Logger LOGGER = Logger.getLogger(ListProjectWorkersBean.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(WorkersListProjectBean.class.getName());
 
     @ManagedProperty(value = "#{listWorkerBean}")
-    private transient ListWorkerBean listWorkerBean = new ListWorkerBean();
+    private final transient WorkerListNotProjectBean listWorkerBean = new WorkerListNotProjectBean();
 
-    public ListProjectWorkersBean() {
+    public WorkersListProjectBean() {
         super();
         try {
-            this.user = ((UserEntity) sessionMap.get("UserLogIn"));
+            this.user = ((UserEntity) sessionMap.get("userlogin"));
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
 
-        final ListProjectWorkersEjb workersEjb = new ListProjectWorkersEjb();
-        this.workers = workersEjb.obtainWorkers(this.project);
+        this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());
+        this.workers = new WorkersListProjectEjb().obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -96,7 +99,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         LOGGER.info(worker.toString());
         LOGGER.info(this.project.toString());
 
-        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
+        final WorkersListProjectEjb eaE = new WorkersListProjectEjb();
         eaE.remove(project, worker);
 
         this.listWorkerBean.reload();
@@ -111,7 +114,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         LOGGER.info(worker.toString());
         LOGGER.info(this.project.toString());
 
-        final ListProjectWorkersEjb eaE = new ListProjectWorkersEjb();
+        final WorkersListProjectEjb eaE = new WorkersListProjectEjb();
         eaE.add(project, worker);
 
         this.listWorkerBean.reload();
@@ -119,8 +122,16 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
         return "list_worker";
     }
 
-    public ListWorkerBean getListWorkerBean() {
+    public WorkerListNotProjectBean getListWorkerBean() {
         return listWorkerBean;
+    }
 
+    public void reloadWorkerBean(final ActionEvent event) {
+        this.listWorkerBean.reload();
+    }
+
+    public void reset() {
+        this.setWorkers(new WorkersListProjectEjb().obtainWorkers(this.project));
+        this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 }

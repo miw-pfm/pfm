@@ -82,7 +82,7 @@ public class LoginBean implements Serializable {
 
             if (userEntity != null) { //NOPMD
                 loggedIn = true;
-                this.sessionMap.add("userlogin", userEntity);
+                this.sessionMap.put("userlogin", userEntity);
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
             } else {
                 loggedIn = false;

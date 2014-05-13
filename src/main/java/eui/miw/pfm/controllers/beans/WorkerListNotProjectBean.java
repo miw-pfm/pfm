@@ -5,7 +5,8 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.ListWorkersEjb;
+import eui.miw.pfm.controllers.ejb.WorkersListNotProjectEjb;
+import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
@@ -25,17 +26,17 @@ import org.primefaces.model.LazyDataModel;
  */
 @Named
 @SessionScoped
-public class ListWorkerBean extends Bean implements Serializable {
+public class WorkerListNotProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private transient LazyDataModel<WorkerEntity> lazyModel;
-    private static final Logger LOGGER = Logger.getLogger(ListWorkerBean.class.getName());//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(WorkerListNotProjectBean.class.getName());//NOPMD
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
     private UserEntity user;
     private ProjectEntity project;
 
-    public ListWorkerBean() {
+    public WorkerListNotProjectBean() {
         super();
         try {
             this.user = ((UserEntity) sessionMap.get("userlogin"));
@@ -43,8 +44,8 @@ public class ListWorkerBean extends Bean implements Serializable {
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
-
-        this.workers = new ListWorkersEjb().obtainWorkers(this.project);
+        this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());
+        this.workers = new WorkersListNotProjectEjb().obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -89,7 +90,7 @@ public class ListWorkerBean extends Bean implements Serializable {
      * @author Jose M Villar
      */
     public void reload() {
-        this.workers = new ListWorkersEjb().obtainWorkers(this.project);
+        this.workers = new WorkersListNotProjectEjb().obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 

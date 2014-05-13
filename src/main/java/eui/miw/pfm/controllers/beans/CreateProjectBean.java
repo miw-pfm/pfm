@@ -66,7 +66,7 @@ public class CreateProjectBean extends Bean implements Serializable {
             assert this.projectEntity != null;
             this.projectEntity.setOwner((UserEntity) this.sessionMap.get("userlogin"));
             this.createProjectEjb.createProject(this.projectEntity);
-            this.sessionMap.add("project", this.projectEntity);
+            this.sessionMap.put("project", this.projectEntity);
             load_holidays();
             view = "confProject";
         } else {

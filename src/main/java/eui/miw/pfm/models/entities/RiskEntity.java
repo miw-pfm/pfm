@@ -48,7 +48,7 @@ public class RiskEntity implements Serializable {
         this.id = id;
     }
 
-    public RiskEntity(Integer id, String name, ProjectEntity project) {
+    public RiskEntity(final Integer id, final String name, final ProjectEntity project) {
         this.id = id;
         this.name = name;
         this.project = project;
