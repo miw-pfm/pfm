@@ -41,28 +41,29 @@ public class WorkerEntity implements Serializable {
 
     @Column(name = "name", length = 100)
     @NotNull
-    @Size(min = 2, max = 100)
+    @Size(min = 2, max = 100, message = "Error. Name logitud incorrecta")
     private String name;
 
     @Column(name = "surname", length = 100)
     @NotNull
-    @Size(min = 2, max = 100)
+    @Size(min = 2, max = 100, message = "Error. Surname logitud incorrecta")
     private String surname;
 
-    @Column(name = "dni", length = 10)
-    @NotNull
-    @Size(min = 2, max = 10)
+    @Column(name = "dni", length = 10, unique=true)    
+    @NotNull (message = "Error. DNI not NULL")
+    @Size(min = 2, max = 10, message = "Error. DNI logitud incorrecta")
+    @Pattern(regexp = "^[0-9]{8}[a-zA-Z]{1}$", message = "DNI Incorrecto")       
     private String dni;
 
-    @Column(name = "email", length = 255)
-    @NotNull
-    @Size(min = 6, max = 50)
-    @Pattern(regexp = "^.+@.+\\..+$")
+    @Column(name = "email", length = 255, unique=true)
+    @NotNull (message = "Error. Email not NULL")
+    @Size(min = 6, max = 50, message = "Error. Email logitud incorrecta")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{2,15}@[a-zA-Z0-9_-]{2,15}.[a-zA-Z]{2,4}(.[a-zA-Z]{2,4})?$", message = "Email Incorrect")
     private String email;
 
-    @Column(name = "git_user", length = 100)
-    @NotNull
-    @Size(min = 2, max = 100)
+    @Column(name = "git_user", length = 100, unique=true)
+    @NotNull(message = "Error. Git User not NULL")
+    @Size(min = 2, max = 100, message = "Error. Git User longitud incorrecta")
     private String gitUser;
 
     @JoinTable(name = "projects_workers", joinColumns = {
