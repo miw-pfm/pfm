@@ -19,56 +19,9 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:outputScript target="head">
-            $ = jQuery;
-            $(document).ready(function() {
-            $("#submitcreateworker").click(function(e){
-            e.preventDefault();                
-            if ($("#createnewworker").attr("style") == "display: none;") {
-            $("#createnewworker").attr("style","display: block;" );                   
-            } else $("#createnewworker").attr("style","display: none;"); 
-            }) 
 
-            $("#cancelcreateworker").click(function(e){
-            e.preventDefault();                
-            if ($("#createnewworker").attr("style") == "display: none;") {
-            $("#createnewworker").attr("style","display: block;" );                   
-            } else $("#createnewworker").attr("style","display: none;"); 
-            })
-            });           
-        </h:outputScript> 
-
-        <h:link value="#{msgs.create_worker}" styleClass="btn btn-success" id="submitcreateworker"/>
-                <h:panelGroup id="createnewworker" layout="block" style="display: none;"  >
-            <h:form id="form_create">
-                 <p:growl id="growl" showDetail="true" sticky="true" />
-                 <h:panelGroup layout="block">
-                     <h:panelGroup layout="span" styleClass="btn" style="float: right;" >
-                        <h:link  value="Cancel" id="cancelcreateworker" />
-                    </h:panelGroup>
-                 <h:panelGrid columns="2">
-
-                    <h:outputText value="#{msgs.nameWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.name}" maxlength="25" id="nameWorker" binding="#{nameWorker}" required="true" />
-
-                    <h:outputText value="#{msgs.surnameWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.surname}" maxlength="25" id="surnameWorker" binding="#{surnameWorker}" required="true" />
-
-                    <h:outputText value="#{msgs.dniWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.dni}" maxlength="9" id="dniWorker" binding="#{dniWorker}" required="true" />
-
-                    <h:outputText value="#{msgs.emailWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.email}" maxlength="60" id="emailWorker" binding="#{emailWorker}" required="true" />
-
-                    <h:outputText value="#{msgs.gitUserWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUserWorker}" required="true" />
-
-                    <h:commandButton value="#{msgs.submit}" action="#{workerBean.create()}" styleClass="btn btn-success" />
-                </h:panelGrid>
-                     </h:panelGroup>
-            </h:form>    
-        </h:panelGroup>
-
+        <h:link value="#{msgs.create_worker}" styleClass="btn btn-success" id="submitcreateworker" outcome="createWorker"/>
+        
         <h:form id="form_list">              
             <p:growl id="messages" showDetail="true" /> 
             <ul id="workerListing">
