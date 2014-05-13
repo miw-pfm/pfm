@@ -16,7 +16,7 @@ import java.util.List;
  * @author Roberto Amor
  * @author Jose M Villar
  */
-public class ListProjectWorkersEjb {
+public class WorkersListProjectEjb {
     public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {       
         return project.getWorkers();
         //return new ArrayList<WorkerEntity>();

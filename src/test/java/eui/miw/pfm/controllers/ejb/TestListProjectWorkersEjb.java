@@ -7,7 +7,6 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UseCaseEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class TestListProjectWorkersEjb {
     
     @Test
     public void addWorker() {
-        final ListProjectWorkersEjb listWEjb = new ListProjectWorkersEjb();
+        final WorkersListProjectEjb listWEjb = new WorkersListProjectEjb();
         List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
         
         
@@ -98,7 +97,7 @@ public class TestListProjectWorkersEjb {
     
     @Test
     public void removeWorker() {
-        final ListProjectWorkersEjb listWEjb = new ListProjectWorkersEjb();
+        final WorkersListProjectEjb listWEjb = new WorkersListProjectEjb();
         List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
 
         listWEjb.add(project, workerEntity1);

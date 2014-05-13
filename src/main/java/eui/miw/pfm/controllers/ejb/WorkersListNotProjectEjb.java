@@ -16,7 +16,7 @@ import java.util.List;
  *
  * Refactoring : Fred Peña & Jose M Villar
  */
-public class ListWorkersEjb {
+public class WorkersListNotProjectEjb {
 
     public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {
         final List<WorkerEntity> listAll = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();

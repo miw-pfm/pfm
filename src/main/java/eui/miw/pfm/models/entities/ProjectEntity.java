@@ -80,7 +80,7 @@ public class ProjectEntity implements Serializable {
      * @author César Martínez
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private Set<RiskEntity> risk = new HashSet<>();
+    private List<RiskEntity> risk = new ArrayList<>();
 
     @JoinTable(name = "projects_workers", joinColumns = {
         @JoinColumn(name = "project_id", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -229,11 +229,11 @@ public class ProjectEntity implements Serializable {
         this.useCases.remove(usecases);
     }
 
-    public Set<RiskEntity> getRisk() {
+    public List<RiskEntity> getRisk() {
         return risk;
     }
 
-    public void setRisk(final Set<RiskEntity> risk) {
+    public void setRisk(final List<RiskEntity> risk) {
         this.risk = risk;
     }
 
