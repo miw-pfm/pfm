@@ -26,6 +26,7 @@ public class ConfProjectBean extends Bean implements Serializable {
     private final ConfProjectEjb confProjectEjb;//NOPMD
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
     private static final List<Integer> chosenList = new ArrayList<>();
+    private boolean weeksError = false;
 
     public ConfProjectBean() {
         super();
@@ -46,42 +47,68 @@ public class ConfProjectBean extends Bean implements Serializable {
         return project;
     }
 
+    public boolean isWeeksError() {
+        return weeksError;
+    }
+
+    public void setWeeksError(boolean weeksError) {
+        this.weeksError = weeksError;
+    }
+
+    public String haveWeeksError() {
+        String result = "";
+        if(this.weeksError){
+            result = "Error (weeks < weeks per iteration)";
+        }
+        return result;
+    }
     public String update() {
         String result;
 
-        if (validDates(project.getStartDate(), project.getEndDate())) {
+        if (validDates(project.getStartDate(), project.getEndDate()) && this.validWeeksPerIter()) {
             confProjectEjb.update(project);
             result = "openProject";
         } else {
             LOG.warning("Not valid dates");
             final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verify the chosen dates",""));
-            result = "confProject";
+            result = "confProject";                    
         }
 
         return result;
     }
 
     public boolean validDates(final Date start, final Date end) {
-
+        
         boolean validDates = false;
         Date actual = new Date(System.currentTimeMillis() - (60 * 60 * 1000));
         if ((start.after(actual) || start.equals(actual)) && (end.after(start))) {
             validDates = true;
         }
-
         return validDates;
     }
 
+    public boolean validWeeksPerIter(){
+        boolean result;
+        this.weeksError = false;
+        final double mils = (project.getEndDate().getTime() - project.getStartDate().getTime() + 1) / 7 * 5;
+        final double weeks = ((mils / (1000 * 60 * 60 * 24))) / 5;
+        if(weeks<project.getWeekNumIteration()){
+            LOG.warning("Not valid time for project (weeks < weeks per iteration)");
+            this.weeksError = true;
+            result = false;
+        } else {
+            result = true;
+        }
+        return result;
+    }
+    
     public void stimateIter() {
 
         final double mils = (project.getEndDate().getTime() - project.getStartDate().getTime() + 1) / 7 * 5;
         final double weeks = ((mils / (1000 * 60 * 60 * 24))) / 5;
-        
-        if(weeks<project.getWeekNumIteration()){
-            LOG.warning("Not valid time for project (weeks < weeks per iteration)");
-            final FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("form:weeIter", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verify project dates or week per iteration", ""));
+        this.weeksError = false;
+        if(!this.validWeeksPerIter()){
             return;
         }
         
