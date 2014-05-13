@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 
@@ -28,7 +29,8 @@ import org.primefaces.model.LazyDataModel;
 public class ListProjectWorkersBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private transient final LazyDataModel<WorkerEntity> lazyModel;
+
+    private transient LazyDataModel<WorkerEntity> lazyModel;
 
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
@@ -37,7 +39,7 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(ListProjectWorkersBean.class.getName());
 
     @ManagedProperty(value = "#{listWorkerBean}")
-    private transient ListWorkerBean listWorkerBean = new ListWorkerBean();
+    private final transient ListWorkerBean listWorkerBean = new ListWorkerBean();
 
     public ListProjectWorkersBean() {
         super();
@@ -121,6 +123,14 @@ public class ListProjectWorkersBean extends Bean implements Serializable {
 
     public ListWorkerBean getListWorkerBean() {
         return listWorkerBean;
+    }
 
+    public void reloadWorkerBean(final ActionEvent event) {
+        this.listWorkerBean.reload();
+    }
+
+    public void reset() {
+        this.setWorkers(new ListProjectWorkersEjb().obtainWorkers(this.project));
+        this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 }
