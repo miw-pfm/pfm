@@ -2,13 +2,16 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.entities.WorkerEntity;
+import eui.miw.pfm.util.LazyWorkerDataModel;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.model.LazyDataModel;
 
 /**
  *
@@ -21,6 +24,7 @@ import javax.inject.Named;
 public class WorkerBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private transient LazyDataModel<WorkerEntity> lazyModel;
     private static final Logger LOGGER = Logger.getLogger(WorkerBean.class.getName());
 
     private WorkerEntity workerEntity;
@@ -28,10 +32,15 @@ public class WorkerBean extends Bean implements Serializable {
     public WorkerBean() {
         super();
         workerEntity = new WorkerEntity();
+        this.lazyModel = new LazyWorkerDataModel(this.getWorkers());
     }
 
     public WorkerEntity getWorkerEntity() {
         return workerEntity;
+    }
+    
+    public LazyDataModel<WorkerEntity> getLazyModel() {        
+        return lazyModel;
     }
 
     public void setWorkerEntity(final WorkerEntity workerEntity) {

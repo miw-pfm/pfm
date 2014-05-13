@@ -24,33 +24,34 @@
         
         <h:form id="form_list">              
             <p:growl id="messages" showDetail="true" /> 
-            <ul id="workerListing">
-                <li class="headerWorkerListing">
-                    <span class="name">Name</span>
-                    <span class="surname">Sure Name</span>
-                    <span class="dni">DNI</span>
-                    <span class="email">Email</span>
-                    <span class="git">Git User</span>
-                    <span class="editWorker"></span>
-                    <span class="deleteWorker"></span>
-                </li>
+         
+            <p:dataTable var="worker" value="#{workerBean.lazyModel}" paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15" 
+                         rowKey="#{worker.id}" 
+                         
+                         id="workerTable" lazy="true">
 
-                <c:forEach var="w" items="#{workerBean.workers}" >
-                    <li>                        
-                        <span class="name">#{w.name}</span>
-                        <span class="surname">#{w.surname}</span>
-                        <span class="dni">#{w.dni}</span>
-                        <span class="email">#{w.email}</span>
-                        <span class="git">#{w.gitUser}</span>
-                        <p:commandButton id="w#{w.id}" styleClass="modalDialogButton" value="Edit" action="#{workerBean.editWorker(w)}">
-                            
-                        </p:commandButton>
-                        <p:commandButton value="Delete" actionListener="#{workerBean.delete(w)}" update="form_list">
-                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
-                        </p:commandButton>  
-                    </li>
-                </c:forEach>                    
-            </ul>
+                <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}">
+                    <h:outputText value="#{worker.name}" />
+                </p:column>
+
+                <p:column headerText="Surname" sortBy="surname" filterBy="#{worker.surname}">
+                    <h:outputText value="#{worker.surname}" />
+                </p:column>
+
+                <p:column headerText="DNI" sortBy="dni" filterBy="#{worker.dni}">
+                    <h:outputText value="#{worker.dni}" />
+                </p:column>
+
+                <p:column headerText="Email" sortBy="email" filterBy="#{worker.email}">
+                    <h:outputText value="#{worker.email}" />
+                </p:column>
+
+                <p:column styleClass="buttom">
+                     
+                </p:column>
+            </p:dataTable>
 
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >  
