@@ -27,8 +27,13 @@
             function markHolidaysAndReportedDays(date) { 
             var holidays = new Array(#{fn:join(calendarProjectBean.getHolidays(), ',')}); 
             for (var i = 0; i &#60; holidays.length; i++) 
-            { if(date.getTime() == new Date(holidays[i]).getTime()) 
-            return [true,'holiday']; } 
+            { 
+              var day = date.getDay();
+              if (day==0 || day==6)
+                return [false,''];
+              else if(date.getTime() == new Date(holidays[i]).getTime())               
+                return [true,'holiday']; 
+            } 
             return [true, '']; }
         </h:outputScript> 
         <h:panelGroup id="infoCalendar" layout="block">            
@@ -42,7 +47,7 @@
             <h:form id="form_calendario">
 
                 <p:growl id="growl" showDetail="true"/>
-                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" beforeShowDay="markHolidaysAndReportedDays">                    
+                <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" disabledWeekends="true" beforeShowDay="markHolidaysAndReportedDays" >                    
                     <p:ajax event="dateSelect" listener="#{calendarProjectBean.llena}" update="nameDate descriptionDate addHoliday editdate removeHoliday"/>
                 </p:calendar>
 
@@ -50,11 +55,11 @@
                 <p:watermark for="descriptionDate" value="#{msgs.description}" />  
                 <h:panelGrid columns="1" id="tableHolidayForm">
                     <span class="titTableFormCal">Holiday's Name:</span>
-                    <h:inputText id="nameDate" label="Name" value="#{calendarProjectBean.name}" />
+                    <h:inputText id="nameDate" label="Name" value="#{calendarProjectBean.name}" disabled="#{calendarProjectBean.disableNameField}"/>
                     <span class="titTableFormCal">Holiday's Description:</span>
-                    <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" />
+                    <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" disabled="#{calendarProjectBean.disableDescField}" />
                     <h:panelGroup layout="block">
-                        <p:commandButton id="addHoliday" value="Add" action="#{calendarProjectBean.addDateSelect()}" widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar" oncomplete="javascript:location.reload(true)"/>
+                        <p:commandButton id="addHoliday" value="Add" action="#{calendarProjectBean.addDateSelect}" widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar" oncomplete="javascript:location.reload(true)"/>
                         <p:commandButton id="editdate" value="Edit" action="#{calendarProjectBean.updateDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" oncomplete="javascript:location.reload(true)"/>
                         <p:commandButton id="removeHoliday" value="Remove"  action="#{calendarProjectBean.deleteDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" oncomplete="javascript:location.reload(true)"/>
                     </h:panelGroup>

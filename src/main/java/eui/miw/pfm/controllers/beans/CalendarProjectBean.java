@@ -29,13 +29,15 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
     private final CalendarEntity calendarEntity;
     private ProjectEntity project;
-    private String name;
-    private String description;
+    private String name = "";
+    private String description = "";
     private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
     private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
-    private boolean disableAdd = false;
-    private boolean disableEditRemove = false;
+    private boolean disableAdd;// = false;
+    private boolean disableEditRemove;// = true;
+    private boolean disableNameField;// = true;
+    private boolean disableDescField;// = true;
 
     public CalendarProjectBean() {
         super();
@@ -46,6 +48,10 @@ public class CalendarProjectBean extends Bean implements Serializable {
         } catch (Exception e) {
             LOG.warning("No session exist");
         }
+        disableAdd = true;
+        disableEditRemove = true;
+        disableNameField = true;
+        disableDescField = true;
     }
 
     public String getName() {
@@ -82,6 +88,22 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
     public String getEndDate() {
         return format.format(this.project.getEndDate());
+    }
+
+    public boolean isDisableNameField() {
+        return disableNameField;
+    }
+
+    public void setDisableNameField(boolean disableNameField) {
+        this.disableNameField = disableNameField;
+    }
+
+    public boolean isDisableDescField() {
+        return disableDescField;
+    }
+
+    public void setDisableDescField(boolean disableDescField) {
+        this.disableDescField = disableDescField;
     }
 
     public int getWorkingDays() {
@@ -139,6 +161,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
     //Manuel Rodríguez
     public void addDateSelect() {
+        System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
         new CalendarProjectEjb().create(readycalendarentity());
     }
 
@@ -169,14 +192,20 @@ public class CalendarProjectBean extends Bean implements Serializable {
 
     //Manuel Rodríguez
     public String llena() {
+
         List<CalendarEntity> ces = new CalendarProjectEjb().obtainHolidays(project);
         for (CalendarEntity ce : ces) {
             String a = format.format(date1);
-            String b = format.format(ce.getHoliday().getTime());
+            String b = format.format(ce.getHoliday().getTime());         
             if (a.equals(b)) {
                 name = ce.getName();
                 description = ce.getDescription();
                 this.disableAdd = true;
+                this.disableEditRemove = false;
+            } else {
+                this.disableAdd = false;
+                this.disableNameField = false;
+                this.disableDescField = false;
                 this.disableEditRemove = false;
             }
         }
