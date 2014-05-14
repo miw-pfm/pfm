@@ -32,7 +32,7 @@ public class RiskEntity implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", length = 100)
+    @Column(name = "name", length = 100, unique = true)
     @NotNull
     @Size(min = 2, max = 100)
     private String name;
