@@ -90,7 +90,7 @@ public class TestRisk {
 
     }
 
-    //  @Test
+    @Test
     public void testUpdate() {
         final RiskEjb riskEjb = new RiskEjb();
 
@@ -101,11 +101,6 @@ public class TestRisk {
         riskEntity3.setName("pepe6");
         riskEntity3.setValue(5);
         riskEntity3.setProject(project);
-
-        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getName().equals(riskEntity2.getName()));
-        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getName().equals(riskEntity3.getName()));
-        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getValue() == riskEntity2.getValue());
-        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getValue() == riskEntity3.getValue());
 
         riskEjb.update(riskEntity2);
         riskEjb.update(riskEntity3);

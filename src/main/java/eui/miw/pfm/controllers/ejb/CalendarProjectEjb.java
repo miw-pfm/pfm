@@ -25,7 +25,6 @@ public class CalendarProjectEjb {
     }
 
     public void delete(final CalendarEntity calendarEntity) {
-
         AbstractDAOFactory.getFactory().getCalendarDAO().delete(calendarEntity);
     }
 
