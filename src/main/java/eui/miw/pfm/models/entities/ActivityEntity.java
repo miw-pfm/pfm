@@ -7,13 +7,16 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -37,6 +40,13 @@ public class ActivityEntity implements Serializable {
     @Column(name = "code", length = 5)
     @NotNull
     private String code;
+    
+    /**
+     *
+     * @author César Martínez
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iteration")
+    private List<WorkUnitEntity> workUnits = new ArrayList<>();
     
     public ActivityEntity() {
         super();
@@ -72,6 +82,22 @@ public class ActivityEntity implements Serializable {
         this.code = code;
     }
 
+    public List<WorkUnitEntity> getWorkUnits() {
+        return workUnits;
+    }
+
+    public void setWorkUnits(List<WorkUnitEntity> workUnits) {
+        this.workUnits = workUnits;
+    }
+
+    public void addWorkUnit(final WorkUnitEntity w) {
+        this.workUnits.add(w);
+    }
+
+    public void removeWorkUnit(final WorkUnitEntity w) {
+        this.workUnits.remove(w);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -276,6 +276,8 @@ public class ProjectEntity implements Serializable {
     public void removeWorker(final WorkerEntity w) {
         this.workers.remove(w);
     }
+    
+    
 
     @Override
     public int hashCode() {

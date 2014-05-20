@@ -33,6 +33,14 @@ public class WorkUnitEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false)
     private WorkerEntity worker;
+    
+    @ManyToOne
+    @JoinColumn(name = "iteration_id", referencedColumnName = "id", nullable = false)
+    private IterationEntity iteration;
+    
+    @ManyToOne
+    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
+    private ActivityEntity activity;
 
     public WorkUnitEntity() {
     }
@@ -41,9 +49,11 @@ public class WorkUnitEntity implements Serializable {
         this.id = id;
     }
 
-    public WorkUnitEntity(final Integer id, final WorkerEntity worker) {
+    public WorkUnitEntity(final Integer id, final WorkerEntity worker, final IterationEntity iteration, final ActivityEntity activity) {
         this.id = id;
         this.worker = worker;
+        this.iteration = iteration;
+        this.activity = activity;
     }
 
     public Integer getId() {
@@ -58,8 +68,16 @@ public class WorkUnitEntity implements Serializable {
         return worker;
     }
 
-    public void setWorker(WorkerEntity worker) {
+    public void setWorker(final WorkerEntity worker) {
         this.worker = worker;
+    }
+
+    public IterationEntity getIteration() {
+        return iteration;
+    }
+
+    public void setIteration(IterationEntity iteration) {
+        this.iteration = iteration;
     }
 
 
@@ -89,7 +107,7 @@ public class WorkUnitEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "RiskEntity{" + "id=" + id + ", worker=" + worker + '}';
+        return "RiskEntity{" + "id=" + id + ", worker=" + worker + ", iteration=" + iteration + '}';
     }
 
 }
