@@ -76,7 +76,7 @@
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <h:inputText value="#{projectCreatetBean.projectEntity.name}" maxlength="100" />
                         <h:outputText />                                    
-                        <p:commandButton value="Submit" action="#projectCreatetBeann.createProject()}" update="growl" styleClass="btn btn-success"/>                    
+                        <p:commandButton value="Submit" action="#{projectCreatetBean.createProject()}" update="growl" styleClass="btn btn-success"/>                    
                     </h:panelGrid>                    
                 </h:panelGroup>                    
             </h:form>              
