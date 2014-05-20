@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.models.entities;
 
+import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,96 +22,94 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author Jose De Los Santos
+ * @author Manuel Alvarez
  */
 @Entity
-@Table(name = "iterations",  uniqueConstraints={
-   @UniqueConstraint(columnNames={"type", "iter_value", "project_id"})
+@Table(name = "iterations", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"type", "iterValue", "project"})
 })
 public class IterationEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    
-    @Column(name = "type")
-    @NotNull    
-    private char type;
-    
-    @Column(name = "iter_value")
-    @NotNull    
-    private int iter_value;
-    
-    @Column(name = "start_date")
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
-   
 
-    @Column(name = "end_date")
+    @Column(name = "type")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TypeIteration typeIteration;
+
+    @Column(name = "iterValue")
+    @NotNull
+    private int iterValue;
+
+    @Column(name = "startDate")
     @Temporal(TemporalType.DATE)
-    private Date endDate;
-    
+    private Calendar startDate;
+
+    @Column(name = "endDate")
+    @Temporal(TemporalType.DATE)
+    private Calendar endDate;
+
     @ManyToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "project", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
-    
+
     public IterationEntity() {
     }
 
-    public IterationEntity(Integer id, char type, int iter_value, Date startDate, Date endDate, ProjectEntity project) {
+    public IterationEntity(Integer id, TypeIteration typeIteration, int iterValue, Calendar startDate, Calendar endDate, ProjectEntity project) {
         this.id = id;
-        this.type = type;
-        this.iter_value = iter_value;
+        this.typeIteration = typeIteration;
+        this.iterValue = iterValue;
         this.startDate = startDate;
         this.endDate = endDate;
         this.project = project;
     }
-    
-    
-    
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer
-            id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public char geType() {
-        return type;
+    public TypeIteration geTypeIteration() {
+        return typeIteration;
     }
 
-    public void setType(char type) {
-        this.type = type;
+    public void setTypeIteration(TypeIteration typeIteration) {
+        this.typeIteration = typeIteration;
     }
 
-    public int getIter_value() {
-        return iter_value;
+    public int getIterValue() {
+        return iterValue;
     }
 
-    public void setIter_value(int val) {
-        this.iter_value = val;
+    public void setIterValue(int val) {
+        this.iterValue = val;
     }
 
-    public Date getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Calendar getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
     }
 
@@ -120,8 +120,7 @@ public class IterationEntity implements Serializable {
     public void setProject(ProjectEntity project) {
         this.project = project;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -144,7 +143,7 @@ public class IterationEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "IterationEntity[ id=" + id +" type "+type+" iter_value"+iter_value+" startDate "+startDate+" endDate "+endDate+" project "+project+" ]";
+        return "IterationEntity[ id=" + id + " type " + typeIteration + " iterValue" + iterValue + " startDate " + startDate + " endDate " + endDate + " project " + project + " ]";
     }
-    
+
 }
