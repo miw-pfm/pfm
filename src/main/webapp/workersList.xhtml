@@ -47,9 +47,18 @@
                 <p:column headerText="Email" sortBy="email" filterBy="#{worker.email}">
                     <h:outputText value="#{worker.email}" />
                 </p:column>
+                
+                <p:column headerText="GitUser" sortBy="gitUser" filterBy="#{worker.gitUser}">
+                    <h:outputText value="#{worker.gitUser}" />
+                </p:column>
 
                 <p:column styleClass="buttom">
-                     
+                    <p:commandButton value="#{msgs.edit}" styleClass="btn btn-sm btn-default" icon="ui-icon-pencil" action="#{workerBean.editWorker()}" update=":form_list">  
+                         <f:setPropertyActionListener target="#{workerBean.selected}" value="#{worker}" />
+                    </p:commandButton>
+                    <p:commandButton value="#{msgs.delete}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" action="#{workerBean.delete}" update=":form_list" >
+                        <f:setPropertyActionListener target="#{workerBean.selected}" value="#{worker}" />
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
 
