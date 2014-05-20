@@ -33,7 +33,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
     private String description = "";
     private SimpleDateFormat format = new SimpleDateFormat("d/M/yy");
     private Date date1;
-    private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
+    private static final Logger LOG = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
     private boolean disableAdd;
     private boolean disableEditRemove;
     private boolean disableNameField;

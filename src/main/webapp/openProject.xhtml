@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/templateHome.xhtml">
 
-    <!--<ui:param name="project" value="#{openProjectBean.openProject.g}"/>-->
+    <!--<ui:param name="project" value="#{projectOpenBean.openProject.g}"/>-->
     <ui:define name="pagetitle" >
          #{project.name}
     </ui:define>      
@@ -38,7 +38,7 @@
                 
                 <h:panelGroup id="participants_pnl" layout="block">
                     <h3>Workers</h3>
-                    <p:dataList id="participants" var="participant" value="#{openProjectBean.participants}" itemType="participant" >  
+                    <p:dataList id="participants" var="participant" value="#{projectOpenBean.participants}" itemType="participant" >  
                     #{participant.name}  
                     </p:dataList>
                 </h:panelGroup>

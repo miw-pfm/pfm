@@ -7,6 +7,7 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.CalendarEntity;
+import eui.miw.pfm.models.entities.CalendarTemplateEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import java.util.Calendar;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author Jean Mubaied
  * @author Manuel Rodríguez
- * 
+ *
  */
 public class CalendarProjectEjb {
 
@@ -24,7 +25,7 @@ public class CalendarProjectEjb {
     }
 
     public void delete(final CalendarEntity calendarEntity) {
-        
+
         AbstractDAOFactory.getFactory().getCalendarDAO().delete(calendarEntity);
     }
 
@@ -36,10 +37,15 @@ public class CalendarProjectEjb {
         final String psql = "SELECT ca FROM CalendarEntity ca WHERE ca.project = ?1";//NOPMD
         return AbstractDAOFactory.getFactory().getCalendarDAO().find(psql, project);
     }
+
     //Manuel Rodríguez
-    public CalendarEntity obtainHoliday(final ProjectEntity project, final Calendar holiday)
-    {         
+    public CalendarEntity obtainHoliday(final ProjectEntity project, final Calendar holiday) {
         return AbstractDAOFactory.getFactory().getCalendarDAO().findHoliday(project, holiday);
-    }        
+    }
+
+    //Manuel Rodríguez
+    public List<CalendarTemplateEntity> obtainHolidays() {
+        return AbstractDAOFactory.getFactory().getCalendarTemplateDAO().findAll();
+    }
 
 }

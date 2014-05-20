@@ -44,7 +44,7 @@ public class TestCalendarProject {
         assertTrue("fin test", true); // NOPMD  
     }
 
-    @Test
+  //  @Test
     public void testUpdateCalendar() {
         CalendarDAO cd = AbstractDAOFactory.getFactory().getCalendarDAO();
         CalendarEntity calendar2 = cd.read(12);

@@ -23,13 +23,13 @@ import org.junit.Test;
 public class TestCreateProject {
 
     private transient ProjectEntity project;
-    private transient CreateProjectEjb createProjectEjb;
+    private transient ProjectEjb createProjectEjb;
     private transient UserEntity user;
 
     @Before
     public void before() {
         project = new ProjectEntity();
-        createProjectEjb = new CreateProjectEjb();
+        createProjectEjb = new ProjectEjb();
 
         user = new UserEntity();
         user.setName("Pepe");

@@ -25,14 +25,14 @@ public class TestNameProjectValidator {
     private transient ProjectEntity project;
     private transient ProjectEntity project2;
     private transient UserEntity user1;
-    private transient CreateProjectEjb createProjectEjb;
+    private transient ProjectEjb createProjectEjb;
 
     @Before
     public void before() {
         project = new ProjectEntity();
         project2 = new ProjectEntity();
         user1 = new UserEntity();
-        createProjectEjb = new CreateProjectEjb();
+        createProjectEjb = new ProjectEjb();
 
         user1.setName("Pepe");
         user1.setPassword("1234");

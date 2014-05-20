@@ -5,7 +5,7 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.WorkersListProjectEjb;
+import eui.miw.pfm.controllers.ejb.WorkersListEjb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
@@ -52,7 +52,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         }
 
         this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());
-        this.workers = new WorkersListProjectEjb().obtainWorkers(this.project);
+        this.workers = new WorkersListEjb().obtainWorkers(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -99,7 +99,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         LOGGER.info(worker.toString());
         LOGGER.info(this.project.toString());
 
-        final WorkersListProjectEjb eaE = new WorkersListProjectEjb();
+        final WorkersListEjb eaE = new WorkersListEjb();
         eaE.remove(project, worker);
 
         this.listWorkerBean.reload();
@@ -114,7 +114,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         LOGGER.info(worker.toString());
         LOGGER.info(this.project.toString());
 
-        final WorkersListProjectEjb eaE = new WorkersListProjectEjb();
+        final WorkersListEjb eaE = new WorkersListEjb();
         eaE.add(project, worker);
 
         this.listWorkerBean.reload();
@@ -131,7 +131,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
     }
 
     public void reset() {
-        this.setWorkers(new WorkersListProjectEjb().obtainWorkers(this.project));
+        this.setWorkers(new WorkersListEjb().obtainWorkers(this.project));
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 }

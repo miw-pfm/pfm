@@ -8,6 +8,7 @@ import eui.miw.pfm.models.entities.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -89,29 +90,30 @@ public class TestRisk {
 
     }
 
-  //  @Test
+    //  @Test
     public void testUpdate() {
         final RiskEjb riskEjb = new RiskEjb();
 
         riskEntity2.setName("pepe5");
         riskEntity2.setValue(1);
         riskEntity2.setProject(project);
-        List<UseCaseEntity> lUsecase1 = new ArrayList<>();
-        lUsecase1.add(useCaseEntity3);
-        riskEntity2.setUsecases(lUsecase1);
 
         riskEntity3.setName("pepe6");
         riskEntity3.setValue(5);
         riskEntity3.setProject(project);
-        List<UseCaseEntity> lUsecase2 = new ArrayList<>();
-        lUsecase2.add(useCaseEntity1);
-        riskEntity3.setUsecases(lUsecase2);
+
+        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getName().equals(riskEntity2.getName()));
+        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getName().equals(riskEntity3.getName()));
+        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getValue() == riskEntity2.getValue());
+        assertFalse("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getValue() == riskEntity3.getValue());
 
         riskEjb.update(riskEntity2);
         riskEjb.update(riskEntity3);
 
-        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).equals(riskEntity2));
-        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).equals(riskEntity3));
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getName().equals(riskEntity2.getName()));
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getName().equals(riskEntity3.getName()));
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getValue() == riskEntity2.getValue());
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getValue() == riskEntity3.getValue());
 
     }
 
@@ -127,7 +129,6 @@ public class TestRisk {
         riskEntity4.setProject(project);
         List<UseCaseEntity> lUsecase1 = new ArrayList<>();
         lUsecase1.add(useCaseEntity1);
-
         riskEntity4.setUsecases(lUsecase1);
 
         riskEntity5.setName("Pepe8");

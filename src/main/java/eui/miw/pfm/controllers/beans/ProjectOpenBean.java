@@ -5,16 +5,16 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.OpenProjectEjb;
+import eui.miw.pfm.controllers.ejb.ProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.moks.Participant;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
  *
@@ -22,13 +22,13 @@ import javax.faces.context.FacesContext;
  */
 @RequestScoped
 @Named
-public class OpenProjectBean extends Bean implements Serializable {
+public class ProjectOpenBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity project;
     private List<Participant> participants;
 
-    public OpenProjectBean() {
+    public ProjectOpenBean() {
         super();
         this.project = new ProjectEntity();
         this.participants = new ArrayList<>();
@@ -63,9 +63,7 @@ public class OpenProjectBean extends Bean implements Serializable {
 
     public ProjectEntity openProject(int projectId) { //NOPMD
 
-        OpenProjectEjb opEJB;
-        opEJB = new OpenProjectEjb();
-        project = opEJB.openProject(projectId);
+        project = new ProjectEjb().openProject(projectId);
 
         //This entity should be filled with the user in session
         /*

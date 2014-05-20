@@ -5,7 +5,7 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.WorkersListNotProjectEjb;
+import eui.miw.pfm.controllers.ejb.WorkersListEjb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UserEntity;
@@ -45,7 +45,7 @@ public class WorkerListNotProjectBean extends Bean implements Serializable {
             LOGGER.warning("No session exist");
         }
         this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());
-        this.workers = new WorkersListNotProjectEjb().obtainWorkers(this.project);
+        this.workers = new WorkersListEjb().obtainWorkersNotProject(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 
@@ -90,7 +90,7 @@ public class WorkerListNotProjectBean extends Bean implements Serializable {
      * @author Jose M Villar
      */
     public void reload() {
-        this.workers = new WorkersListNotProjectEjb().obtainWorkers(this.project);
+        this.workers = new WorkersListEjb().obtainWorkersNotProject(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }
 

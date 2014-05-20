@@ -1,6 +1,6 @@
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.ConfProjectEjb;
+import eui.miw.pfm.controllers.ejb.ProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -19,19 +18,19 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class ConfProjectBean extends Bean implements Serializable {
+public class ProjectConfBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity project;//NOPMD
-    private final ConfProjectEjb confProjectEjb;//NOPMD
-    private static final Logger LOG = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
+    private final ProjectEjb projectEjb;//NOPMD
+    private static final Logger LOG = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
     private static final List<Integer> chosenList = new ArrayList<>();
     private boolean weeksError = false;
 
-    public ConfProjectBean() {
+    public ProjectConfBean() {
         super();
         project = new ProjectEntity();
-        confProjectEjb = new ConfProjectEjb();
+        projectEjb = new ProjectEjb();
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
@@ -66,7 +65,7 @@ public class ConfProjectBean extends Bean implements Serializable {
         String result;
 
         if (validDates(project.getStartDate(), project.getEndDate()) && this.validWeeksPerIter()) {
-            confProjectEjb.update(project);
+            projectEjb.update(project);
             result = "openProject";
         } else {
             LOG.warning("Not valid dates");

@@ -113,7 +113,7 @@ public class TestWorkerProfile {
 
     @Test
     public void testWorker1() {
-        final WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
+        final WorkerEjb workerProfileEjb = new WorkerEjb();
         final List<ProjectEntity> projectEntities = workerProfileEjb.findProjects(AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity1.getId()));
 
         for (ProjectEntity pe : projectEntities) {
@@ -129,7 +129,7 @@ public class TestWorkerProfile {
 
     @Test
     public void testWorker2() {
-        final WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
+        final WorkerEjb workerProfileEjb = new WorkerEjb();
         final List<ProjectEntity> projectEntities = workerProfileEjb.findProjects(AbstractDAOFactory.getFactory().getWorkerDAO().read(workerEntity2.getId()));
 
         for (ProjectEntity pe : projectEntities) {

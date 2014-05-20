@@ -38,11 +38,11 @@
 
         <h:form id="form">
 
-            <p:dataTable var="project" value="#{listProjectsBean.lazyModel}" paginator="true" rows="10"
+            <p:dataTable var="project" value="#{projectListBean.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{listProjectsBean.selectedProject}" id="projectTable" lazy="true">
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{projectListBean.selectedProject}" id="projectTable" lazy="true">
 
-               <p:ajax event="rowSelect" listener="#{listProjectsBean.onRowSelect}"  />
+               <p:ajax event="rowSelect" listener="#{projectListBean.onRowSelect}"  />
 
                <p:column headerText="Name" sortBy="name" filterBy="#{project.name}">
                    <h:outputText value="#{project.name}" />
@@ -74,9 +74,9 @@
                     <h:panelGrid columns="2" style=" overflow: auto;">                            
                         <h:outputText value="#{msgs.enter_name_project}" class="nameOfTheProject" />          
                         <p:growl id="growl" showDetail="true" sticky="true" />
-                        <h:inputText value="#{createProjectBean.projectEntity.name}" maxlength="100" />
+                        <h:inputText value="#{projectCreatetBean.projectEntity.name}" maxlength="100" />
                         <h:outputText />                                    
-                        <p:commandButton value="Submit" action="#{createProjectBean.createProject()}" update="growl" styleClass="btn btn-success"/>                    
+                        <p:commandButton value="Submit" action="#projectCreatetBeann.createProject()}" update="growl" styleClass="btn btn-success"/>                    
                     </h:panelGrid>                    
                 </h:panelGroup>                    
             </h:form>              

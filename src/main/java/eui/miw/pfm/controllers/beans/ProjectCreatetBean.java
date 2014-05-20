@@ -6,8 +6,7 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.CalendarProjectEjb;
-import eui.miw.pfm.controllers.ejb.CalendarTemplateEjb;
-import eui.miw.pfm.controllers.ejb.CreateProjectEjb;
+import eui.miw.pfm.controllers.ejb.ProjectEjb;
 import eui.miw.pfm.models.entities.CalendarEntity;
 import eui.miw.pfm.models.entities.CalendarTemplateEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
@@ -25,20 +24,20 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class CreateProjectBean extends Bean implements Serializable {
+public class ProjectCreatetBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity projectEntity;
     private transient UserEntity userEntity;
-    private final CreateProjectEjb createProjectEjb;//NOPMD
-    private static final Logger LOGGER = Logger.getLogger(CreateProjectBean.class.getName());//NOPMD
+    private final ProjectEjb createProjectEjb;//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(ProjectCreatetBean.class.getName());//NOPMD
 
     /**
      * Creates a new instance of CreateProjectBean
      */
-    public CreateProjectBean() {//NOPMD 
+    public ProjectCreatetBean() {//NOPMD 
         this.projectEntity = new ProjectEntity();
-        this.createProjectEjb = new CreateProjectEjb();
+        this.createProjectEjb = new ProjectEjb();
 
         try {
             this.userEntity = ((UserEntity) sessionMap.get("userlogin"));
@@ -79,8 +78,7 @@ public class CreateProjectBean extends Bean implements Serializable {
 
     public void load_holidays() {
         final CalendarProjectEjb calProjectEjb = new CalendarProjectEjb();
-        final CalendarTemplateEjb calTemplateEjb = new CalendarTemplateEjb();
-        for (CalendarTemplateEntity ct : calTemplateEjb.obtainHolidays()) {
+        for (CalendarTemplateEntity ct : calProjectEjb.obtainHolidays()) {
             final CalendarEntity calendarEntity = new CalendarEntity();
             calendarEntity.setName(ct.getName());
             calendarEntity.setDescription(ct.getName());
