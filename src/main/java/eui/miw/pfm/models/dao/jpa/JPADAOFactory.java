@@ -3,6 +3,7 @@ package eui.miw.pfm.models.dao.jpa;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
+import eui.miw.pfm.models.dao.interfaces.IterationDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
@@ -69,6 +70,11 @@ public class JPADAOFactory extends AbstractDAOFactory {
     @Override
     public RiskDAO getRiskDAO() {
         return new JPARiskDAO();
+    }
+
+    @Override
+    public IterationDAO getIterationDAO() {
+        return new JPAIterationDAO();
     }
 
 }
