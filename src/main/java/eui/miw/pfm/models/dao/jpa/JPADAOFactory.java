@@ -4,6 +4,7 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.dao.interfaces.ActivityDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
+import eui.miw.pfm.models.dao.interfaces.IterationDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
@@ -77,4 +78,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
         return new JPAActivityDAO();
     }
 
+    public IterationDAO getIterationDAO() {
+        return new JPAIterationDAO();
+    }
 }
