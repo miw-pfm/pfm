@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
@@ -24,15 +23,16 @@ import javax.validation.constraints.NotNull;
  * @author Jean Mubaied
  */
 @Entity
-@Table (name="activities")
+@Table(name = "activities")
 public class ActivityEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
- 
+
     @Column(name = "name", length = 100)
     @NotNull
     private String name;
@@ -40,14 +40,14 @@ public class ActivityEntity implements Serializable {
     @Column(name = "code", length = 5)
     @NotNull
     private String code;
-    
+
     /**
      *
      * @author César Martínez
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iteration")
     private List<WorkUnitEntity> workUnits = new ArrayList<>();
-    
+
     public ActivityEntity() {
         super();
     }
@@ -97,30 +97,4 @@ public class ActivityEntity implements Serializable {
     public void removeWorkUnit(final WorkUnitEntity w) {
         this.workUnits.remove(w);
     }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ActivityEntity)) {
-            return false;
-        }
-        ActivityEntity other = (ActivityEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "eui.miw.pfm.models.entities.activityEntity[ id=" + id + " ]";
-    }
-    
 }

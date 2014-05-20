@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
@@ -16,23 +15,27 @@ import java.util.List;
  * @author Roberto Amor
  * @author Jose M Villar
  */
-public class WorkersListProjectEjb {
-    public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {       
+public class WorkersListEjb {
+
+    public List<WorkerEntity> obtainWorkers(final ProjectEntity project) {
         return project.getWorkers();
-        //return new ArrayList<WorkerEntity>();
-    }       
+    }
 
     public void remove(final ProjectEntity project, final WorkerEntity worker) {
         project.removeWorker(worker);
-        //worker.removeProject(project);
-        AbstractDAOFactory.getFactory().getProjectDAO().update(project);        
+        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
         AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
     }
 
     public void add(final ProjectEntity project, final WorkerEntity worker) {
         project.addWorker(worker);
-        //worker.addProject(project);
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);
-        AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);        
+        AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
+    }
+
+    public List<WorkerEntity> obtainWorkersNotProject(final ProjectEntity project) {
+        final List<WorkerEntity> listAll = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
+        listAll.removeAll(project.getWorkers());
+        return listAll;
     }
 }

@@ -70,7 +70,7 @@ public class TestListProjectWorkersEjb {
     
     @Test
     public void addWorker() {
-        final WorkersListProjectEjb listWEjb = new WorkersListProjectEjb();
+        final WorkersListEjb listWEjb = new WorkersListEjb();
         List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
         
         
@@ -97,7 +97,7 @@ public class TestListProjectWorkersEjb {
     
     @Test
     public void removeWorker() {
-        final WorkersListProjectEjb listWEjb = new WorkersListProjectEjb();
+        final WorkersListEjb listWEjb = new WorkersListEjb();
         List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
 
         listWEjb.add(project, workerEntity1);

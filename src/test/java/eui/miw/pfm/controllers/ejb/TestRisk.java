@@ -8,6 +8,7 @@ import eui.miw.pfm.models.entities.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -110,9 +111,11 @@ public class TestRisk {
         riskEjb.update(riskEntity2);
         riskEjb.update(riskEntity3);
 
-        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).equals(riskEntity2));
-        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).equals(riskEntity3));
 
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getName().equals(riskEntity2.getName()));
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getName().equals(riskEntity3.getName()));
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity2.getId()).getValue() == riskEntity2.getValue());
+        assertTrue("ERROR updating", AbstractDAOFactory.getFactory().getRiskDAO().read(riskEntity3.getId()).getValue() == riskEntity3.getValue());
     }
 
     @Test

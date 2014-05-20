@@ -8,7 +8,7 @@
                 template="/templates/templateHome.xhtml">
 
     <ui:define name="pagetitle">
-        #{confProjectBean.project.name}
+        #{projectConfBean.project.name}
     </ui:define>    
 
     <ui:define name="title">
@@ -24,33 +24,33 @@
             <h:form id="form">
                 <h:panelGrid columns="3">
                     <h:outputText value="#{msgs.startDate}" />
-                    <p:calendar value="#{confProjectBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true" pattern="MM-dd-yyyy">                            
-                        <p:ajax event="dateSelect" update="beginCal stIter choseN" listener="#{confProjectBean.stimateIter}"/>
+                    <p:calendar value="#{projectConfBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true" pattern="MM-dd-yyyy">                            
+                        <p:ajax event="dateSelect" update="beginCal stIter choseN" listener="#{projectConfBean.stimateIter}"/>
                     </p:calendar>
                     <h:message for="beginCal" style="color:red" />
                     <h:outputText value="#{msgs.endDate}" />
-                    <p:calendar value="#{confProjectBean.project.endDate}" id="endCal" binding="#{endCalen}" required="true" pattern="MM-dd-yyyy">
-                        <p:ajax event="dateSelect" update="endCal stIter choseN" listener="#{confProjectBean.stimateIter}"/>
+                    <p:calendar value="#{projectConfBean.project.endDate}" id="endCal" binding="#{endCalen}" required="true" pattern="MM-dd-yyyy">
+                        <p:ajax event="dateSelect" update="endCal stIter choseN" listener="#{projectConfBean.stimateIter}"/>
                     </p:calendar>
                     <h:message for="endCal" style="color:red" />
                     <h:outputText value="#{msgs.weekNumIteration}"/>
-                    <h:inputText value="#{confProjectBean.project.weekNumIteration}" maxlength="5" id="weeIter" binding="#{weekNum}" required="true">                            
-                            <p:ajax event="blur" update="stIter choseN alertIters" listener="#{confProjectBean.stimateIter}"/>        
+                    <h:inputText value="#{projectConfBean.project.weekNumIteration}" maxlength="5" id="weeIter" binding="#{weekNum}" required="true">                            
+                            <p:ajax event="blur" update="stIter choseN alertIters" listener="#{projectConfBean.stimateIter}"/>        
                     </h:inputText>
-                    <h:outputText value="#{confProjectBean.haveWeeksError()}" id="alertIters" style="color:red;" />
+                    <h:outputText value="#{projectConfBean.haveWeeksError()}" id="alertIters" style="color:red;" />
                     <h:outputText value="#{msgs.estimatedNumIteration}" />
-                    <h:inputText  value="#{confProjectBean.project.estimatedNumIteration}" id="stIter" disabled="true" />
+                    <h:inputText  value="#{projectConfBean.project.estimatedNumIteration}" id="stIter" disabled="true" />
                     <h:outputText />
                     <h:outputText value="#{msgs.chosenNumIteration}" />
-                    <p:selectOneMenu id="choseN"  value="#{confProjectBean.project.chosenNumIteration}">
-                        <f:selectItems value="#{confProjectBean.chosenList}"  />
+                    <p:selectOneMenu id="choseN"  value="#{projectConfBean.project.chosenNumIteration}">
+                        <f:selectItems value="#{projectConfBean.chosenList}"  />
                     </p:selectOneMenu>
                     <h:message for="choseN" style="color:red" />
                     <h:outputText value="#{msgs.description}" />
-                    <h:inputTextarea value="#{confProjectBean.project.description}" cols="5" id="desc" required="true"/>
+                    <h:inputTextarea value="#{projectConfBean.project.description}" cols="5" id="desc" required="true"/>
                     <h:message for="desc" style="color:red" />
                     <h:outputText />                        
-                    <p:commandButton value="#{msgs.submit}" action="#{confProjectBean.update}" styleClass="btn btn-success" update="form" />
+                    <p:commandButton value="#{msgs.submit}" action="#{projectConfBean.update}" styleClass="btn btn-success" update="form" />
                     
                     <h:message for="form" style="color:red" />
                 </h:panelGrid>

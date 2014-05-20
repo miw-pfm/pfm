@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author Jean Mubaied
  * @author Manuel Rodríguez
  */
+public interface CalendarDAO extends TransactionGenericDAO<CalendarEntity, Integer> {
 
-public interface CalendarDAO extends TransactionGenericDAO<CalendarEntity, Integer>{ 
     CalendarEntity findHoliday(ProjectEntity project, Calendar holiday);
 }
