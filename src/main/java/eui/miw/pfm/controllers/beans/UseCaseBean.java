@@ -63,8 +63,12 @@ public class UseCaseBean extends Bean implements Serializable {
         final UseCaseEjb useCaseEjb = new UseCaseEjb();
         this.usecase.setProject(project);
         LOGGER.info(this.usecase.toString());
-        useCaseEjb.update(this.usecase);
-        FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
+        boolean result = useCaseEjb.update(this.usecase);
+        if(result)
+            FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
+        else
+            FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
+        this.usecase = null; // para vaciar los campos del formulario
         return "useCasesList";
     }
 
@@ -75,9 +79,12 @@ public class UseCaseBean extends Bean implements Serializable {
         }
         this.usecase.setProject(this.project);
         final UseCaseEjb useCaseEjb = new UseCaseEjb();
-        useCaseEjb.create(this.usecase);
-        FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
-        this.usecase = null; // para vaciar los campos edl formulario
+        boolean result = useCaseEjb.create(this.usecase);
+        if(result)
+            FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
+        else
+            FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
+        this.usecase = null; // para vaciar los campos del formulario
         return null;
     }
 

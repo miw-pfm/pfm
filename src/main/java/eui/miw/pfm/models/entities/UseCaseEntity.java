@@ -105,10 +105,10 @@ public class UseCaseEntity implements Serializable {
             return false;//NOPMD
         }
         final UseCaseEntity other = (UseCaseEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;//NOPMD
-        }
-        return true;
+        if(this.id == other.id || (this.getName().equals(other.getName()) && (this.getProject().getId() == other.getProject().getId())))
+            return true;
+        
+        return false;
     }
 
     @Override

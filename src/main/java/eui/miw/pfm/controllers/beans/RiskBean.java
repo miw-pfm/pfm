@@ -3,6 +3,7 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.RiskEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.RiskEntity;
+import eui.miw.pfm.util.ExceptionCatch;
 import eui.miw.pfm.util.LazyRiskDataModel;
 import java.io.Serializable;
 import java.util.logging.Logger;
@@ -79,8 +80,16 @@ public class RiskBean extends Bean implements Serializable {
         this.project.addRisk(this.riskEntity);
 
         riskEjb.create(this.riskEntity);
-        this.reload();
-        FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Created", ""));
+        
+        if (ExceptionCatch.getInstance().isException()) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Create Risk", ""));
+            ExceptionCatch.getInstance().setException(false);
+            this.project.removeRisk(this.riskEntity);
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Created", ""));
+            this.reload();                   
+        }
+
         return "listRisk";
     }
 

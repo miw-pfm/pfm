@@ -3,9 +3,10 @@ package eui.miw.pfm.models.dao.jpa;
 import eui.miw.pfm.models.dao.TransactionGenericDAO;
 import eui.miw.pfm.util.ExceptionCatch;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+//import javax.faces.application.FacesMessage;
+//import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+//import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,10 +15,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
 
+/*It is recomendable for the EntityManager to be managed by the Glassfish Server in an automate way.
+That can be done with the @PersistenceContext annotattion*/
+
 public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T, ID> {
     
     protected final transient Class<T> persistentClass;
     
+//    @PersistenceContext
     transient protected EntityManager entityManager;
     
     public JPATransactionGenericDAO(final Class<T> persistentClass) {

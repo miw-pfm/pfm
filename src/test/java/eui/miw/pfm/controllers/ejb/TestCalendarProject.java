@@ -34,7 +34,7 @@ public class TestCalendarProject {
         this.calendar.setHoliday(new GregorianCalendar(2014, 11, 25));
         this.calendar.setName("Christmas");
         this.calendar.setDescription("Free");
-        this.calendar.setProject(pd.read(12));
+        this.calendar.setProject(pd.read(124));
         this.calendarProjectEJB = new CalendarProjectEjb();
     }
 

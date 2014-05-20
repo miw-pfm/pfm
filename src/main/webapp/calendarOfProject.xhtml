@@ -25,13 +25,13 @@
 
         <h:outputScript target="head">
             function markHolidaysAndReportedDays(date) { 
-            var holidays = new Array(#{fn:join(calendarProjectBean.getHolidays(), ',')}); 
-            for (var i = 0; i &#60; holidays.length; i++) 
-            { 
             var day = date.getDay();
             if (day==0 || day==6)
             return [false,''];
-            else if(date.getTime() == new Date(holidays[i]).getTime())               
+            var holidays = new Array(#{fn:join(calendarProjectBean.getHolidays(), ',')}); 
+            for (var i = 0; i &#60; holidays.length; i++) 
+            {             
+            if(date.getTime() == new Date(holidays[i]).getTime())               
             return [true,'holiday']; 
             } 
             return [true, '']; }           
