@@ -6,12 +6,16 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,6 +24,7 @@ import javax.validation.constraints.Size;
 /**
  *
  * @author Roberto Amor
+ * *@author Fred Peña
  */
 @Entity
 @Table(name = "usecases")
@@ -43,6 +48,12 @@ public class UseCaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
+
+    @JoinTable(name = "risks_usecases", joinColumns = {
+        @JoinColumn(name = "usecase_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "risk_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<RiskEntity> risks = new ArrayList<>();
 
     public UseCaseEntity() {
         super();
@@ -91,6 +102,22 @@ public class UseCaseEntity implements Serializable {
         this.project = project;
     }
 
+    public List<RiskEntity> getRisks() {
+        return risks;
+    }
+
+    public void setRisks(final List<RiskEntity> risks) {
+        this.risks = risks;
+    }
+
+    public void addRisk(final RiskEntity risk) {
+        this.risks.add(risk);
+    }
+
+    public void removeRisk(final RiskEntity risk) {
+        this.risks.remove(risk);
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -105,9 +132,10 @@ public class UseCaseEntity implements Serializable {
             return false;//NOPMD
         }
         final UseCaseEntity other = (UseCaseEntity) object;
-        if(this.id == other.id || (this.getName().equals(other.getName()) && (this.getProject().getId() == other.getProject().getId())))
+        if (this.id == other.id || (this.getName().equals(other.getName()) && (this.getProject().getId() == other.getProject().getId()))) {
             return true;
-        
+        }
+
         return false;
     }
 

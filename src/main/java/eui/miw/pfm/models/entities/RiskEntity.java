@@ -6,6 +6,8 @@
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,14 +15,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
  * @author César Martínez
+ * @author Fred Peña
+ * @author Roberto Amor
  */
 @Entity
 @Table(name = "risks")
@@ -41,6 +49,18 @@ public class RiskEntity implements Serializable {
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
 
+    @Column(name = "risk_value")
+    @NotNull
+    @Min(1)
+    @Max(5)
+    private int value;
+
+    @JoinTable(name = "risks_usecases", joinColumns = {
+        @JoinColumn(name = "risk_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "usecase_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<UseCaseEntity> usecases = new ArrayList<>();
+
     public RiskEntity() {
     }
 
@@ -48,9 +68,10 @@ public class RiskEntity implements Serializable {
         this.id = id;
     }
 
-    public RiskEntity(final Integer id, final String name, final ProjectEntity project) {
+    public RiskEntity(final Integer id, final String name, final int value, final ProjectEntity project) {
         this.id = id;
         this.name = name;
+        this.value = value;
         this.project = project;
     }
 
@@ -76,6 +97,30 @@ public class RiskEntity implements Serializable {
 
     public void setProject(final ProjectEntity project) {
         this.project = project;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public List<UseCaseEntity> getUsecases() {
+        return usecases;
+    }
+
+    public void setUsecases(final List<UseCaseEntity> usecases) {
+        this.usecases = usecases;
+    }
+
+    public void addUsecase(final UseCaseEntity usecase) {
+        this.usecases.add(usecase);
+    }
+
+    public void removeUsecase(final UseCaseEntity usecase) {
+        this.usecases.remove(usecase);
     }
 
     @Override
