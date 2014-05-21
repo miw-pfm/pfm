@@ -7,7 +7,7 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ActivityEjb;
-import eui.miw.pfm.models.entities.ActivityEntity;
+import eui.miw.pfm.models.entities.SubActivityEntity;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -21,17 +21,17 @@ import javax.inject.Named;
 @Named
 public class ActivityBean {
     
-    private final ActivityEntity activity;
+    private final SubActivityEntity activity;
     
      public ActivityBean() {
         super();
-        activity = new ActivityEntity();    
+        activity = new SubActivityEntity();    
     } 
      
      public void getActivities() {
         final ActivityEjb activityEjb;
         activityEjb = new ActivityEjb();
-        final List<ActivityEntity> activities;
+        final List<SubActivityEntity> activities;
         activities = activityEjb.obtainActivities();   
     }
     
