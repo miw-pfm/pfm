@@ -6,7 +6,6 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ProjectEjb;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.ControllerDate;
 import java.io.Serializable;
@@ -102,7 +101,7 @@ public class ResourcesPlanBean extends Bean implements Serializable {
         return this.workers >= 0;
     }
 
-    private void calculator() {
+    public void calculator() {
         double week;
         double work;
         double workingDays;
@@ -113,7 +112,7 @@ public class ResourcesPlanBean extends Bean implements Serializable {
         work = this.workers * week * BUSINESS_DAYS;
         hour = work * HOURS_WORKED_DAY;
 
-        this.weeks = (int) week;
+        this.weeks = (int) Math.round((float) week);
         this.hours = (int) hour;
         this.working = (int) work;
     }
