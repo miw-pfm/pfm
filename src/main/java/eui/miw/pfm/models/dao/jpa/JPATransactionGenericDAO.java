@@ -16,20 +16,19 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
 
 /*It is recomendable for the EntityManager to be managed by the Glassfish Server in an automate way.
-That can be done with the @PersistenceContext annotattion*/
-
+ That can be done with the @PersistenceContext annotattion*/
 public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T, ID> {
-    
+
     protected final transient Class<T> persistentClass;
-    
+
 //    @PersistenceContext
     transient protected EntityManager entityManager;
-    
+
     public JPATransactionGenericDAO(final Class<T> persistentClass) {
         this.persistentClass = persistentClass;
         this.entityManager = ((JPADAOFactory) JPADAOFactory.getFactory()).getEntityManager();
     }
-    
+
     @Override
     public void create(final T entity) {
         Logger.getLogger(JPATransactionGenericDAO.class).info("create: " + entity);
@@ -49,12 +48,12 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
             }
         }
     }
-    
+
     @Override
     public T read(final ID code) {
         return entityManager.find(persistentClass, code);
     }
-    
+
     @Override
     public void update(final T entity) {
         Logger.getLogger(JPATransactionGenericDAO.class).info("update: " + entity);
@@ -67,7 +66,7 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 Logger.getLogger(JPATransactionGenericDAO.class).error("update: " + e);
-                ExceptionCatch.getInstance().setException(true);                
+                ExceptionCatch.getInstance().setException(true);
                 if (entityManager.getTransaction().isActive()) {
                     entityManager.getTransaction().rollback();
                 }
@@ -90,14 +89,14 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 Logger.getLogger(JPATransactionGenericDAO.class).error("delete: " + e);
-                ExceptionCatch.getInstance().setException(true);                
+                ExceptionCatch.getInstance().setException(true);
                 if (entityManager.getTransaction().isActive()) {
                     entityManager.getTransaction().rollback();
                 }
             }
         }
     }
-    
+
     @Override
     public void deleteByID(final ID code) {
         assert code != null;
@@ -105,7 +104,7 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
         assert entity != null;
         this.delete(entity);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public List<T> find(final String[] attributes, final String[] values, final String order, final int index, final int size) {
@@ -115,7 +114,7 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
 // Se crea un criterio de consulta
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         assert criteriaBuilder != null;
-        
+
         final CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
         assert criteriaQuery != null;
 
@@ -156,20 +155,20 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
             return query.getResultList();
         }
     }
-    
+
     @Override
     public List<T> find(final String[] attributes, final String[] values) {
         assert attributes != null;
         assert values != null;
         return this.find(attributes, values, null, -1, -1);
     }
-    
+
     @Override
     public List<T> findAll() {
         // Se crea un criterio de consulta
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         assert criteriaBuilder != null;
-        
+
         final CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.persistentClass);
         assert criteriaQuery != null;
 
@@ -191,44 +190,44 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
         // Equivalente a return this.find(new String[0], new String[0], null, 0,
         // 0);
     }
-    
+
     public void close() {
         this.entityManager.close();
     }
-    
+
     @Override
     protected void finalize() throws Throwable {
         this.close();
         super.finalize();
     }
-    
+
     @Override
     public void begin() {
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
         }
     }
-    
+
     @Override
     public void commit() {
         if (entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().commit();
         }
     }
-    
+
     @Override
     public void rollback() {
         if (entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().rollback();
         }
     }
-    
+
     @Override
     public List<T> find(String psql, Object entity) {
         Query query = entityManager.createQuery(psql);
         query.setParameter(1, (T) entity);
         return (List<T>) query.getResultList();
-        
+
     }
-    
+
 }

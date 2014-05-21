@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.entities.CalendarTemplateEntity;
+import eui.miw.pfm.models.entities.SubActivityEntity;
 import java.util.List;
 
 /**
  *
- * @author Manuel Rodriguez
+ * @author Jean Mubaied
  */
-public class CalendarTemplateEjb {
-
-    public List<CalendarTemplateEntity> obtainHolidays() {
-        return AbstractDAOFactory.getFactory().getCalendarTemplateDAO().findAll();
+public class ActivityEjb {
+    
+    public List<SubActivityEntity> obtainActivities() {
+        return AbstractDAOFactory.getFactory().getActivityDAO().findAll();
     }
+    
 }

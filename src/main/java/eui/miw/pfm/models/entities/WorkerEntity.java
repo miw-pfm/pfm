@@ -8,8 +8,10 @@ package eui.miw.pfm.models.entities;
 import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -74,6 +76,13 @@ public class WorkerEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "worker")
     private List<TasksEntityMock> taskMock = new ArrayList<>();
+    
+    /**
+     *
+     * @author César Martínez
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "worker")
+    private Set<WorkUnitEntity> workUnits = new HashSet<>();
 
     public WorkerEntity() {
     }
@@ -169,6 +178,24 @@ public class WorkerEntity implements Serializable {
     public void setTaskMock(final List<TasksEntityMock> taskMock) {
         this.taskMock = taskMock;
     }
+
+    public Set<WorkUnitEntity> getWorkUnits() {
+        return workUnits;
+    }
+
+    public void setWorkUnits(Set<WorkUnitEntity> workUnits) {
+        this.workUnits = workUnits;
+    }
+    
+    public void addWorkUnit(final WorkUnitEntity w) {
+        this.workUnits.add(w);
+    }
+
+    public void removeWorkUnit(final WorkUnitEntity w) {
+        this.workUnits.remove(w);
+    }
+    
+    
 
     @Override
     public int hashCode() {

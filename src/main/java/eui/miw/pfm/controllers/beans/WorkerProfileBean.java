@@ -5,7 +5,7 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.WorkerProfileEjb;
+import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
@@ -38,8 +38,7 @@ public class WorkerProfileBean implements Serializable {
         this.workerEntity = AbstractDAOFactory.getFactory().getWorkerDAO().read(1);
 
         if (workerEntity != null) {//NOPMD
-            final WorkerProfileEjb workerProfileEjb = new WorkerProfileEjb();
-            projects = workerProfileEjb.findProjects(workerEntity);
+            projects = new WorkerEjb().findProjects(workerEntity);
         } else {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Worker not selected", ""));
         }

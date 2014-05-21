@@ -28,14 +28,14 @@ public class TestListCaseUse {
     private ProjectDAO projectDAO;
     private UserEntity user;
     private ProjectEntity project;
-    private ListUseCaseEjb listUCEjb;
+    private UseCaseEjb listUCEjb;
     
     
     @Before
     public void before() {
         this.user = new UserEntity();
         this.project = new ProjectEntity();
-        this.listUCEjb = new ListUseCaseEjb();
+        this.listUCEjb = new UseCaseEjb();
 
         this.user.setName("usuario");
         this.userDAO = AbstractDAOFactory.getFactory().getUserDAO();

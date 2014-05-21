@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Author: Clemencio Morales -->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -6,38 +7,40 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/templatePhasePlan.xhtml">
 
-
+    
+    
     <ui:define name="title">
-        #{msgs.listWorker_subtitle}
+        #{msgs.projectPlan_subtitle}
     </ui:define>    
 
     <ui:define name="pagetitle">
-        #{projectConfBean.project.name}
+        #{confProjectBean.project.name}
     </ui:define>
 
     <ui:define name="body">
         <h:outputScript target="head">
             $ = jQuery;
             $(document).ready(function() {
-            $("#submitcreateworker").click(function(e){
+            $("#submitcreateiteration").click(function(e){
             e.preventDefault();                
-            if ($("#createnewworker").attr("style") == "display: none;") {
-            $("#createnewworker").attr("style","display: block;" );                   
-            } else $("#createnewworker").attr("style","display: none;"); 
+            if ($("#createnewiteration").attr("style") == "display: none;") {
+            $("#createnewiteration").attr("style","display: block;" );                   
+            } else $("#createnewiteration").attr("style","display: none;"); 
             }) 
 
-            $("#cancelcreateworker").click(function(e){
+            $("#cancelcreateiteration").click(function(e){
             e.preventDefault();                
-            if ($("#createnewworker").attr("style") == "display: none;") {
-            $("#createnewworker").attr("style","display: block;" );                   
-            } else $("#createnewworker").attr("style","display: none;"); 
+            if ($("#createnewiteration").attr("style") == "display: none;") {
+            $("#createnewiteration").attr("style","display: block;" );                   
+            } else $("#createnewiteration").attr("style","display: none;"); 
             })
             });
         </h:outputScript> 
 
+         <!--TODO:DUDA LINEA workersListProjectBean.reloadWorkerBean-->
         <h:form id="form" class="dataTableList">
             <h:panelGroup layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="workerBtn" value="#{msgs.add_worker}" actionListener="#{workersListProjectBean.reloadWorkerBean}" oncomplete="PF('workerPranel').show()" styleClass="btn btn-success" />
+                <p:commandButton id="iterationBtn" value="#{msgs.add_iteration}" actionListener="#{workersListProjectBean.reloadWorkerBean}" oncomplete="PF('workerPranel').show()" styleClass="btn btn-success" />
             </h:panelGroup>
 
             <p:growl id="messages" showDetail="true" /> 
@@ -103,4 +106,5 @@
         </h:form>
 
     </ui:define>
+    
 </ui:composition>

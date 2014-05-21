@@ -5,7 +5,6 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.ListUseCaseEjb;
 import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
@@ -31,7 +30,7 @@ public class UseCaseBean extends Bean implements Serializable {
 
     private UseCaseEntity usecase = new UseCaseEntity();
     private transient ProjectEntity project;
-    private static final Logger LOGGER = Logger.getLogger(ConfProjectBean.class.getName());//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
 
     public UseCaseBean() {
         super();
@@ -64,10 +63,11 @@ public class UseCaseBean extends Bean implements Serializable {
         this.usecase.setProject(project);
         LOGGER.info(this.usecase.toString());
         boolean result = useCaseEjb.update(this.usecase);
-        if(result)
+        if (result) {
             FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
-        else
+        } else {
             FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
+        }
         this.usecase = null; // para vaciar los campos del formulario
         return "useCasesList";
     }
@@ -80,10 +80,11 @@ public class UseCaseBean extends Bean implements Serializable {
         this.usecase.setProject(this.project);
         final UseCaseEjb useCaseEjb = new UseCaseEjb();
         boolean result = useCaseEjb.create(this.usecase);
-        if(result)
+        if (result) {
             FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
-        else
+        } else {
             FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
+        }
         this.usecase = null; // para vaciar los campos del formulario
         return null;
     }
@@ -99,8 +100,7 @@ public class UseCaseBean extends Bean implements Serializable {
     }
 
     public List<UseCaseEntity> getUseCases() {
-        final ListUseCaseEjb listejb = new ListUseCaseEjb();
-        return listejb.obtainUseCase(this.project);
+        return new UseCaseEjb().obtainUseCase(this.project);
     }
 
     public String editUseCase(final UseCaseEntity useCaseEntity) {
