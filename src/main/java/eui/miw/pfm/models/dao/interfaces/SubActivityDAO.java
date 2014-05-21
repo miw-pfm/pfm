@@ -7,13 +7,13 @@
 package eui.miw.pfm.models.dao.interfaces;
 
 import eui.miw.pfm.models.dao.TransactionGenericDAO;
-import eui.miw.pfm.models.entities.ActivitiesEntity;
+import eui.miw.pfm.models.entities.SubActivityEntity;
+
 
 /**
  *
- * @author Jose Mª Villar
+ * @author Jean Mubaied
  */
-public interface ActivitiesDAO extends TransactionGenericDAO<ActivitiesEntity, Integer>{
+public interface SubActivityDAO extends TransactionGenericDAO<SubActivityEntity, Integer>{
     
 }
-

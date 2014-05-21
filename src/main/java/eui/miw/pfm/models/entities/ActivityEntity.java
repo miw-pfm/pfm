@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -23,7 +25,9 @@ import javax.validation.constraints.NotNull;
  * @author Jose Mª Villar
  * @author Jean Mubaied
  */
-public class ActivitiesEntity implements Serializable {
+@Entity
+@Table(name = "activities")
+public class ActivityEntity implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,15 +43,15 @@ public class ActivitiesEntity implements Serializable {
     private String code;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
-    private List<ActivityEntity> subactivity = new ArrayList<>();      
+    private List<SubActivityEntity> subactivity = new ArrayList<>();      
 
-    public ActivitiesEntity(final Integer id, final String name, final String code) {
+    public ActivityEntity(final Integer id, final String name, final String code) {
         this.id = id;
         this.name = name;
         this.code = code;
     }
 
-    public ActivitiesEntity() {
+    public ActivityEntity() {
         super();
     }
 
@@ -75,19 +79,19 @@ public class ActivitiesEntity implements Serializable {
         this.code = code;
     }
 
-    public List<ActivityEntity> getSubactivity() {
+    public List<SubActivityEntity> getSubActivity() {
         return subactivity;
     }
 
-    public void setSubactivity(List<ActivityEntity> subactivity) {
+    public void setSubActivity(List<SubActivityEntity> subactivity) {
         this.subactivity = subactivity;
     }
 
-    public void addSubactivity(final ActivityEntity sa) {
+    public void addSubActivity(final SubActivityEntity sa) {
         this.subactivity.add(sa);
     }
 
-    public void removeSubactivity(final ActivityEntity sa) {
+    public void removeSubactivity(final SubActivityEntity sa) {
         this.subactivity.remove(sa);
     }
 
@@ -106,11 +110,8 @@ public class ActivitiesEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ActivitiesEntity other = (ActivitiesEntity) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        final ActivityEntity other = (ActivityEntity) obj;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
