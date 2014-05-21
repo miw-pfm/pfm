@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- Author: ppbust -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateHome.xhtml">
+
+    <ui:define name="pagetitle">
+        #{projectConfBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.suggestResourcesRequest}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.resourcesPlan}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:panelGroup id="confproject" layout="block">
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" sticky="true" />    
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{msgs.setNumberResourceWorker}" />
+                    <h:inputText id="workers" value="#{setNumberResourceMock.worker}" required="true">
+                        <f:converter converterId = "javax.faces.Integer"/>  
+                    </h:inputText>  
+
+                    <h:outputText value="#{msgs.setNumberResourceWeeks}" />
+                    <h:inputText id="weeks" value="#{setNumberResourceMock.worker}" readonly="true" required="true"/>  
+
+                    <h:outputText value="#{msgs.setNumberResourceWorking}" />
+                    <h:inputText id="working" value="#{setNumberResourceMock.worker}" readonly="true" required="true"/>  
+
+                    <h:outputText value="#{msgs.setNumberResourceHours}" />
+                    <h:inputText id="hours" value="#{setNumberResourceMock.worker}" readonly="true" required="true"/>  
+
+
+                    <p:commandButton value="#{msgs.submit}" action="#{setNumberResourceMock.save()}" styleClass="btn btn-success" update="form" />
+                    <p:commandButton value="#{msgs.edit}" action="#{setNumberResourceMock.edit()}" styleClass="btn btn-success" update="form" />
+
+                </h:panelGrid>
+            </h:form>    
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
