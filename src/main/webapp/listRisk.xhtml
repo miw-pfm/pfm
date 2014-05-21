@@ -8,7 +8,7 @@
                 template="/templates/templateRiskPlan.xhtml">
 
     <ui:define name="pagetitle">
-        #{projectConfBean.project.name}
+        #{confProjectBean.project.name}
     </ui:define>    
 
     <ui:define name="title">
@@ -49,6 +49,9 @@
 
                 <p:column headerText="Name" sortBy="name" filterBy="#{risk.name}">
                     <h:outputText value="#{risk.name}" />
+                </p:column>
+                <p:column headerText="Value" sortBy="value" filterBy="#{risk.value}">
+                    <h:outputText value="#{risk.value}" />
                 </p:column>
 
                 <p:column styleClass="buttom">

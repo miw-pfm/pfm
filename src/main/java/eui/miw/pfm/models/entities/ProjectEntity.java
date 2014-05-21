@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -66,7 +67,11 @@ public class ProjectEntity implements Serializable {
     private int chosenNumIteration; //NOPMD 
 
     @Column(name = "description")
-    private String description; //NOPMD 
+    private String description; //NOPMD
+    
+    @Column(name = "workers_in_plan")
+    @Min(0)
+    private int workersInPlan;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -78,6 +83,7 @@ public class ProjectEntity implements Serializable {
     /**
      *
      * @author César Martínez
+     * @Roberto Amor
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private List<RiskEntity> risk = new ArrayList<>();
@@ -276,8 +282,14 @@ public class ProjectEntity implements Serializable {
     public void removeWorker(final WorkerEntity w) {
         this.workers.remove(w);
     }
-    
-    
+
+    public int getWorkersInPlan() {
+        return workersInPlan;
+    }
+
+    public void setWorkersInPlan(int workersInPlan) {
+        this.workersInPlan = workersInPlan;
+    }
 
     @Override
     public int hashCode() {
