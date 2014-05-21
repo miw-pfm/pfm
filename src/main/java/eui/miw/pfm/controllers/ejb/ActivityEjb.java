@@ -7,7 +7,7 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.entities.ActivityEntity;
+import eui.miw.pfm.models.entities.SubActivityEntity;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ActivityEjb {
     
-    public List<ActivityEntity> obtainActivities() {
+    public List<SubActivityEntity> obtainActivities() {
         return AbstractDAOFactory.getFactory().getActivityDAO().findAll();
     }
     

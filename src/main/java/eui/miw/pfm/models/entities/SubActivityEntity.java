@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "activities")
-public class ActivityEntity implements Serializable {
+public class SubActivityEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,14 +45,14 @@ public class ActivityEntity implements Serializable {
      *
      * @author César Martínez
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iteration")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     private List<WorkUnitEntity> workUnits = new ArrayList<>();
 
-    public ActivityEntity() {
+    public SubActivityEntity() {
         super();
     }
 
-    public ActivityEntity(final Integer id, final String name, final String code) {//NOPMD
+    public SubActivityEntity(final Integer id, final String name, final String code) {//NOPMD
         this.id = id;
         this.name = name;
         this.code = code;

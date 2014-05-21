@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * @author César Martínez
  */
 @Entity
-@Table(name = "risks")
+@Table(name = "work_units")
 public class WorkUnitEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class WorkUnitEntity implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
-    private ActivityEntity activity;
+    private SubActivityEntity activity;
 
     public WorkUnitEntity() {
     }
@@ -49,7 +49,7 @@ public class WorkUnitEntity implements Serializable {
         this.id = id;
     }
 
-    public WorkUnitEntity(final Integer id, final WorkerEntity worker, final IterationEntity iteration, final ActivityEntity activity) {
+    public WorkUnitEntity(final Integer id, final WorkerEntity worker, final IterationEntity iteration, final SubActivityEntity activity) {
         this.id = id;
         this.worker = worker;
         this.iteration = iteration;
