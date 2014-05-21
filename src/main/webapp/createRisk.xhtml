@@ -23,13 +23,19 @@
         <h:panelGroup id="confproject" layout="block">
             <h:form id="form">
                 <p:growl id="message"  sticky="true" />
-                <h:panelGrid columns="3">
+                
+                <h:panelGrid columns="5" >                            
+                        <h:outputText value="#{msgs.name}" />                
+                        <h:inputText value="#{riskBean.riskEntity.name}" maxlength="25" />
+                        <h:outputText value="value" /> 
+                        <p:selectOneMenu id="choseN"  value="#{riskBean.riskEntity.value}">
+                            <f:selectItems value="#{riskBean.chosenList}"  />
+                        </p:selectOneMenu>
+                                           
+                        <h:commandButton value="#{msgs.submit}" action="#{riskBean.create()}" styleClass="btn btn-success" />                    
+                    </h:panelGrid>
+                
 
-                    <h:outputText value="#{msgs.enter_name_risk}"/>
-                    <h:inputText value="#{riskBean.riskEntity.name}" maxlength="25" id="nameRisk" binding="#{enter_name_risk}" required="true" />
-
-                    <h:commandButton value="#{msgs.submit}" action="#{riskBean.create()}" styleClass="btn btn-success" />
-                </h:panelGrid>
             </h:form>    
         </h:panelGroup>
     </ui:define>

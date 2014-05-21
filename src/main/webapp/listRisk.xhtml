@@ -50,6 +50,9 @@
                 <p:column headerText="Name" sortBy="name" filterBy="#{risk.name}">
                     <h:outputText value="#{risk.name}" />
                 </p:column>
+                <p:column headerText="Value" sortBy="value" filterBy="#{risk.value}">
+                    <h:outputText value="#{risk.value}" />
+                </p:column>
 
                 <p:column styleClass="buttom">
                     <p:commandButton value="#{msgs.remove}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" actionListener="#{riskBean.delete(risk)}"  update=":form" />
