@@ -54,5 +54,5 @@ public abstract class AbstractDAOFactory {
 
     public abstract IterationDAO getIterationDAO();
     
-    public abstract WorkUnitDAO getWorkerUnit();
+    public abstract WorkUnitDAO getWorkUnitDAO();
 }
