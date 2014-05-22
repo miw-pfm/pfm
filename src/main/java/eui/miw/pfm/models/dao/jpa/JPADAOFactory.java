@@ -73,11 +73,12 @@ public class JPADAOFactory extends AbstractDAOFactory {
         return new JPARiskDAO();
     }
 
-
+    @Override
     public ActivityDAO getActivityDAO() {
         return new JPAActivityDAO();
     }
-
+    
+    @Override
     public IterationDAO getIterationDAO() {
         return new JPAIterationDAO();
     }
