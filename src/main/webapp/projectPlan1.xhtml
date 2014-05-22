@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Author: Clemencio Morales -->
+<!-- Author: Manuel Alvarez -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templatePhasePlan.xhtml">
+    <ui:define name="title">
+        #{msgs.projectPlan_subtitle}
+    </ui:define>
+
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.set_iteration_per_phase}
+    </ui:define>
+    <f:metadata>
+        <f:event listener="#{iterationBean.obtainCantPhases}" type="preRenderView" />
+    </f:metadata>
+    <ui:define name="body" >
+
+        <h:form id="formProjectPlan">
+            <h:panelGroup layout="block"  id="tableProjectPlan">
+                <h:panelGrid columns="10">
+                    <h:outputText value="" />
+                    <h:outputText value="#{msgs.title_percent}" />
+                    <h:outputText value="#{msgs.title_days}" />
+                    <h:outputText value="#{msgs.title_weeks}" />
+                    <h:outputText value="#{msgs.title_iterations}" />
+                    <h:outputText value="#{msgs.title_iterations}" />
+                    <h:outputText value="#{msgs.title_percent}" />
+                    <h:outputText value="#{msgs.title_days}" />
+                    <h:outputText value="#{msgs.title_weeks}" />
+                    <h:outputText value="#{msgs.title_deviation}" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_inception}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.inception}" id="inputInception" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_elaboration}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.elaboration}" id="inputElaboration" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_construction}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.construction}" id="inputConstruction" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_transition}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.transition}" id="inputTransition" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                </h:panelGrid>
+                <p:commandButton value="#{msgs.submit}" styleClass="btn btn-success" action="#{iterationBean.update()}" /> 
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>
