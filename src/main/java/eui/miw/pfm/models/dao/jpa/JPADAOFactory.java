@@ -75,7 +75,6 @@ public class JPADAOFactory extends AbstractDAOFactory {
         return new JPARiskDAO();
     }
 
-
     @Override
     public ActivityDAO getActivityDAO() {
         return new JPAActivityDAO();

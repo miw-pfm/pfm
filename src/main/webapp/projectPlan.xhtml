@@ -1,110 +1,88 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Author: Clemencio Morales -->
+<!-- Author: Manuel Alvarez -->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/templatePhasePlan.xhtml">
-
-    
-    
     <ui:define name="title">
         #{msgs.projectPlan_subtitle}
-    </ui:define>    
+    </ui:define>
 
     <ui:define name="pagetitle">
         #{confProjectBean.project.name}
     </ui:define>
 
-    <ui:define name="body">
-        <h:outputScript target="head">
-            $ = jQuery;
-            $(document).ready(function() {
-            $("#submitcreateiteration").click(function(e){
-            e.preventDefault();                
-            if ($("#createnewiteration").attr("style") == "display: none;") {
-            $("#createnewiteration").attr("style","display: block;" );                   
-            } else $("#createnewiteration").attr("style","display: none;"); 
-            }) 
-
-            $("#cancelcreateiteration").click(function(e){
-            e.preventDefault();                
-            if ($("#createnewiteration").attr("style") == "display: none;") {
-            $("#createnewiteration").attr("style","display: block;" );                   
-            } else $("#createnewiteration").attr("style","display: none;"); 
-            })
-            });
-        </h:outputScript> 
-
-         <!--TODO:DUDA LINEA workersListProjectBean.reloadWorkerBean-->
-        <h:form id="form" class="dataTableList">
-            <h:panelGroup layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="iterationBtn" value="#{msgs.add_iteration}" actionListener="#{workersListProjectBean.reloadWorkerBean}" oncomplete="PF('workerPranel').show()" styleClass="btn btn-success" />
-            </h:panelGroup>
-
-            <p:growl id="messages" showDetail="true" /> 
-
-            <p:dataTable var="worker" value="#{workersListProjectBean.lazyModel}" paginator="true" rows="10"
-                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5,10,15" 
-                         rowKey="#{worker.id}" 
-                         selection="#{workersListProjectBean.selectedWorker}" 
-                         id="workerTable" lazy="true">
-
-                <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}">
-                    <h:outputText value="#{worker.name}" />
-                </p:column>
-
-                <p:column headerText="Surname" sortBy="surname" filterBy="#{worker.surname}">
-                    <h:outputText value="#{worker.surname}" />
-                </p:column>
-
-                <p:column headerText="DNI" sortBy="dni" filterBy="#{worker.dni}">
-                    <h:outputText value="#{worker.dni}" />
-                </p:column>
-
-                <p:column headerText="Email" sortBy="email" filterBy="#{worker.email}">
-                    <h:outputText value="#{worker.email}" />
-                </p:column>
-
-                <p:column styleClass="buttom">
-                    <p:commandButton value="#{msgs.remove}" styleClass="btn btn-sm btn-default" icon="ui-icon-trash" action="#{workersListProjectBean.remove(worker)}" update=":form" />
-                </p:column>
-            </p:dataTable>
-
-            <p:dialog id="workerPranel" header="#{msgs.add_worker}" widgetVar="workerPranel" hideEffect="fade" dynamic="true">            
-
-                <p:dataTable var="w" value="#{workersListProjectBean.listWorkerBean.lazyModel}" paginator="true" rows="10"
-                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             rowsPerPageTemplate="5,10,15" 
-                             rowKey="#{w.id}" 
-                             selection="#{workersListProjectBean.listWorkerBean.selectedWorker}" 
-                             id="addWorkerTable" lazy="true" widgetVar="dialog">
-
-                    <p:column headerText="Name" sortBy="surname" filterBy="#{w.name}">
-                        <h:outputText value="#{w.name}" />
-                    </p:column>
-
-                    <p:column headerText="Surname" sortBy="surname" filterBy="#{w.surname}">
-                        <h:outputText value="#{w.surname}" />
-                    </p:column>
-
-                    <p:column headerText="DNI" sortBy="dni" filterBy="#{w.dni}">
-                        <h:outputText value="#{w.dni}" />
-                    </p:column>
-
-                    <p:column headerText="Email" sortBy="email" filterBy="#{w.email}">
-                        <h:outputText value="#{w.email}" />
-                    </p:column>
-
-                    <p:column styleClass="buttom">
-                        <p:commandButton value="#{msgs.add}" styleClass="btn btn-sm btn-default" icon="ui-icon-check" action="#{workersListProjectBean.add(w)}" update=":form:workerTable, :form:addWorkerTable" />
-                    </p:column>
-                </p:dataTable> 
-            </p:dialog>
-        </h:form>
-
+    <ui:define name="subtitle">
+        #{msgs.set_iteration_per_phase}
     </ui:define>
-    
+    <f:metadata>
+        <f:event listener="#{iterationBean.obtainCantPhases}" type="preRenderView" />
+    </f:metadata>
+    <ui:define name="body" >
+
+        <h:form id="formProjectPlan">
+            <h:panelGroup layout="block"  id="tableProjectPlan">
+                <h:panelGrid columns="10">
+                    <h:outputText value="" />
+                    <h:outputText value="#{msgs.title_percent}" />
+                    <h:outputText value="#{msgs.title_days}" />
+                    <h:outputText value="#{msgs.title_weeks}" />
+                    <h:outputText value="#{msgs.title_iterations}" />
+                    <h:outputText value="#{msgs.title_iterations}" />
+                    <h:outputText value="#{msgs.title_percent}" />
+                    <h:outputText value="#{msgs.title_days}" />
+                    <h:outputText value="#{msgs.title_weeks}" />
+                    <h:outputText value="#{msgs.title_deviation}" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_inception}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.inception}" id="inputInception" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_elaboration}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.elaboration}" id="inputElaboration" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_construction}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.construction}" id="inputConstruction" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+
+                    <h:outputText class="msgTableProjectPlan" value="#{msgs.name_phase_transition}" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:inputText  value="#{iterationBean.transition}" id="inputTransition" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                    <h:outputText value="" />
+                </h:panelGrid>
+                <p:commandButton value="#{msgs.submit}" styleClass="btn btn-success" action="#{iterationBean.update()}" /> 
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
 </ui:composition>

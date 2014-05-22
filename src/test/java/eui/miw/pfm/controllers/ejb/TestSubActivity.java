@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author Jean Mubaied
  * @author Jose Mª Villar
  */
-public class TestSubActivityEjb {
+public class TestSubActivity {
 
     private transient SubActivityEjb subActivityEjb;
     private transient ActivityEjb activityEjb;

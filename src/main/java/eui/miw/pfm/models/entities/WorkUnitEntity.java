@@ -31,7 +31,7 @@ public class WorkUnitEntity implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = true)
     private WorkerEntity worker;
     
     @ManyToOne
@@ -44,6 +44,15 @@ public class WorkUnitEntity implements Serializable {
 
     public WorkUnitEntity() {
         super();
+    }
+
+    /**
+    *
+    * @author Jose Mª Villar
+    */    
+    public WorkUnitEntity(final IterationEntity iteration, final SubActivityEntity subactivity) {
+        this.iteration = iteration;
+        this.subactivity = subactivity;
     }
 
     public WorkUnitEntity(final Integer id, final WorkerEntity worker, final IterationEntity iteration, final SubActivityEntity activity) {
@@ -81,7 +90,7 @@ public class WorkUnitEntity implements Serializable {
         return subactivity;
     }
 
-    public void setSubactivity(SubActivityEntity subactivity) {
+    public void setSubactivity(final SubActivityEntity subactivity) {
         this.subactivity = subactivity;
     }
 
