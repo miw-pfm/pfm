@@ -32,6 +32,6 @@
             <property name="javax.persistence.jdbc.user" value="miw"/>
             <property name="javax.persistence.jdbc.password" value="jbslt2014"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> -->
-        </properties>
-    </persistence-unit>
+    </properties>
+  </persistence-unit>
 </persistence>
