@@ -91,7 +91,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
     }
 
     @Override
-    public WorkUnitDAO getWorkerUnit() {
-        return new JPAWorkUnitDAO();
+    public WorkUnitDAO getWorkUnitDAO() {
+       return new JPAWorkUnitDAO();
     }
 }

@@ -69,7 +69,7 @@ public class UseCaseBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
         }
         this.usecase = null; // para vaciar los campos del formulario
-        return "useCasesList";
+        return "/riskplan/useCasesList";
     }
 
     public String create() {
@@ -105,6 +105,6 @@ public class UseCaseBean extends Bean implements Serializable {
 
     public String editUseCase(final UseCaseEntity useCaseEntity) {
         this.usecase = useCaseEntity;
-        return "useCasesedit";
+        return "/riskplan/useCasesEdit";
     }
 }

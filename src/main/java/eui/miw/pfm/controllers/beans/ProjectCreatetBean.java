@@ -67,7 +67,7 @@ public class ProjectCreatetBean extends Bean implements Serializable {
             this.createProjectEjb.createProject(this.projectEntity);
             this.sessionMap.put("project", this.projectEntity);
             load_holidays();
-            view = "confProject";
+            view = "projectConfig";
         } else {
             LOGGER.warning("Not a valid name");
             final FacesContext context = FacesContext.getCurrentInstance();

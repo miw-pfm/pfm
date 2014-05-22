@@ -45,7 +45,7 @@ public class ProjectOpenBean extends Bean implements Serializable {
         String projectId = params.get("projectId");
         openProject(Integer.parseInt(projectId));
         // return openProject(Integer.parseInt(projectId));
-        return "confProject";
+        return "projectConfig";
     }
 
     public String showOpenProject(ProjectEntity project) {
@@ -58,7 +58,7 @@ public class ProjectOpenBean extends Bean implements Serializable {
         } catch (Exception e) {
 
         }
-        return "openProject";
+        return "openedProject";
     }
 
     public ProjectEntity openProject(int projectId) { //NOPMD
@@ -96,7 +96,7 @@ public class ProjectOpenBean extends Bean implements Serializable {
         this.participants.add(new Participant(3, "participante 3"));
         this.participants.add(new Participant(4, "participante 4"));
 
-        return "openProject";
+        return "openedProject";
     }
 
     public ProjectEntity getProject() {

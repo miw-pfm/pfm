@@ -7,9 +7,11 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
+import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
+import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import javax.inject.Named;
 /**
  *
  * @author Jose Mª Villar
+ * @César Martínez
  */
 
 @Named
@@ -29,6 +32,7 @@ public class WorkUnitBean extends Bean implements Serializable {
     private transient WorkUnitEntity workunit;
     private transient SubActivityEntity subActivity;
     private transient IterationEntity iteration;    
+    private WorkerEntity worker;
 
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
     
@@ -76,6 +80,14 @@ public class WorkUnitBean extends Bean implements Serializable {
     public void setNumHours(final Integer numHours) {
         this.numHours = numHours;
     }
+    
+        public WorkerEntity getWorker() {
+        return worker;
+    }
+
+    public void setWorker(WorkerEntity worker) {
+        this.worker = worker;
+    }
         
     public void storeHours() {
         final WorkUnitEjb workUnitEjb = new WorkUnitEjb();
@@ -87,6 +99,15 @@ public class WorkUnitBean extends Bean implements Serializable {
         for (WorkUnitEntity workUnitEntity : this.listWorkUnit) {
             workUnitEjb.create(workUnitEntity);
         }        
+    }
+    
+    public void setWorkUnitToWorker(){
+    
+        this.worker.getWorkUnits().add(workunit);
+        final WorkerEjb workerEjb = new WorkerEjb();
+        workerEjb.update(worker);
+        
+        
     }
     
 }

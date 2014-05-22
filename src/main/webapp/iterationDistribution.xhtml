@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- Author: Jose De Los Santos -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templatePhasePlan.xhtml">
+
+    <ui:define name="pagetitle">
+        #{confProjectBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.iter_dist_title}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.iter_dist_title}
+    </ui:define>
+
+    <ui:define name="body">
+        <p:outputLabel id="iteration_title" value="#{msgs.iteration}" />
+        <p:selectOneMenu id="iteration" value="#{selectOneMenuView.console}">            
+            <f:selectItem itemLabel="23" itemValue="23" />            
+        </p:selectOneMenu>
+        <p:outputLabel id="activity" value="#{msgs.activity} "/>
+        <h:form >                        
+            <p:dataTable var="c" value="0"  id="test" styleClass="tableIterationDistribution">
+                <p:column headerText="#{msgs.name}">
+                    <h:outputText value="Open" />
+                </p:column>
+
+                <p:column headerText="#{msgs.code}">
+                    <h:outputText value="01" />
+                </p:column>
+
+                <p:column headerText="#{msgs.total_units}">
+                    <h:outputText value="12" />
+                </p:column>
+
+                <p:column headerText="#{msgs.setNumberResourceHours}">
+                    <h:outputText value="3" />
+                </p:column>
+
+                <p:column headerText="#{msgs.available_units}">
+                    <h:outputText value="12" />
+                </p:column>
+            </p:dataTable>              
+            <p:dataList value="#{workerBean.workers}" var="worker" styleClass="workers_list">
+                <f:facet name="header">
+                    #{msgs.setNumberResourceWorker}
+                </f:facet>
+                #{worker.name}
+            </p:dataList>
+        </h:form>
+    </ui:define>
+</ui:composition>

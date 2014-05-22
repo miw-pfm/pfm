@@ -41,7 +41,7 @@
                     <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUserWorker}" required="true" requiredMessage="Error. #{msgs.gitUserWorker} not NULL" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{workerBean.create()}" styleClass="btn btn-success" />
-                    <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="workersList"/>       
+                    <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="allWorkersList"/>       
                 </h:panelGrid>
             </h:form>    
         </h:panelGroup>

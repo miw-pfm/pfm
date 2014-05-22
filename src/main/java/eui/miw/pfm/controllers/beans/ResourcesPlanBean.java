@@ -40,11 +40,8 @@ public class ResourcesPlanBean extends Bean implements Serializable {
     private static final int MORE_ONE = 1;
     private static final int HOURS_WORKED_DAY = 8;//hours worked per day
 
-    private final ProjectEjb projectEjb;//NOPMD
-
     public ResourcesPlanBean() {
         super();
-        projectEjb = new ProjectEjb();
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
@@ -90,7 +87,7 @@ public class ResourcesPlanBean extends Bean implements Serializable {
         if (validateWorkers()) {
             LOGGER.log(Level.INFO, this.workers + "");
             this.project.setWorkersInPlan(this.workers);
-            projectEjb.update(this.project);
+            new ProjectEjb().update(this.project);
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Workers Saved", ""));
         } else {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Number Workers not valid", ""));

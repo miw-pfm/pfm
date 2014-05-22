@@ -54,7 +54,6 @@ public class WorkUnitEntity implements Serializable {
         this.iteration = iteration;
         this.subactivity = subactivity;
     }
-
     public WorkUnitEntity(final Integer id, final WorkerEntity worker, final IterationEntity iteration, final SubActivityEntity activity) {
         this.id = id;
         this.worker = worker;
