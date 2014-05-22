@@ -66,12 +66,12 @@ public class ProjectConfBean extends Bean implements Serializable {
 
         if (validDates(project.getStartDate(), project.getEndDate()) && this.validWeeksPerIter()) {
             projectEjb.update(project);
-            result = "openProject";
+            result = "openedProject";
         } else {
             LOG.warning("Not valid dates");
             final FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verify the chosen dates",""));
-            result = "confProject";                    
+            result = "projectConfig";                    
         }
 
         return result;

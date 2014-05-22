@@ -65,7 +65,7 @@ public class LoginBean implements Serializable {
 
     private void redirectionHome() {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("list_project.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("projectList.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,7 +99,7 @@ public class LoginBean implements Serializable {
         context.addCallbackParam("loggedIn", loggedIn);
 
         if (loggedIn) {
-            context.addCallbackParam("view", "list_project.xhtml");
+            context.addCallbackParam("view", "projectList.xhtml");
         }
     }
 }

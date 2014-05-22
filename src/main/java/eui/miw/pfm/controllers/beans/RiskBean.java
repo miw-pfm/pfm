@@ -76,7 +76,7 @@ public class RiskBean extends Bean implements Serializable {
 
         riskEjb.update(this.riskEntity);
         FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Updated", ""));
-        return "listRisk";
+        return "/riskplan/riskList";
     }
 
     public String create() {
@@ -100,12 +100,12 @@ public class RiskBean extends Bean implements Serializable {
             this.reload();                   
         }
 
-        return "listRisk";
+        return "/riskplan/riskList";
     }
 
     public String edit(final RiskEntity risk) {
         this.riskEntity = risk;
-        return "editRisk";
+        return "/riskplan/riskEdit";
     }
 
     public String delete(final RiskEntity risk) {
@@ -123,7 +123,7 @@ public class RiskBean extends Bean implements Serializable {
 
         reload();
 
-        return "listRisk";
+        return "/riskplan/riskList";
     }
 
     private void reload() {
