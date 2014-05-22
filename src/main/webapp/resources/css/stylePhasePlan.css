@@ -49,7 +49,7 @@
     text-align: center;
 }
 
-#formProjectPlan\:tableProjectPlan button{
+#formProjectPlan\:tableProjectPlan button, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus{
     background-image: linear-gradient(to bottom, #F3D5BC 0%, #F79646 100%);
     border-color: #F79646;
     display: block;
@@ -60,7 +60,7 @@
     width: 121px;
 }
 
-#formProjectPlan\:tableProjectPlan button:hover, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus{
+#formProjectPlan\:tableProjectPlan button:hover{
     background-image: none;
     background-color: #F3D5BC;
     border-color: #F3D5BC;

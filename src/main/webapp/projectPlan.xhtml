@@ -18,12 +18,10 @@
     <ui:define name="subtitle">
         #{msgs.set_iteration_per_phase}
     </ui:define>
-    <f:metadata>
-        <f:event listener="#{iterationBean.obtainCantPhases}" type="preRenderView" />
-    </f:metadata>
     <ui:define name="body" >
 
         <h:form id="formProjectPlan">
+            <p:growl id="growl" showDetail="true" for="formProjectPlan"/>
             <h:panelGroup layout="block"  id="tableProjectPlan">
                 <h:panelGrid columns="10">
                     <h:outputText value="" />
@@ -81,7 +79,8 @@
                     <h:outputText value="" />
                     <h:outputText value="" />
                 </h:panelGrid>
-                <p:commandButton value="#{msgs.submit}" styleClass="btn btn-success" action="#{iterationBean.update()}" /> 
+                
+                <p:commandButton value="#{msgs.submit}" styleClass="btn btn-success" action="#{iterationBean.updateIterationsForPhase}" update="growl"/> 
             </h:panelGroup>
         </h:form>
     </ui:define>

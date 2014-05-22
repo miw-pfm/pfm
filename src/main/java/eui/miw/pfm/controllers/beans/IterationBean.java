@@ -3,20 +3,20 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.SessionMap;
 import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.event.ComponentSystemEvent;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @author Clemencio Morales Lucas
  * @author Manuel Alvarez
+ * @author Clemencio Morales Lucas
  */
 @RequestScoped
 @Named
@@ -27,83 +27,79 @@ public class IterationBean extends Bean implements Serializable {
 
     private ProjectEntity project;
 
-    private static final String FORM_NAME = "formProjectPlan";
-    private static final String NEXT_VIEW = "projectPlan";
-
-    private List<IterationEntity> listInception = new ArrayList<IterationEntity>();
-    private List<IterationEntity> listElaboration = new ArrayList<IterationEntity>();
-    private List<IterationEntity> listConstruction = new ArrayList<IterationEntity>();
-    private List<IterationEntity> listTransition = new ArrayList<IterationEntity>();
+    private List<IterationEntity> listInception;
+    private List<IterationEntity> listElaboration;
+    private List<IterationEntity> listConstruction;
+    private List<IterationEntity> listTransition;
 
     private int inception;
     private int elaboration;
     private int construction;
     private int transition;
 
-    public void obtainCantPhases(final ComponentSystemEvent evt) {
+    private IterationEntity iterEntity;
+
+    public IterationBean() {
+        super();
+        final IterationEjb iterationEjb = new IterationEjb();
+
         project = new ProjectEntity();
 
+        this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
+        this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
+        this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION);
+        this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION);
+
+        this.inception = this.listInception.size();
+        this.elaboration = this.listElaboration.size();
+        this.construction = this.listConstruction.size();
+        this.transition = this.listTransition.size();
+
         try {
-            this.project = ((ProjectEntity) new SessionMap().get("project"));
+            this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.info("No session exist");
         }
-
-        final IterationEjb iterationEjb = new IterationEjb();
-
-        listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
-        listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
-        listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION);
-        listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION);
-
-        this.inception = listInception.size();
-        this.elaboration = listElaboration.size();
-        this.construction = listConstruction.size();
-        this.transition = listTransition.size();
     }
 
-    public String update() {
+    public void check(TypeIteration type, int valueNew, List<IterationEntity> list) {
+        int valueOld = list.size();
+
         final IterationEjb iterationEjb = new IterationEjb();
-        int inc = listInception.size();
-        int elab = listElaboration.size();
-        int cons = listConstruction.size();
-        int trans = listTransition.size();
+        if (valueNew > valueOld) {
 
-        IterationEntity iterEntity;
-
-        if (this.inception > inc) {
-            while (this.inception > inc) {
-                inc++;
+            while (valueNew > valueOld) {
+                valueOld++;
                 iterEntity = new IterationEntity();
-                iterEntity.setTypeIteration(TypeIteration.INCEPTION);
-                iterEntity.setIterValue(inc);
+                iterEntity.setTypeIteration(type);
+                iterEntity.setIterValue(valueOld);
                 iterEntity.setProject(project);
 
                 iterationEjb.create(iterEntity);
             }
-        } else if (inc > this.inception) {
-
+        } else if (valueOld > valueNew) {
+            while (valueOld > valueNew) {
+                Collections.reverse(list);
+                for (IterationEntity auxIter : list) {
+                    if ((auxIter.getTypeIteration() == type) && (auxIter.getIterValue() == valueOld) && (valueOld > valueNew)) {
+                        iterationEjb.delete(auxIter);
+                        valueOld--;
+                    }
+                }
+            }
         }
+    }
 
-        if (this.elaboration > elab) {
+    public String updateIterationsForPhase() {
+        String nextView = "projectPlan";
 
-        } else if (elab > this.elaboration) {
+        check(TypeIteration.INCEPTION, this.inception, this.listInception);
+        check(TypeIteration.ELABORATION, this.elaboration, this.listElaboration);
+        check(TypeIteration.CONSTRUCTION, this.construction, this.listConstruction);
+        check(TypeIteration.TRANSITION, this.transition, this.listTransition);
 
-        }
-
-        if (this.construction > cons) {
-
-        } else if (cons > this.construction) {
-
-        }
-
-        if (this.transition > trans) {
-
-        } else if (trans > this.transition) {
-
-        }
-        System.out.println("-----------------------------------------End of method-----------------------------------------");
-        return null;
+        FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Table Updated"));
+        return nextView;
     }
 
     public int getInception() {
@@ -138,67 +134,56 @@ public class IterationBean extends Bean implements Serializable {
         this.transition = transition;
     }
 
-//    public IterationBean() {
-//        super();
-//        iterationEntity = new IterationEntity();
-//    }
-//    public String create() {
-//        assert this.iterationEntity != null;
-//        LOGGER.info(this.iterationEntity.toString());
-//        final IterationEjb iterationEjb = new IterationEjb();
-//        iterationEjb.create(this.iterationEntity);
-//
-//        if (ExceptionCatch.getInstance().isException()) {
-//            FacesContext.getCurrentInstance().addMessage(IterationBean.FORM_NAME, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Creating Iteration Entity", ""));
-//            ExceptionCatch.getInstance().setException(false);
-//        } else {
-//            FacesContext.getCurrentInstance().addMessage(IterationBean.FORM_NAME, new FacesMessage(FacesMessage.SEVERITY_INFO, "Iteration Entity Created", ""));
-//        }
-//
-//        return IterationBean.NEXT_VIEW;
-//    }
-//
-//    public String delete(final IterationEntity iteration) {
-//        assert this.iterationEntity != null;
-//        LOGGER.info(this.iterationEntity.toString());
-//        final IterationEjb iterationEjb = new IterationEjb();
-//        iterationEjb.delete(iteration);
-//        return IterationBean.NEXT_VIEW;
-//    }
-//    public String editIteration(final IterationEntity iteration) {
-//        this.iterationEntity = iteration;
-//        LOGGER.info("Edit: " + this.iterationEntity.toString());
-//
-//        return IterationBean.NEXT_VIEW;
-//    }
-//
-//    public List<IterationEntity> getIteration() {
-//        final IterationEjb iterationEjb = new IterationEjb();
-//        return iterationEjb.getIterations();
-//    }
-    //    public IterationEntity getIterationEntity() {
-//        return iterationEntity;
-//    }
-//
-//    public void setIterationEntity(final IterationEntity iterationEntity) {
-//        this.iterationEntity = iterationEntity;
-//    }
-    //    public String update() {
-//        assert this.iterationEntity != null;
-//
-//        final IterationEjb iterationEjb = new IterationEjb();
-//
-//        LOGGER.info("Update: " + this.iterationEntity.toString());
-//
-//        iterationEjb.update(this.iterationEntity);
-//
-//        if (ExceptionCatch.getInstance().isException()) {
-//            FacesContext.getCurrentInstance().addMessage(IterationBean.FORM_NAME, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Updating Iteration Entity", ""));
-//            ExceptionCatch.getInstance().setException(false);
-//        } else {
-//            FacesContext.getCurrentInstance().addMessage(IterationBean.FORM_NAME, new FacesMessage(FacesMessage.SEVERITY_INFO, "Iteration Entity Updated", ""));
-//        }
-//
-//        return IterationBean.NEXT_VIEW;
-//    }
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
+    }
+
+    public List<IterationEntity> getListInception() {
+        return listInception;
+    }
+
+    public void setListInception(List<IterationEntity> listInception) {
+        this.listInception = listInception;
+    }
+
+    public List<IterationEntity> getListElaboration() {
+        return listElaboration;
+    }
+
+    public void setListElaboration(List<IterationEntity> listElaboration) {
+        this.listElaboration = listElaboration;
+    }
+
+    public List<IterationEntity> getListConstruction() {
+        return listConstruction;
+    }
+
+    public void setListConstruction(List<IterationEntity> listConstruction) {
+        this.listConstruction = listConstruction;
+    }
+
+    public List<IterationEntity> getListTransition() {
+        return listTransition;
+    }
+
+    public void setListTransition(List<IterationEntity> listTransition) {
+        this.listTransition = listTransition;
+    }
+
+    public IterationEntity getIterEntity() {
+        return iterEntity;
+    }
+
+    public void setIterEntity(IterationEntity iterEntity) {
+        this.iterEntity = iterEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", inception=" + inception + ", elaboration=" + elaboration + ", construction=" + construction + ", transition=" + transition + ", iterEntity=" + iterEntity + '}';
+    }
 }
