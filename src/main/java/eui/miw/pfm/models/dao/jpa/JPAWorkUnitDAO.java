@@ -11,11 +11,12 @@ import eui.miw.pfm.models.entities.WorkUnitEntity;
 
 /**
  *
- * @author Jose Mª Villar
+ * @author César Y. Martínez R.
  */
 public class JPAWorkUnitDAO extends JPATransactionGenericDAO<WorkUnitEntity, Integer> implements WorkUnitDAO{
 
-    public JPAWorkUnitDAO() {
+    public JPAWorkUnitDAO(){
         super(WorkUnitEntity.class);
-    }    
+    }
+    
 }

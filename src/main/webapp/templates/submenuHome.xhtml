@@ -9,12 +9,11 @@
     <ui:composition>
         <h:panelGroup id="panelsubmenu" layout="block">
             <ul>
-                <li><h:link value="Opened Project" outcome="openProject" /></li>
-                <li><h:link value="Project's Calendar" outcome="calendarOfProject" /></li>
-                <li><h:link value="Configure Project" outcome="confProject" /></li>
-                <li class="divisorSubMenu"><h:link value="Create Project" outcome="createProject" /></li>
-                <li><h:link value="Project List" outcome="list_project" /></li>
-                <li><h:link value="Worker's List" outcome="workersList" /></li>
+                <li><h:link value="Opened Project" outcome="/openedProject" /></li>
+                <li><h:link value="Project's Calendar" outcome="/projectCalendar" /></li>
+                <li><h:link value="Configure Project" outcome="/projectConfig" /></li>
+                <li class="divisorSubMenu"><h:link value="Project List" outcome="/projectList" /></li>
+                <li><h:link value="Worker's List" outcome="/phaseplan/allWorkersList" /></li>
             </ul>
         </h:panelGroup>
     </ui:composition>

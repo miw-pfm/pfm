@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
@@ -13,6 +14,7 @@ import eui.miw.pfm.models.entities.WorkUnitEntity;
 /**
  *
  * @author Jose Mª Villar
+ * @César Martínez
  */
 public class WorkUnitEjb {
 
@@ -23,15 +25,19 @@ public class WorkUnitEjb {
     }
 
     public void create(final WorkUnitEntity workUnitEntity) {
-        AbstractDAOFactory.getFactory().getWorkerUnit().create(workUnitEntity);
+        AbstractDAOFactory.getFactory().getWorkUnitDAO().create(workUnitEntity);
+    }
+    
+    public void update(final WorkUnitEntity workUnitEntity){
+        AbstractDAOFactory.getFactory().getWorkUnitDAO().update(workUnitEntity);
     }
 
     public void delete(final WorkUnitEntity workUnitEntity) {
-        AbstractDAOFactory.getFactory().getWorkerUnit().delete(workUnitEntity);
+        AbstractDAOFactory.getFactory().getWorkUnitDAO().delete(workUnitEntity);
     }
 
     public int getNumTotalWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2";//NOPMD
-        return AbstractDAOFactory.getFactory().getWorkerUnit().find(psql, iteration, subActivity).size();
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity).size();
     }
 }

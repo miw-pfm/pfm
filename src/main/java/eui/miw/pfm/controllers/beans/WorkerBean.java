@@ -74,7 +74,7 @@ public class WorkerBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Update", ""));
         }
 
-        return "workersList";
+        return "/phaseplan/allWorkersList";
     }
 
     public String create() {
@@ -90,7 +90,7 @@ public class WorkerBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
         }
 
-        return "workersList";
+        return "/phaseplan/allWorkersList";
     }
 
 //    public String delete(final WorkerEntity worker) {
@@ -98,14 +98,14 @@ public class WorkerBean extends Bean implements Serializable {
 //        LOGGER.info(this.workerEntity.toString());
 //        final WorkerEjb workerEjb = new WorkerEjb();
 //        workerEjb.delete(worker);
-//        return "workersList";
+//        return "allWorkersList";
 //    }
     
     public String delete() {
         LOGGER.info(this.selected.toString());
         final WorkerEjb workerEjb = new WorkerEjb();
         workerEjb.delete(selected);
-        return "workersList";
+        return "/phaseplan/allWorkersList";
     }
 
 //    public String editWorker(final WorkerEntity worker) {
