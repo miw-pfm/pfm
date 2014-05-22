@@ -11,6 +11,7 @@
         <class>eui.miw.pfm.models.entities.RiskEntity</class>
         <class>eui.miw.pfm.models.entities.IterationEntity</class>
         <class>eui.miw.pfm.models.entities.SubActivityEntity</class>
+        <class>eui.miw.pfm.models.entities.ActivityEntity</class>
         <class>eui.miw.pfm.models.entities.WorkUnitEntity</class>
         
         <exclude-unlisted-classes>true</exclude-unlisted-classes>

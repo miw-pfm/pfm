@@ -20,7 +20,7 @@ import org.junit.Test;
 
 /**
  *
- * @author aw0591
+ * @author Jose Mª Villar
  */
 public class TestListCaseUse {
     
@@ -51,11 +51,12 @@ public class TestListCaseUse {
     @Test
     public void obtainUseCases() {
         
-        UseCaseEntity uc1 = new UseCaseEntity();
-        UseCaseEntity uc2 = new UseCaseEntity();
-        UseCaseEntity uc3 = new UseCaseEntity();
+        final UseCaseEntity uc1 = new UseCaseEntity();
+        final UseCaseEntity uc2 = new UseCaseEntity();
+        final UseCaseEntity uc3 = new UseCaseEntity();
         
-        List<UseCaseEntity> listUC = new ArrayList<UseCaseEntity>();
+        final List<UseCaseEntity> listUC;
+        listUC = new ArrayList<>();
         
         uc1.setName("CU1");
         uc1.setDescription("Descripción del caso de uso1");

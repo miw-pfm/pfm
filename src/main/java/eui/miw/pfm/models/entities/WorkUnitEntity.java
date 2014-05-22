@@ -31,7 +31,7 @@ public class WorkUnitEntity implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = true)
     private WorkerEntity worker;
     
     @ManyToOne
@@ -39,21 +39,27 @@ public class WorkUnitEntity implements Serializable {
     private IterationEntity iteration;
     
     @ManyToOne
-    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
-    private SubActivityEntity activity;
+    @JoinColumn(name = "subactivity_id", referencedColumnName = "id", nullable = false)
+    private SubActivityEntity subactivity;
 
     public WorkUnitEntity() {
+        super();
     }
 
-    public WorkUnitEntity(final Integer id) {
-        this.id = id;
+    /**
+    *
+    * @author Jose Mª Villar
+    */    
+    public WorkUnitEntity(final IterationEntity iteration, final SubActivityEntity subactivity) {
+        this.iteration = iteration;
+        this.subactivity = subactivity;
     }
 
     public WorkUnitEntity(final Integer id, final WorkerEntity worker, final IterationEntity iteration, final SubActivityEntity activity) {
         this.id = id;
         this.worker = worker;
         this.iteration = iteration;
-        this.activity = activity;
+        this.subactivity = activity;
     }
 
     public Integer getId() {
@@ -76,22 +82,28 @@ public class WorkUnitEntity implements Serializable {
         return iteration;
     }
 
-    public void setIteration(IterationEntity iteration) {
+    public void setIteration(final IterationEntity iteration) {
         this.iteration = iteration;
     }
 
+    public SubActivityEntity getSubactivity() {
+        return subactivity;
+    }
 
+    public void setSubactivity(final SubActivityEntity subactivity) {
+        this.subactivity = subactivity;
+    }
 
-
+    
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -99,15 +111,11 @@ public class WorkUnitEntity implements Serializable {
             return false;
         }
         final WorkUnitEntity other = (WorkUnitEntity) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "RiskEntity{" + "id=" + id + ", worker=" + worker + ", iteration=" + iteration + '}';
+        return "WorkUnitEntity{" + "id=" + id + ", worker=" + worker + ", iteration=" + iteration + ", subactivity=" + subactivity + '}';
     }
-
 }

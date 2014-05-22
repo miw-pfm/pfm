@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
@@ -15,22 +16,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
  *
+ * @author Jose Mª Villar
  * @author Jean Mubaied
  */
 @Entity
-@Table(name = "subactivities")
-public class SubActivityEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+@Table(name = "activities")
+public class ActivityEntity implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -43,38 +41,25 @@ public class SubActivityEntity implements Serializable {
     @Column(name = "code", length = 5)
     @NotNull
     private String code;
-
-    /**
-     *
-     * @author Jose Mª Villar
-     */
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
-    private ActivityEntity activity;
     
-    /**
-     *
-     * @author César Martínez
-     */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subactivity")
-    private List<WorkUnitEntity> workUnits = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
+    private List<SubActivityEntity> subactivity = new ArrayList<>();      
 
-    public SubActivityEntity() {
-        super();
-    }
-
-    public SubActivityEntity(Integer id, String name, String code, ActivityEntity activity) {
+    public ActivityEntity(final Integer id, final String name, final String code) {
         this.id = id;
         this.name = name;
         this.code = code;
-        this.activity = activity;
     }
-    
+
+    public ActivityEntity() {
+        super();
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -82,7 +67,7 @@ public class SubActivityEntity implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -90,38 +75,30 @@ public class SubActivityEntity implements Serializable {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(final String code) {
         this.code = code;
     }
 
-    public List<WorkUnitEntity> getWorkUnits() {
-        return workUnits;
+    public List<SubActivityEntity> getSubActivity() {
+        return subactivity;
     }
 
-    public void setWorkUnits(List<WorkUnitEntity> workUnits) {
-        this.workUnits = workUnits;
+    public void setSubActivity(List<SubActivityEntity> subactivity) {
+        this.subactivity = subactivity;
     }
 
-    public void addWorkUnit(final WorkUnitEntity w) {
-        this.workUnits.add(w);
+    public void addSubActivity(final SubActivityEntity sa) {
+        this.subactivity.add(sa);
     }
 
-    public void removeWorkUnit(final WorkUnitEntity w) {
-        this.workUnits.remove(w);
-    }
-
-    public ActivityEntity getActivity() {
-        return activity;
-    }
-
-    public void setActivity(final ActivityEntity activity) {
-        this.activity = activity;
+    public void removeSubactivity(final SubActivityEntity sa) {
+        this.subactivity.remove(sa);
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -133,12 +110,15 @@ public class SubActivityEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SubActivityEntity other = (SubActivityEntity) obj;
+        final ActivityEntity other = (ActivityEntity) obj;
         return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "SubActivityEntity{" + "id=" + id + ", name=" + name + ", code=" + code + "}";
-    }    
+        return "ActivitiesEntity{" + "id=" + id + ", name=" + name + ", code=" + code + ", subactivity=" + subactivity + '}';
+    }
+    
+    
+    
 }
