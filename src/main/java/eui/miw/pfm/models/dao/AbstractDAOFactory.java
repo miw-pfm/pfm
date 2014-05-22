@@ -9,6 +9,7 @@ import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
+import eui.miw.pfm.models.dao.interfaces.WorkUnitDAO;
 import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import eui.miw.pfm.models.dao.jpa.JPADAOFactory;
 import org.apache.log4j.Logger;
@@ -49,4 +50,6 @@ public abstract class AbstractDAOFactory {
     public abstract ActivityDAO getActivityDAO();
 
     public abstract IterationDAO getIterationDAO();
+    
+    public abstract WorkUnitDAO getWorkUnitDAO();
 }

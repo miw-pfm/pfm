@@ -10,6 +10,7 @@ import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
+import eui.miw.pfm.models.dao.interfaces.WorkUnitDAO;
 import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -80,5 +81,10 @@ public class JPADAOFactory extends AbstractDAOFactory {
 
     public IterationDAO getIterationDAO() {
         return new JPAIterationDAO();
+    }
+
+    @Override
+    public WorkUnitDAO getWorkUnitDAO() {
+       return new JPAWorkUnitDAO();
     }
 }
