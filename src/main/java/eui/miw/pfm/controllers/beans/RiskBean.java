@@ -6,7 +6,10 @@ import eui.miw.pfm.models.entities.RiskEntity;
 import eui.miw.pfm.util.ExceptionCatch;
 import eui.miw.pfm.util.LazyRiskDataModel;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,11 +29,18 @@ public class RiskBean extends Bean implements Serializable {
     private transient LazyDataModel<RiskEntity> lazyModel;
     private RiskEntity selectedRisk;
     private RiskEntity riskEntity;
+    private static List<Integer> chosenList;
     private transient ProjectEntity project;
-
+    
     public RiskBean() {
         super();
         riskEntity = new RiskEntity();
+        chosenList = new ArrayList<>();
+        chosenList.add(1);
+        chosenList.add(2);
+        chosenList.add(3);
+        chosenList.add(4);
+        chosenList.add(5);
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
@@ -118,5 +128,9 @@ public class RiskBean extends Bean implements Serializable {
 
     private void reload() {
         this.lazyModel = new LazyRiskDataModel(new RiskEjb().findRisks(this.project));
+    }
+    
+    public List<Integer> getChosenList() {
+        return chosenList;
     }
 }

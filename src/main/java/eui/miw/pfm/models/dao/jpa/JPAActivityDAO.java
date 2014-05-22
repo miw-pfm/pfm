@@ -6,16 +6,16 @@
 
 package eui.miw.pfm.models.dao.jpa;
 
+import eui.miw.pfm.models.entities.ActivityEntity;
 import eui.miw.pfm.models.dao.interfaces.ActivityDAO;
-import eui.miw.pfm.models.entities.SubActivityEntity;
-
 /**
  *
+ * @author Jose Mª Villar
  * @author Jean Mubaied
  */
-public class JPAActivityDAO extends JPATransactionGenericDAO<SubActivityEntity, Integer> implements ActivityDAO{
+public class JPAActivityDAO extends JPATransactionGenericDAO<ActivityEntity, Integer> implements ActivityDAO {
       public JPAActivityDAO(){
-       super(SubActivityEntity.class);
+       super(ActivityEntity.class);
     } 
 
          

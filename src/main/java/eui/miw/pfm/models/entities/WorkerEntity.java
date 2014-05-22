@@ -29,7 +29,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Roberto Amor
+ * @author Roberto Amor.
  */
 @Entity
 @Table(name = "workers")
