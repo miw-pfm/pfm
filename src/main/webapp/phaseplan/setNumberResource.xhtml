@@ -22,7 +22,7 @@
     <ui:define name="body">
         <h:panelGroup id="confproject" layout="block">
             <h:form id="form">
-                <p:growl id="growl" showDetail="true" sticky="true" />    
+                <p:growl id="growl" sticky="true" />    
                 <h:panelGrid columns="2">
                     <h:outputText value="#{msgs.setNumberResourceWorker}" />
                     <h:inputText id="workers" value="#{resourcesPlanBean.workers}" required="true" binding="#{workers}">
