@@ -35,7 +35,7 @@
             return [true,'holiday']; 
             } 
             return [true, '']; }           
-            
+
         </h:outputScript> 
         <h:panelGroup id="infoCalendar" layout="block">            
             <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
@@ -60,14 +60,25 @@
                     <span class="titTableFormCal">Holiday's Description:</span>
                     <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" disabled="#{calendarProjectBean.disableDescField}" />
                     <h:panelGroup layout="block">
-                        <p:commandButton id="addHoliday" value="Add" action="#{calendarProjectBean.addDateSelect}" widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar" oncomplete="javascript:location.reload(true)"/>                                                                              
-                        <p:commandButton id="editdate" value="Edit" action="#{calendarProjectBean.updateDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" oncomplete="javascript:location.reload(true)"/>
-                        <p:commandButton id="removeHoliday" value="Remove"  action="#{calendarProjectBean.deleteDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" oncomplete="javascript:location.reload(true)"/>
+                        <p:commandButton id="addHoliday" value="Add" actionListener="#{calendarProjectBean.addDateSelect}"  widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args) "/>                                                                              
+                        <p:commandButton id="editdate" value="Edit" actionListener="#{calendarProjectBean.updateDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args)"/>
+                        <p:commandButton id="removeHoliday" value="Remove"  actionListener="#{calendarProjectBean.deleteDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args)"/>
                     </h:panelGroup>
                 </h:panelGrid>
             </h:form>
 
         </h:panelGroup>
-
+        <script type="text/javascript">
+            //<![CDATA[
+            function calendaActionrCallback(xhr, status, args) {
+                if (args.operationResult && args.operation === "delete") {
+                    setTimeout(function() {
+                        document.getElementById("form_calendario:nameDate").value = "";
+                        document.getElementById("form_calendario:descriptionDate").value = "";
+                    }, 500);
+                }
+            }
+            //]]>
+        </script> 
     </ui:define>
 </ui:composition>
