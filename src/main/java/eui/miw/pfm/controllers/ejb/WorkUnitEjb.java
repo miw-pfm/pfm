@@ -14,6 +14,7 @@ import eui.miw.pfm.models.entities.WorkUnitEntity;
 /**
  *
  * @author Jose Mª Villar
+ * @César Martínez
  */
 public class WorkUnitEjb {
 
@@ -25,6 +26,10 @@ public class WorkUnitEjb {
 
     public void create(final WorkUnitEntity workUnitEntity) {
         AbstractDAOFactory.getFactory().getWorkUnitDAO().create(workUnitEntity);
+    }
+    
+    public void update(final WorkUnitEntity workUnitEntity){
+        AbstractDAOFactory.getFactory().getWorkUnitDAO().update(workUnitEntity);
     }
 
     public void delete(final WorkUnitEntity workUnitEntity) {
