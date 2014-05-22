@@ -92,7 +92,7 @@ public class IterationEntity implements Serializable {
         this.id = id;
     }
 
-    public TypeIteration geTypeIteration() {
+    public TypeIteration getTypeIteration() {
         return typeIteration;
     }
 
@@ -146,6 +146,10 @@ public class IterationEntity implements Serializable {
 
     public void removeWorkUnit(final WorkUnitEntity w) {
         this.workUnits.remove(w);
+    }
+
+    public String getCodeIteration() {
+        return "" + this.getTypeIteration().toString() + this.getIterValue();
     }
 
     @Override

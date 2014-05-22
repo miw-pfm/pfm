@@ -16,15 +16,15 @@ import org.junit.Test;
  * @author Jean Mubaied
  * @author Jose Mª Villar
  */
-public class TestSubActivity {
+public class TestActivities {
 
-    private transient SubActivityEjb subActivityEjb;
+    private transient ActivitiesEjb subActivityEjb;
     private transient ActivityEjb activityEjb;
     private transient ActivityEntity activity;
 
     @Before
     public void init() {
-        this.subActivityEjb = new SubActivityEjb();
+        this.subActivityEjb = new ActivitiesEjb();
         this.activityEjb = new ActivityEjb();
 
         this.activity = new ActivityEntity(9, "Control de Cambios asignable", "C");
@@ -36,8 +36,13 @@ public class TestSubActivity {
     }
 
     @Test
+    public void testObtainAllActivities() {
+        assertNotNull("listado de actividades", subActivityEjb.obtainAllActivities());
+        
+    }
+    @Test
     public void testObtainAllSubActivities() {
-        assertNotNull("listado de actividades", subActivityEjb.obtainAllSubActivities());
+        assertNotNull("listado de subactividades", subActivityEjb.obtainAllSubActivities());
     }
 
     @Test
