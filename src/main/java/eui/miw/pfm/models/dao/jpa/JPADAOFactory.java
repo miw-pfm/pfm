@@ -11,7 +11,6 @@ import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
-import eui.miw.pfm.models.dao.interfaces.WorkUnitDAO;
 import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import eui.miw.pfm.models.dao.interfaces.WorkUnitDAO;
 import javax.persistence.EntityManager;
