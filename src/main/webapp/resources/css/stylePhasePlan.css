@@ -11,3 +11,108 @@
     background: #F79646;
     color: #FFF;
 }
+
+#formProjectPlan\:tableProjectPlan table{
+}
+
+#formProjectPlan\:tableProjectPlan table tr td{
+    border:1px solid #F3D5BC;
+}
+
+#formProjectPlan\:tableProjectPlan table tr:nth-child(odd){
+    background: #F3D5BC;
+}
+
+#formProjectPlan\:tableProjectPlan table tr:nth-child(even){
+    background: #FFFFFF;
+}
+
+#formProjectPlan\:tableProjectPlan table tr:first-child{
+    background: #F79646;
+}
+
+#formProjectPlan\:tableProjectPlan table tr:first-child td{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 2px 17px 4px;
+}
+
+#formProjectPlan\:tableProjectPlan table tr td span.msgTableProjectPlan{
+    font-size: 15px;
+    padding: 0 16px 0 7px;
+}
+
+#formProjectPlan\:tableProjectPlan table tr td input{
+    width: 40px;
+    margin: 6px 40px;
+    width: 40px;
+    text-align: center;
+}
+
+#formProjectPlan\:tableProjectPlan button{
+    background-image: linear-gradient(to bottom, #F3D5BC 0%, #F79646 100%);
+    border-color: #F79646;
+    display: block;
+    float: right;
+    font-size: 15px;
+    margin-right: 50px;
+    margin-top: 15px;
+    width: 121px;
+}
+
+#formProjectPlan\:tableProjectPlan button:hover, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus{
+    background-image: none;
+    background-color: #F3D5BC;
+    border-color: #F3D5BC;
+}
+.tableIterationDistribution td:nth-child(1) {
+    width: 100px;
+}
+
+.tableIterationDistribution td:nth-child(2) {
+    width: 30px;
+}
+
+.tableIterationDistribution td:nth-child(3) {
+    width: 90px;
+}
+
+.tableIterationDistribution td:nth-child(4) {
+    width: 30px;
+}
+
+.tableIterationDistribution table {
+    max-width: 100%;
+}
+
+.tableIterationDistribution {
+    width: 50%;
+    float:left;
+    clear: both;    
+    
+    
+}
+.workers_list{
+    width: 40%;
+    position: relative;
+    float:right;   
+    padding-right: 30px;
+}
+
+#activity, #iteration_title {
+    clear: both;    
+    float: left;
+   margin-bottom: 15px;
+   font-size: 18px;
+}
+
+#iteration_title {
+    padding-right: 10px;
+}
+
+.ui-datalist-item{
+    padding-left: 10px;
+    list-style-type: none;
+}
+
+

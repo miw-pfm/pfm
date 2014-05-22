@@ -92,7 +92,7 @@ public class IterationEntity implements Serializable {
         this.id = id;
     }
 
-    public TypeIteration geTypeIteration() {
+    public TypeIteration getTypeIteration() {
         return typeIteration;
     }
 
