@@ -11,3 +11,55 @@
     background: #F79646;
     color: #FFF;
 }
+
+.tableIterationDistribution td:nth-child(1) {
+    width: 100px;
+}
+
+.tableIterationDistribution td:nth-child(2) {
+    width: 30px;
+}
+
+.tableIterationDistribution td:nth-child(3) {
+    width: 90px;
+}
+
+.tableIterationDistribution td:nth-child(4) {
+    width: 30px;
+}
+
+.tableIterationDistribution table {
+    max-width: 100%;
+}
+
+.tableIterationDistribution {
+    width: 50%;
+    float:left;
+    clear: both;    
+    
+    
+}
+.workers_list{
+    width: 40%;
+    position: relative;
+    float:right;   
+    padding-right: 30px;
+}
+
+#activity, #iteration_title {
+    clear: both;    
+    float: left;
+   margin-bottom: 15px;
+   font-size: 18px;
+}
+
+#iteration_title {
+    padding-right: 10px;
+}
+
+.ui-datalist-item{
+    padding-left: 10px;
+    list-style-type: none;
+}
+
+
