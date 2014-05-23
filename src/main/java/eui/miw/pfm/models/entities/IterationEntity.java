@@ -149,7 +149,7 @@ public class IterationEntity implements Serializable {
     }
 
     public String getCodeIteration() {
-        return "" + this.getTypeIteration().toString() + this.getIterValue();
+        return "" + this.getTypeIteration().toString().charAt(0) + this.getIterValue();
     }
 
     @Override

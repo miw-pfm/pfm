@@ -36,8 +36,14 @@ public class TestActivities {
     @Test
     public void testObtainAllActivities() {
         assertNotNull("listado de actividades", activitiesEjb.obtainAllActivities());
-        
+
     }
+
+    @Test
+    public void testObtainActivity() {
+        assertEquals("es la misma actividad", activitiesEjb.obtainActivity(this.activity.getId()), this.activity);
+    }
+
     @Test
     public void testObtainAllSubActivities() {
         assertNotNull("listado de subactividades", activitiesEjb.obtainAllSubActivities());

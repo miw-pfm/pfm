@@ -26,11 +26,10 @@ public class ActivitiesEjb {
     }
 
     public List<ActivityEntity> obtainAllActivities() {
-        System.out.println("Entra:"+AbstractDAOFactory.getFactory().getActivityDAO().findAll().toString());
         return AbstractDAOFactory.getFactory().getActivityDAO().findAll();
     }
 
     public ActivityEntity obtainActivity(final Integer id) {
         return AbstractDAOFactory.getFactory().getActivityDAO().read(id);
-    }    
+    }  
 }

@@ -6,8 +6,8 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ActivitiesEjb;
+import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ActivityEntity;
-import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import java.io.Serializable;
@@ -26,7 +26,9 @@ import javax.inject.Named;
 @Named
 public class ActivitiesBean extends Bean implements Serializable {
     
-    private transient ProjectEntity project;
+    private static final long serialVersionUID = 1L;
+    
+    private ProjectEntity project;
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
 
     @ManagedProperty(value = "#{iterationBean}")
@@ -34,13 +36,13 @@ public class ActivitiesBean extends Bean implements Serializable {
     
     public ActivitiesBean() {        
         super();
-        this.project = new ProjectEntity();
-
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
-        }        
+        }
+
+        this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());        
     }    
     
     public List<SubActivityEntity> getSubActivities() {
@@ -62,6 +64,10 @@ public class ActivitiesBean extends Bean implements Serializable {
     public ProjectEntity getProject() {
         return project;
     }      
+
+    public void setProject(final ProjectEntity project) {
+        this.project = project;
+    }
 
     public IterationBean getIterationBean() {
         return iterationBean;
