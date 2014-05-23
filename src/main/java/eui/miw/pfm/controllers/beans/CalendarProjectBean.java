@@ -5,6 +5,7 @@ import eui.miw.pfm.models.entities.CalendarEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.ExceptionCatch;
 import eui.miw.pfm.util.SessionMap;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -51,6 +53,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
         calendarEntity = new CalendarEntity();
         try {
             this.project = ((ProjectEntity) new SessionMap().get("project"));
+            redirectIfNoCalendar("projectConfig");
         } catch (Exception e) {
             LOG.warning("No session exist");
         }     
@@ -259,4 +262,26 @@ public class CalendarProjectBean extends Bean implements Serializable {
         }
         return a;
     }
+    
+    //HWilliamRS
+    public boolean existsCalendar(){
+        return (this.project.getChosenNumIteration() >= 1);
+    }
+    
+    //HWilliamRS
+    public void redirectIfNoCalendar(final String view){
+        FacesContext context;
+        if(!existsCalendar()){
+            context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage( FacesMessage.SEVERITY_WARN, "No Calendar Exist",
+                    "Please configure the calendar's project to be able to edit it."));
+            try {
+                context.getExternalContext().redirect(view + ".xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarProjectBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  
+    }
+    
 }
