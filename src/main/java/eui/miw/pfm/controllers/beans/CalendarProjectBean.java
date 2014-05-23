@@ -3,7 +3,9 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.CalendarProjectEjb;
 import eui.miw.pfm.models.entities.CalendarEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.util.ExceptionCatch;
 import eui.miw.pfm.util.SessionMap;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,15 +13,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author Manuel Álvarez
  * @code added Manuel Rodríguez
  * @code added Jean Mubaied
+ * @code added Hector William
  */
 @RequestScoped
 @Named
@@ -45,6 +53,7 @@ public class CalendarProjectBean extends Bean implements Serializable {
         calendarEntity = new CalendarEntity();
         try {
             this.project = ((ProjectEntity) new SessionMap().get("project"));
+            redirectIfNoCalendar("projectConfig");
         } catch (Exception e) {
             LOG.warning("No session exist");
         }     
@@ -156,23 +165,51 @@ public class CalendarProjectBean extends Bean implements Serializable {
     }
 
     //Manuel Rodríguez
-    public void addDateSelect() {        
+    //Hector William
+    public void addDateSelect(final ActionEvent actionEvent) {        
         new CalendarProjectEjb().create(readycalendarentity());
+        final RequestContext context = RequestContext.getCurrentInstance();
+        boolean operationResult;
+        operationResult = false;
+        FacesMessage message;
+        
+        if (ExceptionCatch.getInstance().isException()) {
+            operationResult = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error Festive Date ",
+                    "Error : Please review the filled fields and try again. " );
+            ExceptionCatch.getInstance().setException(false);
+        } else {
+            operationResult = true;
+            message = new FacesMessage( FacesMessage.SEVERITY_INFO, "Date Successfutlly Added",
+                    "The date was correctly added.");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        context.addCallbackParam("operationResult", operationResult);
+       
     }
 
     //Manuel Rodríguez
-    public void updateDateSelect() {
+    //Hector William
+    public void updateDateSelect(final ActionEvent actionEvent) {
         CalendarProjectEjb c = new CalendarProjectEjb();
         CalendarEntity ce = c.obtainHoliday(project, fecha_seleccionada());
         ce.setDescription(description);
         ce.setName(name);
         c.update(ce);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage( FacesMessage.SEVERITY_INFO, "Date Update",
+                    "The date was correctly updated"));
+        RequestContext.getCurrentInstance().addCallbackParam("operationResult", true);
     }
 
     //Manuel Rodríguez
-    public void deleteDateSelect() {
+    //Hector William
+    public void deleteDateSelect(final ActionEvent actionEvent) {
         CalendarProjectEjb c = new CalendarProjectEjb();
         c.delete(c.obtainHoliday(project, fecha_seleccionada()));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage( FacesMessage.SEVERITY_INFO, "Date Delete",
+                    "The date was correctly Deleted"));
+        RequestContext.getCurrentInstance().addCallbackParam("operationResult", true);
+        RequestContext.getCurrentInstance().addCallbackParam("operation", "delete");
     }
 
     //Manuel Rodríguez
@@ -225,4 +262,26 @@ public class CalendarProjectBean extends Bean implements Serializable {
         }
         return a;
     }
+    
+    //HWilliamRS
+    public boolean existsCalendar(){
+        return (this.project.getChosenNumIteration() >= 1);
+    }
+    
+    //HWilliamRS
+    public void redirectIfNoCalendar(final String view){
+        FacesContext context;
+        if(!existsCalendar()){
+            context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage( FacesMessage.SEVERITY_WARN, "No Calendar Exist",
+                    "Please configure the calendar's project to be able to edit it."));
+            try {
+                context.getExternalContext().redirect(view + ".xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarProjectBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  
+    }
+    
 }
