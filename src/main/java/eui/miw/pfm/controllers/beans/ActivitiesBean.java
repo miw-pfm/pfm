@@ -30,7 +30,7 @@ public class ActivitiesBean extends Bean implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
 
     @ManagedProperty(value = "#{iterationBean}")
-    private final transient ProjectIterationsBean iterationBean = new ProjectIterationsBean();
+    private final transient IterationBean iterationBean = new IterationBean();
     
     public ActivitiesBean() {        
         super();
@@ -63,7 +63,7 @@ public class ActivitiesBean extends Bean implements Serializable {
         return project;
     }      
 
-    public ProjectIterationsBean getIterationBean() {
+    public IterationBean getIterationBean() {
         return iterationBean;
     }
        

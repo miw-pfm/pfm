@@ -29,9 +29,8 @@ public class ActivitiesEjb {
         System.out.println("Entra:"+AbstractDAOFactory.getFactory().getActivityDAO().findAll().toString());
         return AbstractDAOFactory.getFactory().getActivityDAO().findAll();
     }
-    public static void main(String[] args) {
-        ActivitiesEjb ejb = new ActivitiesEjb();
-        ejb.obtainAllActivities();
-    }
 
+    public ActivityEntity obtainActivity(final Integer id) {
+        return AbstractDAOFactory.getFactory().getActivityDAO().read(id);
+    }    
 }
