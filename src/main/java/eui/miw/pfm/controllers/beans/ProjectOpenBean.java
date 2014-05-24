@@ -7,10 +7,7 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.moks.Participant;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -26,25 +23,19 @@ public class ProjectOpenBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ProjectEntity project;
-    private List<Participant> participants;
 
     public ProjectOpenBean() {
         super();
         this.project = new ProjectEntity();
-        this.participants = new ArrayList<>();
-        this.participants.add(new Participant(1, "participante 1"));
-        this.participants.add(new Participant(2, "participante 2"));
-        this.participants.add(new Participant(3, "participante 3"));
-        this.participants.add(new Participant(4, "participante 4"));
-        // this.openProject(2);
     }
 
     public String openProject() { //NOPMD
 
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String projectId = params.get("projectId");
-        openProject(Integer.parseInt(projectId));
-        // return openProject(Integer.parseInt(projectId));
+        Map<String, String> params ;
+        params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String projectId ;
+        projectId = params.get("projectId");
+        this.openProject(Integer.parseInt(projectId));
         return "projectConfig";
     }
 
@@ -87,15 +78,8 @@ public class ProjectOpenBean extends Bean implements Serializable {
     }
 
     //public List<Participant> 
-    public String showOpenProject(int projectId) {
-
+    public String showOpenProject(final int projectId) {
         this.openProject(projectId);
-
-        this.participants.add(new Participant(1, "participante 1"));
-        this.participants.add(new Participant(2, "participante 2"));
-        this.participants.add(new Participant(3, "participante 3"));
-        this.participants.add(new Participant(4, "participante 4"));
-
         return "openedProject";
     }
 
@@ -103,16 +87,7 @@ public class ProjectOpenBean extends Bean implements Serializable {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(final ProjectEntity project) {
         this.project = project;
     }
-
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
-    }
-
 }

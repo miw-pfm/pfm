@@ -38,7 +38,7 @@
                 
                 <h:panelGroup id="participants_pnl" layout="block">
                     <h3>Workers</h3>
-                    <p:dataList id="participants" var="participant" value="#{projectOpenBean.participants}" itemType="participant" >  
+                    <p:dataList id="participants" var="participant" value="#{project.workers}" itemType="participant" >  
                     #{participant.name}  
                     </p:dataList>
                 </h:panelGroup>
