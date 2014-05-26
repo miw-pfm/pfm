@@ -28,14 +28,13 @@ public class UseCaseBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UseCaseEntity usecase = new UseCaseEntity();
+    private UseCaseEntity usecase;
     private transient ProjectEntity project;
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
 
     public UseCaseBean() {
         super();
-        project = new ProjectEntity();
-        usecase = new UseCaseEntity();
+        this.usecase = new UseCaseEntity();
 
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
@@ -44,58 +43,58 @@ public class UseCaseBean extends Bean implements Serializable {
         }
     }
 
-    public UseCaseBean(final UseCaseEntity usecase) {
-        super();
-        this.usecase = usecase;
-    }
-
     public UseCaseEntity getUsecase() {
         return usecase;
     }
 
     public void setUsecase(final UseCaseEntity usecase) {
         this.usecase = usecase;
-        LOGGER.info(this.usecase.toString());
     }
 
     public String update() {
-        final UseCaseEjb useCaseEjb = new UseCaseEjb();
         this.usecase.setProject(project);
+
         LOGGER.info(this.usecase.toString());
-        boolean result = useCaseEjb.update(this.usecase);
-        if (result) {
-            FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
+
+        if (new UseCaseEjb().update(this.usecase)) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Updated", ""));
         } else {
-            FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Cases name is already exists", ""));
+            return null;
         }
-        this.usecase = null; // para vaciar los campos del formulario
         return "/riskplan/useCasesList";
     }
 
     public String create() {
         if (this.project == null) {
-            FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_WARN, "No project selected", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No project selected", ""));
             return null;//NOPMD
         }
+
         this.usecase.setProject(this.project);
-        final UseCaseEjb useCaseEjb = new UseCaseEjb();
-        boolean result = useCaseEjb.create(this.usecase);
-        if (result) {
-            FacesContext.getCurrentInstance().addMessage("form_create", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
+
+        LOGGER.info(this.usecase.toString());
+
+        if (new UseCaseEjb().create(this.usecase)) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Created", ""));
         } else {
-            FacesContext.getCurrentInstance().addMessage("form_update", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Case is already exists", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Use Cases name is already exists", ""));
+            return null;
         }
-        this.usecase = null; // para vaciar los campos del formulario
-        return null;
+        return "/riskplan/useCasesList";
     }
 
-    public String delete(final UseCaseEntity useCaseEntity) {
-        final UseCaseEjb useCaseEjb = new UseCaseEjb();
-        this.usecase.setProject(project);
-        this.usecase = useCaseEntity;
-        LOGGER.info(this.usecase.toString());
-        useCaseEjb.delete(usecase);
-        FacesContext.getCurrentInstance().addMessage("form_list", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Deleted", ""));
+    public String delete() {
+        if (this.usecase == null) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Use Case Selected", ""));
+        } else {
+            this.usecase.setProject(project);
+
+            LOGGER.info(this.usecase.toString());
+
+            new UseCaseEjb().delete(usecase);
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Use Case Deleted", ""));
+        }
         return null;
     }
 
@@ -103,8 +102,13 @@ public class UseCaseBean extends Bean implements Serializable {
         return new UseCaseEjb().obtainUseCase(this.project);
     }
 
-    public String editUseCase(final UseCaseEntity useCaseEntity) {
-        this.usecase = useCaseEntity;
-        return "/riskplan/useCasesEdit";
+    public String editUseCase() {
+        System.out.println("Risk: " + this.usecase);
+        if (this.usecase == null) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Use Case Selected", ""));
+        } else {
+            return "/riskplan/useCasesEdit";
+        }
+        return null;
     }
 }

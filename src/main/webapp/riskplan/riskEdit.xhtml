@@ -1,12 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!--Author: Pepe Bustamante--> 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/templateRiskPlan.xhtml">
-
+                template="/templates/templateRiskPlan.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define>    
@@ -16,26 +15,27 @@
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.editRisk_subtitle}
+        #{msgs.list_usecase_subtitle}
     </ui:define>
 
     <ui:define name="body">
 
-        <h:panelGroup id="editRisk" layout="block">
-            <h:form id="form">
-                <p:growl id="messages" showDetail="true" /> 
-
+        <h:form id="form" >
+            <h:panelGroup layout="block">
+                <p:growl id="growl_update"  sticky="true" life="1500"/>   
                 <h:inputHidden id="id" value="#{riskBean.riskEntity.id}" />
-
-                <h:panelGrid columns="3">
-
-                    <h:outputLabel id="nameLabel" for="name" value="#{msgs.enter_name_risk}"/>
-                    <h:inputText id="name" value="#{riskBean.riskEntity.name}" maxlength="100"  required="true" />
-
-                    <h:commandButton value="#{msgs.submit}" action="#{riskBean.update()}" styleClass="btn btn-success" />
-                </h:panelGrid>
-            </h:form>    
-        </h:panelGroup>
+                <h:panelGrid columns="5">      
+                    <h:outputText value="#{msgs.name}" />                
+                    <h:inputText id="name" value="#{riskBean.riskEntity.name}" maxlength="100">                                
+                    </h:inputText>
+                    <h:outputText value="#{msgs.value}" />              
+                    <p:selectOneMenu id="choseN"  value="#{riskBean.riskEntity.value}">
+                        <f:selectItems value="#{riskBean.chosenList}"  />
+                    </p:selectOneMenu>              
+                    <h:commandButton value="Submit" action="#{riskBean.update()}" styleClass="btn btn-success" />                                   
+                </h:panelGrid>                    
+            </h:panelGroup>                     
+        </h:form> 
     </ui:define>
-</ui:composition>
 
+</ui:composition>

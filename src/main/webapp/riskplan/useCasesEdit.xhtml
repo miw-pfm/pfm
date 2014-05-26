@@ -20,19 +20,18 @@
 
     <ui:define name="body">
 
-        <h:form id="form_update" >
+        <h:form id="form" >
             <h:panelGroup layout="block">
+                <p:growl id="growl_update"  sticky="true" life="1500"/>   
+                <h:inputHidden id="id" value="#{useCaseBean.usecase.id}" />
                 <h:panelGrid columns="5">     
-                    <p:growl id="growl_update" showDetail="true" sticky="true" />    
                     <h:outputText value="#{msgs.enter_name_usecase}" />                
-                    <h:inputHidden id="id" value="#{useCaseBean.usecase.id}" />
-                    <h:inputText id="name" value="#{useCaseBean.usecase.name}">                                
+                    <h:inputText id="name" value="#{useCaseBean.usecase.name}" maxlength="100">                                
                     </h:inputText>
                     <h:outputText value="#{msgs.enter_description_usecase}" />                
-                    <h:inputText id="description" value="#{useCaseBean.usecase.description}" >                              
-                    </h:inputText>
-                    <h:outputText />                   
-                    <h:commandButton value="Submit" action="#{useCaseBean.update}" styleClass="btn btn-success" />                                   
+                    <h:inputText id="description" value="#{useCaseBean.usecase.description}" maxlength="100">                              
+                    </h:inputText>                 
+                    <h:commandButton value="Submit" action="#{useCaseBean.update()}" styleClass="btn btn-success" />                                   
                 </h:panelGrid>                    
             </h:panelGroup>                     
         </h:form> 
