@@ -35,7 +35,7 @@ public class Bean {
     private void redirectionLogin() {
         try {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/pfm/login.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
             }
