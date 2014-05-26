@@ -6,8 +6,10 @@
 
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.ActivitiesEjb;
 import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
+import eui.miw.pfm.models.entities.ActivityEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
@@ -22,7 +24,7 @@ import javax.inject.Named;
 /**
  *
  * @author Jose Mª Villar
- * @César Martínez
+ * @author César Martínez
  */
 
 @Named
@@ -33,6 +35,7 @@ public class WorkUnitBean extends Bean implements Serializable {
     private transient SubActivityEntity subActivity;
     private transient IterationEntity iteration;    
     private WorkerEntity worker;
+    private List<ActivityEntity> activities;
 
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
     
@@ -41,7 +44,8 @@ public class WorkUnitBean extends Bean implements Serializable {
     
     public WorkUnitBean() {
         super();
-        workunit = new WorkUnitEntity();        
+        workunit = new WorkUnitEntity(); 
+        this.activities = new ActivitiesEjb().obtainAllActivities(); 
     }
 
     public WorkUnitBean(final WorkUnitEntity workunit) {
@@ -88,7 +92,25 @@ public class WorkUnitBean extends Bean implements Serializable {
     public void setWorker(WorkerEntity worker) {
         this.worker = worker;
     }
-        
+
+    public List<ActivityEntity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<ActivityEntity> activities) {
+        this.activities = activities;
+    }
+     
+    public void getWorkUnitsByIterAndSubActivity(final ActivityEntity activity,final IterationEntity iteration){
+        List<SubActivityEntity> subactivities;
+        subactivities = new ActivitiesEjb().obtainSubActivities(activity);
+        List<WorkUnitEntity> workunits =  new ArrayList<WorkUnitEntity>();
+        WorkUnitEjb workejb =  new WorkUnitEjb();
+        for(SubActivityEntity s : subactivities){
+            workunits.addAll( workejb.getWorkUnitsByIterAndActivity(s,iteration));
+        }
+    }
+    
     public void storeHours() {
         final WorkUnitEjb workUnitEjb = new WorkUnitEjb();
         
