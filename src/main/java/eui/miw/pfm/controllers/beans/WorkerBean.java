@@ -114,7 +114,7 @@ public class WorkerBean extends Bean implements Serializable {
 //
 //        LOGGER.info("Edit: " + this.workerEntity.toString());
 //
-//        return "editWorker";
+//        return "workerEdit";
 //    }
     
     public String editWorker() {
@@ -122,7 +122,7 @@ public class WorkerBean extends Bean implements Serializable {
 
         LOGGER.info("Edit: " + this.workerEntity.toString());
 
-        return "editWorker";
+        return "workerEdit";
     }
 
     public List<WorkerEntity> getWorkers() {
