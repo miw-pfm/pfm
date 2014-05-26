@@ -20,9 +20,9 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:panelGroup id="confproject" layout="block">
+        <h:panelGroup id="setnumberresource" layout="block">
             <h:form id="form">
-                <p:growl id="growl" sticky="true" />    
+                <p:growl id="growl" sticky="true" life="1500"/>    
                 <h:panelGrid columns="2">
                     <h:outputText value="#{msgs.setNumberResourceWorker}" />
                     <h:inputText id="workers" value="#{resourcesPlanBean.workers}" required="true" binding="#{workers}">

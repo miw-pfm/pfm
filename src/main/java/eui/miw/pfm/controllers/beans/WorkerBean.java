@@ -2,16 +2,13 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.ExceptionCatch;
-import eui.miw.pfm.util.LazyWorkerDataModel;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-
-import org.primefaces.model.LazyDataModel;
 
 /**
  *
@@ -19,40 +16,22 @@ import org.primefaces.model.LazyDataModel;
  * @author Jose M Villar
  * @author Jose Angel
  */
-
-@javax.faces.view.ViewScoped
 @Named
-
+@RequestScoped
 public class WorkerBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private transient LazyDataModel<WorkerEntity> lazyModel;
     private static final Logger LOGGER = Logger.getLogger(WorkerBean.class.getName());
 
     private WorkerEntity workerEntity;
-    private WorkerEntity selected;
 
     public WorkerBean() {
         super();
         workerEntity = new WorkerEntity();
-        this.lazyModel = new LazyWorkerDataModel(this.getWorkers());
     }
-    
+
     public WorkerEntity getWorkerEntity() {
         return workerEntity;
-    }
-
-    public WorkerEntity getSelected() {
-        return selected;
-    }
-
-    public void setSelected(WorkerEntity selected) {
-        this.selected = selected;
-    }
-    
-
-    public LazyDataModel<WorkerEntity> getLazyModel() {
-        return lazyModel;
     }
 
     public void setWorkerEntity(final WorkerEntity workerEntity) {
@@ -60,73 +39,52 @@ public class WorkerBean extends Bean implements Serializable {
     }
 
     public String update() {
-        assert this.workerEntity != null;
-        final WorkerEjb workerEjb = new WorkerEjb();
+        LOGGER.info(this.workerEntity.toString());
 
-        LOGGER.info("Update: " + this.workerEntity.toString());
-
-        workerEjb.update(this.workerEntity);
-
-        if (ExceptionCatch.getInstance().isException()) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Update Worker", ""));
-            ExceptionCatch.getInstance().setException(false);
+        if (new WorkerEjb().update(this.workerEntity)) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Updated", ""));
         } else {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Update", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Workers DNI is already exists", ""));
+            return null;
         }
-
-        return "/phaseplan/allWorkersList";
+        return "/phaseplan/workerListAll";
     }
 
     public String create() {
-        assert this.workerEntity != null;
         LOGGER.info(this.workerEntity.toString());
-        final WorkerEjb workerEjb = new WorkerEjb();
-        workerEjb.create(this.workerEntity);
 
-        if (ExceptionCatch.getInstance().isException()) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Create Worker", ""));
-            ExceptionCatch.getInstance().setException(false);
-        } else {
+        if (new WorkerEjb().create(this.workerEntity)) {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Workers DNI is already exists", ""));
+            return null;
         }
-
-        return "/phaseplan/allWorkersList";
+        return "/phaseplan/workerListAll";
     }
 
-//    public String delete(final WorkerEntity worker) {
-//        assert this.workerEntity != null;
-//        LOGGER.info(this.workerEntity.toString());
-//        final WorkerEjb workerEjb = new WorkerEjb();
-//        workerEjb.delete(worker);
-//        return "allWorkersList";
-//    }
-    
     public String delete() {
-        LOGGER.info(this.selected.toString());
-        final WorkerEjb workerEjb = new WorkerEjb();
-        workerEjb.delete(selected);
-        return "/phaseplan/allWorkersList";
+
+        if (this.workerEntity == null) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Worker Selected", ""));
+        } else {
+            LOGGER.info(this.workerEntity.toString());
+
+            new WorkerEjb().delete(this.workerEntity);
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Deleted", ""));
+        }
+        return "/phaseplan/workerListAll";
     }
 
-//    public String editWorker(final WorkerEntity worker) {
-//        assert this.workerEntity != null;
-//        this.workerEntity = worker;
-//
-//        LOGGER.info("Edit: " + this.workerEntity.toString());
-//
-//        return "workerEdit";
-//    }
-    
     public String editWorker() {
-        this.workerEntity = selected;
-
-        LOGGER.info("Edit: " + this.workerEntity.toString());
-
-        return "workerEdit";
+        if (this.workerEntity == null) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Worker Selected", ""));
+        } else {
+            return "/phaseplan/workerEdit";
+        }
+        return null;
     }
 
     public List<WorkerEntity> getWorkers() {
-        final WorkerEjb ejb = new WorkerEjb();
-        return ejb.getWorkers();
+        return new WorkerEjb().getWorkers();
     }
 }
