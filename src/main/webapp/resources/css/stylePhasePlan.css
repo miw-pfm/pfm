@@ -12,11 +12,9 @@
     color: #FFF;
 }
 
-#formProjectPlan\:tableProjectPlan table{
-}
-
 #formProjectPlan\:tableProjectPlan table tr td{
     border:1px solid #F3D5BC;
+    text-align: center;
 }
 
 #formProjectPlan\:tableProjectPlan table tr:nth-child(odd){
@@ -49,7 +47,8 @@
     text-align: center;
 }
 
-#formProjectPlan\:tableProjectPlan button, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus{
+#formProjectPlan\:tableProjectPlan button{
+    
     background-image: linear-gradient(to bottom, #F3D5BC 0%, #F79646 100%);
     border-color: #F79646;
     display: block;
@@ -60,7 +59,7 @@
     width: 121px;
 }
 
-#formProjectPlan\:tableProjectPlan button:hover{
+#formProjectPlan\:tableProjectPlan button:hover, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus{
     background-image: none;
     background-color: #F3D5BC;
     border-color: #F3D5BC;
@@ -90,8 +89,8 @@
     width: 50%;
     float:left;
     clear: both;    
-    
-    
+
+
 }
 .workers_list{
     width: 40%;
@@ -103,8 +102,8 @@
 #activity, #iteration_title {
     clear: both;    
     float: left;
-   margin-bottom: 15px;
-   font-size: 18px;
+    margin-bottom: 15px;
+    font-size: 18px;
 }
 
 #iteration_title {
@@ -140,8 +139,8 @@
     width: 50%;
     float:left;
     clear: both;    
-    
-    
+
+
 }
 .workers_list{
     width: 40%;
@@ -153,8 +152,8 @@
 #activity, #iteration_title {
     clear: both;    
     float: left;
-   margin-bottom: 15px;
-   font-size: 18px;
+    margin-bottom: 15px;
+    font-size: 18px;
 }
 
 #iteration_title {
@@ -164,4 +163,49 @@
 .ui-datalist-item{
     padding-left: 10px;
     list-style-type: none;
+}
+
+#msgRecommendedAndPlanned{
+    margin-bottom: 0;
+    margin-top: 45px;
+    overflow: auto;
+}
+
+#msgRecommended{
+    background: none repeat scroll 0 0 #F79646;
+    color: #000000;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 108px;
+    text-align: center;
+    width: 313px;
+}
+
+#msgPlanned{
+    background: none repeat scroll 0 0 #F79646;
+    color: #000000;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 1px;
+    text-align: center;
+    width: 328px;
+}
+
+#daysNumIterationPhasePlan{
+    font-size: 15px;
+    margin-left: 117px;
+    float: left;
+    margin-right: 96px;
+}
+
+#weekNumIterationPhasePlan{
+    font-size: 15px;
+}
+
+#daysNumIterationPhasePlan span, #weekNumIterationPhasePlan span{
+    color: #F79646;
+    font-size: 18px;
+    margin-left: 10px;
 }

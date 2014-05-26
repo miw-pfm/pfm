@@ -108,9 +108,9 @@ public class IterationBean extends Bean implements Serializable {
         int sum = this.inception + this.elaboration + this.construction + this.transition;
 
         if (sum > this.project.getChosenNumIteration()) {
-            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Too many iterations"));
+            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Too many iterations. The sum have to be "+this.project.getChosenNumIteration()+" and it is "+sum));
         } else if (sum < this.project.getChosenNumIteration()) {
-            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Iterations missing"));
+            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Iterations missing. The sum have to be "+this.project.getChosenNumIteration()+" and it is "+sum));
         } else {
             update(TypeIteration.INCEPTION, this.inception, this.listInception);
             update(TypeIteration.ELABORATION, this.elaboration, this.listElaboration);
