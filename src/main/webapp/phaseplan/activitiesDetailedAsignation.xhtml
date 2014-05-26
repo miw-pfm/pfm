@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templatePhasePlan.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:define name="title">
+        #{msgs.phasePlan_title}
+    </ui:define>    
+
+    <ui:define name="subtitle">
+        #{msgs.activities_detail_asignation_subtitle}
+    </ui:define>   
+
+    <ui:define name="pagetitle">
+        #{project.name}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="form" class="dataTableList">
+            <p:dataTable emptyMessage="">                
+                <p:column headerText="#{msgs.code}" width="55" />                     
+                <p:column headerText="#{msgs.activities}" />
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" width="40" headerText="#{iteration.codeIteration}" />    
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" width="40" headerText="#{iteration.codeIteration}" />                           
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" width="40" headerText="#{iteration.codeIteration}" />                  
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" width="40" headerText="#{iteration.codeIteration}" />                                     
+            </p:dataTable> 
+
+
+
+            <c:forEach  var="activity" items="#{activitiesBean.activities}"> 
+                <p:dataTable id="#{activity.code}" value="#{activity.subActivity}" var="subactivity" editable="true" editMode="cell">   
+                    
+                    <p:ajax event="cellEdit" listener="#{activitiesBean.onCellEdit}" update=":form:#{activity.code}" />
+       
+                    <p:column headerText="#{activity.code}" width="55">
+                        <h:outputText value="#{subactivity.code}" />                
+                    </p:column>                        
+                    <p:column headerText="#{activity.name}">#{subactivity.name}</p:column>
+                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" width="40" styleClass="ui-editable-column">                         
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="" /></f:facet>
+                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
+                        </p:cellEditor>
+                    </p:columns>     
+                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" width="40" styleClass="ui-editable-column">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="" /></f:facet>
+                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
+                        </p:cellEditor>                    
+                    </p:columns>                     
+                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" width="40"  styleClass="ui-editable-column">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="" /></f:facet>
+                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
+                        </p:cellEditor>                    
+                    </p:columns>                     
+                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" width="40" styleClass="ui-editable-column">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="" /></f:facet>
+                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
+                        </p:cellEditor>                    
+                    </p:columns>                     
+                </p:dataTable>                    
+            </c:forEach>
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

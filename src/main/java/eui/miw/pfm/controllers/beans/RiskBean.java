@@ -3,50 +3,43 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.RiskEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.RiskEntity;
-import eui.miw.pfm.util.ExceptionCatch;
-import eui.miw.pfm.util.LazyRiskDataModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import org.primefaces.model.LazyDataModel;
 
 /**
  *
  * @author Fred Peña
  */
-@SessionScoped
 @Named
+@RequestScoped
 public class RiskBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(RiskBean.class.getName());
-    private transient LazyDataModel<RiskEntity> lazyModel;
-    private RiskEntity selectedRisk;
     private RiskEntity riskEntity;
     private static List<Integer> chosenList;
     private transient ProjectEntity project;
-    
+
     public RiskBean() {
         super();
         riskEntity = new RiskEntity();
         chosenList = new ArrayList<>();
-        chosenList.add(1);
-        chosenList.add(2);
-        chosenList.add(3);
-        chosenList.add(4);
-        chosenList.add(5);
+
+        for (int i = 1; i < 6; i++) {
+            chosenList.add(i);
+        }
+
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
-        this.lazyModel = new LazyRiskDataModel(new RiskEjb().findRisks(this.project));
     }
 
     public RiskEntity getRiskEntity() {
@@ -57,25 +50,17 @@ public class RiskBean extends Bean implements Serializable {
         this.riskEntity = riskEntity;
     }
 
-    public RiskEntity getSelectedRisk() {
-        return selectedRisk;
-    }
-
-    public void setSelectedRisk(final RiskEntity selectedRisk) {
-        this.selectedRisk = selectedRisk;
-    }
-
-    public LazyDataModel<RiskEntity> getLazyModel() {
-        return lazyModel;
-    }
-
     public String update() {
-        assert this.riskEntity != null;
-        final RiskEjb riskEjb = new RiskEjb();
-        this.riskEntity.setProject(this.project);
+        this.riskEntity.setProject(project);
 
-        riskEjb.update(this.riskEntity);
-        FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Updated", ""));
+        LOGGER.info(this.riskEntity.toString());
+
+        if (new RiskEjb().update(this.riskEntity)) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Updated", ""));
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Risks name is already exists", ""));
+            return null;
+        }
         return "/riskplan/riskList";
     }
 
@@ -84,52 +69,45 @@ public class RiskBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No project selected", ""));
             return null;//NOPMD
         }
-        final RiskEjb riskEjb = new RiskEjb();
 
         this.riskEntity.setProject(this.project);
-        this.project.addRisk(this.riskEntity);
 
-        riskEjb.create(this.riskEntity);
-        
-        if (ExceptionCatch.getInstance().isException()) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Create Risk", ""));
-            ExceptionCatch.getInstance().setException(false);
-            this.project.removeRisk(this.riskEntity);
-        } else {
+        if (new RiskEjb().create(this.riskEntity)) {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Created", ""));
-            this.reload();                   
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Risks name is already exists", ""));
+            return null;
         }
-
         return "/riskplan/riskList";
     }
 
-    public String edit(final RiskEntity risk) {
-        this.riskEntity = risk;
-        return "/riskplan/riskEdit";
+    public String editRisk() {
+        if (this.riskEntity == null) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Risk Selected", ""));
+        } else {
+            return "/riskplan/riskEdit";
+        }
+        return null;
     }
 
-    public String delete(final RiskEntity risk) {
-        assert risk != null;
-        assert this.project != null;
+    public String delete() {
+        if (this.riskEntity == null) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Risk Selected", ""));
+        } else {
+            LOGGER.info(this.riskEntity.toString());
 
-        this.riskEntity = risk;
-        LOGGER.info(this.riskEntity.toString());
+            this.riskEntity.setProject(this.project);
 
-        this.riskEntity.setProject(this.project);
-        this.project.removeRisk(this.riskEntity);
-
-        new RiskEjb().delete(this.riskEntity);
-        FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Deleted", ""));
-
-        reload();
-
-        return "/riskplan/riskList";
+            new RiskEjb().delete(this.riskEntity);
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Deleted", ""));
+        }
+        return null;
     }
 
-    private void reload() {
-        this.lazyModel = new LazyRiskDataModel(new RiskEjb().findRisks(this.project));
+    public List<RiskEntity> getRisks() {
+        return new RiskEjb().findRisks(this.project);
     }
-    
+
     public List<Integer> getChosenList() {
         return chosenList;
     }

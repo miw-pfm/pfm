@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateHome.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="pagetitle">
+        #{projectConfBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.home}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.listWorker_subtitle}
+    </ui:define>
+
+    <ui:define name="body">
+
+        <h:link value="#{msgs.create_worker}" styleClass="btn btn-success" id="submitcreateworker" outcome="workerCreate"/>
+
+        <h:form id="form">
+            <p:growl id="messages" sticky="true" life="1500" />      
+
+            <p:dataTable id="workers" var="worker" value="#{workerBean.workers}"  selectionMode="single" 
+                         selection="#{workerBean.workerEntity}" rowKey="#{worker.id}" rows="10" paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+                <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}" filterMatchMode="contains">
+                    <h:outputText value="#{worker.name}" />
+                </p:column>
+
+                <p:column headerText="Surname" sortBy="surname" filterBy="#{worker.surname}" filterMatchMode="contains">
+                    <h:outputText value="#{worker.surname}" />
+                </p:column>
+
+                <p:column headerText="DNI" sortBy="dni" filterBy="#{worker.dni}" filterMatchMode="contains">
+                    <h:outputText value="#{worker.dni}" />
+                </p:column>
+
+                <p:column headerText="Email" sortBy="email" filterBy="#{worker.email}" filterMatchMode="contains">
+                    <h:outputText value="#{worker.email}" />
+                </p:column>
+
+                <p:column headerText="GitUser" sortBy="gitUser" filterBy="#{worker.gitUser}" filterMatchMode="contains">
+                    <h:outputText value="#{worker.gitUser}" />
+                </p:column>
+
+                <f:facet name="header">
+                    <p:commandButton process="workers" update=":form" icon="ui-icon-trash" value="Delete" action="#{workerBean.delete()}" >
+                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton process="workers" update=":form" icon="ui-icon-pencil" value="Edit" action="#{workerBean.editWorker()}" />
+                </f:facet>
+            </p:dataTable>
+
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >  
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+            </p:confirmDialog> 
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

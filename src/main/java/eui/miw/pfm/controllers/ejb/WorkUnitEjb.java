@@ -10,6 +10,8 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -39,5 +41,10 @@ public class WorkUnitEjb {
     public int getNumTotalWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2";//NOPMD
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity).size();
+    }
+
+    public List<WorkUnitEntity> getWorkUnitsByIterAndActivity(final SubActivityEntity subActivity, final IterationEntity iteration) {
+        final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2";//NOPMD
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity);
     }
 }

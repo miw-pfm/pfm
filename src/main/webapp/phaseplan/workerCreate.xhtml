@@ -20,9 +20,9 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:panelGroup id="confproject" layout="block">
-            <h:form id="form">
-                 <p:growl id="message"  sticky="true" />
+        <h:form id="form">
+            <h:panelGroup layout="block">
+                <p:growl id="growl"  sticky="true" life="1500"/>
                 <h:panelGrid columns="2">
 
                     <h:outputText value="#{msgs.nameWorker}"/>
@@ -41,10 +41,10 @@
                     <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUserWorker}" required="true" requiredMessage="Error. #{msgs.gitUserWorker} not NULL" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{workerBean.create()}" styleClass="btn btn-success" />
-                    <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="allWorkersList"/>       
+                    <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="workerListAll"/>       
                 </h:panelGrid>
-            </h:form>    
-        </h:panelGroup>
+            </h:panelGroup>
+        </h:form>    
+      
     </ui:define>
 </ui:composition>
-

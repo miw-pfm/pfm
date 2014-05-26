@@ -24,17 +24,15 @@
         <h:form id="form">
             <h:panelGroup layout="block">
                 <p:growl id="growl"  sticky="true" life="1500"/>
-                <h:panelGrid columns="5" >                       
+                <h:panelGrid columns="5" >    
                     <h:outputText value="#{msgs.name}" />                
-                    <h:inputText value="#{riskBean.riskEntity.name}" maxlength="100" />
-                    <h:outputText value="#{msgs.value}" />  
-                    <p:selectOneMenu id="choseN"  value="#{riskBean.riskEntity.value}">
-                        <f:selectItems value="#{riskBean.chosenList}"  />
-                    </p:selectOneMenu>                   
-                    <h:commandButton value="#{msgs.submit}" action="#{riskBean.create()}" styleClass="btn btn-success" />                    
+                    <h:inputText value="#{useCaseBean.usecase.name}" maxlength="100" />
+                    <h:outputText value="#{msgs.description}" />                                
+                    <h:inputText value="#{useCaseBean.usecase.description}" maxlength="100" />                   
+                    <h:commandButton value="#{msgs.submit}" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
                 </h:panelGrid>                     
             </h:panelGroup>                    
-        </h:form>   
+        </h:form>              
 
     </ui:define>
 

@@ -19,7 +19,7 @@ import java.util.List;
 public class UseCaseEjb {
 
     public boolean update(final UseCaseEntity usecase) {
-        if (this.isUnique(usecase)) {
+        if (this.isUnique(usecase, false)) {
             AbstractDAOFactory.getFactory().getUseCaseDAO().update(usecase);
             return true;
         } else {
@@ -32,7 +32,7 @@ public class UseCaseEjb {
     }
 
     public boolean create(final UseCaseEntity usecase) {
-        if (this.isUnique(usecase)) {
+        if (this.isUnique(usecase, true)) {
             AbstractDAOFactory.getFactory().getUseCaseDAO().create(usecase);
             return true;
         } else {
@@ -41,15 +41,29 @@ public class UseCaseEjb {
 
     }
 
-    private boolean isUnique(final UseCaseEntity usecase) {
+    private boolean isUnique(final UseCaseEntity usecase, final boolean create) {
 
         final String psql = "SELECT u FROM UseCaseEntity u WHERE u.project = ?1";//NOPMD
-        List<UseCaseEntity> list = AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, usecase.getProject());
-        for (UseCaseEntity u : list) {
-            if (u.equals(usecase)) {
-                return false;
+        final List<UseCaseEntity> list = AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, usecase.getProject());
+
+        if (create) {
+            for (UseCaseEntity u : list) {
+                if (u.getName().equals(usecase.getName())) {
+                    return false;
+                }
+            }
+        } else {
+            for (UseCaseEntity u : list) {
+                if (u.getName().equals(usecase.getName())) {
+                    if (u.getId().equals(usecase.getId())) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
             }
         }
+
         return true;
     }
 

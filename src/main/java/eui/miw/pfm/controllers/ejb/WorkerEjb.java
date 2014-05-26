@@ -20,17 +20,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class WorkerEjb {
 
-    public void delete(final WorkerEntity workerEntity) {
-        AbstractDAOFactory.getFactory().getWorkerDAO().delete(workerEntity);
+    public void delete(final WorkerEntity worker) {
+        AbstractDAOFactory.getFactory().getWorkerDAO().delete(worker);
     }
 
-    public void update(final WorkerEntity workerEntity) {
-        AbstractDAOFactory.getFactory().getWorkerDAO().update(workerEntity);
+    public boolean update(final WorkerEntity worker) {
+        if (this.isUnique(worker, false)) {
+            AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
-    public void create(final WorkerEntity workerEntity) {
-        AbstractDAOFactory.getFactory().getWorkerDAO().create(workerEntity);
+    public boolean create(final WorkerEntity worker) {
+        if (this.isUnique(worker, true)) {
+            AbstractDAOFactory.getFactory().getWorkerDAO().create(worker);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public List<WorkerEntity> getWorkers() {
@@ -60,5 +71,30 @@ public class WorkerEjb {
         }
 
         return lTaskProjects;
+    }
+
+    private boolean isUnique(final WorkerEntity worker, final boolean create) {
+
+        final List<WorkerEntity> list = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
+
+        if (create) {
+            for (WorkerEntity r : list) {
+                if (r.getDni().equals(worker.getDni())) {
+                    return false;
+                }
+            }
+        } else {
+            for (WorkerEntity r : list) {
+                if (r.getDni().equals(worker.getDni())) {
+                    if (r.getId().equals(worker.getId())) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }

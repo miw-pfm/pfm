@@ -20,11 +20,13 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:panelGroup id="editWorker" layout="block">
-            <h:form id="form">
-                <h:inputHidden id="id" value="#{workerBean.workerEntity.id}" />
 
+        <h:form id="form">
+            <h:panelGroup  layout="block">
+                <p:growl id="growl_update"  sticky="true" life="1500"/>   
+                <h:inputHidden id="id" value="#{workerBean.workerEntity.id}" />
                 <h:panelGrid columns="2">
+
 
                     <h:outputLabel id="nameLabel" for="name" value="#{msgs.nameWorker}"/>
                     <h:inputText id="name" value="#{workerBean.workerEntity.name}" maxlength="100"  required="true"  requiredMessage="Error. #{msgs.nameWorker} not NULL" />
@@ -42,10 +44,10 @@
                     <h:inputText id="gitUser" value="#{workerBean.workerEntity.gitUser}" maxlength="25" required="true"   requiredMessage="Error. #{msgs.gitUserWorker} not NULL" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{workerBean.update()}" styleClass="btn btn-success" />
-                    <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="allWorkersList"/>       
+                    <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="workerListAll"/>       
                 </h:panelGrid>
-            </h:form>    
-        </h:panelGroup>
+            </h:panelGroup>
+        </h:form>   
+
     </ui:define>
 </ui:composition>
-
