@@ -346,6 +346,34 @@ public class IterationBean extends Bean implements Serializable {
         return this.getPlannedWeeks_Transition() * DAYSOFONEWEEK;
     }
 
+    public double getDesviation_Inception() {
+        double percent = (double) (((double) this.getPlannedPercent_Inception() - (double) this.getPERCENT_INCEPTION()) / (double) this.getPERCENT_INCEPTION());
+        return this.round(percent * 100);
+    }
+
+    public double getDesviation_Elaboration() {
+        double percent = (double) (((double) this.getPlannedPercent_Elaboration() - (double) this.getPERCENT_ELABORATION()) / (double) this.getPERCENT_ELABORATION());
+        return this.round(percent * 100);
+    }
+
+    public double getDesviation_Construction() {
+        double percent = (double) (((double) this.getPlannedPercent_Construction() - (double) this.getPERCENT_CONSTRUCTION()) / (double) this.getPERCENT_CONSTRUCTION());
+        return this.round(percent * 100);
+    }
+
+    public double getDesviation_Transition() {
+        double percent = (double) (((double) this.getPlannedPercent_Transition() - (double) this.getPERCENT_TRANSITION()) / (double) this.getPERCENT_TRANSITION());
+        return this.round(percent * 100);
+    }
+
+    public int getPlusPlannedDays() {
+        return this.getPlannedDays_Inception() + this.getPlannedDays_Elaboration() + this.getPlannedDays_Construction() + this.getPlannedDays_Transition();
+    }
+
+    public int getPlusPlannedWeeks() {
+        return this.getPlannedWeeks_Inception() + this.getPlannedWeeks_Elaboration() + this.getPlannedWeeks_Construction() + this.getPlannedWeeks_Transition();
+    }
+
     @Override
     public String toString() {
         return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", inception=" + inception + ", elaboration=" + elaboration + ", construction=" + construction + ", transition=" + transition + ", iterEntity=" + iterEntity + '}';
