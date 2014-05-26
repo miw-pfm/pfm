@@ -9,6 +9,10 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/templates/templateHome.xhtml">
 
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{calendarProjectBean.redirectIfNoCalendar('projectConfig')}" />
+    </f:metadata>
+        <!--<f:event listener="#{calendarProjectBean.redirectIfNoCalendar}" type="preRenderView" />-->
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define>    
@@ -49,7 +53,7 @@
 
                 <p:growl id="growl" showDetail="true"/>
                 <p:calendar id="calProject" value="#{calendarProjectBean.date1}" navigator="true" mode="inline" mindate="#{calendarProjectBean.startDate}" maxdate="#{calendarProjectBean.endDate}" disabledWeekends="true" beforeShowDay="markHolidaysAndReportedDays">                    
-                    <p:ajax event="dateSelect" listener="#{calendarProjectBean.llena}" update="nameDate descriptionDate addHoliday editdate removeHoliday"/>                                                                            
+                    <p:ajax event="dateSelect" listener="#{calendarProjectBean.fillCalendar}" update="nameDate descriptionDate addHoliday editdate removeHoliday"/>                                                                            
                 </p:calendar>
 
                 <p:watermark for="nameDate" value="#{msgs.name}" />
