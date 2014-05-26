@@ -28,7 +28,7 @@ public class LogOutBean extends Bean implements Serializable {
     public void logOut() {
         try {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/pfm/login.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(SessionMap.class.getName()).log(Level.SEVERE, null, ex);
             }
