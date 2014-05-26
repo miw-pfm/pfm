@@ -148,6 +148,10 @@ public class IterationEntity implements Serializable {
         this.workUnits.remove(w);
     }
 
+    public String getCodeIteration() {
+        return "" + this.getTypeIteration().toString().charAt(0) + this.getIterValue();
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -20,8 +20,9 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:panelGroup id="confproject" layout="block">
+        <h:panelGroup id="confproject" layout="block" >
             <h:form id="form">
+                <p:growl id="growl" showDetail="true" />
                 <h:panelGrid columns="3">
                     <h:outputText value="#{msgs.startDate}" />
                     <p:calendar value="#{projectConfBean.project.startDate}" id="beginCal" binding="#{beginCalen}" required="true" pattern="MM-dd-yyyy">                            

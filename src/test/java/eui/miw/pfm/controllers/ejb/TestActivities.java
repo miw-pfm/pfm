@@ -16,16 +16,14 @@ import org.junit.Test;
  * @author Jean Mubaied
  * @author Jose Mª Villar
  */
-public class TestSubActivityEjb {
+public class TestActivities {
 
-    private transient SubActivityEjb subActivityEjb;
-    private transient ActivityEjb activityEjb;
+    private transient ActivitiesEjb activitiesEjb;
     private transient ActivityEntity activity;
 
     @Before
     public void init() {
-        this.subActivityEjb = new SubActivityEjb();
-        this.activityEjb = new ActivityEjb();
+        this.activitiesEjb = new ActivitiesEjb();
 
         this.activity = new ActivityEntity(9, "Control de Cambios asignable", "C");
         final SubActivityEntity subActivity1 = new SubActivityEntity(37, "Plan de Control de Cambios", "C1", activity);
@@ -36,12 +34,23 @@ public class TestSubActivityEjb {
     }
 
     @Test
+    public void testObtainAllActivities() {
+        assertNotNull("listado de actividades", activitiesEjb.obtainAllActivities());
+
+    }
+
+    @Test
+    public void testObtainActivity() {
+        assertEquals("es la misma actividad", activitiesEjb.obtainActivity(this.activity.getId()), this.activity);
+    }
+
+    @Test
     public void testObtainAllSubActivities() {
-        assertNotNull("listado de actividades", subActivityEjb.obtainAllSubActivities());
+        assertNotNull("listado de subactividades", activitiesEjb.obtainAllSubActivities());
     }
 
     @Test
     public void testObtainAllSubActivitiesByActivity() {
-        assertTrue("listado de subactividades de una actividad", subActivityEjb.obtainSubActivities(activityEjb.obtainActivity(this.activity.getId())).containsAll(this.activity.getSubActivity()));
+        assertTrue("listado de subactividades de una actividad", activitiesEjb.obtainSubActivities(activitiesEjb.obtainActivity(this.activity.getId())).containsAll(this.activity.getSubActivity()));
     }
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
@@ -16,14 +15,21 @@ import java.util.List;
  * @author Jean Mubaied
  * @author Jose Mª Villar
  */
-public class SubActivityEjb {
-    
+public class ActivitiesEjb {
+
     public List<SubActivityEntity> obtainAllSubActivities() {
         return AbstractDAOFactory.getFactory().getSubActivityDAO().findAll();
     }
 
-    public List<SubActivityEntity> obtainSubActivities(final ActivityEntity activity) {        
+    public List<SubActivityEntity> obtainSubActivities(final ActivityEntity activity) {
         return activity.getSubActivity();
     }
-    
+
+    public List<ActivityEntity> obtainAllActivities() {
+        return AbstractDAOFactory.getFactory().getActivityDAO().findAll();
+    }
+
+    public ActivityEntity obtainActivity(final Integer id) {
+        return AbstractDAOFactory.getFactory().getActivityDAO().read(id);
+    }  
 }
