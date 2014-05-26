@@ -65,7 +65,7 @@ public class WorkerBean extends Bean implements Serializable {
     public String delete() {
 
         if (this.workerEntity == null) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Worker Selected", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Worker Selected", ""));
         } else {
             LOGGER.info(this.workerEntity.toString());
 
@@ -77,7 +77,7 @@ public class WorkerBean extends Bean implements Serializable {
 
     public String editWorker() {
         if (this.workerEntity == null) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Worker Selected", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Worker Selected", ""));
         } else {
             return "/phaseplan/workerEdit";
         }

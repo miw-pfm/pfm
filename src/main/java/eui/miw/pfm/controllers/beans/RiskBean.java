@@ -83,7 +83,7 @@ public class RiskBean extends Bean implements Serializable {
 
     public String editRisk() {
         if (this.riskEntity == null) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Risk Selected", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Risk Selected", ""));
         } else {
             return "/riskplan/riskEdit";
         }
@@ -92,7 +92,7 @@ public class RiskBean extends Bean implements Serializable {
 
     public String delete() {
         if (this.riskEntity == null) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "Risk Selected", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Risk Selected", ""));
         } else {
             LOGGER.info(this.riskEntity.toString());
 
