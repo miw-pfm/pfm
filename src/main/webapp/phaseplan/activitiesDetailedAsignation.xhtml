@@ -15,26 +15,29 @@
     <ui:define name="subtitle">
         #{msgs.activities_detail_asignation_subtitle}
     </ui:define>   
-    
+
     <ui:define name="pagetitle">
         #{project.name}
     </ui:define>
 
     <ui:define name="body">
         <h:form id="form" class="dataTableList">
-            <!--            <p:dataTable emptyMessage="">                
-                            <p:column headerText="#{msgs.code}" width="55" />                     
-                            <p:column headerText="#{msgs.activities}" />
-                            <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" width="40" headerText="#{iteration.codeIteration}" />    
-                            <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" width="40" headerText="#{iteration.codeIteration}" />                           
-                            <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" width="40" headerText="#{iteration.codeIteration}" />                  
-                            <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" width="40" headerText="#{iteration.codeIteration}" />                                     
-                        </p:dataTable>         -->
+            <p:dataTable emptyMessage="">                
+                <p:column headerText="#{msgs.code}" width="55" />                     
+                <p:column headerText="#{msgs.activities}" />
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" width="40" headerText="#{iteration.codeIteration}" />    
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" width="40" headerText="#{iteration.codeIteration}" />                           
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" width="40" headerText="#{iteration.codeIteration}" />                  
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" width="40" headerText="#{iteration.codeIteration}" />                                     
+            </p:dataTable> 
 
 
 
             <c:forEach  var="activity" items="#{activitiesBean.activities}"> 
-                <p:dataTable id="#{activity.code}" value="#{activity.subActivity}" var="subactivity" editable="true" editMode="cell">          
+                <p:dataTable id="#{activity.code}" value="#{activity.subActivity}" var="subactivity" editable="true" editMode="cell">   
+                    
+                    <p:ajax event="cellEdit" listener="#{activitiesBean.onCellEdit}" update=":form:#{activity.code}" />
+       
                     <p:column headerText="#{activity.code}" width="55">
                         <h:outputText value="#{subactivity.code}" />                
                     </p:column>                        
