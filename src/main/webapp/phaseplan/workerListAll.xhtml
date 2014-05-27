@@ -30,23 +30,23 @@
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15">
 
-                <p:column headerText="Name" sortBy="surname" filterBy="#{worker.name}" filterMatchMode="contains">
+                <p:column headerText="#{msgs.nameWorker}" sortBy="surname" filterBy="#{worker.name}" filterMatchMode="contains">
                     <h:outputText value="#{worker.name}" />
                 </p:column>
 
-                <p:column headerText="Surname" sortBy="surname" filterBy="#{worker.surname}" filterMatchMode="contains">
+                <p:column headerText="#{msgs.surnameWorker}" sortBy="surname" filterBy="#{worker.surname}" filterMatchMode="contains">
                     <h:outputText value="#{worker.surname}" />
                 </p:column>
 
-                <p:column headerText="DNI" sortBy="dni" filterBy="#{worker.dni}" filterMatchMode="contains">
+                <p:column headerText="#{msgs.dniWorker}" sortBy="dni" filterBy="#{worker.dni}" filterMatchMode="contains">
                     <h:outputText value="#{worker.dni}" />
                 </p:column>
 
-                <p:column headerText="Email" sortBy="email" filterBy="#{worker.email}" filterMatchMode="contains">
+                <p:column headerText="#{msgs.emailWorker}" sortBy="email" filterBy="#{worker.email}" filterMatchMode="contains">
                     <h:outputText value="#{worker.email}" />
                 </p:column>
 
-                <p:column headerText="GitUser" sortBy="gitUser" filterBy="#{worker.gitUser}" filterMatchMode="contains">
+                <p:column headerText="#{msgs.gitUserWorker}" sortBy="gitUser" filterBy="#{worker.gitUser}" filterMatchMode="contains">
                     <h:outputText value="#{worker.gitUser}" />
                 </p:column>
 
