@@ -5,7 +5,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/templatePhasePlan.xhtml">
+                template="/templates/templatePhasePlan.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="pagetitle">
         #{confProjectBean.project.name}
@@ -21,31 +22,50 @@
 
     <ui:define name="body">
         <p:outputLabel id="iteration_title" value="#{msgs.iteration}" />
-        <p:selectOneMenu id="iteration" value="#{selectOneMenuView.console}">            
-            <f:selectItem itemLabel="23" itemValue="23" />            
+        
+        <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity}">
+            <f:selectItems value="#{iterationBean.listAllIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
+            <p:ajax event="change"  listener="#{iterationBean.handleChange}" update="test"/>
         </p:selectOneMenu>
+        
         <p:outputLabel id="activity" value="#{msgs.activity} "/>
-        <h:form >                        
-            <p:dataTable var="c" value="0"  id="test" styleClass="tableIterationDistribution">
-                <p:column headerText="#{msgs.name}">
-                    <h:outputText value="Open" />
-                </p:column>
+        <h:form id="test">
+            <p:dataTable var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution">
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column rowspan="1" headerText="#{msgs.name}" />
+                        <p:column colspan="1" headerText="#{msgs.code}" />
+                        <p:column colspan="1" headerText="#{msgs.total_units}" />
+                        <p:column colspan="1" headerText="#{msgs.setNumberResourceHours}" />
+                        <p:column colspan="1" headerText="#{msgs.available_units}" />
+                    </p:row>
+                </p:columnGroup>
 
-                <p:column headerText="#{msgs.code}">
-                    <h:outputText value="01" />
-                </p:column>
+                <p:subTable var="subActivity" value="#{activity.subActivity}">
+                    <f:facet name="header">
+                        <h:outputText value="#{activity.name} : #{activity.code}" />
+                    </f:facet>
+                    <p:column >
+                        <h:outputText value="#{subActivity.name}" />
+                    </p:column>
 
-                <p:column headerText="#{msgs.total_units}">
-                    <h:outputText value="12" />
-                </p:column>
+                    <p:column >
+                        <h:outputText value="#{subActivity.code}" />
+                    </p:column>
 
-                <p:column headerText="#{msgs.setNumberResourceHours}">
-                    <h:outputText value="3" />
-                </p:column>
+                    <p:column >
+                        #{workUnitBean.getWorkUnitsByIterAndSubActivity(activity, iteration)}
+                        <h:outputText value="#{subActivity.workUnits.size()}" />
+                    </p:column>
 
-                <p:column headerText="#{msgs.available_units}">
-                    <h:outputText value="12" />
-                </p:column>
+                    <p:column >
+                        <h:outputText value="3" />
+                    </p:column>
+
+                    <p:column >
+                        <h:outputText value="12" />
+                    </p:column>
+                </p:subTable>
             </p:dataTable>              
             <p:dataList value="#{workerBean.workers}" var="worker" styleClass="workers_list">
                 <f:facet name="header">
