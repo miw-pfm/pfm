@@ -58,10 +58,17 @@ public class IterationBean extends Bean implements Serializable {
         final IterationEjb iterationEjb = new IterationEjb();
         iterEntity = iterationEjb.getIterations().get(0);
         project = new ProjectEntity();
-        this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
-        this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
-        this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION);
-        this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION);
+
+        try {
+            this.project = ((ProjectEntity) sessionMap.get("project"));
+        } catch (Exception e) {
+            LOGGER.info("No session exist");
+        }
+
+        this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project);
+        this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION, this.project);
+        this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
+        this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION, this.project);
 
         //this.listAllIterations = new List<IterationEntity>();
         this.allIterations = new ArrayList<IterationEntity>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
@@ -75,11 +82,6 @@ public class IterationBean extends Bean implements Serializable {
         this.construction = this.listConstruction.size();
         this.transition = this.listTransition.size();
 
-        try {
-            this.project = ((ProjectEntity) sessionMap.get("project"));
-        } catch (Exception e) {
-            LOGGER.info("No session exist");
-        }
     }
 
     public void update(TypeIteration type, int valueNew, List<IterationEntity> list) {
@@ -382,6 +384,10 @@ public class IterationBean extends Bean implements Serializable {
         return this.getPlannedWeeksInception() + this.getPlannedWeeksElaboration() + this.getPlannedWeeksConstruction() + this.getPlannedWeeksTransition();
     }
 
+    public int getPlusIterations() {
+        return this.inception + this.elaboration + this.construction + this.transition;
+    }
+
     @Override
     public String toString() {
         return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", inception=" + inception + ", elaboration=" + elaboration + ", construction=" + construction + ", transition=" + transition + ", iterEntity=" + iterEntity + '}';
@@ -398,4 +404,5 @@ public class IterationBean extends Bean implements Serializable {
     public void handleIterationChange() {
         this.iterEntity = new IterationEjb().obtainIteration(this.iterEntity.getId());
     }
+
 }
