@@ -55,28 +55,27 @@ public class IterationBean extends Bean implements Serializable {
 
     public IterationBean() {
         super();
-        final IterationEjb iterationEjb = new IterationEjb();
-        iterEntity = iterationEjb.getIterations().get(0);
-        project = new ProjectEntity();
-
+        
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.info("No session exist");
         }
+        
+        final IterationEjb iterationEjb = new IterationEjb();
+        iterEntity = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project).get(0);
 
         this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project);
         this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION, this.project);
         this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
         this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION, this.project);
 
-        //this.listAllIterations = new List<IterationEntity>();
         this.allIterations = new ArrayList<IterationEntity>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
         this.allIterations.addAll(this.listInception);
         this.allIterations.addAll(this.listElaboration);
         this.allIterations.addAll(this.listConstruction);
         this.allIterations.addAll(this.listTransition);
-
+        
         this.inception = this.listInception.size();
         this.elaboration = this.listElaboration.size();
         this.construction = this.listConstruction.size();

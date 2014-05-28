@@ -27,7 +27,7 @@
             <div>
                 <p:outputLabel id="iteration_title" value="#{msgs.iteration} : " />
                 <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity.id}">
-                    <f:selectItems value="#{iterationBean.listAllIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
+                    <f:selectItems value="#{iterationBean.allIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
                     <p:ajax event="change"  listener="#{iterationBean.handleIterationChange()}" update="test"/>
                 </p:selectOneMenu>
                 <p:outputLabel id="activity" value="#{msgs.activity}" />
