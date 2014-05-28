@@ -21,15 +21,18 @@
     </ui:define>
 
     <ui:define name="body">
-        <p:outputLabel id="iteration_title" value="#{msgs.iteration}" />
-        
-        <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity}">
-            <f:selectItems value="#{iterationBean.listAllIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
-            <p:ajax event="change"  listener="#{iterationBean.handleChange}" update="test"/>
-        </p:selectOneMenu>
-        
-        <p:outputLabel id="activity" value="#{msgs.activity} "/>
+
+
         <h:form id="test">
+            <div>
+                <p:outputLabel id="iteration_title" value="#{msgs.iteration} : " />
+                <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity.id}">
+                    <f:selectItems value="#{iterationBean.listAllIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
+                    <p:ajax event="change"  listener="#{iterationBean.handleIterationChange()}" update="test"/>
+                </p:selectOneMenu>
+                <p:outputLabel id="activity" value="#{msgs.activity}" />
+            </div>
+            
             <p:dataTable var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution">
                 <p:columnGroup type="header">
                     <p:row>
@@ -54,17 +57,18 @@
                     </p:column>
 
                     <p:column >
-                        #{workUnitBean.getWorkUnitsByIterAndSubActivity(activity, iteration)}
-                        <h:outputText value="#{subActivity.workUnits.size()}" />
+                        #{workUnitBean.getWorkUnitsByIterAndSubActivity(activity, iterationBean.iterEntity)}
+                        <h:outputText value="#{workUnitBean.workunits.size()}" />
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="3" />
+                        <h:outputText value="#{workUnitBean.workunits.size()/4}" />
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="12" />
+                        <h:outputText value="#{workUnitBean.workunits.size()}" />
                     </p:column>
+                    
                 </p:subTable>
             </p:dataTable>              
             <p:dataList value="#{workerBean.workers}" var="worker" styleClass="workers_list">

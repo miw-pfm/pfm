@@ -15,7 +15,11 @@ import java.util.List;
  * @author Manuel Alvarez
  */
 public class IterationEjb {
-
+    
+    public IterationEntity obtainIteration(final Integer iterationID){
+        return AbstractDAOFactory.getFactory().getIterationDAO().read(iterationID);
+    }
+    
     public void create(final IterationEntity iterationEntity) {
         AbstractDAOFactory.getFactory().getIterationDAO().create(iterationEntity);
     }
