@@ -7,6 +7,7 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.IterationEntity;
+import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.TypeIteration;
 import java.util.List;
 
@@ -26,15 +27,15 @@ public class IterationEjb {
 
     public void update(final IterationEntity iterationEntity) {
         AbstractDAOFactory.getFactory().getIterationDAO().update(iterationEntity);
-
     }
 
-    public List<IterationEntity> getIterations() {
-        return AbstractDAOFactory.getFactory().getIterationDAO().findAll();
+    public List<IterationEntity> getIterations(final ProjectEntity proj) {
+        final String psql = "SELECT i FROM IterationEntity i WHERE i.project = ?1";//NOPMD
+        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, proj);
     }
 
-    public List<IterationEntity> getIterationsOfOnePhase(final TypeIteration type) {
-        final String psql = "SELECT i FROM IterationEntity i WHERE i.typeIteration = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, type);
+    public List<IterationEntity> getIterationsOfOnePhase(final TypeIteration type, final ProjectEntity proj) {
+        final String psql = "SELECT i FROM IterationEntity i WHERE i.typeIteration = ?1 AND i.project = ?2";//NOPMD
+        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, type, proj);
     }
 }

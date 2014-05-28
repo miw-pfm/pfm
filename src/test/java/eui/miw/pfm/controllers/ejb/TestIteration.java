@@ -116,13 +116,13 @@ public class TestIteration {
 //    @Test
 //    public void testGetIterations() {
 //        create();
-//        assertNotNull("ERROR get Iterations", iterEjb.getIterations());        
+//        assertNotNull("ERROR get Iterations", iterEjb.getIterations(this.project));        
 //        delete();
 //    }
 //    @Test
 //    public void testGetIterationsOfOnePhase() {
 //        create();
-//        assertNotNull("ERROR get Iterations", iterEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION));
+//        assertNotNull("ERROR get Iterations", iterEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project));
 //        delete();
 //    }
 
