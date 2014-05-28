@@ -26,10 +26,10 @@
                          rowsPerPageTemplate="5,10,15">
 
 
-                <p:column headerText="Name" filterBy="#{uc.name}" filterMatchMode="contains">
+                <p:column headerText="#{msgs.name}" filterBy="#{uc.name}" filterMatchMode="contains">
                     <h:outputText value="#{uc.name}" />
                 </p:column>
-                <p:column headerText="Description" filterMatchMode="contains" filterBy="#{uc.description}">
+                <p:column headerText="#{msgs.description}" filterMatchMode="contains" filterBy="#{uc.description}">
                     <h:outputText value="#{uc.description}" />
                 </p:column>
 
