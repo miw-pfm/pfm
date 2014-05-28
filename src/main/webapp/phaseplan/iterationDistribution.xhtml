@@ -5,7 +5,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/templatePhasePlan.xhtml">
+                template="/templates/templatePhasePlan.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="pagetitle">
         #{confProjectBean.project.name}
@@ -20,146 +21,57 @@
     </ui:define>
     <ui:define name="body">
         <p:outputLabel id="iteration_title" value="#{msgs.iteration}" />
-        <p:selectOneMenu id="iteration" value="0">            
-            <f:selectItem itemLabel="23" itemValue="23" />            
+        
+        <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity}">
+            <f:selectItems value="#{iterationBean.listAllIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
+            <p:ajax event="change"  listener="#{iterationBean.handleChange}" update="test"/>
         </p:selectOneMenu>
+        
         <p:outputLabel id="activity" value="#{msgs.activity} "/>
-        <script type="text/javascript">
+        <h:form id="test">
+            <p:dataTable var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution">
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column rowspan="1" headerText="#{msgs.name}" />
+                        <p:column colspan="1" headerText="#{msgs.code}" />
+                        <p:column colspan="1" headerText="#{msgs.total_units}" />
+                        <p:column colspan="1" headerText="#{msgs.setNumberResourceHours}" />
+                        <p:column colspan="1" headerText="#{msgs.available_units}" />
+                    </p:row>
+                </p:columnGroup>
 
-            function initDND() {
-
-                $('.ui-icon-arrow-4').draggable({
-                    helper: 'clone',
-                    scope: 'treetotable',
-                    zIndex: ++PrimeFaces.zindex
-                });
-
-                $('.ui-datatable .droppoint').droppable({
-                    activeClass: 'ui-state-active',
-                    hoverClass: 'ui-state-highlight',
-                    tolerance: 'pointer',
-                    scope: 'treetotable',
-                    drop: function(event, ui) {
-                        var sub_activity = ui.draggable.attr('id'),
-                                worker = $(this).attr('id'),
-                                worker_id = $('.workers_list').find("tbody").find("tr").eq(worker.split(":")[2]).find("td").eq(0).html(),
-                                sub_activity_id = $('.tableIterationDistribution').find("tbody").find("tr").eq(sub_activity.split(":")[2]).find("td").eq(0).html();
-
-                        treeToTable([
-                            {name: 'sub_activity_id', value: sub_activity_id}
-                            , {name: 'worker_id', value: worker_id}
-                        ]);
-                    }
-                });
-            }
-
-            $(function() {
-                initDND();
-            });
-
-            function Test() {
-                initDND();
-                PF('carDialog').show();
-            }
-
-        </script>
-        <h:form id="form">                        
-            <!--            <p:dataTable var="c" value="0"  id="test" styleClass="tableIterationDistribution">
-                            <p:column headerText="#{msgs.name}">
-                                <h:outputText value="Open" />
-                            </p:column>
-            
-                            <p:column headerText="#{msgs.code}">
-                                <h:outputText value="01" />
-                            </p:column>
-            
-                            <p:column headerText="#{msgs.total_units}">
-                                <h:outputText value="12" />
-                            </p:column>
-            
-                            <p:column headerText="#{msgs.setNumberResourceHours}">
-                                <h:outputText value="3" />
-                            </p:column>
-                            
-                            <p:column style="width:20px">
-                                    <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />                        
-                                </p:column>
-            
-                                <p:column headerText="Available Units" id="dragguie">
-                                    <h:outputText value="12" />                                        
-                                </p:column>
-                        </p:dataTable> -->
-            <!--            <p:fieldset id="availableCarsField" styleClass="available_cars" >
-                            <p:dataTable id="availableCars" var="car" value="0">
-                                
-                            </p:dataTable>
-                        </p:fieldset>-->
-
-            <p:dataTable var="c" value="#{workerBean.workers}"  id="test" styleClass="tableIterationDistribution">
-
-                <p:column headerText="#{msgs.code}" style="display: none" >
-                    <h:outputText value="#{c.id}" />
-                </p:column>
-                <p:column headerText="#{msgs.name}">
-                    <h:outputText value="Open" />
-                </p:column>
-
-
-                <p:column headerText="#{msgs.code}">
-                    <h:outputText value="#{c.dni}" />
-                </p:column>
-
-                <p:column headerText="#{msgs.total_units}">
-                    <h:outputText value="#{c.dni}" />
-                </p:column>
-
-                <p:column headerText="#{msgs.setNumberResourceHours}">
-                    <h:outputText value="#{c.name}" />
-                </p:column>
-
-                <p:column style="width:20px">
-                    <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />                        
-                </p:column>
-
-                <p:column headerText="Available Units" id="dragguie">
-                    <h:outputText value="#{c.surname}" />                                        
-                </p:column>
-            </p:dataTable> 
-
-
-            <p:remoteCommand name="treeToTable" actionListener="#{columnManagerView.treeToTable}" update="work_lst" oncomplete="Test()"/>            
-
-
-            <p:dataTable id="work_lst" var="w" value="#{workerBean.workers}" styleClass="workers_list">                   
-                <p:column style="display: none">                    
-                    <h:outputText value="#{w.id}" />
-                </p:column>
-                <p:column>
-                    <f:facet name="header">                        
-                        <h:outputText value="Workers"/>
+                <p:subTable var="subActivity" value="#{activity.subActivity}">
+                    <f:facet name="header">
+                        <h:outputText value="#{activity.name} : #{activity.code}" />
                     </f:facet>
-                    <h:outputText value="#{w.name}"  styleClass="droppoint dropright" id="work_id" />
-                </p:column>
-            </p:dataTable>
+                    <p:column >
+                        <h:outputText value="#{subActivity.name}" />
+                    </p:column>
 
+                    <p:column >
+                        <h:outputText value="#{subActivity.code}" />
+                    </p:column>
 
-            <p:dialog header="Car Detail" widgetVar="carDialog" resizable="false" draggable="false"
-                      showEffect="fade" hideEffect="fade" modal="true">
+                    <p:column >
+                        #{workUnitBean.getWorkUnitsByIterAndSubActivity(activity, iteration)}
+                        <h:outputText value="#{subActivity.workUnits.size()}" />
+                    </p:column>
 
-                <h:panelGrid id="display" columns="2" cellpadding="4">                    
-                    <h:outputText value="Id:" />
-                    <h:outputText value="#{workerBean.selected.name}" style="font-weight:bold"/>
+                    <p:column >
+                        <h:outputText value="3" />
+                    </p:column>
 
-                    <h:outputText value="Year:" />
-                    <h:outputText value="#{dndCarsView.selectedCar.year}" style="font-weight:bold"/>
-
-                    <h:outputText value="Brand:" />
-                    <h:outputText value="#{dndCarsView.selectedCar.brand}" style="font-weight:bold"/>
-
-                    <h:outputText value="Color:" />
-                    <h:outputText value="#{dndCarsView.selectedCar.color}" style="font-weight:bold"/>
-                </h:panelGrid>
-            </p:dialog>
+                    <p:column >
+                        <h:outputText value="12" />
+                    </p:column>
+                </p:subTable>
+            </p:dataTable>              
+            <p:dataList value="#{workerBean.workers}" var="worker" styleClass="workers_list">
+                <f:facet name="header">
+                    #{msgs.setNumberResourceWorker}
+                </f:facet>
+                #{worker.name}
+            </p:dataList>
         </h:form>
 
 

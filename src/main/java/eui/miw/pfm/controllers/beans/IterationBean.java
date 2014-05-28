@@ -5,12 +5,15 @@ import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
 
@@ -32,6 +35,7 @@ public class IterationBean extends Bean implements Serializable {
     private List<IterationEntity> listElaboration;
     private List<IterationEntity> listConstruction;
     private List<IterationEntity> listTransition;
+    private List<IterationEntity> listAllItertations;
 
     private int inception;
     private int elaboration;
@@ -53,6 +57,7 @@ public class IterationBean extends Bean implements Serializable {
 
     public IterationBean() {
         super();
+        iterEntity = new IterationEntity();
         final IterationEjb iterationEjb = new IterationEjb();
 
         project = new ProjectEntity();
@@ -61,6 +66,13 @@ public class IterationBean extends Bean implements Serializable {
         this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
         this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION);
         this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION);
+
+        //this.listAllIterations = new List<IterationEntity>();
+        this.listAllItertations = new ArrayList<IterationEntity>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
+        this.listAllItertations.addAll(this.listInception);
+        this.listAllItertations.addAll(this.listElaboration);
+        this.listAllItertations.addAll(this.listConstruction);
+        this.listAllItertations.addAll(this.listTransition);
 
         this.inception = this.listInception.size();
         this.elaboration = this.listElaboration.size();
@@ -108,9 +120,9 @@ public class IterationBean extends Bean implements Serializable {
         int sum = this.inception + this.elaboration + this.construction + this.transition;
 
         if (sum > this.project.getChosenNumIteration()) {
-            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Too many iterations. The sum have to be "+this.project.getChosenNumIteration()+" and it is "+sum));
+            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Too many iterations. The sum have to be " + this.project.getChosenNumIteration() + " and it is " + sum));
         } else if (sum < this.project.getChosenNumIteration()) {
-            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Iterations missing. The sum have to be "+this.project.getChosenNumIteration()+" and it is "+sum));
+            FacesContext.getCurrentInstance().addMessage("formProjectPlan", new FacesMessage("Iterations missing. The sum have to be " + this.project.getChosenNumIteration() + " and it is " + sum));
         } else {
             update(TypeIteration.INCEPTION, this.inception, this.listInception);
             update(TypeIteration.ELABORATION, this.elaboration, this.listElaboration);
@@ -377,5 +389,19 @@ public class IterationBean extends Bean implements Serializable {
     @Override
     public String toString() {
         return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", inception=" + inception + ", elaboration=" + elaboration + ", construction=" + construction + ", transition=" + transition + ", iterEntity=" + iterEntity + '}';
+    }
+
+    public void setListAllIterations(List<IterationEntity> listAllItertations) {
+        this.listAllItertations = listAllItertations;
+    }
+
+    public List<IterationEntity> getListAllIterations() {
+
+        return listAllItertations;
+//        return this.getListInception();
+    }
+
+    public void handleChange() {
+        System.out.println("New value: " + iterEntity);
     }
 }
