@@ -21,55 +21,29 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:form id="form" class="dataTableList">
-            <p:dataTable emptyMessage="">                
-                <p:column headerText="#{msgs.code}" width="55" />                     
-                <p:column headerText="#{msgs.activities}" />
-                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" width="40" headerText="#{iteration.codeIteration}" />    
-                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" width="40" headerText="#{iteration.codeIteration}" />                           
-                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" width="40" headerText="#{iteration.codeIteration}" />                  
-                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" width="40" headerText="#{iteration.codeIteration}" />                                     
-            </p:dataTable> 
 
+        <h:form id="formActivitiesDetailedAsignation" class="dataTableList">
+            <p:growl id="msgs" sticky="true" life="1500"/>
+            <p id="activitiesAndIterationsTitle">
+                <h:outputText id="activitiesTitle" value="#{msgs.activities}" />
+                <h:outputText id="iterationsTitle" value="#{msgs.title_iterations}" />
+            </p>
+            <p:multiSelectListbox id="listActivities" value="#{activitiesBean.selectionSubAct}" effect="slide">
+                <f:selectItems value="#{activitiesBean.activitiesItem}" />
+            </p:multiSelectListbox>
 
+            <p:multiSelectListbox id="listIterations" value="#{activitiesBean.selectionIter}" effect="slide">
+                <f:selectItems value="#{activitiesBean.iterationsItem}" />
+            </p:multiSelectListbox>
 
-            <c:forEach  var="activity" items="#{activitiesBean.activities}"> 
-                <p:dataTable id="#{activity.code}" value="#{activity.subActivity}" var="subactivity" editable="true" editMode="cell">   
-                    
-                    <p:ajax event="cellEdit" listener="#{activitiesBean.onCellEdit}" update=":form:#{activity.code}" />
-       
-                    <p:column headerText="#{activity.code}" width="55">
-                        <h:outputText value="#{subactivity.code}" />                
-                    </p:column>                        
-                    <p:column headerText="#{activity.name}">#{subactivity.name}</p:column>
-                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" width="40" styleClass="ui-editable-column">                         
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="" /></f:facet>
-                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
-                        </p:cellEditor>
-                    </p:columns>     
-                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" width="40" styleClass="ui-editable-column">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="" /></f:facet>
-                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
-                        </p:cellEditor>                    
-                    </p:columns>                     
-                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" width="40"  styleClass="ui-editable-column">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="" /></f:facet>
-                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
-                        </p:cellEditor>                    
-                    </p:columns>                     
-                    <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" width="40" styleClass="ui-editable-column">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="" /></f:facet>
-                            <f:facet name="input"><p:inputText value="" style="width:96%"/></f:facet>
-                        </p:cellEditor>                    
-                    </p:columns>                     
-                </p:dataTable>                    
-            </c:forEach>
+            <div id="saveUnits">
+                <h:outputText value="#{msgs.title_units}" />
+                <h:inputText id="unit" value="#{activitiesBean.workUnit}"  >
+                    <f:converter converterId = "javax.faces.Double"/>
+                </h:inputText>
 
-
+                <p:commandButton value="#{msgs.submit}" icon="ui-icon-check" action="#{activitiesBean.save()}" update="msgs" styleClass="btn btn-success"/>            
+            </div>
         </h:form>
 
     </ui:define>

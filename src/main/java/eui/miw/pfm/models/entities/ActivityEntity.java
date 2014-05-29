@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.models.entities;
 
 import java.io.Serializable;
@@ -28,7 +27,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "activities")
 public class ActivityEntity implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -41,9 +40,9 @@ public class ActivityEntity implements Serializable {
     @Column(name = "code", length = 5)
     @NotNull
     private String code;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
-    private List<SubActivityEntity> subactivity = new ArrayList<>();      
+    private List<SubActivityEntity> subactivity = new ArrayList<>();
 
     public ActivityEntity(final Integer id, final String name, final String code) {
         this.id = id;
@@ -116,9 +115,7 @@ public class ActivityEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ActivitiesEntity{" + "id=" + id + ", name=" + name + ", code=" + code + ", subactivity=" + subactivity + '}';
+        return code + ".-" + name;
     }
-    
-    
-    
+
 }

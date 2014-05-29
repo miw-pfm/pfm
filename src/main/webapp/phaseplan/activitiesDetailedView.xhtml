@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templatePhasePlan.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:define name="title">
+        #{msgs.phasePlan_title}
+    </ui:define>    
+
+    <ui:define name="subtitle">
+        #{msgs.activities_detail_asignation_subtitle}
+    </ui:define>   
+
+    <ui:define name="pagetitle">
+        #{project.name}
+    </ui:define>
+
+    <ui:define name="body">
+
+        <h:form id="formActivitiesDetailedView" class="dataTableList">
+            <p:growl id="msgs" sticky="true"/>
+            <h:panelGrid columns="1">
+                <p:outputLabel  value="#{msgs.activities}:  "/>   
+                <p:selectOneMenu id="activities" value="#{activitiesBean.selectionAct}" style="width:150px">
+                    <p:ajax listener="#{activitiesBean.subActivitiesByActivity()}" update="dataTableSubActivity" />
+                    <f:selectItem itemLabel="#{msgs.all_activities}" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{activitiesBean.activities}"   />                 
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:dataTable id="dataTableSubActivity" value="#{activitiesBean.subActivities}" var="subactivity">     
+
+                <p:column headerText="#{msgs.code}" width="55">
+                    <h:outputText value="#{subactivity.code}" style="display:block" />                    
+                </p:column>                        
+
+                <p:column headerText="#{msgs.title_subactivity}">
+                    <h:outputText  value="#{subactivity.name}" style="display:block" />                    
+                </p:column>
+
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" headerText="#{iteration.codeIteration}" width="40" styleClass="ui-editable-column">                         
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
+                </p:columns>     
+
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" headerText="#{iteration.codeIteration}" width="40" styleClass="ui-editable-column">
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
+                </p:columns>                     
+
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" headerText="#{iteration.codeIteration}" width="40"  styleClass="ui-editable-column">
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
+                </p:columns>      
+
+                <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" headerText="#{iteration.codeIteration}" width="40" styleClass="ui-editable-column">
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
+                </p:columns>                     
+            </p:dataTable> 
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

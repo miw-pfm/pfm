@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,8 +27,8 @@ public class WorkUnitEjb {
     public void create(final WorkUnitEntity workUnitEntity) {
         AbstractDAOFactory.getFactory().getWorkUnitDAO().create(workUnitEntity);
     }
-    
-    public void update(final WorkUnitEntity workUnitEntity){
+
+    public void update(final WorkUnitEntity workUnitEntity) {
         AbstractDAOFactory.getFactory().getWorkUnitDAO().update(workUnitEntity);
     }
 
@@ -43,8 +41,18 @@ public class WorkUnitEjb {
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity).size();
     }
 
+     public int getNumAvailableWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration) {
+        final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2 AND wu.worker IS NULL";//NOPMD
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity).size();
+    }
+
     public List<WorkUnitEntity> getWorkUnitsByIterAndActivity(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2";//NOPMD
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity);
+    }
+
+    public List<WorkUnitEntity> getWorkUnitsByIter(final IterationEntity iteration) {
+        final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1";//NOPMD
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration);
     }
 }
