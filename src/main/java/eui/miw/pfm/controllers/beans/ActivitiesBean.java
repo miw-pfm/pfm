@@ -147,11 +147,6 @@ public class ActivitiesBean extends Bean implements Serializable {
         return null;
     }
 
-    public void findWorkUnit() {
-        System.out.println("qeqwqwqe");
-        workUnit = findWorkUnit(getSubActivityEntity(), getIterationEntity());
-    }
-
     public int findWorkUnit(final SubActivityEntity subActivity, final IterationEntity iteration) {
         return new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration) / WORK_UNIT;
     }
