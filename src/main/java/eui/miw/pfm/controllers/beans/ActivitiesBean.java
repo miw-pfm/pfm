@@ -84,7 +84,7 @@ public class ActivitiesBean extends Bean implements Serializable {
         iterationsItem = new ArrayList<>();
 
         List<SelectItem> lIterations = new ArrayList<>();
-        for (IterationEntity iter : this.iterationBean.getListAllIterations()) {
+        for (IterationEntity iter : this.iterationBean.getAllIterations()) {
             lIterations.add(new SelectItem(iter.getTypeIteration() + ".-" + iter.getIterValue(), iter.getTypeIteration() + ".-" + iter.getIterValue()));
         }
 
@@ -130,7 +130,7 @@ public class ActivitiesBean extends Bean implements Serializable {
     public IterationEntity getIterationEntity() {
         String[] split = this.selectionIter.split(".-");
 
-        for (IterationEntity iteration : this.iterationBean.getListAllIterations()) {
+        for (IterationEntity iteration : this.iterationBean.getAllIterations()) {
             if (iteration.getTypeIteration().toString().equals(split[0]) && iteration.getIterValue() == Integer.parseInt(split[1])) {
                 return iteration;
             }

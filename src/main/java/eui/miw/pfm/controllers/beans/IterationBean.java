@@ -1,10 +1,8 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.IterationEjb;
-import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.WorkUnitEntity;
 import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,33 +55,15 @@ public class IterationBean extends Bean implements Serializable {
 
     public IterationBean() {
         super();
-        iterEntity = new IterationEntity();
-        final IterationEjb iterationEjb = new IterationEjb();
-
-        this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
-        this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
-        this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION);
-        this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION);
-
-        //this.listAllIterations = new List<IterationEntity>();
-        this.listAllItertations = new ArrayList<>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
-        this.listAllItertations.addAll(this.listInception);
-        this.listAllItertations.addAll(this.listElaboration);
-        this.listAllItertations.addAll(this.listConstruction);
-        this.listAllItertations.addAll(this.listTransition);
-
-        this.inception = this.listInception.size();
-        this.elaboration = this.listElaboration.size();
-        this.construction = this.listConstruction.size();
-        this.transition = this.listTransition.size();
 
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.info("No session exist");
         }
-        
+        iterEntity = new IterationEntity();
         final IterationEjb iterationEjb = new IterationEjb();
+     
         iterEntity = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project).get(0);
 
         this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project);
@@ -91,12 +71,12 @@ public class IterationBean extends Bean implements Serializable {
         this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
         this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION, this.project);
 
-        this.allIterations = new ArrayList<IterationEntity>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
+        this.allIterations = new ArrayList<>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
         this.allIterations.addAll(this.listInception);
         this.allIterations.addAll(this.listElaboration);
         this.allIterations.addAll(this.listConstruction);
         this.allIterations.addAll(this.listTransition);
-        
+
         this.inception = this.listInception.size();
         this.elaboration = this.listElaboration.size();
         this.construction = this.listConstruction.size();
@@ -156,7 +136,7 @@ public class IterationBean extends Bean implements Serializable {
         return inception;
     }
 
-    public void setInception(int inception) {
+    public void setInception(final int inception) {
         this.inception = inception;
     }
 
@@ -164,7 +144,7 @@ public class IterationBean extends Bean implements Serializable {
         return elaboration;
     }
 
-    public void setElaboration(int elaboration) {
+    public void setElaboration(final int elaboration) {
         this.elaboration = elaboration;
     }
 
@@ -172,7 +152,7 @@ public class IterationBean extends Bean implements Serializable {
         return construction;
     }
 
-    public void setConstruction(int construction) {
+    public void setConstruction(final int construction) {
         this.construction = construction;
     }
 
@@ -180,7 +160,7 @@ public class IterationBean extends Bean implements Serializable {
         return transition;
     }
 
-    public void setTransition(int transition) {
+    public void setTransition(final int transition) {
         this.transition = transition;
     }
 
@@ -188,7 +168,7 @@ public class IterationBean extends Bean implements Serializable {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(final ProjectEntity project) {
         this.project = project;
     }
 
@@ -196,7 +176,7 @@ public class IterationBean extends Bean implements Serializable {
         return listInception;
     }
 
-    public void setListInception(List<IterationEntity> listInception) {
+    public void setListInception(final List<IterationEntity> listInception) {
         this.listInception = listInception;
     }
 
@@ -204,7 +184,7 @@ public class IterationBean extends Bean implements Serializable {
         return listElaboration;
     }
 
-    public void setListElaboration(List<IterationEntity> listElaboration) {
+    public void setListElaboration(final List<IterationEntity> listElaboration) {
         this.listElaboration = listElaboration;
     }
 
@@ -212,7 +192,7 @@ public class IterationBean extends Bean implements Serializable {
         return listConstruction;
     }
 
-    public void setListConstruction(List<IterationEntity> listConstruction) {
+    public void setListConstruction(final List<IterationEntity> listConstruction) {
         this.listConstruction = listConstruction;
     }
 
@@ -220,7 +200,7 @@ public class IterationBean extends Bean implements Serializable {
         return listTransition;
     }
 
-    public void setListTransition(List<IterationEntity> listTransition) {
+    public void setListTransition(final List<IterationEntity> listTransition) {
         this.listTransition = listTransition;
     }
 
@@ -228,7 +208,7 @@ public class IterationBean extends Bean implements Serializable {
         return iterEntity;
     }
 
-    public void setIterEntity(IterationEntity iterEntity) {
+    public void setIterEntity(final IterationEntity iterEntity) {
         this.iterEntity = iterEntity;
     }
 
