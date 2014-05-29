@@ -89,6 +89,8 @@ public class ActivitiesBean extends Bean implements Serializable {
         }
 
         iterationsItem.addAll(lIterations);
+
+        this.subActivities = new ActivitiesEjb().obtainAllSubActivities();
     }
 
     public void save() {
@@ -112,11 +114,12 @@ public class ActivitiesBean extends Bean implements Serializable {
         int size = lWorkUnit.size();
         if (unit < size) {//DELETE
             Collections.reverse(lWorkUnit);
-            for (int i = 0; i < (size - unit); i++) {
+            int delete = size - unit;
+            for (int i = 0; i < delete; i++) {
                 workUnitEjb.delete(lWorkUnit.get(i));
             }
-        } else if (unit > size) {//CREATE            
-            for (int i = 0; i < (unit - size); i++) {
+        } else if (unit > size) {//CREATE   
+            for (int i = size; i < unit; i++) {
                 workUnitEntity = new WorkUnitEntity(iterationEntity, subActivityEntity);
                 workUnitEjb.create(workUnitEntity);
             }
@@ -136,12 +139,17 @@ public class ActivitiesBean extends Bean implements Serializable {
     }
 
     private SubActivityEntity getSubActivityEntity() {
-        for (SubActivityEntity subActivity : new ActivitiesEjb().obtainAllSubActivities()) {
+        for (SubActivityEntity subActivity : this.subActivities) {
             if (subActivity.getCode().equals(this.selectionSubAct.split(".-")[0])) {
                 return subActivity;
             }
         }
         return null;
+    }
+
+    public void findWorkUnit() {
+        System.out.println("qeqwqwqe");
+        workUnit = findWorkUnit(getSubActivityEntity(), getIterationEntity());
     }
 
     public int findWorkUnit(final SubActivityEntity subActivity, final IterationEntity iteration) {
@@ -151,10 +159,11 @@ public class ActivitiesBean extends Bean implements Serializable {
     public void subActivitiesByActivity() {
         for (ActivityEntity activity : this.getActivities()) {
             if (activity.getCode().equals(this.selectionAct.split(".-")[0])) {
-                subActivities = new ActivitiesEjb().obtainSubActivities(activity);
+                this.subActivities = new ActivitiesEjb().obtainSubActivities(activity);
                 return;
             }
         }
+        this.subActivities = new ActivitiesEjb().obtainAllSubActivities();
     }
 
     public IterationBean getIterationBean() {

@@ -1,8 +1,10 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.IterationEjb;
+import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.WorkUnitEntity;
 import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,14 +52,13 @@ public class IterationBean extends Bean implements Serializable {
 
     @ManagedProperty(value = "#{cpb}")
     private final transient CalendarProjectBean cpb = new CalendarProjectBean();
-        
+
     private IterationEntity iterEntity;
 
     public IterationBean() {
         super();
         iterEntity = new IterationEntity();
         final IterationEjb iterationEjb = new IterationEjb();
-
 
         this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
         this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
@@ -83,10 +84,11 @@ public class IterationBean extends Bean implements Serializable {
         }
     }
 
-    public void update(TypeIteration type, int valueNew, List<IterationEntity> list) {
+    public void update(final TypeIteration type, final int valueNew, final List<IterationEntity> list) {
         int valueOld = list.size();
 
         final IterationEjb iterationEjb = new IterationEjb();
+
         if (valueNew > valueOld) {
 
             while (valueNew > valueOld) {
@@ -99,13 +101,12 @@ public class IterationBean extends Bean implements Serializable {
                 iterationEjb.create(iterEntity);
             }
         } else if (valueOld > valueNew) {
-            while (valueOld > valueNew) {
-                Collections.reverse(list);
-                for (IterationEntity auxIter : list) {
-                    if ((auxIter.getTypeIteration() == type) && (auxIter.getIterValue() == valueOld) && (valueOld > valueNew)) {
-                        iterationEjb.delete(auxIter);
-                        valueOld--;
-                    }
+            int delete = valueOld - valueNew;
+            Collections.reverse(list);
+            for (int i = 0; i < delete; i++) {
+                IterationEntity auxIter = list.get(i);
+                if ((auxIter.getTypeIteration() == type) && (auxIter.getIterValue() == valueOld) && (valueOld > valueNew)) {
+                    iterationEjb.delete(auxIter);
                 }
             }
         }

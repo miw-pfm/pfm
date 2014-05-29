@@ -28,7 +28,7 @@
                 <p:outputLabel  value="#{msgs.activities}:  "/>   
                 <p:selectOneMenu id="activities" value="#{activitiesBean.selectionAct}" style="width:150px">
                     <p:ajax listener="#{activitiesBean.subActivitiesByActivity()}" update="dataTableSubActivity" />
-                    <f:selectItem itemLabel="Select Activity" itemValue="" noSelectionOption="true" />
+                    <f:selectItem itemLabel="All Activity" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{activitiesBean.activities}"   />                 
                 </p:selectOneMenu>
             </h:panelGrid>
@@ -39,7 +39,7 @@
                     <h:outputText value="#{subactivity.code}" style="display:block" />                    
                 </p:column>                        
 
-                <p:column headerText="Sub Activity">
+                <p:column headerText="Sub Activity" footerText="Total">
                     <h:outputText  value="#{subactivity.name}" style="display:block" />                    
                 </p:column>
 

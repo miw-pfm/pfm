@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
@@ -28,8 +27,8 @@ public class WorkUnitEjb {
     public void create(final WorkUnitEntity workUnitEntity) {
         AbstractDAOFactory.getFactory().getWorkUnitDAO().create(workUnitEntity);
     }
-    
-    public void update(final WorkUnitEntity workUnitEntity){
+
+    public void update(final WorkUnitEntity workUnitEntity) {
         AbstractDAOFactory.getFactory().getWorkUnitDAO().update(workUnitEntity);
     }
 
@@ -45,5 +44,10 @@ public class WorkUnitEjb {
     public List<WorkUnitEntity> getWorkUnitsByIterAndActivity(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2";//NOPMD
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity);
+    }
+
+    public List<WorkUnitEntity> getWorkUnitsByIter(final IterationEntity iteration) {
+        final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1";//NOPMD
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration);
     }
 }
