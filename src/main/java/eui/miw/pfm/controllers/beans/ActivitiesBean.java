@@ -84,7 +84,7 @@ public class ActivitiesBean extends Bean implements Serializable {
         iterationsItem = new ArrayList<>();
 
         List<SelectItem> lIterations = new ArrayList<>();
-        for (IterationEntity iter : this.iterationBean.getListAllIterations()) {
+        for (IterationEntity iter : this.iterationBean.getAllIterations()) {
             lIterations.add(new SelectItem(iter.getTypeIteration() + ".-" + iter.getIterValue(), iter.getTypeIteration() + ".-" + iter.getIterValue()));
         }
 
@@ -113,11 +113,12 @@ public class ActivitiesBean extends Bean implements Serializable {
         int size = lWorkUnit.size();
         if (unit < size) {//DELETE
             Collections.reverse(lWorkUnit);
-            for (int i = 0; i < (size - unit); i++) {
+            int delete = size - unit;
+            for (int i = 0; i < delete; i++) {
                 workUnitEjb.delete(lWorkUnit.get(i));
             }
-        } else if (unit > size) {//CREATE            
-            for (int i = 0; i < (unit - size); i++) {
+        } else if (unit > size) {//CREATE   
+            for (int i = size; i < unit; i++) {
                 workUnitEntity = new WorkUnitEntity(iterationEntity, subActivityEntity);
                 workUnitEjb.create(workUnitEntity);
             }
@@ -128,7 +129,7 @@ public class ActivitiesBean extends Bean implements Serializable {
     public IterationEntity getIterationEntity() {
         String[] split = this.selectionIter.split(".-");
 
-        for (IterationEntity iteration : this.iterationBean.getListAllIterations()) {
+        for (IterationEntity iteration : this.iterationBean.getAllIterations()) {
             if (iteration.getTypeIteration().toString().equals(split[0]) && iteration.getIterValue() == Integer.parseInt(split[1])) {
                 return iteration;
             }
