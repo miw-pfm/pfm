@@ -32,4 +32,9 @@ public class ActivitiesEjb {
     public ActivityEntity obtainActivity(final Integer id) {
         return AbstractDAOFactory.getFactory().getActivityDAO().read(id);
     }  
+    
+    public SubActivityEntity obtainSubActivity(final int subActId)
+    {
+        return AbstractDAOFactory.getFactory().getSubActivityDAO().read(subActId);
+    }
 }

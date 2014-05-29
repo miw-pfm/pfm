@@ -16,8 +16,10 @@ import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -91,6 +93,10 @@ public class WorkUnitBean extends Bean implements Serializable {
     public void setWorker(WorkerEntity worker) {
         this.worker = worker;
     }
+    
+    public void setWorker(int id) {                       
+        setWorker(new WorkerEjb().getWorker(id));
+    }
 
     public List<ActivityEntity> getActivities() {
         return activities;
@@ -98,6 +104,10 @@ public class WorkUnitBean extends Bean implements Serializable {
 
     public void setActivities(List<ActivityEntity> activities) {
         this.activities = activities;
+    }
+    
+    public void setSubActivity(int subActId) {        
+        setSubActivity(new ActivitiesEjb().obtainSubActivity(subActId));                        
     }
 
     public List<WorkUnitEntity> getWorkunits() {
@@ -135,6 +145,22 @@ public class WorkUnitBean extends Bean implements Serializable {
         final WorkerEjb workerEjb = new WorkerEjb();
         workerEjb.update(worker);
 
+    }
+    
+    public void selectedSubActivityAndWorker()
+    {
+        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        
+        int sub_activity_id = Integer.parseInt(params.get("sub_activity_id"));
+        int worker_id = Integer.parseInt(params.get("worker_id"));
+        setWorker(worker_id);
+        setSubActivity(sub_activity_id);
+        //System.out.println("sub_activity_id "+sub_activity_id + " worker_id "+worker_id+" work "+worker.getName());        
+       // RequestContext.getCurrentInstance().openDialog("assignUnits");
+    }
+
+    public void settWorker(WorkerEntity worker) {
+        this.worker = worker;
     }
 
 }

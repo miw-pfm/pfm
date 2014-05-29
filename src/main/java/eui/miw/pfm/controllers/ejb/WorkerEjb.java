@@ -97,4 +97,9 @@ public class WorkerEjb {
 
         return true;
     }
+    
+    public WorkerEntity getWorker(int id)
+    {
+        return  AbstractDAOFactory.getFactory().getWorkerDAO().read(id);
+    }
 }
