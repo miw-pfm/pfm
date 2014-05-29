@@ -55,17 +55,15 @@ public class IterationBean extends Bean implements Serializable {
 
     public IterationBean() {
         super();
-
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.info("No session exist");
         }
-        iterEntity = new IterationEntity();
-        final IterationEjb iterationEjb = new IterationEjb();
-     
-        iterEntity = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project).get(0);
 
+        final IterationEjb iterationEjb = new IterationEjb();
+
+        //iterEntity = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project).get(0);
         this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project);
         this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION, this.project);
         this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
@@ -76,6 +74,12 @@ public class IterationBean extends Bean implements Serializable {
         this.allIterations.addAll(this.listElaboration);
         this.allIterations.addAll(this.listConstruction);
         this.allIterations.addAll(this.listTransition);
+
+        if (!this.allIterations.isEmpty()) {
+            iterEntity = this.allIterations.get(0);
+        } else {
+            iterEntity = new IterationEntity();
+        }
 
         this.inception = this.listInception.size();
         this.elaboration = this.listElaboration.size();
@@ -88,7 +92,6 @@ public class IterationBean extends Bean implements Serializable {
         int valueOld = list.size();
 
         final IterationEjb iterationEjb = new IterationEjb();
-
         if (valueNew > valueOld) {
 
             while (valueNew > valueOld) {
@@ -101,12 +104,13 @@ public class IterationBean extends Bean implements Serializable {
                 iterationEjb.create(iterEntity);
             }
         } else if (valueOld > valueNew) {
-            int delete = valueOld - valueNew;
-            Collections.reverse(list);
-            for (int i = 0; i < delete; i++) {
-                IterationEntity auxIter = list.get(i);
-                if ((auxIter.getTypeIteration() == type) && (auxIter.getIterValue() == valueOld) && (valueOld > valueNew)) {
-                    iterationEjb.delete(auxIter);
+            while (valueOld > valueNew) {
+                Collections.reverse(list);
+                for (IterationEntity auxIter : list) {
+                    if ((auxIter.getTypeIteration() == type) && (auxIter.getIterValue() == valueOld) && (valueOld > valueNew)) {
+                        iterationEjb.delete(auxIter);
+                        valueOld--;
+                    }
                 }
             }
         }
@@ -305,19 +309,19 @@ public class IterationBean extends Bean implements Serializable {
     }
 
     public int getPlannedPercentInception() {
-        return (int) this.plannedPercent(this.inception);
+        return (int) Math.round(this.plannedPercent(this.inception));
     }
 
     public int getPlannedPercentElaboration() {
-        return (int) this.plannedPercent(this.elaboration);
+        return (int) Math.round(this.plannedPercent(this.elaboration));
     }
 
     public int getPlannedPercentConstruction() {
-        return (int) this.plannedPercent(this.construction);
+        return (int) Math.round(this.plannedPercent(this.construction));
     }
 
     public int getPlannedPercentTransition() {
-        return (int) this.plannedPercent(this.transition);
+        return (int) Math.round(this.plannedPercent(this.transition));
     }
 
     public int plannedWeeks(int p) {

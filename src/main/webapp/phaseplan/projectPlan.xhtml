@@ -98,14 +98,14 @@
                     <h:outputText value="#{iterationBean.cpb.workingDays}" />
                     <h:outputText value="#{iterationBean.workingWeeks}" />
                     <h:outputText value="" />
-                    <h:outputText value="" id="totIterations"/>
+                    <h:outputText value="#{iterationBean.plusIterations}" id="totIterations"/>
                     <h:outputText value="" />
                     <h:outputText value="#{iterationBean.plusPlannedDays}" />
                     <h:outputText value="#{iterationBean.plusPlannedWeeks}" />
                     <h:outputText value="" />
                 </h:panelGrid>
 
-                <p:commandButton value="#{msgs.submit}" styleClass="btn btn-success" action="#{iterationBean.updateIterationsForPhase}" update="growl"/> 
+                <p:commandButton value="#{msgs.submit}" styleClass="btn btn-success" action="#{iterationBean.updateIterationsForPhase}" update="formProjectPlan"/> 
             </h:panelGroup>
         </h:form>
     </ui:define>

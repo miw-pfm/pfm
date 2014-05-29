@@ -40,7 +40,7 @@ public class ActivitiesBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
 
-    private static final int WORK_UNIT = 4;
+    private static final double WORK_UNIT = 4.0;
 
     private ProjectEntity project;
 
@@ -93,6 +93,11 @@ public class ActivitiesBean extends Bean implements Serializable {
     }
 
     public void save() {
+        if (this.workUnit % 0.25 != 0.0) {
+            FacesContext.getCurrentInstance().addMessage("formActivitiesDetailedAsignation", new FacesMessage(FacesMessage.SEVERITY_WARN, "The number must be a multiple of 0.25", ""));
+            return;
+        }
+
         if (selectionSubAct.isEmpty()) {
             FacesContext.getCurrentInstance().addMessage("formActivitiesDetailedAsignation", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Sub Activity Selected", ""));
             return;
@@ -109,7 +114,7 @@ public class ActivitiesBean extends Bean implements Serializable {
 
         List<WorkUnitEntity> lWorkUnit = workUnitEjb.getWorkUnitsByIterAndActivity(subActivityEntity, iterationEntity);
 
-        int unit = (int) this.workUnit * WORK_UNIT;
+        int unit = (int) (this.workUnit * WORK_UNIT);
         int size = lWorkUnit.size();
         if (unit < size) {//DELETE
             Collections.reverse(lWorkUnit);
@@ -146,8 +151,12 @@ public class ActivitiesBean extends Bean implements Serializable {
         return null;
     }
 
-    public int findWorkUnit(final SubActivityEntity subActivity, final IterationEntity iteration) {
-        return new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration) / WORK_UNIT;
+    public double findWorkUnit(final SubActivityEntity subActivity, final IterationEntity iteration) {
+        return (double) new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration) / WORK_UNIT;
+    }
+
+    public static void main(String[] args) {
+
     }
 
     public void subActivitiesByActivity() {
