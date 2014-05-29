@@ -117,14 +117,14 @@
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="#{workUnitBean.workunits.size()}" />
+                        <h:outputText value="#{subActivity.workUnits.size()}" />
                     </p:column>
                 </p:subTable>
             </p:dataTable>
 
             <p:remoteCommand name="treeToTable" actionListener="#{workUnitBean.selectedSubActivityAndWorker}" update="displayPanel displayTable" oncomplete="Test()"/>            
 
-            <p:dataTable id="work_lst" var="w" value="#{workerBean.workers}" styleClass="workers_list">                   
+            <p:dataTable id="work_lst" var="w" value="#{workersListProjectBean.workers}" styleClass="workers_list">                   
                 <p:column style="display: none">                    
                     <h:outputText value="#{w.id}" />
                 </p:column>
@@ -146,16 +146,14 @@
                         <h:outputText value="#{w.subActivity.code}" />
                     </p:column>                    
                     <p:column headerText="Units Available">
-                        <h:outputText value="12" />
+                        <h:outputText value="#{w.workunits.size()}" />
                     </p:column>
                 </p:dataTable>
-                <p:panelGrid columns="2">
-                    <h:selectOneMenu id="txt3" required="true" label="Text 3">                
-                        <f:selectItem itemLabel="3" itemValue="1" />
-                        <f:selectItem itemLabel="2" itemValue="2" />
-                        <f:selectItem itemLabel="1" itemValue="3" />
-                    </h:selectOneMenu>
-                    <p:commandButton update="@(form)" value="Add" />
+                <p:panelGrid columns="2">                                        
+                    <p:spinner id="ajaxSpinner" value="#{workUnitBean.numUnitsToAsign}" max="#{workUnitBean.numUnitsToAsign}" min="1">                                                    
+                    <p:ajax process="@this" />
+                    </p:spinner>                                            
+                    <p:commandButton actionListener="#{workUnitBean.addUnitsToWorker}" ajax="false" value="Add" />                    
                 </p:panelGrid>
             </p:dialog>
 

@@ -6,6 +6,7 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ActivitiesEjb;
+import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
 import eui.miw.pfm.models.entities.ActivityEntity;
@@ -18,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import javax.ejb.SessionBean;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -28,7 +31,7 @@ import javax.inject.Named;
  * @author César Martínez
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class WorkUnitBean extends Bean implements Serializable {
 
     private transient WorkUnitEntity workunit;
@@ -42,16 +45,20 @@ public class WorkUnitBean extends Bean implements Serializable {
 
     private Integer numHours;
     private final List<WorkUnitEntity> listWorkUnit = new ArrayList<>();
+    
+    private int numUnitsToAsign;
 
     public WorkUnitBean() {
         super();
         workunit = new WorkUnitEntity();
         this.activities = new ActivitiesEjb().obtainAllActivities();
+        System.out.println("Construct1  ");
     }
 
     public WorkUnitBean(final WorkUnitEntity workunit) {
         super();
         this.workunit = workunit;
+        System.out.println("Construct2  ");
     }
 
     public WorkUnitEntity getWorkunit() {
@@ -93,8 +100,8 @@ public class WorkUnitBean extends Bean implements Serializable {
     public void setWorker(WorkerEntity worker) {
         this.worker = worker;
     }
-    
-    public void setWorker(int id) {                       
+
+    public void setWorker(int id) {
         setWorker(new WorkerEjb().getWorker(id));
     }
 
@@ -105,9 +112,9 @@ public class WorkUnitBean extends Bean implements Serializable {
     public void setActivities(List<ActivityEntity> activities) {
         this.activities = activities;
     }
-    
-    public void setSubActivity(int subActId) {        
-        setSubActivity(new ActivitiesEjb().obtainSubActivity(subActId));                        
+
+    public void setSubActivity(int subActId) {
+        setSubActivity(new ActivitiesEjb().obtainSubActivity(subActId));
     }
 
     public List<WorkUnitEntity> getWorkunits() {
@@ -116,8 +123,23 @@ public class WorkUnitBean extends Bean implements Serializable {
 
     public void setWorkunits(List<WorkUnitEntity> workunits) {
         this.workunits = workunits;
+        System.out.println("From units5  "+this.workunits.size());
     }
 
+    public void setWorkunits(final SubActivityEntity subActivity, final IterationEntity iteration) {
+        this.workunits = new WorkUnitEjb().getWorkUnitsByIterAndActivity(subActivity, iteration);
+        System.out.println("From units "+workunits.size());
+    }
+
+    public int getNumUnitsToAsign() {
+        return numUnitsToAsign;
+    }
+
+    public void setNumUnitsToAsign(int numUnitsToAsign) {
+        this.numUnitsToAsign = numUnitsToAsign;
+        System.out.println(numUnitsToAsign+" "+workunits.size());
+    }
+        
     public void getWorkUnitsByIterAndSubActivity(final ActivityEntity activity, final IterationEntity iteration) {
         List<SubActivityEntity> subactivities;
         subactivities = new ActivitiesEjb().obtainSubActivities(activity);
@@ -146,21 +168,31 @@ public class WorkUnitBean extends Bean implements Serializable {
         workerEjb.update(worker);
 
     }
-    
-    public void selectedSubActivityAndWorker()
-    {
-        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        
+
+    public void selectedSubActivityAndWorker() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
         int sub_activity_id = Integer.parseInt(params.get("sub_activity_id"));
         int worker_id = Integer.parseInt(params.get("worker_id"));
         setWorker(worker_id);
         setSubActivity(sub_activity_id);
+        setWorkunits(subActivity,new IterationEjb().obtainIteration(8));
+        setNumUnitsToAsign(workunits.size());
+        System.out.println(subActivity.toString()+" ---------- "+new IterationEjb().obtainIteration(8).toString());
         //System.out.println("sub_activity_id "+sub_activity_id + " worker_id "+worker_id+" work "+worker.getName());        
-       // RequestContext.getCurrentInstance().openDialog("assignUnits");
+        // RequestContext.getCurrentInstance().openDialog("assignUnits");
     }
 
     public void settWorker(WorkerEntity worker) {
         this.worker = worker;
     }
 
+    public void addUnitsToWorker() {
+        for (int i = 0; i < numUnitsToAsign; i++) {
+            setWorkunit(workunits.get(i));
+            setWorkUnitToWorker();
+        }
+        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("WorkUnitBean");
+    }
 }

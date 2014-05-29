@@ -209,3 +209,7 @@
     font-size: 18px;
     margin-left: 10px;
 }
+
+.ui-spinner-input{
+    width: 75px;
+}
