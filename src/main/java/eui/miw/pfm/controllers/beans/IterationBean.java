@@ -19,6 +19,8 @@ import org.apache.log4j.Logger;
  *
  * @author Manuel Alvarez
  * @author Clemencio Morales Lucas
+ * @added code Hector William
+ * @refacored Hector William
  */
 @RequestScoped
 @Named
@@ -52,6 +54,7 @@ public class IterationBean extends Bean implements Serializable {
     private final transient CalendarProjectBean cpb = new CalendarProjectBean();
 
     private IterationEntity iterEntity;
+    private final IterationEjb iterationEjb ;
 
     public IterationBean() {
         super();
@@ -61,13 +64,12 @@ public class IterationBean extends Bean implements Serializable {
             LOGGER.info("No session exist");
         }
 
-        final IterationEjb iterationEjb = new IterationEjb();
+        this.iterationEjb = new IterationEjb();
 
-        //iterEntity = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project).get(0);
-        this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project);
-        this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION, this.project);
-        this.listConstruction = iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
-        this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION, this.project);
+        this.listInception = this.iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION, this.project);
+        this.listElaboration = this.iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION, this.project);
+        this.listConstruction = this.iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
+        this.listTransition = this.iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION, this.project);
 
         this.allIterations = new ArrayList<>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
         this.allIterations.addAll(this.listInception);
@@ -101,14 +103,14 @@ public class IterationBean extends Bean implements Serializable {
                 iterEntity.setIterValue(valueOld);
                 iterEntity.setProject(project);
 
-                iterationEjb.create(iterEntity);
+                this.iterationEjb.create(iterEntity);
             }
         } else if (valueOld > valueNew) {
             while (valueOld > valueNew) {
                 Collections.reverse(list);
                 for (IterationEntity auxIter : list) {
                     if ((auxIter.getTypeIteration() == type) && (auxIter.getIterValue() == valueOld) && (valueOld > valueNew)) {
-                        iterationEjb.delete(auxIter);
+                        this.iterationEjb.delete(auxIter);
                         valueOld--;
                     }
                 }
@@ -397,7 +399,7 @@ public class IterationBean extends Bean implements Serializable {
         return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", inception=" + inception + ", elaboration=" + elaboration + ", construction=" + construction + ", transition=" + transition + ", iterEntity=" + iterEntity + '}';
     }
 
-    public void setAllIterations(List<IterationEntity> allIterations) {
+    public void setAllIterations(final List<IterationEntity> allIterations) {
         this.allIterations = allIterations;
     }
 
@@ -406,7 +408,7 @@ public class IterationBean extends Bean implements Serializable {
     }
 
     public void handleIterationChange() {
-        this.iterEntity = new IterationEjb().obtainIteration(this.iterEntity.getId());
+        this.iterEntity = this.iterationEjb.obtainIteration(this.iterEntity.getId());
     }
 
 }

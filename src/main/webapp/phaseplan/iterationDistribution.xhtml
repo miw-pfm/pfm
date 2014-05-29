@@ -28,7 +28,7 @@
                 <p:outputLabel id="iteration_title" value="#{msgs.iteration} : " />
                 <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity.id}">
                     <f:selectItems value="#{iterationBean.allIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
-                    <p:ajax event="change"  listener="#{iterationBean.handleIterationChange()}" update="test"/>
+                    <p:ajax event="change"  listener="#{iterationBean.handleIterationChange}" update="test"/>
                 </p:selectOneMenu>
                 <p:outputLabel id="activity" value="#{msgs.activity}" />
             </div>
@@ -57,16 +57,16 @@
                     </p:column>
 
                     <p:column >
-                        #{workUnitBean.getWorkUnitsByIterAndSubActivity(activity, iterationBean.iterEntity)}
-                        <h:outputText value="#{workUnitBean.workunits.size()}" />
+                        #{workUnitBean.getWorkUnitsByIterAndActivity(activity, iterationBean.iterEntity)}
+                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, iterationBean.iterEntity, false)}" />
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="#{workUnitBean.workunits.size()/4}" />
+                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, iterationBean.iterEntity, true)/4}" />
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="#{workUnitBean.workunits.size()}" />
+                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, iterationBean.iterEntity, true)}" />
                     </p:column>
                     
                 </p:subTable>

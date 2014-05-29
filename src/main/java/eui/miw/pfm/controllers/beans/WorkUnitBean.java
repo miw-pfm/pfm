@@ -108,7 +108,7 @@ public class WorkUnitBean extends Bean implements Serializable {
         this.workunits = workunits;
     }
 
-    public void getWorkUnitsByIterAndSubActivity(final ActivityEntity activity, final IterationEntity iteration) {
+    public void getWorkUnitsByIterAndActivity(final ActivityEntity activity, final IterationEntity iteration) {
         List<SubActivityEntity> subactivities;
         subactivities = new ActivitiesEjb().obtainSubActivities(activity);
         WorkUnitEjb workejb = new WorkUnitEjb();
@@ -117,6 +117,17 @@ public class WorkUnitBean extends Bean implements Serializable {
         }
     }
 
+    public int getNumSubActivityUnits(final SubActivityEntity subActivity, final IterationEntity iteration,boolean available){
+        WorkUnitEjb workejb = new WorkUnitEjb();
+        int units = 0;
+        if(available){
+          units = workejb.getNumAvailableWorkUnits(subActivity, iteration);
+        }else{
+          units = workejb.getNumTotalWorkUnits(subActivity, iteration);
+        }
+        return units;
+    }
+    
     public void storeHours() {
         final WorkUnitEjb workUnitEjb = new WorkUnitEjb();
 
