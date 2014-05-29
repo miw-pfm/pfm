@@ -22,26 +22,28 @@
 
     <ui:define name="body">
 
-        <h:form id="form" class="dataTableList">
+        <h:form id="formActivitiesDetailedAsignation" class="dataTableList">
             <p:growl id="msgs" sticky="true" life="1500"/>
-
-            <p:multiSelectListbox value="#{activitiesBean.selectionSubAct}" effect="slide">
+            <p id="activitiesAndIterationsTitle">
+                <h:outputText id="activitiesTitle" value="#{msgs.activities}" />
+                <h:outputText id="iterationsTitle" value="#{msgs.title_iterations}" />
+            </p>
+            <p:multiSelectListbox id="listActivities" value="#{activitiesBean.selectionSubAct}" effect="slide">
                 <f:selectItems value="#{activitiesBean.activitiesItem}" />
             </p:multiSelectListbox>
 
-
-            <p:multiSelectListbox value="#{activitiesBean.selectionIter}" effect="slide">
+            <p:multiSelectListbox id="listIterations" value="#{activitiesBean.selectionIter}" effect="slide">
                 <f:selectItems value="#{activitiesBean.iterationsItem}" />
             </p:multiSelectListbox>
 
+            <div id="saveUnits">
+                <h:outputText value="#{msgs.title_units}" />
+                <h:inputText id="unit" value="#{activitiesBean.workUnit}"  >
+                    <f:converter converterId = "javax.faces.Double"/>
+                </h:inputText>
 
-            <h:inputText id="unit"  value="#{activitiesBean.workUnit}"  >
-                <f:converter converterId = "javax.faces.Double"/>
-            </h:inputText>
-
-
-            <p:commandButton value="Save" icon="ui-icon-check" action="#{activitiesBean.save()}" update="msgs" styleClass="btn btn-success"/>            
-
+                <p:commandButton value="#{msgs.submit}" icon="ui-icon-check" action="#{activitiesBean.save()}" update="msgs" styleClass="btn btn-success"/>            
+            </div>
         </h:form>
 
     </ui:define>

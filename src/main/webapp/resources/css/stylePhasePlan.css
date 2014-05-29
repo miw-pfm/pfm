@@ -48,7 +48,7 @@
 }
 
 #formProjectPlan\:tableProjectPlan button{
-    
+
     background-image: linear-gradient(to bottom, #F3D5BC 0%, #F79646 100%);
     border-color: #F79646;
     display: block;
@@ -59,7 +59,7 @@
     width: 121px;
 }
 
-#formProjectPlan\:tableProjectPlan button:hover, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus{
+#formProjectPlan\:tableProjectPlan button:hover, #formProjectPlan\:tableProjectPlan button:active, #formProjectPlan\:tableProjectPlan button:focus ,#saveUnits button:hover, #saveUnits button:active, #saveUnits button:focus{
     background-image: none;
     background-color: #F3D5BC;
     border-color: #F3D5BC;
@@ -208,4 +208,62 @@
     color: #F79646;
     font-size: 18px;
     margin-left: 10px;
+}
+
+#formActivitiesDetailedAsignation\:listActivities div{
+    width: 245px;
+    padding: 5px;
+}
+
+#formActivitiesDetailedAsignation\:listActivities{
+    border: 2px solid #F3D5BC;
+    float: left;
+    padding: 10px;
+    width: 522px;
+    margin-left: 20px;
+}
+
+#formActivitiesDetailedAsignation\:listIterations div{
+    width: 160px;
+    padding: 5px;
+}
+
+#formActivitiesDetailedAsignation\:listIterations{
+    float: right;
+    border: 2px solid #F3D5BC;
+    padding: 10px;
+    margin-right: 55px;
+}
+
+#saveUnits{
+    clear: both;
+    margin-bottom: 20px;
+    overflow: auto;
+    padding-top: 20px;
+    margin-left: 50px;
+}
+
+#formActivitiesDetailedAsignation\:unit{
+    text-align: center;
+    width: 67px;
+}
+
+#saveUnits button{
+    background-image: linear-gradient(to bottom, #F3D5BC 0%, #F79646 100%);
+    border-color: #F79646;
+    width: 80px;
+}
+
+#activitiesAndIterationsTitle{
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 18px;
+}
+
+#formActivitiesDetailedAsignation\:activitiesTitle{
+    margin-left: 35px;
+}
+
+#formActivitiesDetailedAsignation\:iterationsTitle{
+    margin-left: 525px;
 }

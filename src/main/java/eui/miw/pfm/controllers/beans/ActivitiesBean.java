@@ -89,15 +89,16 @@ public class ActivitiesBean extends Bean implements Serializable {
         }
 
         iterationsItem.addAll(lIterations);
+        this.subActivities = new ActivitiesEjb().obtainAllSubActivities();
     }
 
     public void save() {
         if (selectionSubAct.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Sub Activity Selected", ""));
+            FacesContext.getCurrentInstance().addMessage("formActivitiesDetailedAsignation", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Sub Activity Selected", ""));
             return;
         }
         if (selectionIter.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Iteration Selected", ""));
+            FacesContext.getCurrentInstance().addMessage("formActivitiesDetailedAsignation", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Iteration Selected", ""));
             return;
         }
 
@@ -121,7 +122,7 @@ public class ActivitiesBean extends Bean implements Serializable {
                 workUnitEjb.create(workUnitEntity);
             }
         }
-        FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Work Unit Saved", ""));
+        FacesContext.getCurrentInstance().addMessage("formActivitiesDetailedAsignation", new FacesMessage(FacesMessage.SEVERITY_INFO, "Work Unit Saved", ""));
     }
 
     public IterationEntity getIterationEntity() {
@@ -136,7 +137,7 @@ public class ActivitiesBean extends Bean implements Serializable {
     }
 
     private SubActivityEntity getSubActivityEntity() {
-        for (SubActivityEntity subActivity : new ActivitiesEjb().obtainAllSubActivities()) {
+        for (SubActivityEntity subActivity : this.subActivities) {
             if (subActivity.getCode().equals(this.selectionSubAct.split(".-")[0])) {
                 return subActivity;
             }
@@ -151,10 +152,11 @@ public class ActivitiesBean extends Bean implements Serializable {
     public void subActivitiesByActivity() {
         for (ActivityEntity activity : this.getActivities()) {
             if (activity.getCode().equals(this.selectionAct.split(".-")[0])) {
-                subActivities = new ActivitiesEjb().obtainSubActivities(activity);
+                this.subActivities = new ActivitiesEjb().obtainSubActivities(activity);
                 return;
             }
         }
+        this.subActivities = new ActivitiesEjb().obtainAllSubActivities();
     }
 
     public IterationBean getIterationBean() {
