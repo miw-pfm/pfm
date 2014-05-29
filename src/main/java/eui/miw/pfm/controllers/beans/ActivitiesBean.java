@@ -6,44 +6,58 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ActivitiesEjb;
+import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ActivityEntity;
+import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
+import eui.miw.pfm.models.entities.WorkUnitEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.event.CellEditEvent;
 
 /**
  *
  * @author Jean Mubaied
  * @author Jose Mª Villar
+ * @author Fred Pena
  */
 @ViewScoped
 @Named
 public class ActivitiesBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
+
+    private static final int WORK_UNIT = 4;
 
     private ProjectEntity project;
-    private transient ActivityEntity activity;
-    private transient List<SubActivityEntity> subActivities;
-    private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
-    private String prueba;
-    
+
+    private List<SubActivityEntity> subActivities;
+    private List<SelectItem> activitiesItem;
+    private List<SelectItem> iterationsItem;
+
+    private String selectionSubAct;
+    private String selectionAct;
+    private String selectionIter;
+    private double workUnit;
 
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
 
-    public ActivitiesBean() {
-        super();
+    @PostConstruct
+    public void init() {
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
@@ -51,20 +65,100 @@ public class ActivitiesBean extends Bean implements Serializable {
         }
 
         this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());
-        this.activity = AbstractDAOFactory.getFactory().getActivityDAO().read(1);
-        
-        ActivitiesEjb activityEjb;
-        activityEjb = new ActivitiesEjb();
-        this.subActivities = activityEjb.obtainSubActivities(activity);        
+
+        activitiesItem = new ArrayList<>();
+        List<SelectItem> lActivities = new ArrayList<>();
+
+        for (ActivityEntity act : this.getActivities()) {
+            SelectItemGroup itemGroup = new SelectItemGroup(act.getCode() + ".-" + act.getName());
+            int i = 0;
+            SelectItem[] lSubActivities = new SelectItem[act.getSubActivity().size()];
+            for (SubActivityEntity sub : act.getSubActivity()) {
+                lSubActivities[i++] = new SelectItem(sub.getCode() + ".-" + sub.getName(), sub.getCode() + ".-" + sub.getName());
+            }
+            itemGroup.setSelectItems(lSubActivities);
+            lActivities.add(itemGroup);
+        }
+
+        activitiesItem.addAll(lActivities);
+        iterationsItem = new ArrayList<>();
+
+        List<SelectItem> lIterations = new ArrayList<>();
+        for (IterationEntity iter : this.iterationBean.getListAllIterations()) {
+            lIterations.add(new SelectItem(iter.getTypeIteration() + ".-" + iter.getIterValue(), iter.getTypeIteration() + ".-" + iter.getIterValue()));
+        }
+
+        iterationsItem.addAll(lIterations);
     }
 
-    
-    public ActivityEntity getActivity() {
-        return activity;
+    public void save() {
+        if (selectionSubAct.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Sub Activity Selected", ""));
+            return;
+        }
+        if (selectionIter.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Iteration Selected", ""));
+            return;
+        }
+
+        WorkUnitEjb workUnitEjb = new WorkUnitEjb();
+        SubActivityEntity subActivityEntity = getSubActivityEntity();
+        IterationEntity iterationEntity = getIterationEntity();
+        WorkUnitEntity workUnitEntity;
+
+        List<WorkUnitEntity> lWorkUnit = workUnitEjb.getWorkUnitsByIterAndActivity(subActivityEntity, iterationEntity);
+
+        int unit = (int) this.workUnit * WORK_UNIT;
+        int size = lWorkUnit.size();
+        if (unit < size) {//DELETE
+            Collections.reverse(lWorkUnit);
+            for (int i = 0; i < (size - unit); i++) {
+                workUnitEjb.delete(lWorkUnit.get(i));
+            }
+        } else if (unit > size) {//CREATE            
+            for (int i = 0; i < (unit - size); i++) {
+                workUnitEntity = new WorkUnitEntity(iterationEntity, subActivityEntity);
+                workUnitEjb.create(workUnitEntity);
+            }
+        }
+        FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Work Unit Saved", ""));
     }
 
-    public void setActivity(final ActivityEntity activity) {
-        this.activity = activity;
+    public IterationEntity getIterationEntity() {
+        String[] split = this.selectionIter.split(".-");
+
+        for (IterationEntity iteration : this.iterationBean.getListAllIterations()) {
+            if (iteration.getTypeIteration().toString().equals(split[0]) && iteration.getIterValue() == Integer.parseInt(split[1])) {
+                return iteration;
+            }
+        }
+        return null;
+    }
+
+    private SubActivityEntity getSubActivityEntity() {
+        for (SubActivityEntity subActivity : new ActivitiesEjb().obtainAllSubActivities()) {
+            if (subActivity.getCode().equals(this.selectionSubAct.split(".-")[0])) {
+                return subActivity;
+            }
+        }
+        return null;
+    }
+
+    public int findWorkUnit(final SubActivityEntity subActivity, final IterationEntity iteration) {
+        return new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration) / WORK_UNIT;
+    }
+
+    public void subActivitiesByActivity() {
+        for (ActivityEntity activity : this.getActivities()) {
+            if (activity.getCode().equals(this.selectionAct.split(".-")[0])) {
+                subActivities = new ActivitiesEjb().obtainSubActivities(activity);
+                return;
+            }
+        }
+    }
+
+    public IterationBean getIterationBean() {
+        return iterationBean;
     }
 
     public List<SubActivityEntity> getSubActivities() {
@@ -75,37 +169,55 @@ public class ActivitiesBean extends Bean implements Serializable {
         this.subActivities = subActivities;
     }
 
-    public ProjectEntity getProject() {
-        return project;
-    }
-
-    public void setProject(final ProjectEntity project) {
-        this.project = project;
-    }
-
-    public IterationBean getIterationBean() {
-        return iterationBean;
-    }
-
-    public List<SubActivityEntity> getSubActivitiesByActivity(final ActivityEntity activity) {
-        ActivitiesEjb activityEjb;
-        activityEjb = new ActivitiesEjb();
-        return activityEjb.obtainSubActivities(activity);
-    }
-
     public List<ActivityEntity> getActivities() {
         return new ActivitiesEjb().obtainAllActivities();
     }
-    
-    public void onCellEdit(final CellEditEvent event) {
-//        final Object oldValue = event.getOldValue();
-//        final Object newValue = event.getNewValue();
-        
-        System.out.println("---------------------------");
-        
-//        if(newValue != null && !newValue.equals(oldValue)) {
-//            final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        }
-    }    
+
+    public List<SelectItem> getActivitiesItem() {
+        return activitiesItem;
+    }
+
+    public void setActivitiesItem(final List<SelectItem> activitiesItem) {
+        this.activitiesItem = activitiesItem;
+    }
+
+    public String getSelectionSubAct() {
+        return selectionSubAct;
+    }
+
+    public void setSelectionSubAct(final String selectionSubAct) {
+        this.selectionSubAct = selectionSubAct;
+    }
+
+    public String getSelectionIter() {
+        return selectionIter;
+    }
+
+    public void setSelectionIter(final String selectionIter) {
+        this.selectionIter = selectionIter;
+    }
+
+    public double getWorkUnit() {
+        return workUnit;
+    }
+
+    public void setWorkUnit(final double unitWork) {
+        this.workUnit = unitWork;
+    }
+
+    public List<SelectItem> getIterationsItem() {
+        return iterationsItem;
+    }
+
+    public void setIterationsItem(final List<SelectItem> iterationsItem) {
+        this.iterationsItem = iterationsItem;
+    }
+
+    public String getSelectionAct() {
+        return selectionAct;
+    }
+
+    public void setSelectionAct(final String selectionAct) {
+        this.selectionAct = selectionAct;
+    }
 }

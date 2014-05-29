@@ -10,7 +10,6 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
-import java.util.Collection;
 import java.util.List;
 
 /**

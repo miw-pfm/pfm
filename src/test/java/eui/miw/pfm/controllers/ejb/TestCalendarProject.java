@@ -143,7 +143,7 @@ public class TestCalendarProject {
         cProjectEjb.delete(calendar3);
     }
 
-    @Test
+   // @Test
     public void testFind() {
         create();
 

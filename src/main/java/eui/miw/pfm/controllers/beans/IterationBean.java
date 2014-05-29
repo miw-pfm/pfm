@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
 
@@ -52,7 +50,7 @@ public class IterationBean extends Bean implements Serializable {
 
     @ManagedProperty(value = "#{cpb}")
     private final transient CalendarProjectBean cpb = new CalendarProjectBean();
-
+        
     private IterationEntity iterEntity;
 
     public IterationBean() {
@@ -60,7 +58,6 @@ public class IterationBean extends Bean implements Serializable {
         iterEntity = new IterationEntity();
         final IterationEjb iterationEjb = new IterationEjb();
 
-        project = new ProjectEntity();
 
         this.listInception = iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
         this.listElaboration = iterationEjb.getIterationsOfOnePhase(TypeIteration.ELABORATION);
@@ -68,7 +65,7 @@ public class IterationBean extends Bean implements Serializable {
         this.listTransition = iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION);
 
         //this.listAllIterations = new List<IterationEntity>();
-        this.listAllItertations = new ArrayList<IterationEntity>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
+        this.listAllItertations = new ArrayList<>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
         this.listAllItertations.addAll(this.listInception);
         this.listAllItertations.addAll(this.listElaboration);
         this.listAllItertations.addAll(this.listConstruction);
