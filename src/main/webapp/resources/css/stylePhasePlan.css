@@ -267,3 +267,7 @@
 #formActivitiesDetailedAsignation\:iterationsTitle{
     margin-left: 525px;
 }
+
+.ui-spinner-input{
+    width: 75px;
+}

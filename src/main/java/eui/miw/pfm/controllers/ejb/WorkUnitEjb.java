@@ -41,9 +41,9 @@ public class WorkUnitEjb {
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity).size();
     }
 
-     public int getNumAvailableWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration) {
+     public List<WorkUnitEntity> getAvailableWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2 AND wu.worker IS NULL";//NOPMD
-        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity).size();
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity);
     }
 
     public List<WorkUnitEntity> getWorkUnitsByIterAndActivity(final SubActivityEntity subActivity, final IterationEntity iteration) {

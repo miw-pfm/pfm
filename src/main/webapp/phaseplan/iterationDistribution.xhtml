@@ -37,7 +37,6 @@
                     tolerance: 'pointer',
                     scope: 'treetotable',
                     drop: function(event, ui) {
-                        //var sub_activity = ui.draggable.attr('id'),
                         index_tr = $(ui.draggable).closest("tr")[0].rowIndex - 1,
                                 worker = $(this).attr('id'),
                                 worker_id = $('.workers_list').find("tbody").find("tr").eq(worker.split(":")[2]).find("td").eq(0).html(),
@@ -70,12 +69,13 @@
                 <p:outputLabel id="iteration_title" value="#{msgs.iteration} : " />
                 <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity.id}">
                     <f:selectItems value="#{iterationBean.allIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
-                    <p:ajax event="change"  listener="#{iterationBean.handleIterationChange}" update="test"/>
+                    <p:ajax event="change"  listener="#{iterationBean.handleIterationChange}" update="test" oncomplete="initDND()"/>
                 </p:selectOneMenu>
                 <p:outputLabel id="activity" value="#{msgs.activity}" />
             </div>
 
-            <p:dataTable var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution">
+            <p:dataTable var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution" paginator="true"
+                         rows="1" rowsPerPageTemplate="1,2,3">
                 <p:columnGroup type="header">
                     <p:row>
                         <p:column rowspan="1" headerText="#{msgs.name}" />
@@ -132,7 +132,7 @@
                     <f:facet name="header">                        
                         <h:outputText value="Workers"/>
                     </f:facet>
-                    <p:commandLink id="ajax" actionListener="#{workUnitBean.settWorker(w)}" oncomplete="WorkDialog()" update=":test:displayTable">
+                    <p:commandLink id="ajax" actionListener="#{workUnitBean.setWorker(w)}" oncomplete="WorkDialog()" update=":test:displayTable">
                         <h:outputText value="#{w.name}"  styleClass="droppoint dropright" id="work_id" />
                     </p:commandLink>
 
@@ -151,7 +151,7 @@
                 </p:dataTable>
                 <p:panelGrid columns="2">                                        
                     <p:spinner id="ajaxSpinner" value="#{workUnitBean.numUnitsToAsign}" max="#{workUnitBean.numUnitsToAsign}" min="1">                                                    
-                    <p:ajax process="@this" />
+                        <p:ajax process="@this" />
                     </p:spinner>                                            
                     <p:commandButton actionListener="#{workUnitBean.addUnitsToWorker}" ajax="false" value="Add" />                    
                 </p:panelGrid>
