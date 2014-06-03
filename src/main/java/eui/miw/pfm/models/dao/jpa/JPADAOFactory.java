@@ -101,10 +101,9 @@ public class JPADAOFactory extends AbstractDAOFactory {
     public ProgressDetailDAO getProgressDetailDAO() {
         return new JPAProgressDetailDAO();
     }
-}
     
     @Override
     public DisciplineDAO getDisciplineDAO() {
        return new JPADisciplineDAO();
     }
-}
+} 

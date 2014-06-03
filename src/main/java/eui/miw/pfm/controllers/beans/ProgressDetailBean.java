@@ -5,14 +5,11 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.UseCaseEjb;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.controllers.ejb.DisciplineEjb;
+import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
-import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
-import eui.miw.pfm.util.moks.entities.DisciplineEntityMock;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -37,20 +34,18 @@ public class ProgressDetailBean extends Bean implements Serializable {
     private double percentCompleted;
     private boolean enabled;
 
-    private transient ProjectEntity project;
+    private transient List<DisciplineEntity> lDisciplines;
 
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
 
+    @ManagedProperty(value = "#{iterationBean}")
+    private final transient UseCaseBean useCaseBean = new UseCaseBean();
+
     @PostConstruct
     public void init() {
-        try {
-            this.project = ((ProjectEntity) sessionMap.get("project"));
-        } catch (Exception e) {
-            LOGGER.warning("No session exist");
-        }
 
-        this.project = AbstractDAOFactory.getFactory().getProjectDAO().read(project.getId());
+        this.lDisciplines = new DisciplineEjb().findAll();
     }
 
     public void save() {
@@ -58,10 +53,10 @@ public class ProgressDetailBean extends Bean implements Serializable {
     }
 
     private IterationEntity getIterationEntity() {
-        final String[] spli = this.iterationSelect.split(".-");
+        final String[] strings = this.iterationSelect.split(".-");
 
-        for (IterationEntity iteration : this.iterationBean.getAllIterations()) {
-            if (iteration.getTypeIteration().toString().equals(spli[0]) && iteration.getIterValue() == Integer.parseInt(spli[1])) {
+        for (IterationEntity iteration : this.getIterations()) {            
+            if (iteration.getTypeIteration().toString().equals(strings[0]) && iteration.getIterValue() == Integer.parseInt(strings[1])) {
                 return iteration;
             }
         }
@@ -69,8 +64,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
     }
 
     private UseCaseEntity getUseCaseEntity() {
-        final List<UseCaseEntity> caseEntitys = new UseCaseEjb().obtainUseCase(this.project);
-        for (UseCaseEntity useCase : caseEntitys) {
+        for (UseCaseEntity useCase : this.getlUseCases()) {
             if (useCase.getName().equals(this.useCaseSelect)) {
                 return useCase;
             }
@@ -78,13 +72,25 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return null;
     }
 
-    private DisciplineEntityMock getDisciplineEntity() {
-        for (DisciplineEntityMock discipline : new ArrayList<DisciplineEntityMock>()) {
+    private DisciplineEntity getDisciplineEntity() {
+        for (DisciplineEntity discipline : this.getlDisciplines()) {
             if (discipline.getName().equals(this.disciplineSelect)) {
                 return discipline;
             }
         }
         return null;
+    }
+
+    public List<IterationEntity> getIterations() {
+        return this.iterationBean.getAllIterations();
+    }
+
+    public List<DisciplineEntity> getlDisciplines() {
+        return lDisciplines;
+    }
+
+    public List<UseCaseEntity> getlUseCases() {
+        return useCaseBean.getUseCases();
     }
 
     public String getIterationSelect() {
