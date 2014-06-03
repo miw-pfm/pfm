@@ -6,6 +6,7 @@ import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.DisciplineDAO;
 import eui.miw.pfm.models.dao.interfaces.IterationDAO;
+import eui.miw.pfm.models.dao.interfaces.ProgressDetailDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.SubActivityDAO;
@@ -80,7 +81,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
     public ActivityDAO getActivityDAO() {
         return new JPAActivityDAO();
     }
-    
+
     @Override
     public SubActivityDAO getSubActivityDAO() {
         return new JPASubActivityDAO();
@@ -93,11 +94,16 @@ public class JPADAOFactory extends AbstractDAOFactory {
 
     @Override
     public WorkUnitDAO getWorkUnitDAO() {
-       return new JPAWorkUnitDAO();
+        return new JPAWorkUnitDAO();
+    }
+
+    @Override
+    public ProgressDetailDAO getProgressDetailDAO() {
+        return new JPAProgressDetailDAO();
     }
     
     @Override
     public DisciplineDAO getDisciplineDAO() {
        return new JPADisciplineDAO();
     }
-}
+} 
