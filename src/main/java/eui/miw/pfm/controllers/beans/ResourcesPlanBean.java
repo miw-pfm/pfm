@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -35,10 +36,11 @@ public class ResourcesPlanBean extends Bean implements Serializable {
     private int weeks;
     private int working;
     private int hours;
-    private static final int WEEKDAYS = 7;
     private static final int BUSINESS_DAYS = 5;
-    private static final int MORE_ONE = 1;
     private static final int HOURS_WORKED_DAY = 8;//hours worked per day
+
+    @ManagedProperty(value = "#{calendarProjectBean}")
+    private final transient CalendarProjectBean calendarProjectBean = new CalendarProjectBean();
 
     public ResourcesPlanBean() {
         super();
@@ -101,26 +103,14 @@ public class ResourcesPlanBean extends Bean implements Serializable {
     public void calculator() {
         double week;
         double work;
-        double workingDays;
         double hour;
 
-        workingDays = roundOneDecimals((ControllerDate.getDifferenceDate(this.project.getStartDate(), this.project.getEndDate()) + MORE_ONE) / WEEKDAYS * BUSINESS_DAYS);
-        week = workingDays / BUSINESS_DAYS;
+        week = ((double) calendarProjectBean.getWorkingDays()) / BUSINESS_DAYS;
         work = this.workers * week * BUSINESS_DAYS;
         hour = work * HOURS_WORKED_DAY;
 
         this.weeks = (int) Math.round((float) week);
         this.hours = (int) hour;
         this.working = (int) work;
-    }
-
-    private double roundOneDecimals(final double value) {
-        final DecimalFormat oneDigit = new DecimalFormat("#,###.0");
-        try {
-            return (double) oneDigit.parse(oneDigit.format(value));//NOPMD
-        } catch (ParseException ex) {
-            Logger.getLogger(ResourcesPlanBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
     }
 }
