@@ -19,25 +19,32 @@
 
     <ui:define name="body">
 
-        <h:form id="form">
+        <h:form id="formInsertDetail">
             <h:panelGroup layout="block">
                 <p:growl id="growl"  sticky="true" life="1500"/>
-                <h:panelGrid columns="2" cellpadding="5">    
+                <h:panelGrid columns="2">    
                     <h:outputText value="Iterations" />                
-                    <p:selectOneMenu id="choseiteration"  value="">
-                        <f:selectItems value="Prueba"  />
+                    <p:selectOneMenu id="chooseIteration" value="#{iterationBean.iterEntity.id}">
+                        <f:selectItems value="#{iterationBean.allIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
                     </p:selectOneMenu>
                     <h:outputText value="Discipline" />                                
-                    <p:selectOneMenu id="chosediscipline"  value="">
+                    <p:selectOneMenu id="chooseDiscipline"  value="">
                         <f:selectItems value="Prueba"  />
                     </p:selectOneMenu> 
                     <h:outputText value="Use Cases" />                                
-                    <p:selectOneMenu id="choseusecase"  value="">
+                    <p:selectOneMenu id="chooseUsecase"  value="#{useCaseBean.usecase.id}">
+                        <f:selectItems value="#{useCaseBean.useCases}" var="usecase" itemLabel="#{usecase.name}" itemValue="#{usecase.id}"/>
+                    </p:selectOneMenu> 
+                    <h:outputText value="U.C. Enable" />                                
+                    <p:selectOneMenu id="chooseEnable"  value="">
                         <f:selectItems value="Prueba"  />
                     </p:selectOneMenu> 
                     <h:outputText value="% Complete" />
-                    <p:spinner id="basic" value="" />
-                    <h:commandButton value="#{msgs.submit}" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
+                    <p:selectOneMenu id="chooseComplete"  value="">
+                        <f:selectItems value="Prueba"  />
+                    </p:selectOneMenu> 
+                    <h:outputText />   
+                    <h:commandButton id="submitDetailProgress" value="#{msgs.submit}" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
                 </h:panelGrid>                     
             </h:panelGroup>                    
         </h:form>  
