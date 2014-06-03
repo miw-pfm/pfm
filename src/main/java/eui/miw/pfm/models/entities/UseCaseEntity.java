@@ -25,6 +25,7 @@ import javax.validation.constraints.Size;
  *
  * @author Roberto Amor
  * *@author Fred Peña
+ * @author Clemencio Morales
  */
 @Entity
 @Table(name = "usecases")
@@ -44,6 +45,11 @@ public class UseCaseEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     private String description;
+    
+    @Column(name = "isChecked", length = 10)
+    @NotNull
+    @Size(min = 1, max = 10)
+    private boolean isChecked;
 
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
@@ -102,6 +108,14 @@ public class UseCaseEntity implements Serializable {
         this.project = project;
     }
 
+    public boolean isIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+    }
+    
     public List<RiskEntity> getRisks() {
         return risks;
     }
@@ -132,7 +146,7 @@ public class UseCaseEntity implements Serializable {
             return false;//NOPMD
         }
         final UseCaseEntity other = (UseCaseEntity) object;
-        if (this.id == other.id || (this.getName().equals(other.getName()) && (this.getProject().getId() == other.getProject().getId()))) {
+        if (this.id == other.id || (this.getName().equals(other.getName()) && (this.getProject().getId() == other.getProject().getId()))) {//NOPMD
             return true;
         }
 
@@ -141,7 +155,6 @@ public class UseCaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", project=" + project + '}';
+        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", isChecked=" + isChecked + ", project=" + project + ", risks=" + risks + '}';
     }
-
 }
