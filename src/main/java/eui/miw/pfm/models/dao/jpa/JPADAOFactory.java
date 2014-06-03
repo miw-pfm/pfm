@@ -1,18 +1,19 @@
 package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.DisciplineDAO;
-import eui.miw.pfm.models.dao.interfaces.SubActivityDAO;
+import eui.miw.pfm.models.dao.interfaces.ActivityDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
+import eui.miw.pfm.models.dao.interfaces.DisciplineDAO;
 import eui.miw.pfm.models.dao.interfaces.IterationDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.RiskDAO;
+import eui.miw.pfm.models.dao.interfaces.SubActivityDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
-import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import eui.miw.pfm.models.dao.interfaces.WorkUnitDAO;
+import eui.miw.pfm.models.dao.interfaces.WorkerDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -76,7 +77,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
     }
 
     @Override
-    public DisciplineDAO getActivityDAO() {
+    public ActivityDAO getActivityDAO() {
         return new JPAActivityDAO();
     }
     
