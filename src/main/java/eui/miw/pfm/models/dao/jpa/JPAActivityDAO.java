@@ -6,8 +6,8 @@
 
 package eui.miw.pfm.models.dao.jpa;
 
-import eui.miw.pfm.models.entities.ActivityEntity;
 import eui.miw.pfm.models.dao.interfaces.ActivityDAO;
+import eui.miw.pfm.models.entities.ActivityEntity;
 /**
  *
  * @author Jose Mª Villar

@@ -1,6 +1,6 @@
 package eui.miw.pfm.models.dao;
 
-import eui.miw.pfm.models.dao.interfaces.ActivityDAO;
+import eui.miw.pfm.models.dao.interfaces.DisciplineDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
 import eui.miw.pfm.models.dao.interfaces.IterationDAO;
@@ -48,11 +48,13 @@ public abstract class AbstractDAOFactory {
 
     public abstract RiskDAO getRiskDAO();
     
-    public abstract ActivityDAO getActivityDAO();
+    public abstract DisciplineDAO getActivityDAO();
     
     public abstract SubActivityDAO getSubActivityDAO();
 
     public abstract IterationDAO getIterationDAO();
     
     public abstract WorkUnitDAO getWorkUnitDAO();
+    
+    public abstract DisciplineDAO getDisciplineDAO();
 }

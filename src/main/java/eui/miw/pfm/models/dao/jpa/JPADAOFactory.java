@@ -1,7 +1,7 @@
 package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.dao.interfaces.ActivityDAO;
+import eui.miw.pfm.models.dao.interfaces.DisciplineDAO;
 import eui.miw.pfm.models.dao.interfaces.SubActivityDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarDAO;
 import eui.miw.pfm.models.dao.interfaces.CalendarTemplateDAO;
@@ -76,7 +76,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
     }
 
     @Override
-    public ActivityDAO getActivityDAO() {
+    public DisciplineDAO getActivityDAO() {
         return new JPAActivityDAO();
     }
     
@@ -93,5 +93,10 @@ public class JPADAOFactory extends AbstractDAOFactory {
     @Override
     public WorkUnitDAO getWorkUnitDAO() {
        return new JPAWorkUnitDAO();
+    }
+    
+    @Override
+    public DisciplineDAO getDisciplineDAO() {
+       return new JPADisciplineDAO();
     }
 }
