@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
  * @author Clemencio Morales
  */
 @Entity
-@Table(name = "progressdetailentity")
+@Table(name = "progressdetail")
 public class ProgressDetailEntity {
 
     @Id

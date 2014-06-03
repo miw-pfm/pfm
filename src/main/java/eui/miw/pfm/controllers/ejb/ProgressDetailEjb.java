@@ -6,7 +6,7 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.util.moks.entities.ProgressDetailEntityMock;
+import eui.miw.pfm.models.entities.ProgressDetailEntity;
 
 /**
  *
@@ -14,7 +14,7 @@ import eui.miw.pfm.util.moks.entities.ProgressDetailEntityMock;
  */
 public class ProgressDetailEjb {
 
-    public void create(final ProgressDetailEntityMock progressDetail) {
+    public void create(final ProgressDetailEntity progressDetail) {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().create(progressDetail);
     }
 

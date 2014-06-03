@@ -6,12 +6,12 @@
 package eui.miw.pfm.models.dao.interfaces;
 
 import eui.miw.pfm.models.dao.TransactionGenericDAO;
-import eui.miw.pfm.util.moks.entities.ProgressDetailEntityMock;
+import eui.miw.pfm.models.entities.ProgressDetailEntity;
 
 /**
  *
  * @author Fred Peña
  */
-public interface ProgressDetailDAO extends TransactionGenericDAO<ProgressDetailEntityMock, Integer> {
+public interface ProgressDetailDAO extends TransactionGenericDAO<ProgressDetailEntity, Integer> {
 
 }

@@ -6,16 +6,16 @@
 package eui.miw.pfm.models.dao.jpa;
 
 import eui.miw.pfm.models.dao.interfaces.ProgressDetailDAO;
-import eui.miw.pfm.util.moks.entities.ProgressDetailEntityMock;
+import eui.miw.pfm.models.entities.ProgressDetailEntity;
 
 /**
  *
  * @author Fred Peña
  */
-public class JPAProgressDetailDAO extends JPATransactionGenericDAO<ProgressDetailEntityMock, Integer> implements ProgressDetailDAO {
+public class JPAProgressDetailDAO extends JPATransactionGenericDAO<ProgressDetailEntity, Integer> implements ProgressDetailDAO {
 
     public JPAProgressDetailDAO() {
-        super(ProgressDetailEntityMock.class);
+        super(ProgressDetailEntity.class);
     }
 
 }
