@@ -11,6 +11,47 @@
     color: #FFF;
 }
 
+#formInsertDetail\:chooseIteration{
+    margin-bottom: 10px;
+}
+
+#formInsertDetail\:chooseEnable{
+    margin-bottom: 10px;
+}
+
+#formInsertDetail\:submitDetailProgress{
+
+    background-image: linear-gradient(to bottom, #F3D5BC 0%, #C0504D 100%);
+    border-color: #C0504D;
+    display: block;
+    width: 95px;
+    margin-top: 0px;
+    margin-left: 35px;
+}
+
+#formInsertDetail\:submitDetailProgress:hover{
+    background-image: none;
+    background-color: #F2DDDC;
+    border-color: #F2DDDC;
+}
+
+#formInsertDetail\:chooseIteration_input{
+    width: 200px;
+}
+
+#formInsertDetail\:chooseDiscipline_input{
+    width: 200px;
+}
+
+#formInsertDetail\:chooseUsecase_input{
+    width: 200px;
+}
+
+#formInsertDetail\:chooseComplete_input{
+    width: 70px;
+    margin-left: 0px;
+}
+
 #tableReadDetailProgress{
 width: 510px;
 }
@@ -46,3 +87,4 @@ width: 510px;
     padding: 2px 6px;
     text-align: center;
 }
+
