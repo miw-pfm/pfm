@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateProgress.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:define name="title">
+        #{msgs.progress}
+    </ui:define>    
+
+    <ui:define name="subtitle">
+        #{msgs.abstract}
+    </ui:define>   
+
+    <ui:define name="pagetitle">
+        #{project.name}
+    </ui:define>
+
+    <ui:define name="body">
+
+        <h:form id="formProgressAbstract" class="dataTableList">
+            <p:growl id="msgs" sticky="true"/>
+            
+            <h:panelGroup id="totalUC" layout="block">
+                <h4>#{msgs.total_uc}</h4>
+                <h:outputText value="#{phase.totalCU}" style="display:block; border: 2px solid" />
+            </h:panelGroup>
+
+            <p:dataTable id="dataTableSubActivity" value="#{progressAbstractBean.phases}" var="subactivity">     
+
+                <p:column headerText="#{msgs.code}" width="55">
+                    <h:outputText value="#{phase.code}" style="display:block" />                    
+                </p:column>                        
+
+                <p:column headerText="#{msgs.iteration}">
+                    <h:outputText  value="#{phase.name}" style="display:block" />                    
+                </p:column>
+
+                <p:columns var="iteration" value="#{progressAbstractBean.phaseBean.listInception}" headerText="#{iteration.codePhase}" width="40" styleClass="ui-editable-column">                         
+                    <h:outputText value="#{progressAbstractBean.findPercent(phase, discipline)}" style="display:block" />
+                </p:columns>     
+                
+            </p:dataTable> 
+            
+            <p:commandButton value="#{msgs.stats}" icon="ui-icon-extlink" actionListener="#{dfView.viewCarsCustomized}" />
+            
+        </h:form>
+    </ui:define>
+</ui:composition>
