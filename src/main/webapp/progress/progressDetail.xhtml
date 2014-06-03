@@ -37,13 +37,16 @@
                     </p:selectOneMenu> 
                     <h:outputText value="U.C. Enable" />                                
                     <p:selectOneMenu id="chooseEnable"  value="">
-                        <f:selectItems value="Prueba"  />
+                        <f:selectItem itemLabel="True" itemValue="1" />
+                        <f:selectItem itemLabel="False" itemValue="0" /> 
                     </p:selectOneMenu> 
+                    <h:outputText value="" />  
+                </h:panelGrid>                             
+                <h:panelGrid columns="3"> 
                     <h:outputText value="% Complete" />
                     <p:selectOneMenu id="chooseComplete"  value="">
                         <f:selectItems value="Prueba"  />
                     </p:selectOneMenu> 
-                    <h:outputText />   
                     <h:commandButton id="submitDetailProgress" value="#{msgs.submit}" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
                 </h:panelGrid>                     
             </h:panelGroup>                    

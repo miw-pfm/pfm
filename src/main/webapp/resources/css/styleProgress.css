@@ -15,16 +15,47 @@
     margin-bottom: 10px;
 }
 
+#formInsertDetail\:chooseEnable{
+    margin-bottom: 10px;
+}
+
 #formInsertDetail\:submitDetailProgress{
 
-    background-image: linear-gradient(to bottom, #F3D5BC 0%, #F79646 100%);
-    border-color: #F79646;
+    background-image: linear-gradient(to bottom, #F3D5BC 0%, #C0504D 100%);
+    border-color: #C0504D;
     display: block;
-    width: 121px;
+    width: 95px;
+    margin-top: 0px;
+    margin-left: 35px;
 }
 
 #formInsertDetail\:submitDetailProgress:hover{
     background-image: none;
-    background-color: #F3D5BC;
-    border-color: #F3D5BC;
+    background-color: #F2DDDC;
+    border-color: #F2DDDC;
+}
+
+#formInsertDetail\:chooseIteration_input{
+    width: 200px;
+    margin-left: 10px;
+}
+
+#formInsertDetail\:chooseDiscipline_input{
+    width: 200px;
+    margin-left: 10px;
+}
+
+#formInsertDetail\:chooseUsecase_input{
+    width: 200px;
+    margin-left: 10px;
+}
+
+#formInsertDetail\:chooseComplete_input{
+    width: 70px;
+    margin-left: 10px;
+}
+
+#formInsertDetail\:chooseEnable_input{
+    width: 70px;
+    margin-left: 10px;
 }
