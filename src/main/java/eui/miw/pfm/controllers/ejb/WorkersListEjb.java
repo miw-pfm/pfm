@@ -21,18 +21,6 @@ public class WorkersListEjb {
         return project.getWorkers();
     }
 
-    public void remove(final ProjectEntity project, final WorkerEntity worker) {
-        project.removeWorker(worker);
-        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
-        AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
-    }
-
-    public void add(final ProjectEntity project, final WorkerEntity worker) {
-        project.addWorker(worker);
-        AbstractDAOFactory.getFactory().getProjectDAO().update(project);
-        AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
-    }
-
     public List<WorkerEntity> obtainWorkersNotProject(final ProjectEntity project) {
         final List<WorkerEntity> listAll = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
         listAll.removeAll(project.getWorkers());
