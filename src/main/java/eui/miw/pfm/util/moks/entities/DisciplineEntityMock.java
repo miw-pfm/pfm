@@ -9,7 +9,7 @@ package eui.miw.pfm.util.moks.entities;
  *
  * @author Fred Peña
  */
-public class ProgressDetailEntityMock {
+public class DisciplineEntityMock {
 
     private String name;
 
@@ -20,5 +20,4 @@ public class ProgressDetailEntityMock {
     public void setName(String name) {
         this.name = name;
     }
-
 }

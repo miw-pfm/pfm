@@ -155,10 +155,6 @@ public class ActivitiesBean extends Bean implements Serializable {
         return (double) new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration) / WORK_UNIT;
     }
 
-    public static void main(String[] args) {
-
-    }
-
     public void subActivitiesByActivity() {
         for (ActivityEntity activity : this.getActivities()) {
             if (activity.getCode().equals(this.selectionAct.split(".-")[0])) {
