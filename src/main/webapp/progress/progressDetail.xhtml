@@ -19,5 +19,28 @@
 
     <ui:define name="body">
 
+        <h:form id="form">
+            <h:panelGroup layout="block">
+                <p:growl id="growl"  sticky="true" life="1500"/>
+                <h:panelGrid columns="2" cellpadding="5">    
+                    <h:outputText value="Iterations" />                
+                    <p:selectOneMenu id="choseiteration"  value="">
+                        <f:selectItems value="Prueba"  />
+                    </p:selectOneMenu>
+                    <h:outputText value="Discipline" />                                
+                    <p:selectOneMenu id="chosediscipline"  value="">
+                        <f:selectItems value="Prueba"  />
+                    </p:selectOneMenu> 
+                    <h:outputText value="Use Cases" />                                
+                    <p:selectOneMenu id="choseusecase"  value="">
+                        <f:selectItems value="Prueba"  />
+                    </p:selectOneMenu> 
+                    <h:outputText value="% Complete" />
+                    <p:spinner id="basic" value="" />
+                    <h:commandButton value="#{msgs.submit}" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
+                </h:panelGrid>                     
+            </h:panelGroup>                    
+        </h:form>  
+
     </ui:define>
 </ui:composition>
