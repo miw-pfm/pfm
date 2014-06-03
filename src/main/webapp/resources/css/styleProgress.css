@@ -37,25 +37,17 @@
 
 #formInsertDetail\:chooseIteration_input{
     width: 200px;
-    margin-left: 10px;
 }
 
 #formInsertDetail\:chooseDiscipline_input{
     width: 200px;
-    margin-left: 10px;
 }
 
 #formInsertDetail\:chooseUsecase_input{
     width: 200px;
-    margin-left: 10px;
 }
 
 #formInsertDetail\:chooseComplete_input{
     width: 70px;
-    margin-left: 10px;
-}
-
-#formInsertDetail\:chooseEnable_input{
-    width: 70px;
-    margin-left: 10px;
+    margin-left: 0px;
 }
