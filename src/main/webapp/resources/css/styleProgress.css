@@ -10,3 +10,39 @@
     background: #E6B9B8;
     color: #FFF;
 }
+
+#tableReadDetailProgress{
+width: 510px;
+}
+
+#tableReadDetailProgress thead tr th span{
+
+}
+
+#tableReadDetailProgress thead tr th.columChecks div{
+    display: none;
+}
+
+#tableReadDetailProgress tr .columUsecases{
+    width: 238px;
+}
+
+#tableReadDetailProgress tr .columIdentificacion{
+    width: 30px;
+}
+
+#leyendaDetailProgress{
+    border: 1px solid #E6B9B8;
+    margin: 20px 0;
+}
+
+#leyendaDetailProgress tr.headTableLegend{
+    background: #E6B9B8;
+    font-weight: bold;
+}
+
+#leyendaDetailProgress tr td{
+    border: 1px solid #E6B9B8;
+    padding: 2px 6px;
+    text-align: center;
+}
