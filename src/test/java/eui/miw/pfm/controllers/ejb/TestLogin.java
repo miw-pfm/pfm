@@ -24,7 +24,8 @@ public class TestLogin {
     private UserEntity userEntity3;
 
     @Before
-    public void init() {
+    public void init() {           
+        
         userEntity1 = new UserEntity();
         userEntity2 = new UserEntity();
         userEntity3 = new UserEntity();
