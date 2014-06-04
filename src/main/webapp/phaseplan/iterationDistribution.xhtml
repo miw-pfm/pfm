@@ -144,10 +144,10 @@
             <p:dialog id="displayPanel" header="#{workUnitBean.worker.name}" widgetVar="unitDialog" resizable="false" draggable="false"
                       showEffect="fade" hideEffect="fade" modal="true">
                 <p:dataTable var="w" value="#{workUnitBean}" >
-                    <p:column headerText="Code">
+                    <p:column headerText="#{msgs.code}">
                         <h:outputText value="#{w.subActivity.code}" />
                     </p:column>                    
-                    <p:column headerText="Units Available">
+                    <p:column headerText="#{msgs.availableUnits}">
                         <h:outputText value="#{w.workunits.size()}" />
                     </p:column>
                 </p:dataTable>
@@ -162,31 +162,31 @@
             <p:dialog id="displayTable" header="#{workUnitBean.worker.name}" widgetVar="workDialog" resizable="false" draggable="false"
                       showEffect="fade" hideEffect="fade" modal="true" onHide="initDND()" >                                                
                 <p:dataTable var="work_unit" value="#{workUnitBean.workerSubActivities}" style="margin-bottom:40px">
-                    <p:column headerText="Name" sortBy="#{work_unit.name}">
+                    <p:column headerText="#{msgs.name}" sortBy="#{work_unit.name}">
                         <h:outputText value="#{work_unit.name}" />
                     </p:column>
 
-                    <p:column headerText="Code" sortBy="#{work_unit.code}">
+                    <p:column headerText="#{msgs.code}" sortBy="#{work_unit.code}">
                         <h:outputText value="#{work_unit.code}" />
                     </p:column>
 
-                    <p:column headerText="Unit" >
+                    <p:column headerText="#{msgs.unit}" >
                         <h:outputText value="#{workUnitBean.getWorkerNumSubActivityUnits(work_unit)}" />
                     </p:column>
 
-                    <p:column headerText="Hour">
+                    <p:column headerText="#{msgs.hour}">
                         <h:outputText value="#{workUnitBean.getWorkerNumSubActivityUnits(work_unit)/4}" />
                     </p:column>
 
-                    <p:column headerText="Edit">
+                    <p:column headerText="#{msgs.edit}">
                         <p:commandLink actionListener="#{workUnitBean.editWorkUnits(work_unit)}" oncomplete="EditDialog()" update=":form_iter_distri:editPanel" >
-                            <h:outputText value="Edit"  styleClass="droppoint dropright" />
+                            <h:outputText value="#{msgs.edit}"  styleClass="droppoint dropright" />
                         </p:commandLink>
                     </p:column>
 
-                    <p:column headerText="Remove">
+                    <p:column headerText="#{msgs.remove}">
                         <p:commandLink  actionListener="#{workUnitBean.removeUnitsToWorker(work_unit)}" oncomplete="WorkDialog()" update=":form_iter_distri:displayTable :form_iter_distri:dataTableActivitySubActivity"  >
-                            <h:outputText value="Remove"  styleClass="droppoint dropright" />
+                            <h:outputText value="#{msgs.remove}"  styleClass="droppoint dropright" />
                         </p:commandLink>
                     </p:column>
                 </p:dataTable>
@@ -195,13 +195,13 @@
             <p:dialog id="editPanel" header="#{workUnitBean.worker.name}" widgetVar="editDialog" resizable="false" draggable="false"
                       showEffect="fade" hideEffect="fade" modal="true">
                 <p:dataTable var="w" value="#{workUnitBean}" >
-                    <p:column headerText="Code">
+                    <p:column headerText="#{msgs.code}">
                         <h:outputText value="#{w.subActivity.code}" />
                     </p:column>
-                    <p:column headerText="Actual Units">
+                    <p:column headerText="#{msgs.actualUnits}Actual Units">
                         <h:outputText value="#{w.getWorkerNumSubActivityUnits(w.subActivity)}" />
                     </p:column>
-                    <p:column headerText="Units Available">
+                    <p:column headerText="#{msgs.availableUnits}">
                         <h:outputText value="#{w.getNumSubActivityUnits(w.subActivity, w.iteration, true)}" />
                     </p:column>                    
                 </p:dataTable>

@@ -34,8 +34,8 @@
                 </p:column>
 
                 <f:facet name="header">
-                    <p:commandButton process="usecases" update=":form" icon="ui-icon-trash" value="Delete" action="#{riskBean.delete()}" >
-                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert"/>
+                    <p:commandButton process="usecases" update=":form" icon="ui-icon-trash" value="#{msgs.delete}" action="#{riskBean.delete()}" >
+                        <p:confirm header="#{msgs.confirmation}" message="#{msgs.are_you_sure}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton process="usecases" update=":form" icon="ui-icon-pencil" value="Edit" action="#{riskBean.editRisk()}" />
                 </f:facet>

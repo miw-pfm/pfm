@@ -62,6 +62,58 @@
                 </h:panelGrid>                     
             </h:panelGroup>                    
         </h:form>  
+        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
+
+
+<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
+
+        <h:form id="formShowDetails" >
+            <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+                <p:column styleClass="columUsecases" headerText="Use Case">
+                    <h:outputText value="#{usecases.name}" />
+                </p:column>
+
+                <p:column styleClass="columChecks" headerText="Ident"  selectionMode="multiple" style="width:2%;text-align:center"/>
+
+                <c:forEach  var="discipline" items="#{progressDetailBean.getlDisciplines()}" >
+                    <p:column headerText="#{discipline.name.charAt(0)}"  >
+                        <h:outputText value="#{progressDetailBean.getWorkUnitBy(iterationBean.iterEntity, usecases, discipline).percent}" />
+                    </p:column>
+                </c:forEach>
+
+            </p:dataTable>
+        </h:form>
+
+        <table id="leyendaDetailProgress">
+            <tr class="headTableLegend">
+                <td colspan="2">#{msgs.legend}</td>
+            </tr>
+
+            <tr>
+                <td>#{msgs.ident}</td>
+                <td>#{msgs.identification}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_s}</td>
+                <td>#{msgs.specification}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_d}</td>
+                <td>#{msgs.design}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_i}</td>
+                <td>#{msgs.implementation}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_t}</td>
+                <td>#{msgs.test}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_a}</td>
+                <td>#{msgs.acceptance}</td>
+            </tr>
+        </table>
 
     </ui:define>
 </ui:composition>
