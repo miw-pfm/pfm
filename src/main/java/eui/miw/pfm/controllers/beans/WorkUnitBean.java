@@ -8,8 +8,10 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.ActivitiesEjb;
 import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
 import eui.miw.pfm.controllers.ejb.WorkerEjb;
+import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.models.entities.ActivityEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
+import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
@@ -18,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -28,7 +30,7 @@ import javax.inject.Named;
  * @author César Martínez
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class WorkUnitBean extends Bean implements Serializable {
 
     private transient WorkUnitEntity workunit;
@@ -42,18 +44,27 @@ public class WorkUnitBean extends Bean implements Serializable {
 
     private Integer numHours;
     private final List<WorkUnitEntity> listWorkUnit = new ArrayList<>();
-    
+
     private int numUnitsToAsign;
+    private int numUnitsAvailable;
+    private int numUnitsToRemove;
+    private ProjectEntity project;
 
     public WorkUnitBean() {
-        super();        
+        super();
+        try {
+            project = ((ProjectEntity) sessionMap.get("project"));
+        } catch (Exception e) {
+            LOGGER.info("No session exist");
+        }
         workunit = new WorkUnitEntity();
-        this.activities = new ActivitiesEjb().obtainAllActivities();        
+        this.activities = new ActivitiesEjb().obtainAllActivities();
+        iteration = getAllIterations().get(0);
     }
 
     public WorkUnitBean(final WorkUnitEntity workunit) {
         super();
-        this.workunit = workunit;        
+        this.workunit = workunit;
     }
 
     public WorkUnitEntity getWorkunit() {
@@ -96,7 +107,7 @@ public class WorkUnitBean extends Bean implements Serializable {
         this.worker = worker;
     }
 
-    public void setWorker(int id) {
+    public void settWorker(int id) {
         setWorker(new WorkerEjb().getWorker(id));
     }
 
@@ -117,11 +128,11 @@ public class WorkUnitBean extends Bean implements Serializable {
     }
 
     public void setWorkunits(List<WorkUnitEntity> workunits) {
-        this.workunits = workunits;        
+        this.workunits = workunits;
     }
 
     public void setWorkunits(final SubActivityEntity subActivity, final IterationEntity iteration) {
-        this.workunits = new WorkUnitEjb().getAvailableWorkUnits(subActivity, iteration);        
+        this.workunits = new WorkUnitEjb().getAvailableWorkUnits(subActivity, iteration);
     }
 
     public int getNumUnitsToAsign() {
@@ -129,10 +140,10 @@ public class WorkUnitBean extends Bean implements Serializable {
     }
 
     public void setNumUnitsToAsign(int numUnitsToAsign) {
-        this.numUnitsToAsign = numUnitsToAsign;        
+        this.numUnitsToAsign = numUnitsToAsign;
     }
-        
-   public void getWorkUnitsByIterAndActivity(final ActivityEntity activity, final IterationEntity iteration) {
+
+    public void getWorkUnitsByIterAndActivity(final ActivityEntity activity, final IterationEntity iteration) {
         List<SubActivityEntity> subactivities;
         subactivities = new ActivitiesEjb().obtainSubActivities(activity);
         WorkUnitEjb workejb = new WorkUnitEjb();
@@ -141,18 +152,34 @@ public class WorkUnitBean extends Bean implements Serializable {
         }
     }
 
-    public int getNumSubActivityUnits(final SubActivityEntity subActivity, final IterationEntity iteration,boolean available){
+    public int getNumSubActivityUnits(final SubActivityEntity subActivity, final IterationEntity iteration, boolean available) {
         WorkUnitEjb workejb = new WorkUnitEjb();
         setIteration(iteration);
         int units = 0;
-        if(available){
-          units = workejb.getAvailableWorkUnits(subActivity, iteration).size();
-        }else{
-          units = workejb.getNumTotalWorkUnits(subActivity, iteration);
+        if (available) {
+            units = workejb.getAvailableWorkUnits(subActivity, iteration).size();
+        } else {
+            units = workejb.getNumTotalWorkUnits(subActivity, iteration);
         }
         return units;
     }
-    
+
+    public int getNumUnitsToRemove() {
+        return numUnitsToRemove;
+    }
+
+    public void setNumUnitsToRemove(int numUnitsToRemove) {
+        this.numUnitsToRemove = numUnitsToRemove;
+    }
+
+    public int getNumUnitsAvailable() {
+        return numUnitsAvailable;
+    }
+
+    public void setNumUnitsAvailable(int numUnitsAvailable) {
+        this.numUnitsAvailable = numUnitsAvailable;
+    }
+
     public void storeHours() {
         final WorkUnitEjb workUnitEjb = new WorkUnitEjb();
 
@@ -169,7 +196,7 @@ public class WorkUnitBean extends Bean implements Serializable {
 
         this.worker.getWorkUnits().add(workunit);
         final WorkerEjb workerEjb = new WorkerEjb();
-        workerEjb.update(worker);        
+        workerEjb.update(worker);
     }
 
     public void selectedSubActivityAndWorker() {
@@ -177,18 +204,86 @@ public class WorkUnitBean extends Bean implements Serializable {
 
         int sub_activity_id = Integer.parseInt(params.get("sub_activity_id"));
         int worker_id = Integer.parseInt(params.get("worker_id"));
-        setWorker(worker_id);
+        settWorker(worker_id);
         setSubActivity(sub_activity_id);
-        setWorkunits(subActivity,iteration);
-        setNumUnitsToAsign(workunits.size());        
+        setWorkunits(subActivity, iteration);
+        setNumUnitsToAsign(workunits.size());
     }
 
     public void addUnitsToWorker() {
-        for (int i = 0; i < numUnitsToAsign; i++) {     
+        for (int i = 0; i < numUnitsToAsign; i++) {
             workunit = workunits.get(i);
             workunit.setWorker(worker);
-            new WorkUnitEjb().update(workunit);            
-        }                
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("WorkUnitBean");
+            new WorkUnitEjb().update(workunit);
+        }
     }
+
+    public List<SubActivityEntity> getWorkerSubActivities() {
+        List<SubActivityEntity> workerSubActivities = new ArrayList<>();
+
+        if (worker == null) {
+            setWorker(new WorkerEntity());
+        }
+
+        for (WorkUnitEntity w : new WorkUnitEjb().getWorkerWorkUnits(worker)) {
+            if (!workerSubActivities.contains(w.getSubactivity()) && w.getIteration().equals(iteration)) {
+                workerSubActivities.add(w.getSubactivity());
+            }
+        }
+
+        return workerSubActivities;
+    }
+
+    public int getWorkerNumSubActivityUnits(SubActivityEntity sub) {
+
+        WorkUnitEjb workejb = new WorkUnitEjb();
+
+        int units = workejb.getNumTotalWorkUnits(sub, iteration, worker).size();
+        return units;
+
+    }
+
+    public void removeUnitsToWorker(SubActivityEntity sub) {
+
+        WorkUnitEjb workejb = new WorkUnitEjb();
+
+        for (WorkUnitEntity w : workejb.getNumTotalWorkUnits(sub, iteration, worker)) {
+            w.setWorker(null);
+            workejb.update(w);
+        }
+        settWorker(worker.getId());
+
+    }
+
+    public List<IterationEntity> getAllIterations() {
+        return new IterationEjb().getAllIterations(project);
+    }
+
+    public void handleIterationChange() {
+        this.iteration = new IterationEjb().obtainIteration(this.iteration.getId());
+    }
+
+    public void editWorkUnits(SubActivityEntity sub) {
+        setSubActivity(sub);
+        setNumUnitsAvailable(getNumSubActivityUnits(sub, iteration, true));
+        setNumUnitsToRemove(getWorkerNumSubActivityUnits(sub));
+    }
+
+    public void saveWorkerUnits() {
+
+        setWorkunits(new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration, worker));
+        for (int i = 0; i < numUnitsToRemove; i++) {
+            workunit = workunits.get(i);
+            workunit.setWorker(null);
+            new WorkUnitEjb().update(workunit);
+        }
+
+        setWorkunits(new WorkUnitEjb().getAvailableWorkUnits(subActivity, iteration));
+        for (int i = 0; i < numUnitsAvailable; i++) {
+            workunit = workunits.get(i);
+            workunit.setWorker(worker);
+            new WorkUnitEjb().update(workunit);
+        }
+    }
+
 }
