@@ -6,7 +6,10 @@
 package eui.miw.pfm.models.dao.interfaces;
 
 import eui.miw.pfm.models.dao.TransactionGenericDAO;
+import eui.miw.pfm.models.entities.DisciplineEntity;
+import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
+import eui.miw.pfm.models.entities.UseCaseEntity;
 
 /**
  *
@@ -14,4 +17,5 @@ import eui.miw.pfm.models.entities.ProgressDetailEntity;
  */
 public interface ProgressDetailDAO extends TransactionGenericDAO<ProgressDetailEntity, Integer> {
 
+    public ProgressDetailEntity findProgressDetail(final IterationEntity iteration, final UseCaseEntity useCase, final DisciplineEntity discipline);
 }

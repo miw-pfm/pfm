@@ -6,7 +6,10 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.entities.DisciplineEntity;
+import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
+import eui.miw.pfm.models.entities.UseCaseEntity;
 
 /**
  *
@@ -16,6 +19,14 @@ public class ProgressDetailEjb {
 
     public void create(final ProgressDetailEntity progressDetail) {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().create(progressDetail);
+    }
+
+    public void update(final ProgressDetailEntity progressDetail) {
+        AbstractDAOFactory.getFactory().getProgressDetailDAO().update(progressDetail);
+    }
+
+    public ProgressDetailEntity findProgressDetail(final IterationEntity iteration, final UseCaseEntity useCase, final DisciplineEntity discipline) {
+        return AbstractDAOFactory.getFactory().getProgressDetailDAO().findProgressDetail(iteration, useCase, discipline);
     }
 
 }

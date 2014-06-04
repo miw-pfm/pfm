@@ -26,122 +26,131 @@ import javax.inject.Named;
 @ViewScoped
 @Named
 public class ProgressDetailBean extends Bean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(ProgressDetailBean.class.getName());//NOPMD
 
-    private String iterationSelect;
-    private String disciplineSelect;
-    private String useCaseSelect;
+    private int iterationSelect;
+    private int disciplineSelect;
+    private int useCaseSelect;
     private int percentCompleted;
-    private boolean enabled;
-    
+    private int enabled = 1;
+
     private transient ProgressDetailEntity progressDetail;
-    
+
     private transient List<DisciplineEntity> lDisciplines;
-    
+
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
-    
+//    
     @ManagedProperty(value = "#{iterationBean}")
     private final transient UseCaseBean useCaseBean = new UseCaseBean();
-    
+
     @PostConstruct
     public void init() {
-        
+
         this.lDisciplines = new DisciplineEjb().findAll();
         this.progressDetail = new ProgressDetailEntity();
     }
-    
+
     public void save() {
         this.progressDetail.setDiscipline(getDisciplineEntity());
-        this.progressDetail.setIsChecked(this.enabled);
+        this.progressDetail.setIsChecked((this.enabled != 0));
         this.progressDetail.setIteration(getIterationEntity());
         this.progressDetail.setPercent(this.percentCompleted);
         this.progressDetail.setUseCase(getUseCaseEntity());
-        
-        new ProgressDetailEjb().create(this.progressDetail);
+
+        System.out.println("Progress Detail: " + progressDetail);
+//        if (this.progressDetail.getId() == null) {
+//            new ProgressDetailEjb().create(this.progressDetail);
+//        } else {
+//            new ProgressDetailEjb().update(this.progressDetail);
+//        }
     }
-    
+
     private IterationEntity getIterationEntity() {
-        final String[] strings = this.iterationSelect.split(".-");
-        
         for (IterationEntity iteration : this.getIterations()) {
-            if (iteration.getTypeIteration().toString().equals(strings[0]) && iteration.getIterValue() == Integer.parseInt(strings[1])) {
+            if (iteration.getId().equals(this.iterationSelect)) {
                 return iteration;
             }
         }
         return null;
     }
-    
+
     private UseCaseEntity getUseCaseEntity() {
-        for (UseCaseEntity useCase : this.getlUseCases()) {
-            if (useCase.getName().equals(this.useCaseSelect)) {
+        for (UseCaseEntity useCase : this.getUseCases()) {
+            if (useCase.getId().equals(this.useCaseSelect)) {
                 return useCase;
             }
         }
         return null;
     }
-    
+
     private DisciplineEntity getDisciplineEntity() {
-        for (DisciplineEntity discipline : this.getlDisciplines()) {
-            if (discipline.getName().equals(this.disciplineSelect)) {
+        for (DisciplineEntity discipline : this.getDisciplines()) {
+            if (discipline.getId().equals(this.disciplineSelect)) {
                 return discipline;
             }
         }
         return null;
     }
-    
-    public List<IterationEntity> getIterations() {
-        return this.iterationBean.getAllIterations();
+
+    public void findProgressDetail() {
+        this.progressDetail = new ProgressDetailEjb().findProgressDetail(getIterationEntity(), getUseCaseEntity(), getDisciplineEntity());
+        System.out.println("Progress Detail: " + progressDetail);
+
     }
-    
-    public List<DisciplineEntity> getlDisciplines() {
+
+    public List<IterationEntity> getIterations() {
+        return iterationBean.getAllIterations();
+    }
+
+    public List<DisciplineEntity> getDisciplines() {
         return lDisciplines;
     }
-    
-    public List<UseCaseEntity> getlUseCases() {
+
+    public List<UseCaseEntity> getUseCases() {
         return useCaseBean.getUseCases();
     }
-    
-    public String getIterationSelect() {
+
+    public int getIterationSelect() {
         return iterationSelect;
     }
-    
-    public void setIterationSelect(final String iterationSelect) {
+
+    public void setIterationSelect(final int iterationSelect) {
         this.iterationSelect = iterationSelect;
     }
-    
-    public String getDisciplineSelect() {
+
+    public int getDisciplineSelect() {
         return disciplineSelect;
     }
-    
-    public void setDisciplineSelect(final String disciplineSelect) {
+
+    public void setDisciplineSelect(final int disciplineSelect) {
         this.disciplineSelect = disciplineSelect;
     }
-    
-    public String getUseCaseSelect() {
+
+    public int getUseCaseSelect() {
         return useCaseSelect;
     }
-    
-    public void setUseCaseSelect(final String useCaseSelect) {
+
+    public void setUseCaseSelect(final int useCaseSelect) {
         this.useCaseSelect = useCaseSelect;
     }
-    
+
     public int getPercentCompleted() {
         return percentCompleted;
     }
-    
+
     public void setPercentCompleted(final int percentCompleted) {
         this.percentCompleted = percentCompleted;
     }
-    
-    public boolean isEnabled() {
+
+    public int getEnabled() {
         return enabled;
     }
-    
-    public void setEnabled(final boolean enabled) {
+
+    public void setEnabled(final int enabled) {
         this.enabled = enabled;
     }
-    
+
 }
