@@ -6,6 +6,7 @@
 
 package eui.miw.pfm.models.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "target")
-public class TargetEntity {
+public class TargetEntity implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

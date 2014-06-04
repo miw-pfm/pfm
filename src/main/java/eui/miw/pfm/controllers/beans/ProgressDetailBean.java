@@ -55,7 +55,6 @@ public class ProgressDetailBean extends Bean implements Serializable {
     
     public void save() {
         this.progressDetail.setDiscipline(getDisciplineEntity());
-       // this.progressDetail.setIsChecked(this.enabled);
         this.progressDetail.setIteration(getIterationEntity());
         this.progressDetail.setPercent(this.percentCompleted);
         this.progressDetail.setUseCase(getUseCaseEntity());
