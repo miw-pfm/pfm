@@ -12,11 +12,11 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.phasePlan_title}
+        #{msgs.phasePlan}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.editWorker_subtitle}
+        #{msgs.editWorker}
     </ui:define>
 
     <ui:define name="body">
@@ -28,20 +28,20 @@
                 <h:panelGrid columns="2">
 
 
-                    <h:outputLabel id="nameLabel" for="name" value="#{msgs.nameWorker}"/>
-                    <h:inputText id="name" value="#{workerBean.workerEntity.name}" maxlength="100"  required="true"  requiredMessage="Error. #{msgs.nameWorker} not NULL" />
+                    <h:outputLabel id="nameLabel" for="name" value="#{msgs.name}"/>
+                    <h:inputText id="name" value="#{workerBean.workerEntity.name}" maxlength="100"  required="true"  requiredMessage="Error. #{msgs.name} not NULL" />
 
-                    <h:outputLabel id="surnameLabel" for="surname"  value="#{msgs.surnameWorker}"/>
-                    <h:inputText id="surname" value="#{workerBean.workerEntity.surname}" maxlength="100" required="true" requiredMessage="Error. #{msgs.surnameWorker} not NULL"   />
+                    <h:outputLabel id="surnameLabel" for="surname"  value="#{msgs.surname}"/>
+                    <h:inputText id="surname" value="#{workerBean.workerEntity.surname}" maxlength="100" required="true" requiredMessage="Error. #{msgs.surname} not NULL"   />
 
-                    <h:outputLabel id="dniLabel" for="dni" value="#{msgs.dniWorker}"/>
-                    <h:inputText id="dni" value="#{workerBean.workerEntity.dni}" maxlength="10" required="true"  requiredMessage="Error. #{msgs.dniWorker} not NULL" />
+                    <h:outputLabel id="dniLabel" for="dni" value="#{msgs.dni}"/>
+                    <h:inputText id="dni" value="#{workerBean.workerEntity.dni}" maxlength="10" required="true"  requiredMessage="Error. #{msgs.dni} not NULL" />
 
-                    <h:outputLabel id="emailLabel" for="email" value="#{msgs.emailWorker}"/>
-                    <h:inputText id="email" value="#{workerBean.workerEntity.email}" maxlength="255" required="true"  requiredMessage="Error. #{msgs.emailWorker} not NULL" />
+                    <h:outputLabel id="emailLabel" for="email" value="#{msgs.email}"/>
+                    <h:inputText id="email" value="#{workerBean.workerEntity.email}" maxlength="255" required="true"  requiredMessage="Error. #{msgs.email} not NULL" />
 
-                    <h:outputLabel id="gitUserLabel" value="#{msgs.gitUserWorker}"/>
-                    <h:inputText id="gitUser" value="#{workerBean.workerEntity.gitUser}" maxlength="25" required="true"   requiredMessage="Error. #{msgs.gitUserWorker} not NULL" />
+                    <h:outputLabel id="gitUserLabel" value="#{msgs.gitUser}"/>
+                    <h:inputText id="gitUser" value="#{workerBean.workerEntity.gitUser}" maxlength="25" required="true"   requiredMessage="Error. #{msgs.gitUser} not NULL" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{workerBean.update()}" styleClass="btn btn-success" />
                     <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="workerListAll"/>       

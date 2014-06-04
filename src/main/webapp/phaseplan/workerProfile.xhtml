@@ -16,7 +16,7 @@
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.workerProfile_subtitle} -- #{workerProfileBean.workerEntity.name}
+        #{msgs.workerProfile} -- #{workerProfileBean.workerEntity.name}
     </ui:define>
 
     <ui:define name="body">
@@ -26,13 +26,13 @@
                 <p:dataTable id="workersTable" var="project" value="#{workerProfileBean.projects}">
 
                     <f:facet name="header">
-                        #{msgs.workerProfile_tablename}  
+                        #{msgs.currentInvolvement}
                     </f:facet>
 
                     <p:columnGroup type="header">
                         <p:row>
-                            <p:column headerText="#{msgs.workerProfile_tasks}" />
-                            <p:column headerText="#{msgs.workerProfile_time}" />
+                            <p:column headerText="#{msgs.tasks}" />
+                            <p:column headerText="#{msgs.time}" />
                         </p:row>
                     </p:columnGroup>
 

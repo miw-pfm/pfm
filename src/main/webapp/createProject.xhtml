@@ -8,23 +8,23 @@
                 template="/templates/templateHome.xhtml">
 
     <ui:define name="pagetitle">
-        RUP Management System
+        #{msgs.namerup}
     </ui:define>    
 
     <ui:define name="title">
-        Home
+        #{msgs.home}
     </ui:define>
     <ui:define name="subtitle">
 
     </ui:define>	
     <ui:define name="body">
         <h:panelGroup id="createproject" layout="block">
-            <h2>Enter name of the project:</h2>
+            <h2>#{msgs.name_of_project}</h2>
 
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:inputText value="#{projectCreatetBean.projectEntity.name}" maxlength="100" />
-                <p:commandButton value="Submit" action="#{projectCreatetBean.createProject()}" update="growl" styleClass="btn btn-success"/>     
+                <p:commandButton value="#{msgs.submit}" action="#{projectCreatetBean.createProject()}" update="growl" styleClass="btn btn-success"/>     
             </h:form>    
         </h:panelGroup>
     </ui:define>

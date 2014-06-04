@@ -10,12 +10,12 @@
         <h:panelGroup id="panelheader" layout="block">
             <h:panelGroup id="logo" layout="block">
                 <h:link outcome="/projectList" >
-                    <h:graphicImage library="images" name="logo.jpg" alt="RUP Management System" title="RUP Management System" width="250" height="85" />      
+                    <h:graphicImage library="images" name="logo.jpg" alt="#{msgs.namerup}" title="#{msgs.namerup}" width="250" height="85" />      
                 </h:link>
             </h:panelGroup>
             <h:panelGroup id="pagetitle" layout="block">
                 <h:panelGroup id="logout" layout="block">
-                    <h:link outcome="/logout" value="Log Out" includeViewParams="true" />                             
+                    <h:link outcome="/logout" value="#{msgs.logOut}" includeViewParams="true" />                             
                 </h:panelGroup>   
                 <h1><ui:insert name="pagetitle"/></h1>
             </h:panelGroup>

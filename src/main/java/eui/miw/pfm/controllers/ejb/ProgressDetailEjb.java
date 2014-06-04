@@ -29,4 +29,7 @@ public class ProgressDetailEjb {
         return AbstractDAOFactory.getFactory().getProgressDetailDAO().find(psql,new Object[]{iteration,useCase,discipline} );
     }
 
+    public List<ProgressDetailEntity> getDetails(){
+       return AbstractDAOFactory.getFactory().getProgressDetailDAO().findAll();
+    }
 }
