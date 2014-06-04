@@ -42,4 +42,9 @@ public class IterationEjb {
         final String psql = "SELECT i FROM IterationEntity i WHERE i.typeIteration = ?1 AND i.project = ?2";//NOPMD
         return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, type, proj);
     }
+    
+    public List<IterationEntity> getAllIterations(final ProjectEntity proj) {
+        final String psql = "SELECT i FROM IterationEntity i WHERE i.project = ?1";//NOPMD
+        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, proj);
+    }
 }
