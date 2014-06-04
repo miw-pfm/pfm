@@ -9,7 +9,7 @@
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define> 
-    
+
     <ui:define name="title">
 
     </ui:define>
@@ -19,9 +19,6 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:outputScript target="body">
-      
-        </h:outputScript>
 
         <h:form id="formInsertDetail">
             <h:panelGroup layout="block">
@@ -67,7 +64,7 @@
 
             <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
 
-            <p:column styleClass="columIdentificacion" headerText="Ident">
+            <p:column styleClass="columIdentificacion" headerText="#{msgs.ident}">
                 <h:outputText value="a" />
             </p:column>
 
@@ -78,84 +75,32 @@
 
         <table id="leyendaDetailProgress">
             <tr class="headTableLegend">
-                <td colspan="2">LEGEND</td>
+                <td colspan="2">#{msgs.legend}</td>
             </tr>
-            
-            <tr>
-                <td>Ident</td>
-                <td>Identification</td>
-            </tr>
-            <tr>
-                <td>S</td>
-                <td>Specification</td>
-            </tr>
-            <tr>
-                <td>D</td>
-                <td>Design</td>
-            </tr>
-            <tr>
-                <td>I</td>
-                <td>Implementation</td>
-            </tr>
-            <tr>
-                <td>T</td>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>A</td>
-                <td>Acceptance</td>
-            </tr>
-        </table>
 
-        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
-
-
-<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
-
-        <p:dataTable id="tableReadDetailProgress2"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
-            <p:column styleClass="columUsecases" headerText="Use Case">
-                <h:outputText value="#{usecases.name}" />
-            </p:column>
-
-            <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
-
-            <p:column styleClass="columIdentificacion" headerText="Ident">
-                <h:outputText value="a" />
-            </p:column>
-
-            <p:column headerText="a">
-                <h:outputText value="b" />
-            </p:column>
-        </p:dataTable>
-
-        <table id="leyendaDetailProgress">
-            <tr class="headTableLegend">
-                <td colspan="2">LEGEND</td>
-            </tr>
-            
             <tr>
-                <td>Ident</td>
-                <td>Identification</td>
+                <td>#{msgs.ident}</td>
+                <td>#{msgs.identification}</td>
             </tr>
             <tr>
-                <td>S</td>
-                <td>Specification</td>
+                <td>#{msgs.letter_s}</td>
+                <td>#{msgs.specification}</td>
             </tr>
             <tr>
-                <td>D</td>
-                <td>Design</td>
+                <td>#{msgs.letter_d}</td>
+                <td>#{msgs.design}</td>
             </tr>
             <tr>
-                <td>I</td>
-                <td>Implementation</td>
+                <td>#{msgs.letter_i}</td>
+                <td>#{msgs.implementation}</td>
             </tr>
             <tr>
-                <td>T</td>
-                <td>Test</td>
+                <td>#{msgs.letter_t}</td>
+                <td>#{msgs.test}</td>
             </tr>
             <tr>
-                <td>A</td>
-                <td>Acceptance</td>
+                <td>#{msgs.letter_a}</td>
+                <td>#{msgs.acceptance}</td>
             </tr>
         </table>
 

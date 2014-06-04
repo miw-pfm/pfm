@@ -10,11 +10,11 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.riskPlan_title}
+        #{msgs.riskPlan}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.list_usecase_subtitle}  Use Case Listing
+        #{msgs.use_case_listing}
     </ui:define>
 
     <ui:define name="body">
@@ -34,18 +34,18 @@
                 </p:column>
 
                 <f:facet name="header">
-                    <p:commandButton process="usecases" update=":form" icon="ui-icon-trash" value="Delete" action="#{useCaseBean.delete()}" >
-                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert"/>
+                    <p:commandButton process="usecases" update=":form" icon="ui-icon-trash" value="#{msgs.delete}" action="#{useCaseBean.delete()}" >
+                        <p:confirm header="#{msgs.confirmation}" message="#{msgs.are_you_sure}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton process="usecases" update=":form" icon="ui-icon-pencil" value="Edit" action="#{useCaseBean.editUseCase()}" />
+                    <p:commandButton process="usecases" update=":form" icon="ui-icon-pencil" value="#{mags.edit}" action="#{useCaseBean.editUseCase()}" />
                 </f:facet>
             </p:dataTable>
 
 
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" >  
-                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                <p:commandButton value="#{msgs.yes}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="#{msgs.no}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
             </p:confirmDialog>  
 
         </h:form>

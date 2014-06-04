@@ -8,10 +8,10 @@
 
 
     <ui:define name="title">
+        #{msgs.namerup}
     </ui:define>    
 
-    <ui:define name="pagetitle">
-        #{msgs.namerup}        
+    <ui:define name="pagetitle">       
     </ui:define>
     <ui:define name="body">
         <h:outputScript target="head">
@@ -44,12 +44,12 @@
                 <h:panelGrid columns="3">
 
                     <h:inputText value="#{loginBean.username}"
-                                 id="username" required="true" label="Username" />
+                                 id="username" required="true" label="#{msgs.username}" />
 
                     <h:inputSecret value="#{loginBean.password}"
-                                   id="password" required="true" label="Password" />
+                                   id="password" required="true" label="#{msgs.password}" />
 
-                    <p:commandButton id="loginButton" value="Login" update="growl"
+                    <p:commandButton id="loginButton" value="#{msgs.login}" update="growl"
                                      actionListener="#{loginBean.login}"
                                      oncomplete="manejarLogin(xhr, status, args)"/>
                 </h:panelGrid>

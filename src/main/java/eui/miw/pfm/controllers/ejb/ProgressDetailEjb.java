@@ -7,6 +7,7 @@ package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
+import java.util.List;
 
 /**
  *
@@ -17,5 +18,8 @@ public class ProgressDetailEjb {
     public void create(final ProgressDetailEntity progressDetail) {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().create(progressDetail);
     }
-
+    
+    public List<ProgressDetailEntity> getDetails(){
+       return AbstractDAOFactory.getFactory().getProgressDetailDAO().findAll();
+    }
 }

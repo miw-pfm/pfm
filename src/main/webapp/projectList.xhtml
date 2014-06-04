@@ -8,9 +8,8 @@
 
 
     <ui:define name="title">
-        #{msgs.list_project_subtitle}
-
-    </ui:define>    
+        #{msgs.list_of_projects}
+    </ui:define>
 
     <ui:define name="pagetitle">
         #{msgs.namerup}        
@@ -44,17 +43,17 @@
 
                <p:ajax event="rowSelect" listener="#{projectListBean.onRowSelect}"  />
 
-               <p:column headerText="Name" sortBy="name" filterBy="#{project.name}">
+               <p:column headerText="#{msgs.name}" sortBy="name" filterBy="#{project.name}">
                    <h:outputText value="#{project.name}" />
                </p:column>
 
-                <p:column headerText="Start Date" sortBy="startDate" filterBy="#{project.stringStartDate}">
+               <p:column headerText="#{msgs.startDate}" sortBy="startDate" filterBy="#{project.stringStartDate}">
                     <h:outputText value="#{project.startDate}">
                         <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
                     </h:outputText>
                 </p:column>
 
-                <p:column headerText="End Date" sortBy="endDate" filterBy="#{project.stringEndDate}">
+               <p:column headerText="#{msgs.endDate}" sortBy="endDate" filterBy="#{project.stringEndDate}">
                     <h:outputText value="#{project.endDate}">
                         <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
                     </h:outputText>
@@ -65,18 +64,18 @@
 
         </h:form>
         <p></p>
-        <h:link value="#{msgs.create_project}" styleClass="btn btn-success" id="submitcreateproject"/>
+        <h:link value="#{msgs.create_new_project}" styleClass="btn btn-success" id="submitcreateproject"/>
         <h:panelGroup id="createnewproject" layout="block" style="display: none;"  >
             <h:form>
                 <h:panelGroup layout="block">
                     <h:panelGroup layout="span" styleClass="btn" style="float: right;" ><h:link value="X" id="cancelcreateproject" /></h:panelGroup>
 
                     <h:panelGrid columns="2" style=" overflow: auto;">                            
-                        <h:outputText value="#{msgs.enter_name_project}" class="nameOfTheProject" />          
+                        <h:outputText value="#{msgs.name_of_project}" class="nameOfTheProject" />          
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <h:inputText value="#{projectCreatetBean.projectEntity.name}" maxlength="100" />
                         <h:outputText />                                    
-                        <p:commandButton value="Submit" action="#{projectCreatetBean.createProject()}" update="growl" styleClass="btn btn-success"/>                    
+                        <p:commandButton value="#{msgs.submit}" action="#{projectCreatetBean.createProject()}" update="growl" styleClass="btn btn-success"/>                    
                     </h:panelGrid>                    
                 </h:panelGroup>                    
             </h:form>              

@@ -105,7 +105,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
 
         this.listWorkerBean.reload();
 
-        return "list_worker";
+        return "workerList";
     }
 
     public String add(final WorkerEntity worker) {
@@ -120,7 +120,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
 
         this.listWorkerBean.reload();
 
-        return "list_worker";
+        return "workerList";
     }
 
     public WorkerListNotProjectBean getListWorkerBean() {

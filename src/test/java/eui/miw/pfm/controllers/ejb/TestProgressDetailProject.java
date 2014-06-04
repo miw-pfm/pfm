@@ -87,6 +87,7 @@ public class TestProgressDetailProject {
 
         progressDetail1 = new ProgressDetailEntity();
         progressDetail1.setDiscipline(discipline);
+
         progressDetail1.setIteration(iteration);
         progressDetail1.setPercent(5);
         progressDetail1.setUseCase(useCase);
