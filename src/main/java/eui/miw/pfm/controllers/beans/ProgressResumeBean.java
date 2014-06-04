@@ -2,6 +2,7 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
+import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,6 +24,9 @@ public class ProgressResumeBean extends Bean implements Serializable {
     
     private ProgressDetailEntity progressDetailEntity;
     private ProgressDetailEjb progressDetailEjb;
+    private ProjectEntity project;
+    @ManagedProperty(value = "#{enabledUseCases}")
+    private transient int enabledUseCases;  
     
     @ManagedProperty(value = "#{progressDetailBean}")
     private final transient ProgressDetailBean progressDetailBean = new ProgressDetailBean();
@@ -30,9 +34,15 @@ public class ProgressResumeBean extends Bean implements Serializable {
     private int total;
     
     public ProgressResumeBean(){
-        super();
+        super();          
+        try {
+            this.project = ((ProjectEntity) sessionMap.get("project"));
+        } catch (Exception e) {
+            LOGGER.info("No session exist");
+        }  
         progressDetailEntity = new ProgressDetailEntity();
         progressDetailEjb = new ProgressDetailEjb();
+        this.setEnabledUseCases(progressDetailEjb.getEnabledUseCases(project));
     }
 
     public int getTotal() {
@@ -58,6 +68,22 @@ public class ProgressResumeBean extends Bean implements Serializable {
     public void setProgressDetailEjb(ProgressDetailEjb progressDetailEjb) {
         this.progressDetailEjb = progressDetailEjb;
     }
+
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
+    }
+
+    public int getEnabledUseCases() {
+        return enabledUseCases;
+    }
+
+    public void setEnabledUseCases(int enabledUseCases) {
+        this.enabledUseCases = enabledUseCases;
+    }   
     
     public void obtainPercentsOfPhasePerIteration(){
     //por cada it y disc, find all (Por cada iteración y disciplina, sumar el porcentaje de los CDU.)
@@ -68,4 +94,6 @@ public class ProgressResumeBean extends Bean implements Serializable {
             this.setTotal(this.getTotal()+this.getProgressDetailEntity().getPercent());
         }
     }
+    
+    
 }

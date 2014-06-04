@@ -27,7 +27,8 @@
             
             <h:panelGroup id="totalUC" layout="block">
                 <h4>#{msgs.total_number_use_cases}</h4>
-                <h:outputText value="#{phase.totalCU}" style="display:block; border: 2px solid" />
+                <h:outputText value="#{progressResumeBean.enabledUseCases}" style="display:block; border: 2px solid; width: 6%; text-align: center" />
+                <br/>
             </h:panelGroup>
 
             <p:dataTable id="dataTableSubActivity" value="#{progressAbstractBean.phases}" var="subactivity">     
