@@ -192,7 +192,7 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
     }
 
     public void close() {
-        this.entityManager.close();
+        //this.entityManager.close();
     }
 
     @Override
