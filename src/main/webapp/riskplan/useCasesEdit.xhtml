@@ -31,7 +31,7 @@
                     <h:outputText value="#{msgs.description}" />                
                     <h:inputText id="description" value="#{useCaseBean.usecase.description}" maxlength="100">                              
                     </h:inputText>                 
-                    <h:commandButton value="Submit" action="#{useCaseBean.update()}" styleClass="btn btn-success" />                                   
+                    <h:commandButton value="#{msgs.submit}" action="#{useCaseBean.update()}" styleClass="btn btn-success" />                                   
                 </h:panelGrid>                    
             </h:panelGroup>                     
         </h:form> 

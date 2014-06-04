@@ -12,21 +12,19 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{calendarProjectBean.redirectIfNoCalendar('projectConfig')}" />
     </f:metadata>
-        <!--<f:event listener="#{calendarProjectBean.redirectIfNoCalendar}" type="preRenderView" />-->
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define>    
 
     <ui:define name="title">
-        Home
+        #{msgs.home}
     </ui:define>
 
     <ui:define name="subtitle">
-        Project's Calendar
+        #{msgs.projectsCalendar}
     </ui:define>
 
     <ui:define name="body">
-
         <h:outputScript target="head">
             function markHolidaysAndReportedDays(date) { 
             var day = date.getDay();
@@ -42,9 +40,9 @@
 
         </h:outputScript> 
         <h:panelGroup id="infoCalendar" layout="block">            
-            <p class="CalendarFrom"><span>Since:</span>#{calendarProjectBean.startDate}</p>
-            <p class="CalendarTo"><span>Until:</span>#{calendarProjectBean.endDate}</p>
-            <p class="workingDays">Working days</p>
+            <p class="CalendarFrom"><span>#{msgs.since}</span>#{calendarProjectBean.startDate}</p>
+            <p class="CalendarTo"><span>#{msgs.until}</span>#{calendarProjectBean.endDate}</p>
+            <p class="workingDays">#{msgs.workingDays}</p>
             <p class="totalDays">#{calendarProjectBean.workingDays}</p>
         </h:panelGroup>
 
@@ -59,14 +57,14 @@
                 <p:watermark for="nameDate" value="#{msgs.name}" />
                 <p:watermark for="descriptionDate" value="#{msgs.description}" />  
                 <h:panelGrid columns="1" id="tableHolidayForm">
-                    <span class="titTableFormCal">Holiday's Name:</span>
-                    <h:inputText id="nameDate" label="Name" value="#{calendarProjectBean.name}" disabled="#{calendarProjectBean.disableNameField}"/>
-                    <span class="titTableFormCal">Holiday's Description:</span>
-                    <h:inputText id="descriptionDate" label="Description" value="#{calendarProjectBean.description}" disabled="#{calendarProjectBean.disableDescField}" />
+                    <span class="titTableFormCal">#{msgs.holidaysName}</span>
+                    <h:inputText id="nameDate" label="#{msgs.name}" value="#{calendarProjectBean.name}" disabled="#{calendarProjectBean.disableNameField}"/>
+                    <span class="titTableFormCal">#{msgs.holidaysDescription}</span>
+                    <h:inputText id="descriptionDate" label="#{msgs.description}" value="#{calendarProjectBean.description}" disabled="#{calendarProjectBean.disableDescField}" />
                     <h:panelGroup layout="block">
-                        <p:commandButton id="addHoliday" value="Add" actionListener="#{calendarProjectBean.addDateSelect}"  widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args) "/>                                                                              
-                        <p:commandButton id="editdate" value="Edit" actionListener="#{calendarProjectBean.updateDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args)"/>
-                        <p:commandButton id="removeHoliday" value="Remove"  actionListener="#{calendarProjectBean.deleteDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args)"/>
+                        <p:commandButton id="addHoliday" value="#{msgs.add}" actionListener="#{calendarProjectBean.addDateSelect}"  widgetVar="add" disabled="#{calendarProjectBean.disableAdd}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args) "/>                                                                              
+                        <p:commandButton id="editdate" value="#{msgs.edit}" actionListener="#{calendarProjectBean.updateDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args)"/>
+                        <p:commandButton id="removeHoliday" value="#{msgs.remove}"  actionListener="#{calendarProjectBean.deleteDateSelect}" disabled="#{calendarProjectBean.disableEditRemove}" update=":infoCalendar :form_calendario growl" oncomplete="calendaActionrCallback(xhr, status, args)"/>
                     </h:panelGroup>
                 </h:panelGrid>
             </h:form>
