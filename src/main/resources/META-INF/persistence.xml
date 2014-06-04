@@ -13,19 +13,17 @@
         <class>eui.miw.pfm.models.entities.SubActivityEntity</class>
         <class>eui.miw.pfm.models.entities.WorkUnitEntity</class>
         <class>eui.miw.pfm.models.entities.ActivityEntity</class>
-        
+        <class>eui.miw.pfm.models.entities.DisciplineEntity</class>
+        <class>eui.miw.pfm.models.entities.ProgressDetailEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <validation-mode>NONE</validation-mode>
         <properties>
-
-<!--    <property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
-
+            <!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />--> 
             <!--LOCAL-->
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/pfm"/>
             <property name="javax.persistence.jdbc.user" value="miw"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-
             <!--REMOTE-->
             <!--
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://37.187.93.117:3306/pfm"/>

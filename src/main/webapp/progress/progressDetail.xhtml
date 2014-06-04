@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateProgress.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="pagetitle">
+        #{projectConfBean.project.name}
+    </ui:define> 
+    
+    <ui:define name="title">
+
+    </ui:define>
+
+    <ui:define name="subtitle">
+
+    </ui:define>
+
+    <ui:define name="body">
+        <h:outputScript target="body">
+      
+        </h:outputScript>
+
+        <h:form id="formInsertDetail">
+            <h:panelGroup layout="block">
+                <p:growl id="growl"  sticky="true" life="1500"/>
+                <h:panelGrid columns="2">    
+                    <h:outputText value="Iterations" />                
+                    <p:selectOneMenu id="chooseIteration" value="#{iterationBean.iterEntity.id}">
+                        <f:selectItems value="#{iterationBean.allIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
+                    </p:selectOneMenu>
+                    <h:outputText value="Discipline" />                                
+                    <p:selectOneMenu id="chooseDiscipline"  value="" disabled="#{selectValue == 0}">
+                        <f:selectItems value="Prueba"  />
+                    </p:selectOneMenu> 
+                    <h:outputText value="Use Cases" />                                
+                    <p:selectOneMenu id="chooseUsecase"  value="#{useCaseBean.usecase.id}">
+                        <f:selectItems value="#{useCaseBean.useCases}" var="usecase" itemLabel="#{usecase.name}" itemValue="#{usecase.id}"/>
+                    </p:selectOneMenu> 
+                    <h:outputText value="U.C. Enable" />                                
+                    <p:selectOneMenu id="chooseEnable"  value="#{selectValue}" onchange="">
+                        <f:selectItem itemLabel="True" itemValue="1" />
+                        <f:selectItem itemLabel="False" itemValue="0" /> 
+                        <p:ajax event="change" update="chooseDiscipline chooseComplete"/>
+                    </p:selectOneMenu> 
+                    <h:outputText value="" />  
+                </h:panelGrid>                             
+                <h:panelGrid columns="3"> 
+                    <h:outputText value="% Complete" />
+                    <p:spinner id="chooseComplete" value="0" disabled="#{selectValue == 0}" />
+                    <h:commandButton id="submitDetailProgress" value="#{msgs.submit}" action="#{useCaseBean.create()}" styleClass="btn btn-success" />                    
+                </h:panelGrid>                     
+            </h:panelGroup>                    
+        </h:form>  
+
+        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
+
+
+<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
+
+        <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+            <p:column styleClass="columUsecases" headerText="Use Case">
+                <h:outputText value="#{usecases.name}" />
+            </p:column>
+
+            <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
+
+            <p:column styleClass="columIdentificacion" headerText="Ident">
+                <h:outputText value="a" />
+            </p:column>
+
+            <p:column headerText="a">
+                <h:outputText value="b" />
+            </p:column>
+        </p:dataTable>
+
+        <table id="leyendaDetailProgress">
+            <tr class="headTableLegend">
+                <td colspan="2">LEGEND</td>
+            </tr>
+            
+            <tr>
+                <td>Ident</td>
+                <td>Identification</td>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>Specification</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>Design</td>
+            </tr>
+            <tr>
+                <td>I</td>
+                <td>Implementation</td>
+            </tr>
+            <tr>
+                <td>T</td>
+                <td>Test</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>Acceptance</td>
+            </tr>
+        </table>
+
+        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
+
+
+<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
+
+        <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+            <p:column styleClass="columUsecases" headerText="Use Case">
+                <h:outputText value="#{usecases.name}" />
+            </p:column>
+
+            <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
+
+            <p:column styleClass="columIdentificacion" headerText="Ident">
+                <h:outputText value="a" />
+            </p:column>
+
+            <p:column headerText="a">
+                <h:outputText value="b" />
+            </p:column>
+        </p:dataTable>
+
+        <table id="leyendaDetailProgress">
+            <tr class="headTableLegend">
+                <td colspan="2">LEGEND</td>
+            </tr>
+            
+            <tr>
+                <td>Ident</td>
+                <td>Identification</td>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>Specification</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>Design</td>
+            </tr>
+            <tr>
+                <td>I</td>
+                <td>Implementation</td>
+            </tr>
+            <tr>
+                <td>T</td>
+                <td>Test</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>Acceptance</td>
+            </tr>
+        </table>
+
+    </ui:define>
+</ui:composition>

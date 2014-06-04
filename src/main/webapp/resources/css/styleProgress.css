@@ -1,0 +1,90 @@
+#title{
+    background: #F2DDDC;
+    color: #632523;
+}
+#panelbodyProgress {
+    background: #E6B9B8;
+}
+
+#panelmenu li.opc3 a{
+    background: #E6B9B8;
+    color: #FFF;
+}
+
+#formInsertDetail\:chooseIteration{
+    margin-bottom: 10px;
+}
+
+#formInsertDetail\:chooseEnable{
+    margin-bottom: 10px;
+}
+
+#formInsertDetail\:submitDetailProgress{
+
+    background-image: linear-gradient(to bottom, #F3D5BC 0%, #C0504D 100%);
+    border-color: #C0504D;
+    display: block;
+    width: 95px;
+    margin-top: 0px;
+    margin-left: 35px;
+}
+
+#formInsertDetail\:submitDetailProgress:hover{
+    background-image: none;
+    background-color: #F2DDDC;
+    border-color: #F2DDDC;
+}
+
+#formInsertDetail\:chooseIteration_input{
+    width: 200px;
+}
+
+#formInsertDetail\:chooseDiscipline_input{
+    width: 200px;
+}
+
+#formInsertDetail\:chooseUsecase_input{
+    width: 200px;
+}
+
+#formInsertDetail\:chooseComplete_input{
+    width: 70px;
+    margin-left: 0px;
+}
+
+#tableReadDetailProgress{
+width: 510px;
+}
+
+#tableReadDetailProgress thead tr th span{
+
+}
+
+#tableReadDetailProgress thead tr th.columChecks div{
+    display: none;
+}
+
+#tableReadDetailProgress tr .columUsecases{
+    width: 238px;
+}
+
+#tableReadDetailProgress tr .columIdentificacion{
+    width: 30px;
+}
+
+#leyendaDetailProgress{
+    border: 1px solid #E6B9B8;
+    margin: 20px 0;
+}
+
+#leyendaDetailProgress tr.headTableLegend{
+    background: #E6B9B8;
+    font-weight: bold;
+}
+
+#leyendaDetailProgress tr td{
+    border: 1px solid #E6B9B8;
+    padding: 2px 6px;
+    text-align: center;
+}
+

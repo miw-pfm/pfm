@@ -5,6 +5,7 @@
  */
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.ProjectEjb;
 import eui.miw.pfm.controllers.ejb.WorkersListEjb;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.ProjectEntity;
@@ -99,8 +100,8 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         LOGGER.info(worker.toString());
         LOGGER.info(this.project.toString());
 
-        final WorkersListEjb eaE = new WorkersListEjb();
-        eaE.remove(project, worker);
+        project.removeWorker(worker);
+        new ProjectEjb().update(project);
 
         this.listWorkerBean.reload();
 
@@ -114,8 +115,8 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         LOGGER.info(worker.toString());
         LOGGER.info(this.project.toString());
 
-        final WorkersListEjb eaE = new WorkersListEjb();
-        eaE.add(project, worker);
+        project.addWorker(worker);
+        new ProjectEjb().update(project);
 
         this.listWorkerBean.reload();
 

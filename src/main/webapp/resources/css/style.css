@@ -79,7 +79,7 @@ p, li, h2, a{
 
 
 #panelmenu li.opcgeneral{
-    width: 128px;
+    width: 256px;
     list-style: none;
     float: left;
     text-align: center;
@@ -91,7 +91,7 @@ p, li, h2, a{
     color: #A5A5A5;
     text-decoration: none;
     padding: 2px 0;
-    width: 128px;
+    width: 256px;
     border-bottom: 3px solid #FF0000;
     display: block;
 }
