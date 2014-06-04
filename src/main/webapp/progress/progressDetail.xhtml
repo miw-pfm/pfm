@@ -57,7 +57,7 @@
 
 <!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
 
-        <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+        <p:dataTable id="tableReadDetailProgress1"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
             <p:column styleClass="columUsecases" headerText="Use Case">
                 <h:outputText value="#{usecases.name}" />
             </p:column>
@@ -103,5 +103,6 @@
                 <td>#{msgs.acceptance}</td>
             </tr>
         </table>
+
     </ui:define>
 </ui:composition>

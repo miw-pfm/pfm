@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 /**
  *
  * @author Clemencio Morales
+ * @modificado Manuel Rodriguez
  */
 @Entity
 @Table(name = "progressdetail")
@@ -40,12 +41,7 @@ public class ProgressDetailEntity {
     @Column(name = "percent", length = 5)
     @NotNull
     @Size(min = 1, max = 5)
-    private Integer percent;
-    
-    @Column(name = "isChecked", length = 10)
-    @NotNull
-    @Size(min = 1, max = 10)
-    private boolean isChecked;
+    private Integer percent;    
 
     public ProgressDetailEntity(){
         super();
@@ -55,13 +51,12 @@ public class ProgressDetailEntity {
         this.setId(id);
     }
     
-    public ProgressDetailEntity(Integer id, UseCaseEntity useCase, IterationEntity iteration, DisciplineEntity discipline, Integer percent, boolean isChecked) {
+    public ProgressDetailEntity(Integer id, UseCaseEntity useCase, IterationEntity iteration, DisciplineEntity discipline, Integer percent) {
         this.id = id;
         this.useCase = useCase;
         this.iteration = iteration;
         this.discipline = discipline;
-        this.percent = percent;
-        this.isChecked = isChecked;
+        this.percent = percent;        
     }
 
     public Integer getId() {
@@ -104,17 +99,9 @@ public class ProgressDetailEntity {
         this.percent = percent;
     }
 
-    public boolean isIsChecked() {
-        return isChecked;
-    }
-
-    public void setIsChecked(boolean isChecked) {
-        this.isChecked = isChecked;
-    }
-
     @Override
     public String toString() {
-        return "ProgressDetailEntity{" + "id=" + id + ", useCase=" + useCase + ", iteration=" + iteration + ", discipline=" + discipline + ", percent=" + percent + ", isChecked=" + isChecked + '}';
+        return "ProgressDetailEntity{" + "id=" + id + ", useCase=" + useCase + ", iteration=" + iteration + ", discipline=" + discipline + ", percent=" + percent + "'}'";
     }
 
     @Override
@@ -148,6 +135,6 @@ public class ProgressDetailEntity {
         if (!Objects.equals(this.percent, other.percent)) {
             return false;
         }
-        return this.isChecked == other.isChecked;
+        return true;
     }
 }

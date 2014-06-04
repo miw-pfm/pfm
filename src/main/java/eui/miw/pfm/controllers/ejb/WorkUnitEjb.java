@@ -9,6 +9,7 @@ import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkUnitEntity;
+import eui.miw.pfm.models.entities.WorkerEntity;
 import java.util.List;
 
 /**
@@ -54,5 +55,15 @@ public class WorkUnitEjb {
     public List<WorkUnitEntity> getWorkUnitsByIter(final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1";//NOPMD
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration);
+    }
+    
+    public List<WorkUnitEntity> getNumTotalWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration, final WorkerEntity worker) {
+        final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2 AND wu.worker = ?3";//NOPMD
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{iteration,subActivity,worker});
+}
+    
+    public List<WorkUnitEntity> getWorkerWorkUnits(final WorkerEntity worker) {
+        final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.worker = ?1";//NOPMD
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{worker});
     }
 }
