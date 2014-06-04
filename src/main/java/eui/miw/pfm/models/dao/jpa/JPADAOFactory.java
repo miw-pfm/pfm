@@ -10,6 +10,7 @@ import eui.miw.pfm.models.dao.interfaces.ProgressDetailDAO;
 import eui.miw.pfm.models.dao.interfaces.ProjectDAO;
 import eui.miw.pfm.models.dao.interfaces.RiskDAO;
 import eui.miw.pfm.models.dao.interfaces.SubActivityDAO;
+import eui.miw.pfm.models.dao.interfaces.TargetDAO;
 import eui.miw.pfm.models.dao.interfaces.TaskDAO;
 import eui.miw.pfm.models.dao.interfaces.UseCaseDAO;
 import eui.miw.pfm.models.dao.interfaces.UserDAO;
@@ -105,5 +106,10 @@ public class JPADAOFactory extends AbstractDAOFactory {
     @Override
     public DisciplineDAO getDisciplineDAO() {
        return new JPADisciplineDAO();
+    }
+
+    @Override
+    public TargetDAO getTargerDAO() {
+         return new JPATargetDAO();
     }
 } 

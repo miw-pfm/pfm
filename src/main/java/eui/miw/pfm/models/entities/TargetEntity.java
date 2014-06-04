@@ -8,11 +8,13 @@ package eui.miw.pfm.models.entities;
 
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,6 +22,8 @@ import javax.validation.constraints.Size;
  *
  * @author Jean Mubaied
  */
+@Entity
+@Table(name = "target")
 public class TargetEntity {
     
     @Id
@@ -80,7 +84,7 @@ public class TargetEntity {
         return inception;
     }
 
-    public void setInception(Integer inception) {
+    public void setInception(final Integer inception) {
         this.inception = inception;
     }
 
@@ -88,7 +92,7 @@ public class TargetEntity {
         return elaboration;
     }
 
-    public void setElaboration(Integer elaboration) {
+    public void setElaboration(final Integer elaboration) {
         this.elaboration = elaboration;
     }
 
@@ -96,7 +100,7 @@ public class TargetEntity {
         return construction;
     }
 
-    public void setConstruction(Integer construction) {
+    public void setConstruction(final Integer construction) {
         this.construction = construction;
     }
 
@@ -104,7 +108,7 @@ public class TargetEntity {
         return transition;
     }
 
-    public void setTransition(Integer transition) {
+    public void setTransition(final Integer transition) {
         this.transition = transition;
     }
 
@@ -112,7 +116,7 @@ public class TargetEntity {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(final ProjectEntity project) {
         this.project = project;
     }
 
@@ -120,7 +124,7 @@ public class TargetEntity {
         return discipline;
     }
 
-    public void setDiscipline(DisciplineEntity discipline) {
+    public void setDiscipline(final DisciplineEntity discipline) {
         this.discipline = discipline;
     }
 
@@ -137,7 +141,7 @@ public class TargetEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
