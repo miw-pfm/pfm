@@ -9,7 +9,7 @@
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define> 
-    
+
     <ui:define name="title">
 
     </ui:define>
@@ -20,7 +20,7 @@
 
     <ui:define name="body">
         <h:outputScript target="body">
-      
+
         </h:outputScript>
 
         <h:form id="formInsertDetail">
@@ -60,79 +60,28 @@
 
 <!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
 
-        <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
-            <p:column styleClass="columUsecases" headerText="Use Case">
-                <h:outputText value="#{usecases.name}" />
-            </p:column>
+        <h:form id="formShowDetails" >
+            <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+                <p:column styleClass="columUsecases" headerText="Use Case">
+                    <h:outputText value="#{usecases.name}" />
+                </p:column>
 
-            <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
+                <p:column styleClass="columChecks" headerText="Ident"  selectionMode="multiple" style="width:2%;text-align:center"/>
 
-            <p:column styleClass="columIdentificacion" headerText="Ident">
-                <h:outputText value="a" />
-            </p:column>
+                <c:forEach  var="discipline" items="#{progressDetailBean.getlDisciplines()}" >
+                    <p:column headerText="#{discipline.name.charAt(0)}"  >
+                        <h:outputText value="#{progressDetailBean.getWorkUnitBy(iterationBean.iterEntity, usecases, discipline).percent}" />
+                    </p:column>
+                </c:forEach>
 
-            <p:column headerText="a">
-                <h:outputText value="b" />
-            </p:column>
-        </p:dataTable>
-
-        <table id="leyendaDetailProgress">
-            <tr class="headTableLegend">
-                <td colspan="2">LEGEND</td>
-            </tr>
-            
-            <tr>
-                <td>Ident</td>
-                <td>Identification</td>
-            </tr>
-            <tr>
-                <td>S</td>
-                <td>Specification</td>
-            </tr>
-            <tr>
-                <td>D</td>
-                <td>Design</td>
-            </tr>
-            <tr>
-                <td>I</td>
-                <td>Implementation</td>
-            </tr>
-            <tr>
-                <td>T</td>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>A</td>
-                <td>Acceptance</td>
-            </tr>
-        </table>
-
-        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
-
-
-<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
-
-        <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
-            <p:column styleClass="columUsecases" headerText="Use Case">
-                <h:outputText value="#{usecases.name}" />
-            </p:column>
-
-            <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
-
-            <p:column styleClass="columIdentificacion" headerText="Ident">
-                <h:outputText value="a" />
-            </p:column>
-
-            <p:column headerText="a">
-                <h:outputText value="b" />
-            </p:column>
-        </p:dataTable>
+            </p:dataTable>
+        </h:form>
 
         <table id="leyendaDetailProgress">
             <tr class="headTableLegend">
                 <td colspan="2">LEGEND</td>
             </tr>
-            
+
             <tr>
                 <td>Ident</td>
                 <td>Identification</td>

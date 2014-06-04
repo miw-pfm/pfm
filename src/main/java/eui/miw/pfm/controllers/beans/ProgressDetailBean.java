@@ -22,6 +22,7 @@ import javax.inject.Named;
 /**
  *
  * @author Fred Pena
+ * @author William
  */
 @ViewScoped
 @Named
@@ -38,7 +39,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
     
     private transient ProgressDetailEntity progressDetail;
     
-    private transient List<DisciplineEntity> lDisciplines;
+    private  List<DisciplineEntity> lDisciplines;
     
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
@@ -144,4 +145,14 @@ public class ProgressDetailBean extends Bean implements Serializable {
         this.enabled = enabled;
     }
     
+    public ProgressDetailEntity getWorkUnitBy(final  IterationEntity iteration,final UseCaseEntity useCase,final DisciplineEntity discipline){
+        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline);
+        ProgressDetailEntity progress ;
+        if(lProgress.isEmpty()){
+            progress = new ProgressDetailEntity(null,useCase,iteration,discipline,0, false);
+        }else {
+            progress = lProgress.get(0);
+        }
+        return progress;
+    }
 }

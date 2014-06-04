@@ -116,6 +116,11 @@ public class TestProgressDetailProject {
 
     }
 
+    @Test
+    public void testFind() {
+        assertNotNull("Not Found Progress Detail : ",new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline));
+    }
+
     @AfterClass
     public static void after() {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().delete(progressDetail1);
