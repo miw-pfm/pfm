@@ -148,7 +148,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline);
         ProgressDetailEntity progress ;
         if(lProgress.isEmpty()){
-            progress = new ProgressDetailEntity(null,useCase,iteration,discipline,0, false);
+            progress = new ProgressDetailEntity(null,useCase,iteration,discipline,0);
         }else {
             progress = lProgress.get(0);
         }
