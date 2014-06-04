@@ -8,9 +8,8 @@
 
 
     <ui:define name="title">
-        #{msgs.list_project_subtitle}
-
-    </ui:define>    
+        #{msgs.list_of_projects}
+    </ui:define>
 
     <ui:define name="pagetitle">
         #{msgs.namerup}        
@@ -65,14 +64,14 @@
 
         </h:form>
         <p></p>
-        <h:link value="#{msgs.create_project}" styleClass="btn btn-success" id="submitcreateproject"/>
+        <h:link value="#{msgs.create_new_project}" styleClass="btn btn-success" id="submitcreateproject"/>
         <h:panelGroup id="createnewproject" layout="block" style="display: none;"  >
             <h:form>
                 <h:panelGroup layout="block">
                     <h:panelGroup layout="span" styleClass="btn" style="float: right;" ><h:link value="X" id="cancelcreateproject" /></h:panelGroup>
 
                     <h:panelGrid columns="2" style=" overflow: auto;">                            
-                        <h:outputText value="#{msgs.enter_name_project}" class="nameOfTheProject" />          
+                        <h:outputText value="#{msgs.name_of_the_project}" class="nameOfTheProject" />          
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <h:inputText value="#{projectCreatetBean.projectEntity.name}" maxlength="100" />
                         <h:outputText />                                    

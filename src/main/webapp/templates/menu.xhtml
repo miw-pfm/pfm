@@ -9,10 +9,10 @@
     <ui:composition>
         <h:panelGroup id="panelmenu" layout="block">
             <ul>
-                <li class="opchome opcgeneral"><h:link outcome="/openedProject" class="enlace" type="stylehome">Home</h:link></li>  <!--no tocar la etiqueta a es necesaria para que funcione el jQuery-->                  
-                <li class="opc1 opcgeneral"><h:link outcome="/riskplan/riskPlan.xhtml" class="enlace" type="styleopc1">Risk Plan</h:link></li>
-                <li class="opc2 opcgeneral"><h:link outcome="/phaseplan/workerList.xhtml" class="enlace" type="styleopc1">Phase Plan</h:link></li>
-                <li class="opc3 opcgeneral"><h:link outcome="/progress/progressDetail.xhtml" class="enlace" type="styleopc1">Progress</h:link></li>                               
+                <li class="opchome opcgeneral"><h:link outcome="/openedProject" class="enlace" type="stylehome">#{msgs.home}</h:link></li>           
+                <li class="opc1 opcgeneral"><h:link outcome="/riskplan/riskPlan.xhtml" class="enlace" type="styleopc1">#{msgs.riskPlan}</h:link></li>
+                <li class="opc2 opcgeneral"><h:link outcome="/phaseplan/workerList.xhtml" class="enlace" type="styleopc1">#{msgs.phasePlan}</h:link></li>
+                <li class="opc3 opcgeneral"><h:link outcome="/progress/progressDetail.xhtml" class="enlace" type="styleopc1">#{msgs.progress}</h:link></li>                               
             </ul>
         </h:panelGroup>
     </ui:composition>

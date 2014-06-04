@@ -9,11 +9,11 @@
 
 
     <ui:define name="title">
-        #{msgs.phasePlan_title}
+        #{msgs.phasePlan}
     </ui:define>    
 
     <ui:define name="subtitle">
-        #{msgs.activities_detail_asignation_subtitle}
+        #{msgs.set_hours_activities_iteration}
     </ui:define>   
 
     <ui:define name="pagetitle">
@@ -28,7 +28,7 @@
                 <p:outputLabel  value="#{msgs.activities}:  "/>   
                 <p:selectOneMenu id="activities" value="#{activitiesBean.selectionAct}" style="width:150px">
                     <p:ajax listener="#{activitiesBean.subActivitiesByActivity()}" update="dataTableSubActivity" />
-                    <f:selectItem itemLabel="#{msgs.all_activities}" itemValue="" noSelectionOption="true" />
+                    <f:selectItem itemLabel="#{msgs.allActivities}" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{activitiesBean.activities}"   />                 
                 </p:selectOneMenu>
             </h:panelGrid>
@@ -39,7 +39,7 @@
                     <h:outputText value="#{subactivity.code}" style="display:block" />                    
                 </p:column>                        
 
-                <p:column headerText="#{msgs.title_subactivity}">
+                <p:column headerText="#{msgs.subactivity}">
                     <h:outputText  value="#{subactivity.name}" style="display:block" />                    
                 </p:column>
 
