@@ -25,20 +25,20 @@
                 <p:growl id="growl"  sticky="true" life="1500"/>
                 <h:panelGrid columns="2">
 
-                    <h:outputText value="#{msgs.nameWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.name}" maxlength="25" id="nameWorker" binding="#{nameWorker}" required="true"  requiredMessage="Error. #{msgs.nameWorker} not NULL" />
+                    <h:outputText value="#{msgs.name}"/>
+                    <h:inputText value="#{workerBean.workerEntity.name}" maxlength="25" id="nameWorker" binding="#{name}" required="true"  requiredMessage="Error. #{msgs.name} not NULL" />
 
-                    <h:outputText value="#{msgs.surnameWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.surname}" maxlength="25" id="surnameWorker" binding="#{surnameWorker}" required="true" requiredMessage="Error. #{msgs.surnameWorker} not NULL" />
+                    <h:outputText value="#{msgs.surname}"/>
+                    <h:inputText value="#{workerBean.workerEntity.surname}" maxlength="25" id="surnameWorker" binding="#{surname}" required="true" requiredMessage="Error. #{msgs.surname} not NULL" />
 
-                    <h:outputText value="#{msgs.dniWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.dni}" maxlength="9" id="dniWorker" binding="#{dniWorker}" required="true" requiredMessage="Error. #{msgs.dniWorker} not NULL" />
+                    <h:outputText value="#{msgs.dni}"/>
+                    <h:inputText value="#{workerBean.workerEntity.dni}" maxlength="9" id="dniWorker" binding="#{dni}" required="true" requiredMessage="Error. #{msgs.dni} not NULL" />
 
-                    <h:outputText value="#{msgs.emailWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.email}" maxlength="60" id="emailWorker" binding="#{emailWorker}" required="true" requiredMessage="Error. #{msgs.emailWorker} not NULL"/>
+                    <h:outputText value="#{msgs.email}"/>
+                    <h:inputText value="#{workerBean.workerEntity.email}" maxlength="60" id="emailWorker" binding="#{email}" required="true" requiredMessage="Error. #{msgs.email} not NULL"/>
 
-                    <h:outputText value="#{msgs.gitUserWorker}"/>
-                    <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUserWorker}" required="true" requiredMessage="Error. #{msgs.gitUserWorker} not NULL" />
+                    <h:outputText value="#{msgs.gitUser}"/>
+                    <h:inputText value="#{workerBean.workerEntity.gitUser}" maxlength="25" id="gitUserWorker" binding="#{gitUser}" required="true" requiredMessage="Error. #{msgs.gitUser} not NULL" />
 
                     <h:commandButton value="#{msgs.submit}" action="#{workerBean.create()}" styleClass="btn btn-success" />
                     <h:link value="#{msgs.cancel}" styleClass="btn btn-success" id="cancelcreateworker" outcome="workerListAll"/>       

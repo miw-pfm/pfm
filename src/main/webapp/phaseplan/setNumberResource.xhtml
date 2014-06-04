@@ -12,7 +12,7 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.suggestResourcesRequest}
+        #{msgs.suggest_resources_request}
     </ui:define>
 
     <ui:define name="subtitle">
@@ -24,19 +24,19 @@
             <h:form id="form">
                 <p:growl id="growl" sticky="true" life="1500"/>    
                 <h:panelGrid columns="2">
-                    <h:outputText value="#{msgs.setNumberResourceWorker}" />
+                    <h:outputText value="#{msgs.workers}" />
                     <h:inputText id="workers" value="#{resourcesPlanBean.workers}" required="true" binding="#{workers}">
                         <f:converter converterId = "javax.faces.Integer"/>  
                         <p:ajax event="blur" update="weeks working hours" listener="#{resourcesPlanBean.calculator()}"/>
                     </h:inputText>  
 
-                    <h:outputText value="#{msgs.setNumberResourceWeeks}" />
+                    <h:outputText value="#{msgs.weeks}" />
                     <h:inputText id="weeks" value="#{resourcesPlanBean.weeks}" readonly="true" required="true"/>  
 
-                    <h:outputText value="#{msgs.setNumberResourceWorking}" />
+                    <h:outputText value="#{msgs.working}" />
                     <h:inputText id="working" value="#{resourcesPlanBean.working}" readonly="true" required="true"/>  
 
-                    <h:outputText value="#{msgs.setNumberResourceHours}" />
+                    <h:outputText value="#{msgs.hours}" />
                     <h:inputText id="hours" value="#{resourcesPlanBean.hours}" readonly="true" required="true"/>  
 
 

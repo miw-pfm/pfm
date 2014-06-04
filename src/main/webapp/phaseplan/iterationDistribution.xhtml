@@ -13,11 +13,11 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.iter_dist_title}
+        #{msgs.set_ut_iteration_activity}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.iter_dist_title}
+        #{msgs.set_ut_iteration_activity}
     </ui:define>
 
     <ui:define name="body">
@@ -54,36 +54,39 @@
                 initDND();
             });
 
-            function Test() {
+            function Init() {
                 initDND();
                 PF('unitDialog').show();
             }
             function WorkDialog() {
                 PF('workDialog').show();
             }
+            function EditDialog() {
+                PF('editDialog').show();
+            }
 
         </script>
 
-        <h:form id="test">
+        <h:form id="form_iter_distri">
             <div>
                 <p:outputLabel id="iteration_title" value="#{msgs.iteration} : " />
-                <p:selectOneMenu id="selectIteration" value="#{iterationBean.iterEntity.id}">
-                    <f:selectItems value="#{iterationBean.allIterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
-                    <p:ajax event="change"  listener="#{iterationBean.handleIterationChange}" update="test" oncomplete="initDND()"/>
+                <p:selectOneMenu  value="#{workUnitBean.iteration.id}" style="width:150px">
+                    <p:ajax listener="#{workUnitBean.handleIterationChange()}" update="dataTableActivitySubActivity" oncomplete="initDND()"/>                    
+                    <f:selectItems value="#{workUnitBean.allIterations}"  var="iter" itemValue="#{iter.id}" itemLabel="#{iter.iterValue} : #{iter.typeIteration}"/>
                 </p:selectOneMenu>
                 <p:outputLabel id="activity" value="#{msgs.activity}" />
             </div>
 
-            <p:dataTable var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution" paginator="true"
+            <p:dataTable id="dataTableActivitySubActivity" var="activity" value="#{activitiesBean.activities}"   styleClass="tableIterationDistribution" paginator="true"
                          rows="1" rowsPerPageTemplate="1,2,3">
                 <p:columnGroup type="header">
                     <p:row>
                         <p:column rowspan="1" headerText="#{msgs.name}" />
                         <p:column colspan="1" headerText="#{msgs.code}" />
-                        <p:column colspan="1" headerText="#{msgs.total_units}" />
-                        <p:column colspan="1" headerText="#{msgs.setNumberResourceHours}" />
+                        <p:column colspan="1" headerText="#{msgs.totalUnits}" />
+                        <p:column colspan="1" headerText="#{msgs.hours}" />
                         <p:column colspan="1" headerText="" />
-                        <p:column colspan="1" headerText="#{msgs.available_units}" />
+                        <p:column colspan="1" headerText="#{msgs.availableUnits}" />
                     </p:row>
                 </p:columnGroup>
 
@@ -104,12 +107,12 @@
                     </p:column>
 
                     <p:column >
-                        #{workUnitBean.getWorkUnitsByIterAndActivity(activity, iterationBean.iterEntity)}
-                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, iterationBean.iterEntity, false)}" />
+                        #{workUnitBean.getWorkUnitsByIterAndActivity(activity, workUnitBean.iteration)}
+                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, workUnitBean.iteration, false)}" />
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, iterationBean.iterEntity, true)/4}" />
+                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, workUnitBean.iteration, true)/4}" />
                     </p:column>
 
                     <p:column style="width:20px">
@@ -117,12 +120,12 @@
                     </p:column>
 
                     <p:column >
-                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, iterationBean.iterEntity, true)}" />
+                        <h:outputText value="#{workUnitBean.getNumSubActivityUnits(subActivity, workUnitBean.iteration, true)}" />
                     </p:column>
                 </p:subTable>
             </p:dataTable>
 
-            <p:remoteCommand name="treeToTable" actionListener="#{workUnitBean.selectedSubActivityAndWorker}" update="displayPanel displayTable" oncomplete="Test()"/>            
+            <p:remoteCommand name="treeToTable" actionListener="#{workUnitBean.selectedSubActivityAndWorker}" update="displayPanel displayTable" oncomplete="Init()"/>            
 
             <p:dataTable id="work_lst" var="w" value="#{workersListProjectBean.workers}" styleClass="workers_list">                   
                 <p:column style="display: none">                    
@@ -132,10 +135,9 @@
                     <f:facet name="header">                        
                         <h:outputText value="Workers"/>
                     </f:facet>
-                    <p:commandLink id="ajax" actionListener="#{workUnitBean.setWorker(w)}" oncomplete="WorkDialog()" update=":test:displayTable">
+                    <p:commandLink id="ajax" actionListener="#{workUnitBean.setWorker(w)}" oncomplete="WorkDialog()" update=":form_iter_distri:displayTable">
                         <h:outputText value="#{w.name}"  styleClass="droppoint dropright" id="work_id" />
                     </p:commandLink>
-
                 </p:column>
             </p:dataTable>
 
@@ -158,34 +160,69 @@
             </p:dialog>
 
             <p:dialog id="displayTable" header="#{workUnitBean.worker.name}" widgetVar="workDialog" resizable="false" draggable="false"
-                      showEffect="fade" hideEffect="fade" modal="true">
-                <p:dataTable var="work_unit" value="#{workUnitBean.workunits}" style="margin-bottom:40px">
-                    <p:column headerText="Name" sortBy="#{work_unit.subactivity.name}">
-                        <h:outputText value="#{work_unit.subactivity.name}" />
+                      showEffect="fade" hideEffect="fade" modal="true" onHide="initDND()" >                                                
+                <p:dataTable var="work_unit" value="#{workUnitBean.workerSubActivities}" style="margin-bottom:40px">
+                    <p:column headerText="Name" sortBy="#{work_unit.name}">
+                        <h:outputText value="#{work_unit.name}" />
                     </p:column>
 
-                    <p:column headerText="Code" sortBy="#{work_unit.subactivity.code}">
-                        <h:outputText value="#{work_unit.subactivity.code}" />
+                    <p:column headerText="Code" sortBy="#{work_unit.code}">
+                        <h:outputText value="#{work_unit.code}" />
                     </p:column>
 
                     <p:column headerText="Unit" >
-                        <h:outputText value="3" />
+                        <h:outputText value="#{workUnitBean.getWorkerNumSubActivityUnits(work_unit)}" />
                     </p:column>
 
                     <p:column headerText="Hour">
-                        <h:outputText value="0.75" />
+                        <h:outputText value="#{workUnitBean.getWorkerNumSubActivityUnits(work_unit)/4}" />
                     </p:column>
 
                     <p:column headerText="Edit">
-                        <h:outputText value="Edit" />
+                        <p:commandLink actionListener="#{workUnitBean.editWorkUnits(work_unit)}" oncomplete="EditDialog()" update=":form_iter_distri:editPanel" >
+                            <h:outputText value="Edit"  styleClass="droppoint dropright" />
+                        </p:commandLink>
                     </p:column>
 
                     <p:column headerText="Remove">
-                        <h:outputText value="Remove" />
+                        <p:commandLink  actionListener="#{workUnitBean.removeUnitsToWorker(work_unit)}" oncomplete="WorkDialog()" update=":form_iter_distri:displayTable :form_iter_distri:dataTableActivitySubActivity"  >
+                            <h:outputText value="Remove"  styleClass="droppoint dropright" />
+                        </p:commandLink>
                     </p:column>
                 </p:dataTable>
             </p:dialog>
 
+            <p:dialog id="editPanel" header="#{workUnitBean.worker.name}" widgetVar="editDialog" resizable="false" draggable="false"
+                      showEffect="fade" hideEffect="fade" modal="true">
+                <p:dataTable var="w" value="#{workUnitBean}" >
+                    <p:column headerText="Code">
+                        <h:outputText value="#{w.subActivity.code}" />
+                    </p:column>
+                    <p:column headerText="Actual Units">
+                        <h:outputText value="#{w.getWorkerNumSubActivityUnits(w.subActivity)}" />
+                    </p:column>
+                    <p:column headerText="Units Available">
+                        <h:outputText value="#{w.getNumSubActivityUnits(w.subActivity, w.iteration, true)}" />
+                    </p:column>                    
+                </p:dataTable>
+                <p:panelGrid >                                                            
+                    <p:row>
+                        <p:column style="font-weight: bold;">Add</p:column>
+                        <p:column style="font-weight: bold;">
+                            <p:spinner id="ajaxSpinnerAdd" value="#{workUnitBean.numUnitsAvailable}" max="#{workUnitBean.numUnitsAvailable}" min="0"></p:spinner>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="font-weight: bold;">Remove</p:column>
+                        <p:column style="font-weight: bold;">
+                            <p:spinner id="ajaxSpinnerRemove" value="#{workUnitBean.numUnitsToRemove}" max="#{workUnitBean.numUnitsToRemove}" min="0"></p:spinner>
+                        </p:column>
+                        <p:column rowspan="2" style="font-weight: bold;">
+                            <p:commandButton actionListener="#{workUnitBean.saveWorkerUnits}" ajax="false" value="Save" />                    
+                        </p:column>        
+                    </p:row>                    
+                </p:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

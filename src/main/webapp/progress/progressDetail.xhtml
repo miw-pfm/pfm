@@ -61,5 +61,57 @@
             </h:panelGroup>                    
         </h:form>  
 
+        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
+
+
+<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
+
+        <p:dataTable id="tableReadDetailProgress1"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+            <p:column styleClass="columUsecases" headerText="Use Case">
+                <h:outputText value="#{usecases.name}" />
+            </p:column>
+
+            <p:column styleClass="columChecks" selectionMode="multiple" style="width:2%;text-align:center"/>
+
+            <p:column styleClass="columIdentificacion" headerText="#{msgs.ident}">
+                <h:outputText value="a" />
+            </p:column>
+
+            <p:column headerText="a">
+                <h:outputText value="b" />
+            </p:column>
+        </p:dataTable>
+
+        <table id="leyendaDetailProgress">
+            <tr class="headTableLegend">
+                <td colspan="2">#{msgs.legend}</td>
+            </tr>
+
+            <tr>
+                <td>#{msgs.ident}</td>
+                <td>#{msgs.identification}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_s}</td>
+                <td>#{msgs.specification}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_d}</td>
+                <td>#{msgs.design}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_i}</td>
+                <td>#{msgs.implementation}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_t}</td>
+                <td>#{msgs.test}</td>
+            </tr>
+            <tr>
+                <td>#{msgs.letter_a}</td>
+                <td>#{msgs.acceptance}</td>
+            </tr>
+        </table>
+
     </ui:define>
 </ui:composition>
