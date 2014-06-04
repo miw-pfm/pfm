@@ -7,6 +7,7 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.DisciplineEjb;
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
+import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
@@ -43,28 +44,36 @@ public class ProgressDetailBean extends Bean implements Serializable {
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
 //    
-    @ManagedProperty(value = "#{iterationBean}")
+    @ManagedProperty(value = "#{useCaseBean}")
     private final transient UseCaseBean useCaseBean = new UseCaseBean();
 
     @PostConstruct
     public void init() {
-
         this.lDisciplines = new DisciplineEjb().findAll();
-        this.progressDetail = new ProgressDetailEntity();
+        findProgressDetail(true);
     }
 
     public void save() {
+        final UseCaseEntity useCase = getUseCaseEntity();
+        if (useCase.isIsEnabled() != (this.enabled != 0)) {
+            useCase.setIsEnabled(this.enabled != 0);
+            new UseCaseEjb().update(useCase);
+        }
+
+        findProgressDetail(false);
+        if (this.progressDetail == null) {
+            this.progressDetail = new ProgressDetailEntity();
+        }
         this.progressDetail.setDiscipline(getDisciplineEntity());
         this.progressDetail.setIteration(getIterationEntity());
         this.progressDetail.setPercent(this.percentCompleted);
-        this.progressDetail.setUseCase(getUseCaseEntity());
+        this.progressDetail.setUseCase(useCase);
 
-        System.out.println("Progress Detail: " + progressDetail);
-//        if (this.progressDetail.getId() == null) {
-//            new ProgressDetailEjb().create(this.progressDetail);
-//        } else {
-//            new ProgressDetailEjb().update(this.progressDetail);
-//        }
+        if (this.progressDetail.getId() == null) {
+            new ProgressDetailEjb().create(this.progressDetail);
+        } else {
+            new ProgressDetailEjb().update(this.progressDetail);
+        }
     }
 
     private IterationEntity getIterationEntity() {
@@ -94,10 +103,13 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return null;
     }
 
-    public void findProgressDetail() {
-        this.progressDetail = new ProgressDetailEjb().findProgressDetail(getIterationEntity(), getUseCaseEntity(), getDisciplineEntity());
-        System.out.println("Progress Detail: " + progressDetail);
-
+    public void findProgressDetail(final boolean flag) {
+        final UseCaseEntity useCase = getUseCaseEntity();
+        this.progressDetail = new ProgressDetailEjb().findProgressDetail(getIterationEntity(), useCase, getDisciplineEntity());
+        if (flag && this.progressDetail != null) {
+            this.percentCompleted = (int) this.progressDetail.getPercent();
+            this.enabled = useCase.isIsEnabled() ? 1 : 0;
+        }
     }
 
     public List<IterationEntity> getIterations() {
