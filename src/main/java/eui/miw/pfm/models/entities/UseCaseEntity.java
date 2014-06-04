@@ -26,6 +26,7 @@ import javax.validation.constraints.Size;
  * @author Roberto Amor
  * *@author Fred Peña
  * @author Clemencio Morales
+ * @modificado Manuel Rodriguez
  */
 @Entity
 @Table(name = "usecases")
@@ -46,11 +47,16 @@ public class UseCaseEntity implements Serializable {
     @Size(min = 1, max = 255)
     private String description;
     
-    @Column(name = "isChecked", length = 10)
+    @Column(name = "isChecked", length = 1, columnDefinition = "boolean default false")
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 1)
     private boolean isChecked;
 
+    @Column(name = "isEnabled", length = 1, columnDefinition = "boolean default true")
+    @NotNull
+    @Size(min = 1, max = 1)
+    private boolean isEnabled;
+    
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
@@ -139,6 +145,14 @@ public class UseCaseEntity implements Serializable {
         return hash;
     }
 
+    public boolean isIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }    
+    
     @Override
     public boolean equals(final Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
