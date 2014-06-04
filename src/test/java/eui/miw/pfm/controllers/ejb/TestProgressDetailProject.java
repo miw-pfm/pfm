@@ -87,21 +87,19 @@ public class TestProgressDetailProject {
 
         progressDetail1 = new ProgressDetailEntity();
         progressDetail1.setDiscipline(discipline);
-        progressDetail1.setIsChecked(true);
+
         progressDetail1.setIteration(iteration);
         progressDetail1.setPercent(5);
         progressDetail1.setUseCase(useCase);
 
         progressDetail2 = new ProgressDetailEntity();
         progressDetail2.setDiscipline(discipline);
-        progressDetail2.setIsChecked(false);
         progressDetail2.setIteration(iteration);
         progressDetail2.setPercent(4);
         progressDetail2.setUseCase(useCase);
 
         progressDetail3 = new ProgressDetailEntity();
         progressDetail3.setDiscipline(discipline);
-        progressDetail3.setIsChecked(true);
         progressDetail3.setIteration(iteration);
         progressDetail3.setPercent(3);
         progressDetail3.setUseCase(useCase);
