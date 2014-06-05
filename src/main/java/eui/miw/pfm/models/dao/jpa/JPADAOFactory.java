@@ -109,7 +109,7 @@ public class JPADAOFactory extends AbstractDAOFactory {
     }
 
     @Override
-    public TargetDAO getTargerDAO() {
+    public TargetDAO getTargetDAO() {
          return new JPATargetDAO();
     }
 } 

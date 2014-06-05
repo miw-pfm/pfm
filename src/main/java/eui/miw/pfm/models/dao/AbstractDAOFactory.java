@@ -63,5 +63,5 @@ public abstract class AbstractDAOFactory {
     
     public abstract DisciplineDAO getDisciplineDAO();
     
-    public abstract TargetDAO getTargerDAO();
+    public abstract TargetDAO getTargetDAO();
 }
