@@ -75,7 +75,7 @@
 
                 <p:column styleClass="columChecks" headerText="Ident"  selectionMode="multiple" style="width:2%;text-align:center"/>
 
-                <c:forEach  var="discipline" items="#{progressDetailBean.getlDisciplines()}" >
+                <c:forEach  var="discipline" items="#{progressDetailBean.disciplines}" >
                     <p:column headerText="#{discipline.name.charAt(0)}"  >
                         <h:outputText value="#{progressDetailBean.getWorkUnitBy(iterationBean.iterEntity, usecases, discipline).percent}" />
                     </p:column>

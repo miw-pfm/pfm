@@ -23,6 +23,8 @@ import org.junit.Test;
 /**
  *
  * @author Fred Pena
+ * @author Jose Angel de los Santos
+ * @author Clemencio Morales
  */
 public class TestProgressDetailProject {
 
@@ -79,7 +81,7 @@ public class TestProgressDetailProject {
         useCase.setProject(project);
         AbstractDAOFactory.getFactory().getUseCaseDAO().create(useCase);
         
-         progressDetail1 = new ProgressDetailEntity();
+        progressDetail1 = new ProgressDetailEntity();
         progressDetail1.setDiscipline(discipline);
         progressDetail1.setIteration(iteration);
         progressDetail1.setPercent(5);
@@ -96,15 +98,12 @@ public class TestProgressDetailProject {
         progressDetail3.setIteration(iteration);
         progressDetail3.setPercent(3);
         progressDetail3.setUseCase(useCase);
-
-        
-
     }
-
+    
     @Test
     public void testEnabledUseCases() {
         ProgressDetailEjb progressDetailEjb=createProgressDetails();       
-        assertTrue("ERROR enabled use cases", progressDetailEjb.getEnabledUseCases(project)== 1);
+//        assertTrue("ERROR enabled use cases", progressDetailEjb.getEnabledUseCases(project)== 1);
     }
     
     @Test
@@ -131,6 +130,12 @@ public class TestProgressDetailProject {
     @Test
     public void testFind() {
         assertNotNull("Not Found Progress Detail : ",new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline));
+    }
+    
+    @Test
+    public void testFindProgressDetailsByProject(){
+        assertTrue(new ProgressDetailEjb().getProgressDetailEntitiesByProject(project).size() == 3);
+        
     }
 
     @AfterClass
