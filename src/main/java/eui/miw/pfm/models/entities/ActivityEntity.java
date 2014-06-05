@@ -44,6 +44,13 @@ public class ActivityEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     private List<SubActivityEntity> subactivity = new ArrayList<>();
 
+    /**
+     *
+     * @author Fred Peña
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
+    private List<PlanForNextIterationEntity> planForNextIteration = new ArrayList<>();
+
     public ActivityEntity(final Integer id, final String name, final String code) {
         this.id = id;
         this.name = name;
@@ -92,6 +99,22 @@ public class ActivityEntity implements Serializable {
 
     public void removeSubactivity(final SubActivityEntity sa) {
         this.subactivity.remove(sa);
+    }
+
+    public List<PlanForNextIterationEntity> getPlanForNextIteration() {
+        return planForNextIteration;
+    }
+
+    public void setPlanForNextIteration(final List<PlanForNextIterationEntity> planForNextIteration) {
+        this.planForNextIteration = planForNextIteration;
+    }
+
+    public void addPlanForNextIteration(final PlanForNextIterationEntity planForNextIteration) {
+        this.planForNextIteration.add(planForNextIteration);
+    }
+
+    public void removePlanForNextIteration(final PlanForNextIterationEntity planForNextIteration) {
+        this.planForNextIteration.remove(planForNextIteration);
     }
 
     @Override
