@@ -42,7 +42,7 @@ public class ProgressResumeBean extends Bean implements Serializable {
     private Integer percentImplementation;
     private Integer percentTest;
 
-    public ProgressResumeBean() {
+    public ProgressResumeBean() { 
         super();
 
         this.setPercentIdentification(0);
