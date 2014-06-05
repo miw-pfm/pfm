@@ -71,6 +71,12 @@ public class IterationEntity implements Serializable {
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iteration")
     private List<WorkUnitEntity> workUnits = new ArrayList<>();
+    /**
+     *
+     * @author Fred Peña
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iteration")
+    private List<UseCaseEntity> useCases = new ArrayList<>();
 
     public IterationEntity() {
     }
@@ -146,6 +152,22 @@ public class IterationEntity implements Serializable {
 
     public void removeWorkUnit(final WorkUnitEntity w) {
         this.workUnits.remove(w);
+    }
+
+    public List<UseCaseEntity> getUseCases() {
+        return useCases;
+    }
+
+    public void setUseCases(final List<UseCaseEntity> useCases) {
+        this.useCases = useCases;
+    }
+
+    public void addUseCases(final UseCaseEntity usecases) {
+        this.useCases.add(usecases);
+    }
+
+    public void removeUseCases(final UseCaseEntity usecases) {
+        this.useCases.remove(usecases);
     }
 
     public String getCodeIteration() {

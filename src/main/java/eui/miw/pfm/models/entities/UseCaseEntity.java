@@ -35,6 +35,7 @@ public class UseCaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;//NOPMD
 
     @Column(name = "name", length = 140)
@@ -46,20 +47,19 @@ public class UseCaseEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     private String description;
-    
-    @Column(name = "isChecked", length = 1, columnDefinition = "boolean default false")
-    @NotNull
-    @Size(min = 1, max = 1)
-    private boolean isChecked;
 
-    @Column(name = "isEnabled", length = 1, columnDefinition = "boolean default true")
+    @Column(name = "enabled", length = 1, columnDefinition = "boolean default true")
     @NotNull
     @Size(min = 1, max = 1)
-    private boolean isEnabled;
-    
+    private boolean enabled;
+
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private ProjectEntity project;
+
+    @ManyToOne
+    @JoinColumn(name = "iteration_id", referencedColumnName = "id", nullable = true)
+    private IterationEntity iteration;
 
     @JoinTable(name = "risks_usecases", joinColumns = {
         @JoinColumn(name = "usecase_id", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -75,11 +75,13 @@ public class UseCaseEntity implements Serializable {
         this.id = id;
     }
 
-    public UseCaseEntity(final Integer id, final String name, final String description, final ProjectEntity project) {//NOPMD
+    public UseCaseEntity(Integer id, String name, String description, boolean enabled, ProjectEntity project, IterationEntity iteration) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.enabled = enabled;
         this.project = project;
+        this.iteration = iteration;
     }
 
     public Integer getId() {
@@ -114,14 +116,14 @@ public class UseCaseEntity implements Serializable {
         this.project = project;
     }
 
-    public boolean isIsChecked() {
-        return isChecked;
+    public IterationEntity getIteration() {
+        return iteration;
     }
 
-    public void setIsChecked(boolean isChecked) {
-        this.isChecked = isChecked;
+    public void setIteration(IterationEntity iteration) {
+        this.iteration = iteration;
     }
-    
+
     public List<RiskEntity> getRisks() {
         return risks;
     }
@@ -145,14 +147,14 @@ public class UseCaseEntity implements Serializable {
         return hash;
     }
 
-    public boolean isIsEnabled() {
-        return isEnabled;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setIsEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
-    }    
-    
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(final Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -169,6 +171,6 @@ public class UseCaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", isChecked=" + isChecked + ", project=" + project + ", risks=" + risks + '}';
+        return "UseCaseEntity{" + "id=" + id + ", name=" + name + ", description=" + description + ", enabled=" + enabled + ", project=" + project + ", iteration=" + iteration + ", risks=" + risks + '}';
     }
 }
