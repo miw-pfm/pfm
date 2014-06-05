@@ -75,45 +75,63 @@ public class TestProgressDetailProject {
         useCase = new UseCaseEntity();
         useCase.setDescription("Description UC1");
         useCase.setIsChecked(true);
+        useCase.setIsEnabled(true);
         useCase.setName("Use Case 1");
         useCase.setProject(project);
         AbstractDAOFactory.getFactory().getUseCaseDAO().create(useCase);
-
-    }
-
-    @Test
-    public void testCreate() {
-        final ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
-
-        progressDetail1 = new ProgressDetailEntity();
+        
+         progressDetail1 = new ProgressDetailEntity();
         progressDetail1.setDiscipline(discipline);
-        progressDetail1.setIsChecked(true);
         progressDetail1.setIteration(iteration);
         progressDetail1.setPercent(5);
         progressDetail1.setUseCase(useCase);
 
         progressDetail2 = new ProgressDetailEntity();
         progressDetail2.setDiscipline(discipline);
-        progressDetail2.setIsChecked(false);
         progressDetail2.setIteration(iteration);
         progressDetail2.setPercent(4);
         progressDetail2.setUseCase(useCase);
 
         progressDetail3 = new ProgressDetailEntity();
         progressDetail3.setDiscipline(discipline);
-        progressDetail3.setIsChecked(true);
         progressDetail3.setIteration(iteration);
         progressDetail3.setPercent(3);
         progressDetail3.setUseCase(useCase);
 
-        progressDetailEjb.create(progressDetail1);
-        progressDetailEjb.create(progressDetail2);
-        progressDetailEjb.create(progressDetail3);
+        
+
+    }
+
+    @Test
+    public void testEnabledUseCases() {
+        ProgressDetailEjb progressDetailEjb=createProgressDetails();       
+        assertTrue("ERROR enabled use cases", progressDetailEjb.getEnabledUseCases(project)== 1);
+    }
+    
+    @Test
+    public void testCreate() {
+        
+        createProgressDetails();
 
         assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getProgressDetailDAO().read(progressDetail1.getId()).equals(progressDetail1));
         assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getProgressDetailDAO().read(progressDetail2.getId()).equals(progressDetail2));
         assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getProgressDetailDAO().read(progressDetail3.getId()).equals(progressDetail3));
 
+    }
+
+    public ProgressDetailEjb createProgressDetails()
+    {
+        ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
+        progressDetailEjb.create(progressDetail1);
+        progressDetailEjb.create(progressDetail2);
+        progressDetailEjb.create(progressDetail3);
+        return progressDetailEjb;
+        
+    }
+    
+    @Test
+    public void testFind() {
+        assertNotNull("Not Found Progress Detail : ",new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline));
     }
 
     @AfterClass

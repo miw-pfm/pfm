@@ -11,15 +11,14 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.riskPlan_title}
+        #{msgs.riskPlan}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.list_usecase_subtitle}
+        #{msgs.useCases}
     </ui:define>
 
     <ui:define name="body">
-
         <h:form id="form" >
             <h:panelGroup layout="block">
                 <p:growl id="growl_update"  sticky="true" life="1500"/>   
@@ -32,7 +31,7 @@
                     <p:selectOneMenu id="choseN"  value="#{riskBean.riskEntity.value}">
                         <f:selectItems value="#{riskBean.chosenList}"  />
                     </p:selectOneMenu>              
-                    <h:commandButton value="Submit" action="#{riskBean.update()}" styleClass="btn btn-success" />                                   
+                    <h:commandButton value="#{msgs.submit}" action="#{riskBean.update()}" styleClass="btn btn-success" />                                   
                 </h:panelGrid>                    
             </h:panelGroup>                     
         </h:form> 

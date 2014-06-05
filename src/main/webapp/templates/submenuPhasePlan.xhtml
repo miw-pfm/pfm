@@ -9,12 +9,12 @@
     <ui:composition>
         <h:panelGroup id="panelsubmenu" layout="block">
             <ul>
-                <li><h:link value="Workers" outcome="workerList" /></li>
-                <li><h:link value="Project Plan" outcome="projectPlan" /></li>
-                <li><h:link value="#{msgs.setNumberResource}" outcome="setNumberResource" /></li>
-                <li><h:link value="#{msgs.iter_dist_menu}" outcome="iterationDistribution" /></li>
-                <li><h:link value="#{msgs.activitiesPlan_menu}" outcome="activitiesDetailedAsignation" /></li>                            
-                <li><h:link value="Activities Details" outcome="activitiesDetailedView" /></li>                                            
+                <li><h:link value="#{msgs.workers_of_project}" outcome="workerList" /></li>
+                <li><h:link value="#{msgs.projectPlan}" outcome="projectPlan" /></li>
+                <li><h:link value="#{msgs.set_number_of_resource}" outcome="setNumberResource" /></li>
+                <li><h:link value="#{msgs.iters_distribution}" outcome="iterationDistribution" /></li>
+                <li><h:link value="#{msgs.activitiesPlan}" outcome="activitiesDetailedAsignation" /></li>                            
+                <li><h:link value="#{msgs.activitiesDetails}" outcome="activitiesDetailedView" /></li>                                            
             </ul>
         </h:panelGroup>
     </ui:composition>

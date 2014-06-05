@@ -8,7 +8,7 @@
 
 
     <ui:define name="title">
-        #{msgs.listWorker_subtitle}
+        #{msgs.list_of_workers}
     </ui:define>    
 
     <ui:define name="pagetitle">
@@ -37,7 +37,7 @@
 
         <h:form id="form" class="dataTableList">
             <h:panelGroup layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="workerBtn" value="#{msgs.add_worker}" actionListener="#{workersListProjectBean.reloadWorkerBean}" oncomplete="PF('workerPranel').show()" styleClass="btn btn-success" />
+                <p:commandButton id="workerBtn" value="#{msgs.add_new_worker}" actionListener="#{workersListProjectBean.reloadWorkerBean}" oncomplete="PF('workerPranel').show()" styleClass="btn btn-success" />
             </h:panelGroup>
 
             <p:growl id="messages" showDetail="true" /> 
@@ -49,19 +49,19 @@
                          selection="#{workersListProjectBean.selectedWorker}" 
                          id="workerTable" lazy="true">
 
-                <p:column headerText="#{msgs.nameWorker}" sortBy="surname" filterBy="#{worker.name}">
+                <p:column headerText="#{msgs.name}" sortBy="surname" filterBy="#{worker.name}">
                     <h:outputText value="#{worker.name}" />
                 </p:column>
 
-                <p:column headerText="#{msgs.surnameWorker}" sortBy="surname" filterBy="#{worker.surname}">
+                <p:column headerText="#{msgs.surname}" sortBy="surname" filterBy="#{worker.surname}">
                     <h:outputText value="#{worker.surname}" />
                 </p:column>
 
-                <p:column headerText="#{msgs.dniWorker}" sortBy="dni" filterBy="#{worker.dni}">
+                <p:column headerText="#{msgs.dni}" sortBy="dni" filterBy="#{worker.dni}">
                     <h:outputText value="#{worker.dni}" />
                 </p:column>
 
-                <p:column headerText="#{msgs.emailWorker}" sortBy="email" filterBy="#{worker.email}">
+                <p:column headerText="#{msgs.email}" sortBy="email" filterBy="#{worker.email}">
                     <h:outputText value="#{worker.email}" />
                 </p:column>
 
@@ -70,7 +70,7 @@
                 </p:column>
             </p:dataTable>
 
-            <p:dialog id="workerPranel" header="#{msgs.add_worker}" widgetVar="workerPranel" hideEffect="fade" dynamic="true">            
+            <p:dialog id="workerPranel" header="#{msgs.add_new_worker}" widgetVar="workerPranel" hideEffect="fade" dynamic="true">            
 
                 <p:dataTable var="w" value="#{workersListProjectBean.listWorkerBean.lazyModel}" paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -79,19 +79,19 @@
                              selection="#{workersListProjectBean.listWorkerBean.selectedWorker}" 
                              id="addWorkerTable" lazy="true" widgetVar="dialog">
 
-                    <p:column headerText="#{msgs.nameWorker}" sortBy="surname" filterBy="#{w.name}">
+                    <p:column headerText="#{msgs.name}" sortBy="surname" filterBy="#{w.name}">
                         <h:outputText value="#{w.name}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs.surnameWorker}" sortBy="surname" filterBy="#{w.surname}">
+                    <p:column headerText="#{msgs.surname}" sortBy="surname" filterBy="#{w.surname}">
                         <h:outputText value="#{w.surname}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs.dniWorker}" sortBy="dni" filterBy="#{w.dni}">
+                    <p:column headerText="#{msgs.dni}" sortBy="dni" filterBy="#{w.dni}">
                         <h:outputText value="#{w.dni}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs.emailWorker}" sortBy="email" filterBy="#{w.email}">
+                    <p:column headerText="#{msgs.email}" sortBy="email" filterBy="#{w.email}">
                         <h:outputText value="#{w.email}" />
                     </p:column>
 

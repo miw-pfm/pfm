@@ -9,11 +9,11 @@
 
 
     <ui:define name="title">
-        #{msgs.phasePlan_title}
+        #{msgs.phasePlan}
     </ui:define>    
 
     <ui:define name="subtitle">
-        #{msgs.activities_detail_asignation_subtitle}
+        #{msgs.set_hours_activities_iteration}
     </ui:define>   
 
     <ui:define name="pagetitle">
@@ -26,7 +26,7 @@
             <p:growl id="msgs" life="1500"/>
             <p id="activitiesAndIterationsTitle">
                 <h:outputText id="activitiesTitle" value="#{msgs.activities}" />
-                <h:outputText id="iterationsTitle" value="#{msgs.title_iterations}" />
+                <h:outputText id="iterationsTitle" value="#{msgs.iterations}" />
             </p>
             <p:multiSelectListbox id="listActivities" value="#{activitiesBean.selectionSubAct}" effect="slide">
                 <f:selectItems value="#{activitiesBean.activitiesItem}" />
@@ -37,7 +37,7 @@
             </p:multiSelectListbox>
 
             <div id="saveUnits">
-                <h:outputText value="#{msgs.title_units}" />
+                <h:outputText value="#{msgs.units}" />
                 <h:inputText id="unit" value="#{activitiesBean.workUnit}"  >
                     <f:converter converterId = "javax.faces.Double"/>
                 </h:inputText>

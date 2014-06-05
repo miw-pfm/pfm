@@ -11,11 +11,11 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.riskPlan_title}
+        #{msgs.riskPlan}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.list_usecase_subtitle}
+        #{msgs.useCases}
     </ui:define>
 
     <ui:define name="body">
@@ -25,13 +25,13 @@
                 <p:growl id="growl_update"  sticky="true" life="1500"/>   
                 <h:inputHidden id="id" value="#{useCaseBean.usecase.id}" />
                 <h:panelGrid columns="5">     
-                    <h:outputText value="#{msgs.enter_name_usecase}" />                
+                    <h:outputText value="#{msgs.name}" />                
                     <h:inputText id="name" value="#{useCaseBean.usecase.name}" maxlength="100">                                
                     </h:inputText>
-                    <h:outputText value="#{msgs.enter_description_usecase}" />                
+                    <h:outputText value="#{msgs.description}" />                
                     <h:inputText id="description" value="#{useCaseBean.usecase.description}" maxlength="100">                              
                     </h:inputText>                 
-                    <h:commandButton value="Submit" action="#{useCaseBean.update()}" styleClass="btn btn-success" />                                   
+                    <h:commandButton value="#{msgs.submit}" action="#{useCaseBean.update()}" styleClass="btn btn-success" />                                   
                 </h:panelGrid>                    
             </h:panelGroup>                     
         </h:form> 

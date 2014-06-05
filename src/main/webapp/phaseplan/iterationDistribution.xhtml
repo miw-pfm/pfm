@@ -12,11 +12,11 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.iter_dist_title}
+        #{msgs.set_ut_iteration_activity}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.iter_dist_title}
+        #{msgs.set_ut_iteration_activity}
     </ui:define>
 
     <ui:define name="body">
@@ -39,10 +39,10 @@
                     <p:row>
                         <p:column rowspan="1" headerText="#{msgs.name}" />
                         <p:column colspan="1" headerText="#{msgs.code}" />
-                        <p:column colspan="1" headerText="#{msgs.total_units}" />
-                        <p:column colspan="1" headerText="#{msgs.setNumberResourceHours}" />
+                        <p:column colspan="1" headerText="#{msgs.totalUnits}" />
+                        <p:column colspan="1" headerText="#{msgs.hours}" />
                         <p:column colspan="1" headerText="" />
-                        <p:column colspan="1" headerText="#{msgs.available_units}" />
+                        <p:column colspan="1" headerText="#{msgs.availableUnits}" />
                     </p:row>
                 </p:columnGroup>
 
@@ -103,7 +103,7 @@
                     <p:column headerText="#{msgs.code}">
                         <h:outputText value="#{w.subActivity.code}" />
                     </p:column>                    
-                    <p:column headerText="#{msgs.available_units}">
+                    <p:column headerText="#{msgs.availableUnits}">
                         <h:outputText value="#{w.workunits.size()}" />
                     </p:column>
                 </p:dataTable>
@@ -126,11 +126,11 @@
                         <h:outputText value="#{work_unit.code}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs.units}" >
+                    <p:column headerText="#{msgs.unit}" >
                         <h:outputText value="#{workUnitBean.getWorkerNumSubActivityUnits(work_unit)}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs.setNumberResourceHours}">
+                    <p:column headerText="#{msgs.hour}">
                         <h:outputText value="#{workUnitBean.getWorkerNumSubActivityUnits(work_unit)/4}" />
                     </p:column>
 
@@ -154,10 +154,10 @@
                     <p:column headerText="#{msgs.code}">
                         <h:outputText value="#{w.subActivity.code}" />
                     </p:column>
-                    <p:column headerText="#{msgs.actual_units}">
+                    <p:column headerText="#{msgs.actualUnits}Actual Units">
                         <h:outputText value="#{w.getWorkerNumSubActivityUnits(w.subActivity)}" />
                     </p:column>
-                    <p:column headerText="#{msgs.available_units}">
+                    <p:column headerText="#{msgs.availableUnits}">
                         <h:outputText value="#{w.getNumSubActivityUnits(w.subActivity, w.iteration, true)}" />
                     </p:column>                    
                 </p:dataTable>
