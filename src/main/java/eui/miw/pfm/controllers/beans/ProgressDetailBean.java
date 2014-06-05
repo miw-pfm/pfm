@@ -61,8 +61,8 @@ public class ProgressDetailBean extends Bean implements Serializable {
 
     public void save() {
         final UseCaseEntity useCase = getUseCaseEntity();
-        if (useCase.isIsEnabled() != (this.enabled != 0)) {
-            useCase.setIsEnabled(this.enabled != 0);
+        if (useCase.isEnabled() != (this.enabled != 0)) {
+            useCase.setEnabled(this.enabled != 0);
             new UseCaseEjb().update(useCase);
         }
 
@@ -118,7 +118,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         this.progressDetail = new ProgressDetailEjb().findProgressDetail(getIterationEntity(), useCase, getDisciplineEntity());
         if (flag && this.progressDetail != null) {
             this.percentCompleted = (int) this.progressDetail.getPercent();
-            this.enabled = useCase.isIsEnabled() ? 1 : 0;
+            this.enabled = useCase.isEnabled() ? 1 : 0;
         }
     }
 
