@@ -61,6 +61,20 @@ public class TargetBean extends Bean implements Serializable {
         new TargetEjb().createTarget(target);
         return null;
     }
+    
+    public String delete() {
+        if (null ==  this.target) {
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No target Selected", ""));
+        } else {
+            this.target.setProject(project);
+            
+            LOGGER.info(this.target.toString());
+            
+            new TargetEjb().delete(target);
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Target Deleted", ""));
+        }
+        return null;
+    }
 
     public String update() {
         this.target.setProject(project);
