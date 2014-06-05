@@ -58,7 +58,7 @@ public class UseCaseEntity implements Serializable {
     private ProjectEntity project;
 
     @ManyToOne
-    @JoinColumn(name = "iteration_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "iteration_id", referencedColumnName = "id", nullable = true)
     private IterationEntity iteration;
 
     @JoinTable(name = "risks_usecases", joinColumns = {

@@ -22,8 +22,8 @@ import javax.validation.constraints.NotNull;
  * *@author Fred Peña
  */
 @Entity
-@Table(name = "planfornextiteration")
-public class PlanForNextIterationEntity implements Serializable {
+@Table(name = "theoreticalassignment")
+public class TheoreticalAssignmentEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,11 +51,11 @@ public class PlanForNextIterationEntity implements Serializable {
     @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
     private ActivityEntity activity;
 
-    public PlanForNextIterationEntity() {
+    public TheoreticalAssignmentEntity() {
         super();
     }
 
-    public PlanForNextIterationEntity(final Integer id, final double elaborationValue, final double contrutionValue, final double transitionValue, final ActivityEntity activity) {
+    public TheoreticalAssignmentEntity(final Integer id, final double elaborationValue, final double contrutionValue, final double transitionValue, final ActivityEntity activity) {
         this.id = id;
         this.elaborationValue = elaborationValue;
         this.contrutionValue = contrutionValue;
@@ -126,7 +126,7 @@ public class PlanForNextIterationEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PlanForNextIterationEntity other = (PlanForNextIterationEntity) obj;
+        final TheoreticalAssignmentEntity other = (TheoreticalAssignmentEntity) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

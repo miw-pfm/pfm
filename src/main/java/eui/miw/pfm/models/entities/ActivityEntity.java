@@ -49,7 +49,7 @@ public class ActivityEntity implements Serializable {
      * @author Fred Peña
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
-    private List<PlanForNextIterationEntity> planForNextIteration = new ArrayList<>();
+    private List<TheoreticalAssignmentEntity> theoreticalAssignment = new ArrayList<>();
 
     public ActivityEntity(final Integer id, final String name, final String code) {
         this.id = id;
@@ -101,20 +101,20 @@ public class ActivityEntity implements Serializable {
         this.subactivity.remove(sa);
     }
 
-    public List<PlanForNextIterationEntity> getPlanForNextIteration() {
-        return planForNextIteration;
+    public List<TheoreticalAssignmentEntity> getTheoreticalAssignment() {
+        return theoreticalAssignment;
     }
 
-    public void setPlanForNextIteration(final List<PlanForNextIterationEntity> planForNextIteration) {
-        this.planForNextIteration = planForNextIteration;
+    public void setTheoreticalAssignment(final List<TheoreticalAssignmentEntity> theoreticalAssignment) {
+        this.theoreticalAssignment = theoreticalAssignment;
     }
 
-    public void addPlanForNextIteration(final PlanForNextIterationEntity planForNextIteration) {
-        this.planForNextIteration.add(planForNextIteration);
+    public void addPlanForNextIteration(final TheoreticalAssignmentEntity planForNextIteration) {
+        this.theoreticalAssignment.add(planForNextIteration);
     }
 
-    public void removePlanForNextIteration(final PlanForNextIterationEntity planForNextIteration) {
-        this.planForNextIteration.remove(planForNextIteration);
+    public void removePlanForNextIteration(final TheoreticalAssignmentEntity planForNextIteration) {
+        this.theoreticalAssignment.remove(planForNextIteration);
     }
 
     @Override

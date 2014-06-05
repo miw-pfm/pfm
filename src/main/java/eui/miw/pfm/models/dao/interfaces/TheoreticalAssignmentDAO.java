@@ -6,12 +6,12 @@
 package eui.miw.pfm.models.dao.interfaces;
 
 import eui.miw.pfm.models.dao.TransactionGenericDAO;
-import eui.miw.pfm.models.entities.PlanForNextIterationEntity;
+import eui.miw.pfm.models.entities.TheoreticalAssignmentEntity;
 
 /**
  *
  * @author Fred Peña
  */
-public interface PlanForNextIterationDAO extends TransactionGenericDAO<PlanForNextIterationEntity, Integer> {
+public interface TheoreticalAssignmentDAO extends TransactionGenericDAO<TheoreticalAssignmentEntity, Integer> {
 
 }
