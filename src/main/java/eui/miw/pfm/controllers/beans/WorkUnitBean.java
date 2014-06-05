@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ActivitiesEjb;
@@ -19,7 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -39,8 +34,8 @@ public class WorkUnitBean extends Bean implements Serializable {
     private WorkerEntity worker;
     private List<ActivityEntity> activities;
     private List<WorkUnitEntity> workunits = new ArrayList<>();
-
-    private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
+    private ProjectEntity project;
+    private FacesMessage message;
 
     private Integer numHours;
     private final List<WorkUnitEntity> listWorkUnit = new ArrayList<>();
@@ -48,18 +43,17 @@ public class WorkUnitBean extends Bean implements Serializable {
     private int numUnitsToAsign;
     private int numUnitsAvailable;
     private int numUnitsToRemove;
-    private ProjectEntity project;
 
     public WorkUnitBean() {
         super();
-        try {
-            project = ((ProjectEntity) sessionMap.get("project"));
-        } catch (Exception e) {
-            LOGGER.info("No session exist");
-        }
+
+        project = ((ProjectEntity) sessionMap.get("project"));
         workunit = new WorkUnitEntity();
         this.activities = new ActivitiesEjb().obtainAllActivities();
-        iteration = getAllIterations().get(0);
+
+        if (!getAllIterations().isEmpty()) {
+            iteration = getAllIterations().get(0);
+        }
     }
 
     public WorkUnitBean(final WorkUnitEntity workunit) {
@@ -143,27 +137,6 @@ public class WorkUnitBean extends Bean implements Serializable {
         this.numUnitsToAsign = numUnitsToAsign;
     }
 
-    public void getWorkUnitsByIterAndActivity(final ActivityEntity activity, final IterationEntity iteration) {
-        List<SubActivityEntity> subactivities;
-        subactivities = new ActivitiesEjb().obtainSubActivities(activity);
-        WorkUnitEjb workejb = new WorkUnitEjb();
-        for (SubActivityEntity s : subactivities) {
-            this.workunits.addAll(workejb.getWorkUnitsByIterAndActivity(s, iteration));
-        }
-    }
-
-    public int getNumSubActivityUnits(final SubActivityEntity subActivity, final IterationEntity iteration, boolean available) {
-        WorkUnitEjb workejb = new WorkUnitEjb();
-        setIteration(iteration);
-        int units = 0;
-        if (available) {
-            units = workejb.getAvailableWorkUnits(subActivity, iteration).size();
-        } else {
-            units = workejb.getNumTotalWorkUnits(subActivity, iteration);
-        }
-        return units;
-    }
-
     public int getNumUnitsToRemove() {
         return numUnitsToRemove;
     }
@@ -178,6 +151,27 @@ public class WorkUnitBean extends Bean implements Serializable {
 
     public void setNumUnitsAvailable(int numUnitsAvailable) {
         this.numUnitsAvailable = numUnitsAvailable;
+    }
+
+    public void getWorkUnitsByIterAndActivity(final ActivityEntity activity, final IterationEntity iteration) {
+        List<SubActivityEntity> subactivities;
+        subactivities = new ActivitiesEjb().obtainSubActivities(activity);
+        WorkUnitEjb workejb = new WorkUnitEjb();
+        for (SubActivityEntity s : subactivities) {
+            this.workunits.addAll(workejb.getWorkUnitsByIterAndSubActivity(s, iteration));
+        }
+    }
+
+    public int getNumSubActivityUnits(final SubActivityEntity subActivity, final IterationEntity iteration, boolean available) {
+        WorkUnitEjb workejb = new WorkUnitEjb();
+        setIteration(iteration);
+        int units;
+        if (available) {
+            units = workejb.getAvailableWorkUnits(subActivity, iteration).size();
+        } else {
+            units = workejb.getWorkUnitsByIterAndSubActivity(subActivity, iteration).size();
+        }
+        return units;
     }
 
     public void storeHours() {
@@ -216,6 +210,15 @@ public class WorkUnitBean extends Bean implements Serializable {
             workunit.setWorker(worker);
             new WorkUnitEjb().update(workunit);
         }
+
+        if (numUnitsToAsign > 0) {
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success",
+                    "Units added");
+        } else {
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Fail",
+                    "No units available");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public List<SubActivityEntity> getWorkerSubActivities() {
@@ -238,7 +241,7 @@ public class WorkUnitBean extends Bean implements Serializable {
 
         WorkUnitEjb workejb = new WorkUnitEjb();
 
-        int units = workejb.getNumTotalWorkUnits(sub, iteration, worker).size();
+        int units = workejb.getTotalWorkUnitsByWorker(sub, iteration, worker).size();
         return units;
 
     }
@@ -247,12 +250,10 @@ public class WorkUnitBean extends Bean implements Serializable {
 
         WorkUnitEjb workejb = new WorkUnitEjb();
 
-        for (WorkUnitEntity w : workejb.getNumTotalWorkUnits(sub, iteration, worker)) {
+        for (WorkUnitEntity w : workejb.getTotalWorkUnitsByWorker(sub, iteration, worker)) {
             w.setWorker(null);
             workejb.update(w);
         }
-        settWorker(worker.getId());
-
     }
 
     public List<IterationEntity> getAllIterations() {
@@ -271,7 +272,7 @@ public class WorkUnitBean extends Bean implements Serializable {
 
     public void saveWorkerUnits() {
 
-        setWorkunits(new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration, worker));
+        setWorkunits(new WorkUnitEjb().getTotalWorkUnitsByWorker(subActivity, iteration, worker));
         for (int i = 0; i < numUnitsToRemove; i++) {
             workunit = workunits.get(i);
             workunit.setWorker(null);
@@ -284,6 +285,9 @@ public class WorkUnitBean extends Bean implements Serializable {
             workunit.setWorker(worker);
             new WorkUnitEjb().update(workunit);
         }
+
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
 }

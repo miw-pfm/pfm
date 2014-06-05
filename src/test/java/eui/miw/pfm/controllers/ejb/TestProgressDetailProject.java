@@ -77,16 +77,9 @@ public class TestProgressDetailProject {
         useCase.setName("Use Case 1");
         useCase.setProject(project);
         AbstractDAOFactory.getFactory().getUseCaseDAO().create(useCase);
-
-    }
-
-    @Test
-    public void testCreate() {
-        final ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
-
-        progressDetail1 = new ProgressDetailEntity();
+        
+         progressDetail1 = new ProgressDetailEntity();
         progressDetail1.setDiscipline(discipline);
-
         progressDetail1.setIteration(iteration);
         progressDetail1.setPercent(5);
         progressDetail1.setUseCase(useCase);
@@ -103,9 +96,20 @@ public class TestProgressDetailProject {
         progressDetail3.setPercent(3);
         progressDetail3.setUseCase(useCase);
 
-        progressDetailEjb.create(progressDetail1);
-        progressDetailEjb.create(progressDetail2);
-        progressDetailEjb.create(progressDetail3);
+        
+
+    }
+
+    @Test
+    public void testEnabledUseCases() {
+        ProgressDetailEjb progressDetailEjb=createProgressDetails();       
+        assertTrue("ERROR enabled use cases", progressDetailEjb.getEnabledUseCases(project)== 1);
+    }
+    
+    @Test
+    public void testCreate() {
+        
+        createProgressDetails();
 
         assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getProgressDetailDAO().read(progressDetail1.getId()).equals(progressDetail1));
         assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getProgressDetailDAO().read(progressDetail2.getId()).equals(progressDetail2));
@@ -113,6 +117,16 @@ public class TestProgressDetailProject {
 
     }
 
+    public ProgressDetailEjb createProgressDetails()
+    {
+        ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
+        progressDetailEjb.create(progressDetail1);
+        progressDetailEjb.create(progressDetail2);
+        progressDetailEjb.create(progressDetail3);
+        return progressDetailEjb;
+        
+    }
+    
     @Test
     public void testFind() {
         assertNotNull("Not Found Progress Detail : ",new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline));

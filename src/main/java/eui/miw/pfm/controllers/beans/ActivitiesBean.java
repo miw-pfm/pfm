@@ -112,7 +112,7 @@ public class ActivitiesBean extends Bean implements Serializable {
         IterationEntity iterationEntity = getIterationEntity();
         WorkUnitEntity workUnitEntity;
 
-        List<WorkUnitEntity> lWorkUnit = workUnitEjb.getWorkUnitsByIterAndActivity(subActivityEntity, iterationEntity);
+        List<WorkUnitEntity> lWorkUnit = workUnitEjb.getWorkUnitsByIterAndSubActivity(subActivityEntity, iterationEntity);
 
         int unit = (int) (this.workUnit * WORK_UNIT);
         int size = lWorkUnit.size();
@@ -152,7 +152,7 @@ public class ActivitiesBean extends Bean implements Serializable {
     }
 
     public double findWorkUnit(final SubActivityEntity subActivity, final IterationEntity iteration) {
-        return (double) new WorkUnitEjb().getNumTotalWorkUnits(subActivity, iteration) / WORK_UNIT;
+        return (double) new WorkUnitEjb().getWorkUnitsByIterAndSubActivity(subActivity, iteration).size() / WORK_UNIT;
     }
 
     public void subActivitiesByActivity() {
