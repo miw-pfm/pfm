@@ -28,21 +28,22 @@ public class PlanForNextIterationEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;//NOPMD
 
-    @Column(name = "inception_value", columnDefinition = "Decimal(2,2) default '0.00'")
+    @Column(name = "inception_value", columnDefinition = "Decimal(10,2) default '0.00'")
     @NotNull
     private double inceptionValue;
 
-    @Column(name = "elaboration_value", columnDefinition = "Decimal(2,2) default '0.00'")
+    @Column(name = "elaboration_value", columnDefinition = "Decimal(10,2) default '0.00'")
     @NotNull
     private double elaborationValue;
 
-    @Column(name = "contrution_value", columnDefinition = "Decimal(2,2) default '0.00'")
+    @Column(name = "contrution_value", columnDefinition = "Decimal(10,2) default '0.00'")
     @NotNull
     private double contrutionValue;
 
-    @Column(name = "transition_value", columnDefinition = "Decimal(2,2) default '0.00'")
+    @Column(name = "transition_value", columnDefinition = "Decimal(10,2) default '0.00'")
     @NotNull
     private double transitionValue;
 
