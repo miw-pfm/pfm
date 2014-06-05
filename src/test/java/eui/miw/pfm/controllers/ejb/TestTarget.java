@@ -17,7 +17,10 @@ import eui.miw.pfm.models.entities.TargetEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
 import eui.miw.pfm.models.entities.UserEntity;
 import java.util.Date;
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -84,9 +87,22 @@ public class TestTarget {
     public void createUseCase() {
         targetDAO.create(this.target);
         targetEjb.createTarget(this.target);
- 
         TargetEntity recoveredT = targetDAO.read(target.getId());
-        assertEquals(recoveredT.getConstruction(), this.target.getConstruction()); 
+        assertEquals(recoveredT.getConstruction(), this.target.getConstruction());
+        assertEquals(recoveredT.getElaboration(), this.target.getElaboration()); 
+        assertEquals(recoveredT.getInception(), this.target.getInception()); 
+        assertEquals(recoveredT.getTransition(), this.target.getTransition()); 
+        
+    }
+    
+   @Test
+    public void updateTest() {
+        targetDAO.create(this.target); // se guarda en la base de datos
+        this.target.setInception(99);
+        this.target.setElaboration(99);
+        targetEjb.update(this.target);
+        TargetEntity targettest = targetDAO.read(this.target.getId()); // se obtiene de la BD        
+        assertTrue("Modified", targettest.getInception().equals(99) && targettest.getElaboration().equals(99));
     }
     
      public void fill_userentity() {
@@ -124,5 +140,13 @@ public class TestTarget {
        this.target.setTransition(T_TRANSITION);
        this.target.setProject(this.project);
        this.target.setDiscipline(this.discipline);
+    }
+     
+    @After
+    public void after() {
+        targetDAO.delete(this.target);
+        disciplineDAO.delete(this.discipline);
+        projectDAO.delete(this.project);
+        userDAO.delete(this.user);
     }
 }
