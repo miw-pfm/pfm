@@ -1,6 +1,7 @@
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
+import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
@@ -94,6 +95,4 @@ public class ProgressResumeBean extends Bean implements Serializable {
             this.setTotal(this.getTotal()+this.getProgressDetailEntity().getPercent());
         }
     }
-    
-    
 }

@@ -13,12 +13,14 @@ import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -44,13 +46,16 @@ public class ProgressDetailBean extends Bean implements Serializable {
 
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
-//    
+
     @ManagedProperty(value = "#{useCaseBean}")
     private final transient UseCaseBean useCaseBean = new UseCaseBean();
+
+    private List<UseCaseEntity> checkedUseCases = new ArrayList<>();
 
     @PostConstruct
     public void init() {
         this.lDisciplines = new DisciplineEjb().findAll();
+        this.iterationSelect = iterationBean.getAllIterations().get(0).getId();
         findProgressDetail(true);
     }
 
@@ -75,6 +80,10 @@ public class ProgressDetailBean extends Bean implements Serializable {
         } else {
             new ProgressDetailEjb().update(this.progressDetail);
         }
+    }
+
+    public void fillCheckedUseCase() {
+
     }
 
     private IterationEntity getIterationEntity() {
@@ -164,15 +173,29 @@ public class ProgressDetailBean extends Bean implements Serializable {
     public void setEnabled(final int enabled) {
         this.enabled = enabled;
     }
-    
-    public ProgressDetailEntity getWorkUnitBy(final  IterationEntity iteration,final UseCaseEntity useCase,final DisciplineEntity discipline){
-        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline);
-        ProgressDetailEntity progress ;
-        if(lProgress.isEmpty()){
-            progress = new ProgressDetailEntity(null,useCase,iteration,discipline,0);
-        }else {
+
+    public List<UseCaseEntity> getCheckedUseCases() {
+        return checkedUseCases;
+    }
+
+    public void setCheckedUseCases(List<UseCaseEntity> checkedUseCases) {
+        this.checkedUseCases = checkedUseCases;
+    }
+
+    public ProgressDetailEntity getWorkUnitBy(final UseCaseEntity useCase, final DisciplineEntity discipline) {
+        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(this.getIterationEntity(), useCase, discipline);
+        ProgressDetailEntity progress;
+        if (lProgress.isEmpty()) {
+            progress = new ProgressDetailEntity(null, useCase, this.getIterationEntity(), discipline, 0);
+        } else {
             progress = lProgress.get(0);
         }
         return progress;
+    }
+
+    public void probando(final UseCaseEntity ucc) {
+        System.out.println("-------------------------------------------");
+        System.out.println("--" + ucc.toString());
+        System.out.println("-------------------------------------------");
     }
 }
