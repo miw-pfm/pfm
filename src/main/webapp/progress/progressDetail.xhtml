@@ -23,7 +23,7 @@
 
         </h:outputScript>
 
-        <h:form id="formInsertDetail">
+        <h:form id="formInsertDetail" class="leyendaProgressTable">
             <h:panelGroup layout="block">
                 <p:growl id="growl"  sticky="true" life="1500"/>
                 <h:panelGrid columns="2">    
@@ -75,7 +75,7 @@
 
                 <p:column styleClass="columChecks" headerText="Ident"  selectionMode="multiple" style="width:2%;text-align:center"/>
 
-                <c:forEach  var="discipline" items="#{progressDetailBean.getlDisciplines()}" >
+                <c:forEach  var="discipline" items="#{progressDetailBean.disciplines}" >
                     <p:column headerText="#{discipline.name.charAt(0)}"  >
                         <h:outputText value="#{progressDetailBean.getWorkUnitBy(iterationBean.iterEntity, usecases, discipline).percent}" />
                     </p:column>
@@ -84,7 +84,7 @@
             </p:dataTable>
         </h:form>
 
-        <table id="leyendaDetailProgress">
+        <table id="leyendaDetailProgress"  class="leyendaProgressTable">
             <tr class="headTableLegend">
                 <td colspan="2">#{msgs.legend}</td>
             </tr>
