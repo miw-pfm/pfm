@@ -21,7 +21,7 @@
     </ui:define>
 
     <ui:define name="body">
-<!--http://www.primefaces.org/showcase/ui/data/datatable/group.xhtml-->
+        <!--http://www.primefaces.org/showcase/ui/data/datatable/group.xhtml-->
         <h:form id="formActivitiesDetailedView" class="dataTableList">
 
             <p:dataTable id="dataTableActivityPhase" value="#{activitiesBean.activities}" var="activity">     
@@ -34,16 +34,38 @@
                         <p:column rowspan="2" headerText="#{msgs.activity}">
                             <h:outputText  value="#{activity.name}" style="display:block" />                    
                         </p:column>                           
-                        <p:column colspan="4" headerText="#{msgs.percentages}" />
-                        <p:column colspan="4" headerText="#{msgs.journays}" />
+                        <p:column colspan="5" headerText="#{msgs.percentages}" />
+                        <p:column colspan="5" headerText="#{msgs.journays}" />
                     </p:row>
                     <p:row>
-                        <p:column colspan="2" headerText="Sales" />
-                        <p:column colspan="2" headerText="Profit" />
-                        <p:column colspan="2" headerText="Sales" />
-                        <p:column colspan="2" headerText="Profit" />
+                        <p:column headerText="Project" />
+                        <p:column headerText="I" />
+                        <p:column headerText="E" />
+                        <p:column headerText="C" />
+                        <p:column headerText="T" />
+                        <p:column headerText="Project" />
+                        <p:column headerText="I" />
+                        <p:column headerText="E" />
+                        <p:column headerText="C" />
+                        <p:column headerText="T" />                        
                     </p:row>
                 </p:columnGroup>
+
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="2" style="text-align:right" footerText="Totals:" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />
+                        <p:column footerText="0" />                
+                    </p:row>
+                </p:columnGroup>                
             </p:dataTable> 
 
             <br/>
