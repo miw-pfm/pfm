@@ -67,5 +67,4 @@ public abstract class AbstractDAOFactory {
     public abstract TargetDAO getTargetDAO();
 
     public abstract TheoreticalAssignmentDAO getTheoreticalAssignmentDAO();
-
 }
