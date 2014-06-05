@@ -72,7 +72,7 @@ public class UseCaseBean extends Bean implements Serializable {
         }
         
         this.usecase.setProject(this.project);
-        this.usecase.setIsEnabled(true);
+        this.usecase.setEnabled(true);
         
         LOGGER.info(this.usecase.toString());
         

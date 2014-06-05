@@ -16,6 +16,7 @@
         <class>eui.miw.pfm.models.entities.DisciplineEntity</class>
         <class>eui.miw.pfm.models.entities.ProgressDetailEntity</class>
         <class>eui.miw.pfm.models.entities.TargetEntity</class>
+        <class>eui.miw.pfm.models.entities.PlanForNextIterationEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <validation-mode>NONE</validation-mode>
         <properties>
