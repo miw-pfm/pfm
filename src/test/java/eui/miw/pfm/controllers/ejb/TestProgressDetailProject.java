@@ -74,7 +74,6 @@ public class TestProgressDetailProject {
 
         useCase = new UseCaseEntity();
         useCase.setDescription("Description UC1");
-        useCase.setIsChecked(true);
         useCase.setName("Use Case 1");
         useCase.setProject(project);
         AbstractDAOFactory.getFactory().getUseCaseDAO().create(useCase);
