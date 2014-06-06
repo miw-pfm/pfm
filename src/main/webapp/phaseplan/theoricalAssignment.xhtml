@@ -23,17 +23,13 @@
     <ui:define name="body">
         <!--http://www.primefaces.org/showcase/ui/data/datatable/group.xhtml-->
         <h:form id="formActivitiesDetailedView" class="dataTableList">
+            <p:growl id="msgs" sticky="true"/>
 
-            <p:dataTable id="dataTableActivityPhase" value="#{activitiesBean.activities}" var="activity">     
+            <p:dataTable id="dataTheoreticalAssignmen" value="#{theoreticalAssignmentbean.theoreticalAssignments}" var="assignment">     
                 <p:columnGroup type="header">
                     <p:row>
-                        <p:column rowspan="2" headerText="#{msgs.code}" width="55">
-                            <h:outputText value="#{activity.code}" style="display:block" />                    
-                        </p:column>                        
-
-                        <p:column rowspan="2" headerText="#{msgs.activity}">
-                            <h:outputText  value="#{activity.name}" style="display:block" />                    
-                        </p:column>                           
+                        <p:column rowspan="2" headerText="#{msgs.code}" width="55"/>                      
+                        <p:column rowspan="2" headerText="#{msgs.activity}"/>                         
                         <p:column colspan="5" headerText="#{msgs.percentages}" />
                         <p:column colspan="5" headerText="#{msgs.journays}" />
                     </p:row>
@@ -54,56 +50,95 @@
                 <p:columnGroup type="footer">
                     <p:row>
                         <p:column colspan="2" style="text-align:right" footerText="Totals:" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />
-                        <p:column footerText="0" />                
+                        <p:column footerText="#{theoreticalAssignmentbean.totalProjectTheoreticalAssignment}%"/>
+                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(0)}%" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(1)}%" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(2)}%" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(3)}%" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />                
                     </p:row>
-                </p:columnGroup>                
+                </p:columnGroup>  
+
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.activity.code}" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.activity.name}" style="display:block" />                   
+                </p:column> 
+
+                <p:column  width="55">
+                    <h:outputText value="#{theoreticalAssignmentbean.getProjectTheoreticalAssignment(assignment.activity)}%" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.inceptionValue}%" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.elaborationValue}%" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.contrutionValue}%" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.transitionValue}%" style="display:block" />                   
+                </p:column> 
+
+                <p:column  width="55">
+                    <h:outputText value="0.00" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.inceptionValue}" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.elaborationValue}" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.contrutionValue}" style="display:block" />                   
+                </p:column> 
+                <p:column  width="55">
+                    <h:outputText value="#{assignment.transitionValue}" style="display:block" />                   
+                </p:column> 
+
             </p:dataTable> 
 
             <br/>
 
-            <p:growl id="msgs" sticky="true"/>
             <h:panelGrid columns="1">
                 <p:outputLabel  value="#{msgs.activities}:  "/>   
                 <p:selectOneMenu id="activities" value="#{activitiesBean.selectionAct}" style="width:150px">
-                    <p:ajax listener="#{activitiesBean.subActivitiesByActivity()}" update="dataTableActivityIteration" />
+                    <p:ajax listener="#{activitiesBean.subActivitiesByActivity()}" update="dataViewTheoreticalAssignmen" />
                     <f:selectItem itemLabel="#{msgs.allActivities}" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{activitiesBean.activities}"   />                 
                 </p:selectOneMenu>
             </h:panelGrid>
 
-            <p:dataTable id="dataTableActivityIteration" value="#{activitiesBean.activities}" var="activity">     
+            <p:dataTable id="dataViewTheoreticalAssignmen" value="#{activitiesBean.subActivities}" var="subactivity">     
 
                 <p:column headerText="#{msgs.code}" width="55">
-                    <h:outputText value="#{activity.code}" style="display:block" />                    
+                    <h:outputText value="#{subactivity.code}" style="display:block" />                    
                 </p:column>                        
 
-                <p:column headerText="#{msgs.activity}">
-                    <h:outputText  value="#{activity.name}" style="display:block" />                    
+                <p:column headerText="#{msgs.subactivity}">
+                    <h:outputText  value="#{subactivity.name}" style="display:block" />                    
                 </p:column>
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" headerText="#{iteration.codeIteration}" width="40" styleClass="ui-editable-column">                         
-                    <h:outputText value="#{activitiesBean.findWorkUnit(activity, iteration)}" style="display:block" />
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
                 </p:columns>     
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" headerText="#{iteration.codeIteration}" width="40" styleClass="ui-editable-column">
-                    <h:outputText value="#{activitiesBean.findWorkUnit(activity, iteration)}" style="display:block" />
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
                 </p:columns>                     
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" headerText="#{iteration.codeIteration}" width="40"  styleClass="ui-editable-column">
-                    <h:outputText value="#{activitiesBean.findWorkUnit(activity, iteration)}" style="display:block" />
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
                 </p:columns>      
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" headerText="#{iteration.codeIteration}" width="40" styleClass="ui-editable-column">
-                    <h:outputText value="#{activitiesBean.findWorkUnit(activity, iteration)}" style="display:block" />
+                    <h:outputText value="#{activitiesBean.findWorkUnit(subactivity, iteration)}" style="display:block" />
                 </p:columns>                     
             </p:dataTable> 
 
