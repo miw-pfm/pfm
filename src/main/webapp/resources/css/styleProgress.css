@@ -72,19 +72,31 @@ width: 510px;
     width: 30px;
 }
 
-#leyendaDetailProgress{
+.leyendaProgressTable{
     border: 1px solid #E6B9B8;
     margin: 20px 0;
 }
 
-#leyendaDetailProgress tr.headTableLegend{
+.leyendaProgressTable tr.headTableLegend{
     background: #E6B9B8;
     font-weight: bold;
 }
 
-#leyendaDetailProgress tr td{
+.leyendaProgressTable tr td{
     border: 1px solid #E6B9B8;
     padding: 2px 6px;
     text-align: center;
 }
 
+.progressStimTbl {
+    position:relative;
+    float:left;
+}
+
+.pnlStats {
+    position:relative;
+    float:right;
+    margin: 20px 0 0 0;
+    
+    
+}
