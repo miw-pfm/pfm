@@ -28,7 +28,7 @@
                 <p:growl id="growl"  sticky="true" life="1500"/>
                 <h:panelGrid columns="2">    
                     <h:outputText value="Iterations" />                
-                    <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.iterationSelect}">
+                    <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.idIterSelect}">
                         <p:ajax listener="#{progressDetailBean.findProgressDetail(true)}" update="chooseComplete :formShowDetails" />
                         <f:selectItems value="#{progressDetailBean.iterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
                     </p:selectOneMenu>
@@ -64,25 +64,17 @@
         </h:form>  
 
 <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
-<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
 
         <h:form id="formShowDetails" >
             <p:dataTable id="tableReadDetailProgress" var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
-
-<!--                <p:ajax event="rowSelect" listener="#{progressDetailBean.probando}"  />-->
 
                 <p:column styleClass="columUsecases" headerText="Use Case">
                     <h:outputText value="#{usecases.name}" />
                 </p:column>
 
-                <!--                <p:column headerText="Ident" style="width:2%;text-align:center" selectionMode="multiple" >
-                                    <input class="columChecks" type="checkbox" />
-                                                    <p:column styleClass="columChecks" headerText="Ident" selectionMode="multiple" style="width:2%;text-align:center" />
-                                </p:column>-->
-
                 <p:column headerText="Ident" >
-                    <h:selectBooleanCheckbox id="selection" value="true">
-                        <p:ajax listener="#{progressDetailBean.probando(usecases)}" />
+                    <h:selectBooleanCheckbox id="selection" value="#{progressDetailBean.getIdentUC(usecases)}" valueChangeListener="#{progressDetailBean.probando(usecases)}"  >
+                        <p:ajax />
                     </h:selectBooleanCheckbox>
                 </p:column>
 

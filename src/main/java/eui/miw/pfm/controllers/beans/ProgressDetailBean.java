@@ -11,13 +11,16 @@ import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
+import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
+import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
@@ -34,29 +37,47 @@ public class ProgressDetailBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(ProgressDetailBean.class.getName());//NOPMD
 
-    private int iterationSelect;
+    private int idIterSelect;
     private int disciplineSelect;
     private int useCaseSelect;
     private int percentCompleted;
     private int enabled = 1;
+    private boolean identUC = false;
+
+    private IterationEntity iterationSelected;
 
     private transient ProgressDetailEntity progressDetail;
 
     private transient List<DisciplineEntity> lDisciplines;
 
     @ManagedProperty(value = "#{iterationBean}")
-    private final transient IterationBean iterationBean = new IterationBean();
+    private transient IterationBean iterationBean;
 
     @ManagedProperty(value = "#{useCaseBean}")
     private final transient UseCaseBean useCaseBean = new UseCaseBean();
 
-    private List<UseCaseEntity> checkedUseCases = new ArrayList<>();
+    private List<UseCaseEntity> checkedUseCases;
+
+    private transient ProjectEntity project;
 
     @PostConstruct
     public void init() {
+        iterationBean = new IterationBean();
         this.lDisciplines = new DisciplineEjb().findAll();
-        this.iterationSelect = iterationBean.getAllIterations().get(0).getId();
+        this.iterationSelected = iterationBean.getAllIterations().get(0);
+        this.idIterSelect = this.iterationSelected.getId();
         findProgressDetail(true);
+        fillCheckedUseCase();
+    }
+
+    public ProgressDetailBean() {
+        super();
+
+        try {
+            this.project = ((ProjectEntity) sessionMap.get("project"));
+        } catch (Exception e) {
+            LOGGER.warning("No session exist");
+        }
     }
 
     public void save() {
@@ -71,7 +92,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
             this.progressDetail = new ProgressDetailEntity();
         }
         this.progressDetail.setDiscipline(getDisciplineEntity());
-        this.progressDetail.setIteration(getIterationEntity());
+        this.progressDetail.setIteration(this.iterationSelected);
         this.progressDetail.setPercent(this.percentCompleted);
         this.progressDetail.setUseCase(useCase);
 
@@ -83,16 +104,14 @@ public class ProgressDetailBean extends Bean implements Serializable {
     }
 
     public void fillCheckedUseCase() {
+        checkedUseCases = new ArrayList<>();
+        List<IterationEntity> listPostIter = iterationBean.listPostIterations(iterationSelected);
 
-    }
-
-    private IterationEntity getIterationEntity() {
-        for (IterationEntity iteration : this.getIterations()) {
-            if (iteration.getId().equals(this.iterationSelect)) {
-                return iteration;
+        for (UseCaseEntity ucs : new UseCaseEjb().obtainUseCaseChecked(this.project)) {
+            if ((!listPostIter.contains(ucs.getIteration())) || (ucs.getIteration().equals(this.iterationSelected))) {
+                this.checkedUseCases.add(ucs);
             }
         }
-        return null;
     }
 
     private UseCaseEntity getUseCaseEntity() {
@@ -115,11 +134,13 @@ public class ProgressDetailBean extends Bean implements Serializable {
 
     public void findProgressDetail(final boolean flag) {
         final UseCaseEntity useCase = getUseCaseEntity();
-        this.progressDetail = new ProgressDetailEjb().findProgressDetail(getIterationEntity(), useCase, getDisciplineEntity());
+        this.progressDetail = new ProgressDetailEjb().findProgressDetail(this.iterationSelected, useCase, getDisciplineEntity());
         if (flag && this.progressDetail != null) {
             this.percentCompleted = (int) this.progressDetail.getPercent();
             this.enabled = useCase.isEnabled() ? 1 : 0;
         }
+
+        this.fillCheckedUseCase();
     }
 
     public List<IterationEntity> getIterations() {
@@ -134,12 +155,25 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return useCaseBean.getUseCases();
     }
 
-    public int getIterationSelect() {
-        return iterationSelect;
+    public int getIdIterSelect() {
+        return idIterSelect;
     }
 
-    public void setIterationSelect(final int iterationSelect) {
-        this.iterationSelect = iterationSelect;
+    public void setIdIterSelect(int idIterSelect) {
+        this.idIterSelect = idIterSelect;
+        for (IterationEntity iteration : this.getIterations()) {
+            if (iteration.getId().equals(this.idIterSelect)) {
+                this.iterationSelected = iteration;
+            }
+        }
+    }
+
+    public IterationEntity getIterationSelected() {
+        return iterationSelected;
+    }
+
+    public void setIterationSelected(IterationEntity iterationSelected) {
+        this.iterationSelected = iterationSelected;
     }
 
     public int getDisciplineSelect() {
@@ -183,19 +217,35 @@ public class ProgressDetailBean extends Bean implements Serializable {
     }
 
     public ProgressDetailEntity getWorkUnitBy(final UseCaseEntity useCase, final DisciplineEntity discipline) {
-        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(this.getIterationEntity(), useCase, discipline);
+        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(this.iterationSelected, useCase, discipline);
         ProgressDetailEntity progress;
         if (lProgress.isEmpty()) {
-            progress = new ProgressDetailEntity(null, useCase, this.getIterationEntity(), discipline, 0);
+            progress = new ProgressDetailEntity(null, useCase, this.iterationSelected, discipline, 0);
         } else {
             progress = lProgress.get(0);
         }
         return progress;
     }
 
+    public boolean getIdentUC(UseCaseEntity ucc) {
+        if (this.checkedUseCases.contains(ucc)) {
+            this.setIdentUC(true);
+        } else {
+            this.setIdentUC(false);
+        }
+        return identUC;
+    }
+
+    public void setIdentUC(boolean identUC) {
+        this.identUC = identUC;
+    }
+
     public void probando(final UseCaseEntity ucc) {
-        System.out.println("-------------------------------------------");
-        System.out.println("--" + ucc.toString());
-        System.out.println("-------------------------------------------");
+        if (this.getIdentUC(ucc)) {
+            checkedUseCases.remove(ucc);
+        } else {
+            checkedUseCases.add(ucc);
+        }
+        //AÑADIR Y BORRAR
     }
 }

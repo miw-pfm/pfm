@@ -54,7 +54,7 @@ public class IterationBean extends Bean implements Serializable {
     private final transient CalendarProjectBean cpb = new CalendarProjectBean();
 
     private IterationEntity iterEntity;
-    private final IterationEjb iterationEjb ;
+    private final IterationEjb iterationEjb;
 
     public IterationBean() {
         super();
@@ -409,6 +409,43 @@ public class IterationBean extends Bean implements Serializable {
 
     public void handleIterationChange() {
         this.iterEntity = this.iterationEjb.obtainIteration(this.iterEntity.getId());
+    }
+
+    public List<IterationEntity> listPostIterations(IterationEntity iterAct) {
+        List<IterationEntity> listPost = new ArrayList<>();
+
+        switch (iterAct.getTypeIteration()) {
+            case INCEPTION:
+                listPost = this.addPostIterationsPerValue(listPost, listInception, iterAct);
+                listPost.addAll(listElaboration);
+                listPost.addAll(listConstruction);
+                listPost.addAll(listTransition);
+                break;
+            case ELABORATION:
+                listPost = this.addPostIterationsPerValue(listPost, listElaboration, iterAct);
+                listPost.addAll(listConstruction);
+                listPost.addAll(listTransition);
+                break;
+            case CONSTRUCTION:
+                listPost = this.addPostIterationsPerValue(listPost, listConstruction, iterAct);
+                listPost.addAll(listTransition);
+                break;
+            case TRANSITION:
+                listPost = this.addPostIterationsPerValue(listPost, listTransition, iterAct);
+                break;
+        }
+
+        return listPost;
+    }
+
+    public List<IterationEntity> addPostIterationsPerValue(List<IterationEntity> listPost, List<IterationEntity> listType, IterationEntity iterAct) {
+        for (IterationEntity ie : listType) {
+            if ((ie.getIterValue() == iterAct.getIterValue()) || (ie.getIterValue() > iterAct.getIterValue())) {
+                listPost.add(ie);
+            }
+        }
+
+        return listPost;
     }
 
 }

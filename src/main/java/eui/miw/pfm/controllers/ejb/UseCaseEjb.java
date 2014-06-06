@@ -75,7 +75,7 @@ public class UseCaseEjb {
 
     //@author Cesar y Manuel Álvarez
     public List<UseCaseEntity> obtainUseCaseChecked(final ProjectEntity project) {
-        final String psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1";//NOPMD
+        final String psql = "SELECT uc FROM UseCaseEntity uc WHERE uc.project = ?1 AND uc.iteration != null";//NOPMD
         return AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, project);
     }
 }
