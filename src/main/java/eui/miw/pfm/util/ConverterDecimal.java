@@ -16,8 +16,11 @@ import java.util.logging.Logger;
  */
 public final class ConverterDecimal {
 
+    private ConverterDecimal() {
+    }
+
     private static final Logger LOGGER = java.util.logging.Logger.getLogger(ConverterDecimal.class.getName());
-    private static final String ONE_DECIMAL = "#,###.0";
+    private static final String ONE_DECIMAL = "#.#";
 
     public static double roundOneDecimals(final double value) {
         return Double.parseDouble(new DecimalFormat(ONE_DECIMAL).format(((double) value)).replace(",", "."));

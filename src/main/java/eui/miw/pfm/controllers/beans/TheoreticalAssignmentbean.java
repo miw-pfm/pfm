@@ -10,9 +10,11 @@ import eui.miw.pfm.models.entities.ActivityEntity;
 import eui.miw.pfm.models.entities.TheoreticalAssignmentEntity;
 import eui.miw.pfm.util.ConverterDecimal;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -31,6 +33,9 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
 
     private transient TheoreticalAssignmentEjb assignmentEjb;
 
+    @ManagedProperty(value = "#{resourcesPlanBean}")
+    private final transient ResourcesPlanBean resourcesPlanBean = new ResourcesPlanBean();
+
     @PostConstruct
     public void init() {
         assignmentEjb = new TheoreticalAssignmentEjb();
@@ -40,14 +45,14 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
         return assignmentEjb.findAll();
     }
 
-    public double getTheoreticalAssignment(final int index) {
+    public double getTotalTheoreticalAssignmentPercentage(final int index) {
         return ConverterDecimal.roundOneDecimals(TOTAL[index]);
     }
 
-    public double getTotalProjectTheoreticalAssignment() {
+    public double getTotalTheoreticalAssignmentPercentageProject() {
         double total = 0.0;
         for (int i = 0; i < 4; i++) {
-            total += getTheoreticalAssignment(i);
+            total += getTotalTheoreticalAssignmentPercentage(i);
         }
         return ConverterDecimal.roundOneDecimals(total);
     }
@@ -64,5 +69,18 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
             }
         }
         return ConverterDecimal.roundOneDecimals(total / 100);
+    }
+
+    public double getTotalAssignmentWorkingDays(final int index) {
+        resourcesPlanBean.calculator();
+        return ConverterDecimal.roundOneDecimals((TOTAL[index] / 100) * resourcesPlanBean.getWorking());
+    }
+
+    public double getTotalAssignmentWorkingDaysProject() {
+        double total = 0.0;
+        for (int i = 0; i < 4; i++) {
+            total += getTotalAssignmentWorkingDays(i);
+        }
+        return ConverterDecimal.roundOneDecimals(total);
     }
 }

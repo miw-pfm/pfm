@@ -31,7 +31,7 @@
                         <p:column rowspan="2" headerText="#{msgs.code}" width="55"/>                      
                         <p:column rowspan="2" headerText="#{msgs.activity}"/>                         
                         <p:column colspan="5" headerText="#{msgs.percentages}" />
-                        <p:column colspan="5" headerText="#{msgs.journays}" />
+                        <p:column colspan="5" headerText="#{msgs.workingDays}" />
                     </p:row>
                     <p:row>
                         <p:column headerText="Project" />
@@ -50,16 +50,17 @@
                 <p:columnGroup type="footer">
                     <p:row>
                         <p:column colspan="2" style="text-align:right" footerText="Totals:" />
-                        <p:column footerText="#{theoreticalAssignmentbean.totalProjectTheoreticalAssignment}%"/>
-                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(0)}%" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(1)}%" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(2)}%" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTheoreticalAssignment(3)}%" />
-                        <p:column footerText="0.00" />
-                        <p:column footerText="0.00" />
-                        <p:column footerText="0.00" />
-                        <p:column footerText="0.00" />
-                        <p:column footerText="0.00" />                
+                        <p:column footerText="#{theoreticalAssignmentbean.totalTheoreticalAssignmentPercentageProject}%"/>
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(0)}%" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(1)}%" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(2)}%" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(3)}%" />
+
+                        <p:column footerText="#{theoreticalAssignmentbean.totalAssignmentWorkingDaysProject}" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(0)}" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(1)}" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(2)}" />
+                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(3)}" />
                     </p:row>
                 </p:columnGroup>  
 
