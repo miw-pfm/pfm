@@ -13,21 +13,19 @@ import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
-import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
  * @author Fred Pena
+ * @author Manuel Álvarez
  * @author William
  */
 @ViewScoped
@@ -139,7 +137,6 @@ public class ProgressDetailBean extends Bean implements Serializable {
             this.percentCompleted = (int) this.progressDetail.getPercent();
             this.enabled = useCase.isEnabled() ? 1 : 0;
         }
-
         this.fillCheckedUseCase();
     }
 
@@ -159,7 +156,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return idIterSelect;
     }
 
-    public void setIdIterSelect(int idIterSelect) {
+    public void setIdIterSelect(final int idIterSelect) {
         this.idIterSelect = idIterSelect;
         for (IterationEntity iteration : this.getIterations()) {
             if (iteration.getId().equals(this.idIterSelect)) {
@@ -172,7 +169,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return iterationSelected;
     }
 
-    public void setIterationSelected(IterationEntity iterationSelected) {
+    public void setIterationSelected(final IterationEntity iterationSelected) {
         this.iterationSelected = iterationSelected;
     }
 
@@ -212,7 +209,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return checkedUseCases;
     }
 
-    public void setCheckedUseCases(List<UseCaseEntity> checkedUseCases) {
+    public void setCheckedUseCases(final List<UseCaseEntity> checkedUseCases) {
         this.checkedUseCases = checkedUseCases;
     }
 
@@ -227,7 +224,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         return progress;
     }
 
-    public boolean getIdentUC(UseCaseEntity ucc) {
+    public boolean getIdentUC(final UseCaseEntity ucc) {
         if (this.checkedUseCases.contains(ucc)) {
             this.setIdentUC(true);
         } else {
@@ -240,12 +237,14 @@ public class ProgressDetailBean extends Bean implements Serializable {
         this.identUC = identUC;
     }
 
-    public void probando(final UseCaseEntity ucc) {
+    public void checkIdentUC(final UseCaseEntity ucc) {
         if (this.getIdentUC(ucc)) {
+            ucc.setIteration(null);
             checkedUseCases.remove(ucc);
         } else {
+            ucc.setIteration(this.iterationSelected);
             checkedUseCases.add(ucc);
         }
-        //AÑADIR Y BORRAR
+        new UseCaseEjb().update(ucc);
     }
 }
