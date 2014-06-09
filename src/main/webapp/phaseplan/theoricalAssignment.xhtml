@@ -62,24 +62,20 @@
                         <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(2)}" />
                         <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(3)}" />
                     </p:row>
-                </p:columnGroup>  
 
-                <p:columnGroup type="footer">
                     <p:row>
                         <p:column colspan="2" style="text-align:right" footerText="Totals assigned:" />
-                        <p:column footerText="#{theoreticalAssignmentbean.totalTheoreticalAssignmentPercentageProject}%"/>
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(0)}%" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(1)}%" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(2)}%" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalTheoreticalAssignmentPercentage(3)}%" />
 
-                        <p:column footerText="#{theoreticalAssignmentbean.totalAssignmentWorkingDaysProject}" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(0)}" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(1)}" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(2)}" />
-                        <p:column footerText="#{theoreticalAssignmentbean.getTotalAssignmentWorkingDays(3)}" />
+                        <p:column colspan="5" footerText="" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
+                        <p:column footerText="0.00" />
                     </p:row>
-                </p:columnGroup>
+                </p:columnGroup>  
+
+
 
                 <p:column  width="55">
                     <h:outputText value="#{assignment.activity.code}" style="display:block" />                   
@@ -136,20 +132,20 @@
                 </p:column>
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listInception}" headerText="#{iteration.codeIteration}" width="40">                         
-                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 0)}" style="display:block" />   
+                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 0)}" style="display:block" />  
                 </p:columns>     
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listElaboration}" headerText="#{iteration.codeIteration}" width="40">
-                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 1)}" style="display:block" />   
+                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 1)}" style="display:block" />  
                 </p:columns>                     
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listConstruction}" headerText="#{iteration.codeIteration}" width="40" >
-                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 2)}" style="display:block" />   
+                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 2)}" style="display:block" />  
                 </p:columns>      
 
                 <p:columns var="iteration" value="#{activitiesBean.iterationBean.listTransition}" headerText="#{iteration.codeIteration}" width="40">
-                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 3)}" style="display:block" />   
-                </p:columns>                     
+                    <h:outputText value="#{theoreticalAssignmentbean.getInceptionIterationValue(activity, 3)}" style="display:block" /> 
+                </p:columns>                                 
             </p:dataTable> 
 
 
