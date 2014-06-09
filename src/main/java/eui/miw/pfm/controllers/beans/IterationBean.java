@@ -48,13 +48,12 @@ public class IterationBean extends Bean implements Serializable {
     private static final int PERCENT_TRANSITION = 10;
 
     private static final int DAYSOFONEWEEK = 5;
-    private static final int WEEKSRECOMMENDEDFORRUP = 3;
 
     @ManagedProperty(value = "#{cpb}")
     private final transient CalendarProjectBean cpb = new CalendarProjectBean();
 
     private IterationEntity iterEntity;
-    private final IterationEjb iterationEjb ;
+    private final IterationEjb iterationEjb;
 
     public IterationBean() {
         super();
@@ -262,10 +261,6 @@ public class IterationBean extends Bean implements Serializable {
         return DAYSOFONEWEEK;
     }
 
-    public int getWEEKSRECOMMENDEDFORRUP() {
-        return WEEKSRECOMMENDEDFORRUP;
-    }
-
     public double getRecommendedWeeksInception() {
         return round(this.getRecommendedDaysInception() / this.getDAYSOFONEWEEK());
     }
@@ -287,23 +282,23 @@ public class IterationBean extends Bean implements Serializable {
     }
 
     public double getRecommendedIterationsInception() {
-        return round(this.getRecommendedWeeksInception() / this.getWEEKSRECOMMENDEDFORRUP());
+        return round(this.getRecommendedWeeksInception() / this.getProject().getWeekNumIteration());
     }
 
     public double getRecommendedIterationsElaboration() {
-        return round(this.getRecommendedWeeksElaboration() / this.getWEEKSRECOMMENDEDFORRUP());
+        return round(this.getRecommendedWeeksElaboration() / this.getProject().getWeekNumIteration());
     }
 
     public double getRecommendedIterationsConstruction() {
-        return round(this.getRecommendedWeeksConstruction() / this.getWEEKSRECOMMENDEDFORRUP());
+        return round(this.getRecommendedWeeksConstruction() / this.getProject().getWeekNumIteration());
     }
 
     public double getRecommendedIterationsTransition() {
-        return round(this.getRecommendedWeeksTransition() / this.getWEEKSRECOMMENDEDFORRUP());
+        return round(this.getRecommendedWeeksTransition() / this.getProject().getWeekNumIteration());
     }
 
     public double round(final double calc) {
-        return Math.rint(calc * 100) / 100;
+        return Math.round(calc * 100) / 100;
     }
 
     public double plannedPercent(final int iter) {
@@ -409,6 +404,57 @@ public class IterationBean extends Bean implements Serializable {
 
     public void handleIterationChange() {
         this.iterEntity = this.iterationEjb.obtainIteration(this.iterEntity.getId());
+    }
+
+    public List<IterationEntity> listPostIterations(IterationEntity iterAct) {
+        List<IterationEntity> listPost = new ArrayList<>();
+
+        switch (iterAct.getTypeIteration()) {
+            case INCEPTION:
+                listPost = this.addPostIterationsPerValue(listPost, listInception, iterAct);
+                listPost.addAll(listElaboration);
+                listPost.addAll(listConstruction);
+                listPost.addAll(listTransition);
+                break;
+            case ELABORATION:
+                listPost = this.addPostIterationsPerValue(listPost, listElaboration, iterAct);
+                listPost.addAll(listConstruction);
+                listPost.addAll(listTransition);
+                break;
+            case CONSTRUCTION:
+                listPost = this.addPostIterationsPerValue(listPost, listConstruction, iterAct);
+                listPost.addAll(listTransition);
+                break;
+            case TRANSITION:
+                listPost = this.addPostIterationsPerValue(listPost, listTransition, iterAct);
+                break;
+        }
+
+        return listPost;
+    }
+
+    public List<IterationEntity> addPostIterationsPerValue(List<IterationEntity> listPost, List<IterationEntity> listType, IterationEntity iterAct) {
+        for (IterationEntity ie : listType) {
+            if ((ie.getIterValue() == iterAct.getIterValue()) || (ie.getIterValue() > iterAct.getIterValue())) {
+                listPost.add(ie);
+            }
+        }
+
+        return listPost;
+    }
+
+    public List<IterationEntity> listPreIterations(IterationEntity iter) {
+
+        List<IterationEntity> listPre = new ArrayList<>();
+        List<IterationEntity> listPost = listPostIterations(iter);
+        listPre.add(iter);
+
+        for (IterationEntity it : allIterations) {
+            if (!listPost.contains(it)) {
+                listPre.add(it);
+            }
+        }
+        return listPre;
     }
 
 }

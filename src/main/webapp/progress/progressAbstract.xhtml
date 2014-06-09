@@ -13,7 +13,7 @@
     </ui:define>    
 
     <ui:define name="subtitle">
-        #{msgs.abstract}
+        #{msgs.progressAbstract}
     </ui:define>   
 
     <ui:define name="pagetitle">
@@ -24,10 +24,10 @@
 
         <h:form id="formProgressAbstract" class="dataTableList">
             <p:growl id="msgs" sticky="true"/>
-            
+
             <h:panelGroup id="totalUC" layout="block">
                 <h4>#{msgs.total_number_use_cases}</h4>
-                <h:outputText value="enabledUseCases" style="display:block; border: 2px solid; width: 6%; text-align: center" />
+                <h:outputText value="#{progressAbstractBean.useCaseCount}" style="display:block; border: 2px solid; width: 6%; text-align: center" />
                 <br/>
             </h:panelGroup>
 
@@ -41,14 +41,34 @@
                     <h:outputText  value="#{phase.name}" style="display:block" />                    
                 </p:column>
 
+                <p:column headerText="#{msgs.identification}">
+                    <h:outputText  value="#{phase.name}" style="display:block" />                    
+                </p:column>
+
+                <p:column headerText="#{msgs.specification}
+                          ">
+                    <h:outputText  value="#{phase.name}" style="display:block" />                    
+                </p:column>
+
+                <p:column headerText="#{msgs.design}">
+                    <h:outputText  value="#{phase.name}" style="display:block" />                    
+                </p:column>
+
+                <p:column headerText="#{msgs.implementation}">
+                    <h:outputText  value="#{phase.name}" style="display:block" />                    
+                </p:column>
+
+                <p:column headerText="#{msgs.test}">
+                    <h:outputText  value="#{phase.name}" style="display:block" />                    
+                </p:column>
+
                 <p:columns var="iteration" value="#{progressAbstractBean.phaseBean.listInception}" headerText="#{iteration.codePhase}" width="40" styleClass="ui-editable-column">                         
                     <h:outputText value="#{progressAbstractBean.findPercent(phase, discipline)}" style="display:block" />
                 </p:columns>     
-                
+
             </p:dataTable> 
-            
-            <p:commandButton value="#{msgs.stats}" icon="ui-icon-extlink" actionListener="#{dfView.viewCarsCustomized}" />
-            
+
+            <p:commandButton value="#{msgs.stats}" icon="ui-icon-extlink" actionListener="#{dfView.viewCarsCustomized}" />                                    
         </h:form>
     </ui:define>
 </ui:composition>

@@ -2,13 +2,13 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
+import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -19,14 +19,13 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class ProgressResumeBean extends Bean implements Serializable {
+public class ProgressAbstractBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 //    private static final Logger LOGGER = Logger.getLogger(ProgressResumeBean.class.getName());//NOPMD
-
     private ProgressDetailEntity progressDetailEntity;
-    private ProgressDetailEjb progressDetailEjb;    
+    private ProgressDetailEjb progressDetailEjb;
     private ProjectEntity project;
     private IterationEntity iteration;
 
@@ -42,7 +41,7 @@ public class ProgressResumeBean extends Bean implements Serializable {
     private Integer percentImplementation;
     private Integer percentTest;
 
-    public ProgressResumeBean() { 
+    public ProgressAbstractBean() {
         super();
 
         this.setPercentIdentification(0);
@@ -53,7 +52,7 @@ public class ProgressResumeBean extends Bean implements Serializable {
 
         progressDetailEntity = new ProgressDetailEntity();
         progressDetailEjb = new ProgressDetailEjb();
-        
+
         this.project = ((ProjectEntity) sessionMap.get("project"));
     }
 
@@ -113,6 +112,10 @@ public class ProgressResumeBean extends Bean implements Serializable {
         this.percentTest = percentTest;
     }
 
+    public int getUseCaseCount() {
+        return new UseCaseEjb().obtainUseCase(project).size();
+    }
+
     public void obtainPercentsOfPhasePerIteration() {
         //por cada it y disc, find all (Por cada iteración y disciplina, sumar el porcentaje de los CDU.)
         //Coger ProgressDetailEntity e ir sumando los percent de cada cdu de cada discipline_id e iteration_id
@@ -121,20 +124,20 @@ public class ProgressResumeBean extends Bean implements Serializable {
         for (ProgressDetailEntity progressDetEntity : progressDetails) {
 
             switch (progressDetEntity.getDiscipline().getName()) {
-                case ProgressResumeBean.SPECIFICATION:
-                    this.setPercentSpecification(this.getPercentSpecification()+progressDetEntity.getPercent());
+                case ProgressAbstractBean.SPECIFICATION:
+                    this.setPercentSpecification(this.getPercentSpecification() + progressDetEntity.getPercent());
                     break;
 
-                case ProgressResumeBean.DESIGN:
-                    this.setPercentDesign(this.getPercentDesign()+progressDetEntity.getPercent());
+                case ProgressAbstractBean.DESIGN:
+                    this.setPercentDesign(this.getPercentDesign() + progressDetEntity.getPercent());
                     break;
 
-                case ProgressResumeBean.IMPLEMENTATION:
-                    this.setPercentImplementation(this.getPercentImplementation()+progressDetEntity.getPercent());
+                case ProgressAbstractBean.IMPLEMENTATION:
+                    this.setPercentImplementation(this.getPercentImplementation() + progressDetEntity.getPercent());
                     break;
 
-                case ProgressResumeBean.TEST:
-                    this.setPercentTest(this.getPercentTest()+progressDetEntity.getPercent());
+                case ProgressAbstractBean.TEST:
+                    this.setPercentTest(this.getPercentTest() + progressDetEntity.getPercent());
                     break;
             }
         }
@@ -145,21 +148,15 @@ public class ProgressResumeBean extends Bean implements Serializable {
         List<ProgressDetailEntity> progressDetails = progressDetailEjb.getProgressDetailEntitiesByProject(project);
 
         List<IterationEntity> proIters = new IterationEjb().getIterations(project);
-        
-        List<IterationEntity> subIters = new ArrayList<>();
-      
-        for (IterationEntity iter : proIters) {
-            if(iter.getId()<= iteration.getId()){
-                subIters.add(iter);
-            }
-        }
+
+        List<IterationEntity> subIters = new IterationBean().listPreIterations(iteration);
 
         int total = 0;
         for (ProgressDetailEntity iter : progressDetails) {
-            if(subIters.contains(iter.getIteration())){
-                total ++;
+            if (subIters.contains(iter.getIteration())) {
+                total++;
             }
         }
-        this.setPercentIdentification(total/progressDetails.size());
+        this.setPercentIdentification(total / progressDetails.size());
     }
 }

@@ -15,8 +15,11 @@ import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.util.TypeIteration;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
+import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,10 +40,11 @@ public class TestProgressDetailProject {
     private static DisciplineEntity discipline;
     private static IterationEntity iteration;
     private static UseCaseEntity useCase;
+    private static Integer sumTotal; //NOPMD
 
-    @BeforeClass
-    public static void before() {
-
+    @Before
+    public void before() {
+       
         user = new UserEntity();
         user.setName("usuario");
         user.setEmail("pepe@gmail.com");
@@ -85,25 +89,32 @@ public class TestProgressDetailProject {
         progressDetail1.setIteration(iteration);
         progressDetail1.setPercent(5);
         progressDetail1.setUseCase(useCase);
+        TestProgressDetailProject.sumTotal += progressDetail1.getPercent();
 
         progressDetail2 = new ProgressDetailEntity();
         progressDetail2.setDiscipline(discipline);
         progressDetail2.setIteration(iteration);
         progressDetail2.setPercent(4);
         progressDetail2.setUseCase(useCase);
+        TestProgressDetailProject.sumTotal += progressDetail2.getPercent();        
 
         progressDetail3 = new ProgressDetailEntity();
         progressDetail3.setDiscipline(discipline);
         progressDetail3.setIteration(iteration);
         progressDetail3.setPercent(3);
         progressDetail3.setUseCase(useCase);
+        TestProgressDetailProject.sumTotal += progressDetail3.getPercent();                
+    }
+
+    public TestProgressDetailProject() {
+        TestProgressDetailProject.sumTotal = 0;
     }
     
-    @Test
-    public void testEnabledUseCases() {
-        ProgressDetailEjb progressDetailEjb=createProgressDetails();       
+//    @Test
+//    public void testEnabledUseCases() {
+//        ProgressDetailEjb progressDetailEjb=createProgressDetails();       
 //        assertTrue("ERROR enabled use cases", progressDetailEjb.getEnabledUseCases(project)== 1);
-    }
+//    }
     
     @Test
     public void testCreate() {
@@ -116,14 +127,12 @@ public class TestProgressDetailProject {
 
     }
 
-    public ProgressDetailEjb createProgressDetails()
+    public void createProgressDetails()
     {
-        ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
+        final ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
         progressDetailEjb.create(progressDetail1);
         progressDetailEjb.create(progressDetail2);
         progressDetailEjb.create(progressDetail3);
-        return progressDetailEjb;
-        
     }
     
     @Test
@@ -133,20 +142,27 @@ public class TestProgressDetailProject {
     
     @Test
     public void testFindProgressDetailsByProject(){
-        assertTrue(new ProgressDetailEjb().getProgressDetailEntitiesByProject(project).size() == 3);
-        
+        createProgressDetails();
+        assertSame("Error getProgressDetailEntitiesByProject",new ProgressDetailEjb().getProgressDetailEntitiesByProject(project).size(), 3);
     }
 
-    @AfterClass
-    public static void after() {
+    @Test
+    public void testSumTotalProgressDetailsByProject() {        
+        createProgressDetails();
+        assertEquals("Totales iguales",new ProgressDetailEjb().getSumTotalProgressDetail(iteration, discipline), TestProgressDetailProject.sumTotal);
+    }
+    
+    @After
+    public void after() {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().delete(progressDetail1);
         AbstractDAOFactory.getFactory().getProgressDetailDAO().delete(progressDetail2);
         AbstractDAOFactory.getFactory().getProgressDetailDAO().delete(progressDetail3);
 
-        AbstractDAOFactory.getFactory().getProjectDAO().delete(project);
-        AbstractDAOFactory.getFactory().getUserDAO().delete(user);
         AbstractDAOFactory.getFactory().getDisciplineDAO().delete(discipline);
         AbstractDAOFactory.getFactory().getUseCaseDAO().delete(useCase);
-        AbstractDAOFactory.getFactory().getIterationDAO().delete(iteration);
+        AbstractDAOFactory.getFactory().getIterationDAO().delete(iteration);        
+        
+        AbstractDAOFactory.getFactory().getProjectDAO().delete(project);
+        AbstractDAOFactory.getFactory().getUserDAO().delete(user);
     }
 }
