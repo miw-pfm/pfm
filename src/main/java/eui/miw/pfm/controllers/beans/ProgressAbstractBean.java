@@ -80,6 +80,10 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         this.percentIdentification = percentIdentification;
     }
 
+     public List<IterationEntity> getIterations() {
+        return new IterationEjb().getAllIterations(this.project);
+    }
+    
     public Integer getPercentSpecification() {
         return percentSpecification;
     }
