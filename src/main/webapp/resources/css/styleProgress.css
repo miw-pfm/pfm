@@ -52,23 +52,23 @@
     margin-left: 0px;
 }
 
-#tableReadDetailProgress{
+#formShowDetails\:tableReadDetailProgress{
 width: 510px;
 }
 
-#tableReadDetailProgress thead tr th span{
+#formShowDetails\:tableReadDetailProgress thead tr th span{
 
 }
 
-#tableReadDetailProgress thead tr th.columChecks div{
+#formShowDetails\:tableReadDetailProgress thead tr th.columChecks div{
     display: none;
 }
 
-#tableReadDetailProgress tr .columUsecases{
+#formShowDetails\:tableReadDetailProgress tr .columUsecases{
     width: 238px;
 }
 
-#tableReadDetailProgress tr .columIdentificacion{
+#formShowDetails\:tableReadDetailProgress tr .columIdentificacion{
     width: 30px;
 }
 

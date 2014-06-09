@@ -28,8 +28,8 @@
                 <p:growl id="growl"  sticky="true" life="1500"/>
                 <h:panelGrid columns="2">    
                     <h:outputText value="Iterations" />                
-                    <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.iterationSelect}">
-                        <p:ajax listener="#{progressDetailBean.findProgressDetail(true)}" update="chooseComplete" />
+                    <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.idIterSelect}">
+                        <p:ajax listener="#{progressDetailBean.findProgressDetail(true)}" update="chooseComplete :formShowDetails" />
                         <f:selectItems value="#{progressDetailBean.iterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
                     </p:selectOneMenu>
 
@@ -62,25 +62,27 @@
                 </h:panelGrid>                     
             </h:panelGroup>                    
         </h:form>  
-        <!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
 
-
-<!-- selection="#{dtSelectionView.selectedCars}" http://www.primefaces.org/showcase/ui/data/datatable/selection.xhtml -->
+<!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
 
         <h:form id="formShowDetails" >
-            <p:dataTable id="tableReadDetailProgress"  var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+            <p:dataTable id="tableReadDetailProgress" var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+
                 <p:column styleClass="columUsecases" headerText="Use Case">
                     <h:outputText value="#{usecases.name}" />
                 </p:column>
 
-                <p:column styleClass="columChecks" headerText="Ident"  selectionMode="multiple" style="width:2%;text-align:center"/>
+                <p:column headerText="Ident" >
+                    <h:selectBooleanCheckbox id="selection" value="#{progressDetailBean.getIdentUC(usecases)}" valueChangeListener="#{progressDetailBean.probando(usecases)}"  >
+                        <p:ajax />
+                    </h:selectBooleanCheckbox>
+                </p:column>
 
                 <c:forEach  var="discipline" items="#{progressDetailBean.disciplines}" >
-                    <p:column headerText="#{discipline.name.charAt(0)}"  >
-                        <h:outputText value="#{progressDetailBean.getWorkUnitBy(iterationBean.iterEntity, usecases, discipline).percent}" />
+                    <p:column headerText="#{discipline.name.charAt(0)}" >
+                        <h:outputText value="#{progressDetailBean.getWorkUnitBy(usecases, discipline).percent}" />
                     </p:column>
                 </c:forEach>
-
             </p:dataTable>
         </h:form>
 
