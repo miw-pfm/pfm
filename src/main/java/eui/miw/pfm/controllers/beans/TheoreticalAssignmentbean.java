@@ -10,9 +10,7 @@ import eui.miw.pfm.models.entities.ActivityEntity;
 import eui.miw.pfm.models.entities.TheoreticalAssignmentEntity;
 import eui.miw.pfm.util.ConverterDecimal;
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.view.ViewScoped;
@@ -27,7 +25,6 @@ import javax.inject.Named;
 public class TheoreticalAssignmentbean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(TheoreticalAssignmentbean.class.getName());
 
     private static final double[] TOTAL = {5.0, 20.0, 65.0, 10.0};
 
@@ -35,6 +32,9 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
 
     @ManagedProperty(value = "#{resourcesPlanBean}")
     private final transient ResourcesPlanBean resourcesPlanBean = new ResourcesPlanBean();
+
+    @ManagedProperty(value = "#{iterationBean}")
+    private final transient IterationBean iterationBean = new IterationBean();
 
     @PostConstruct
     public void init() {
@@ -82,5 +82,34 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
             total += getTotalAssignmentWorkingDays(i);
         }
         return ConverterDecimal.roundOneDecimals(total);
+    }
+
+    public double getWorkingDaysValues(final double value, final int index) {
+        return ConverterDecimal.roundOneDecimals((value * getTotalAssignmentWorkingDays(index)) / 100);
+    }
+
+    public double getProjecttWorkingDays(final ActivityEntity activity) {
+        return ConverterDecimal.roundOneDecimals((getProjectTheoreticalAssignment(activity) * getTotalAssignmentWorkingDaysProject()) / 100);
+    }
+
+    private double iterationValue(final int size, final double value, final int index) {
+        return ConverterDecimal.roundOneDecimals(getWorkingDaysValues(value, index) / size);
+    }
+
+    public double getInceptionIterationValue(final ActivityEntity activity, final int index) {
+        final TheoreticalAssignmentEntity theoretical = activity.getTheoreticalAssignment().get(0);
+
+        switch (index) {
+            case 0:
+                return iterationValue(this.iterationBean.getListInception().size(), theoretical.getInceptionValue(), index);
+            case 1:
+                return iterationValue(this.iterationBean.getListElaboration().size(), theoretical.getElaborationValue(), index);
+            case 2:
+                return iterationValue(this.iterationBean.getListConstruction().size(), theoretical.getContrutionValue(), index);
+            case 3:
+                return iterationValue(this.iterationBean.getListTransition().size(), theoretical.getTransitionValue(), index);
+            default:
+                return 0.0;
+        }
     }
 }
