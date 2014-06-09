@@ -118,7 +118,7 @@ public class ProgressAbstractBean extends Bean implements Serializable {
 
     public int getUseCaseCount() {
         return new UseCaseEjb().obtainUseCase(project).size();
-    }
+    }    
 
     public void obtainPercentsOfPhasePerIteration() {
         //por cada it y disc, find all (Por cada iteración y disciplina, sumar el porcentaje de los CDU.)

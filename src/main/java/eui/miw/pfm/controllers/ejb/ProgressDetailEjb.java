@@ -41,16 +41,7 @@ public class ProgressDetailEjb {
 
     public List<ProgressDetailEntity> getDetails() {
         return AbstractDAOFactory.getFactory().getProgressDetailDAO().findAll();
-    }
-
-    public int getEnabledUseCases(final ProjectEntity projectEntity) {
-        final String psql = "SELECT u FROM UseCaseEntity u WHERE u.project=?1 and u.isEnabled=1";//NOPMD
-        int enabled_usecases = 0;
-        for (UseCaseEntity uce : AbstractDAOFactory.getFactory().getUseCaseDAO().find(psql, projectEntity)) {
-            ++enabled_usecases;
-        }
-        return enabled_usecases;
-    }
+    }    
 
     public List<ProgressDetailEntity> getProgressDetailEntitiesByProject(final ProjectEntity project) {
         final String psql = "SELECT pd FROM ProgressDetailEntity pd, ProjectEntity p, IterationEntity i WHERE pd.iteration = i and i.project = p and p = ?1";//NOPMD

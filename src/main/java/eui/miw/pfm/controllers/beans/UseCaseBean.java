@@ -112,4 +112,8 @@ public class UseCaseBean extends Bean implements Serializable {
         }
         return null;
     }
+    
+      public int getUseCaseCountEnabled() {
+        return new UseCaseEjb().getEnabledUseCases(project);
+    }
 }
