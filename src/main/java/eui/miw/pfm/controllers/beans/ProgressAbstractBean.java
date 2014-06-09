@@ -7,10 +7,12 @@ import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -80,10 +82,10 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         this.percentIdentification = percentIdentification;
     }
 
-     public List<IterationEntity> getIterations() {
+    public List<IterationEntity> getIterations() {
         return new IterationEjb().getAllIterations(this.project);
     }
-    
+
     public Integer getPercentSpecification() {
         return percentSpecification;
     }
@@ -118,7 +120,7 @@ public class ProgressAbstractBean extends Bean implements Serializable {
 
     public int getUseCaseCount() {
         return new UseCaseEjb().obtainUseCase(project).size();
-    }    
+    }
 
     public void obtainPercentsOfPhasePerIteration() {
         //por cada it y disc, find all (Por cada iteración y disciplina, sumar el porcentaje de los CDU.)
@@ -162,5 +164,17 @@ public class ProgressAbstractBean extends Bean implements Serializable {
             }
         }
         this.setPercentIdentification(total / progressDetails.size());
+    }
+    
+    // @author Jose Mª Villar
+    public void viewProgressAbstractGraphic() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", true);
+        options.put("contentHeight", 350);
+        options.put("contentWidth", 850);
+
+        RequestContext.getCurrentInstance().openDialog("progressAbstractGraphic", options, null);
     }
 }
