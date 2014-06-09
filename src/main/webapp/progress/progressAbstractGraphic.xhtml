@@ -15,11 +15,11 @@
             }
         </style>
     </h:head>
-     
+
     <h:body>
-        <p:panel header="Header">
-            <p:lineChart animate="true" value="#{chartView.lineModel1}" style="height:300px; width:500px"/>
-        </p:panel>
-       
+        <p:panel header="Header">             
+            <p:lineChart animate="true" value="#{chartBean.categoryModel}" style="height:300px; width:800px" legendPosition="e"/>
+        </p:panel>  
+
     </h:body>
 </ui:composition>

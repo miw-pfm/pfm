@@ -19,7 +19,7 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class ProgressResumeBean extends Bean implements Serializable {
+public class ProgressAbstractBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class ProgressResumeBean extends Bean implements Serializable {
     private Integer percentImplementation;
     private Integer percentTest;
 
-    public ProgressResumeBean() {
+    public ProgressAbstractBean() {
         super();
 
         this.setPercentIdentification(0);
@@ -124,19 +124,19 @@ public class ProgressResumeBean extends Bean implements Serializable {
         for (ProgressDetailEntity progressDetEntity : progressDetails) {
 
             switch (progressDetEntity.getDiscipline().getName()) {
-                case ProgressResumeBean.SPECIFICATION:
+                case ProgressAbstractBean.SPECIFICATION:
                     this.setPercentSpecification(this.getPercentSpecification() + progressDetEntity.getPercent());
                     break;
 
-                case ProgressResumeBean.DESIGN:
+                case ProgressAbstractBean.DESIGN:
                     this.setPercentDesign(this.getPercentDesign() + progressDetEntity.getPercent());
                     break;
 
-                case ProgressResumeBean.IMPLEMENTATION:
+                case ProgressAbstractBean.IMPLEMENTATION:
                     this.setPercentImplementation(this.getPercentImplementation() + progressDetEntity.getPercent());
                     break;
 
-                case ProgressResumeBean.TEST:
+                case ProgressAbstractBean.TEST:
                     this.setPercentTest(this.getPercentTest() + progressDetEntity.getPercent());
                     break;
             }
