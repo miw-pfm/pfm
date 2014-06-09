@@ -71,25 +71,26 @@ public class TestListProjectWorkersEjb {
     public void addWorker() {
         final ProjectEjb projectEjb = new ProjectEjb();
         final WorkersListEjb workersListEjb = new WorkersListEjb();
-        List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
+        final List<WorkerEntity> listPW = new ArrayList<>();
 
         project.addWorker(workerEntity1);
         projectEjb.update(project);
         listPW.addAll(project.getWorkers());
-        System.out.println("add: " + listPW.toString());
 
-        assertTrue("Recupera w1 correctamente", workersListEjb.obtainWorkers(project).containsAll(listPW));
+        assertTrue("NO recupera w1 correctamente", workersListEjb.obtainWorkers(project).containsAll(listPW));
+        assertFalse("Incluye a w1 en los worker que NO pertenecen al project", workersListEjb.obtainWorkersNotProject(project).containsAll(listPW));
+
         listPW.clear();
 
         project.addWorker(workerEntity2);
         projectEjb.update(project);
         project.addWorker(workerEntity3);
         projectEjb.update(project);
-
         listPW.addAll(project.getWorkers());
-        System.out.println("add: " + listPW.toString());
 
-        assertTrue("Recupera w1, w2 y w3 correctamente", workersListEjb.obtainWorkers(project).containsAll(listPW));
+        assertTrue("NO recupera w1, w2 y w3 correctamente", workersListEjb.obtainWorkers(project).containsAll(listPW));
+        assertFalse("Incluye a w1, w2 y w3 en los worker que NO pertenecen al project", workersListEjb.obtainWorkersNotProject(project).containsAll(listPW));
+        
         listPW.clear();
 
         project.removeWorker(workerEntity1);
@@ -102,9 +103,9 @@ public class TestListProjectWorkersEjb {
 
     @Test
     public void removeWorker() {
-        final WorkersListEjb listWEjb = new WorkersListEjb();
+        final WorkersListEjb workersListEjb = new WorkersListEjb();
         final ProjectEjb projectEjb = new ProjectEjb();
-        List<WorkerEntity> listPW = new ArrayList<WorkerEntity>();
+        List<WorkerEntity> listPW = new ArrayList<>();
 
         project.addWorker(workerEntity1);
         projectEjb.update(project);
@@ -117,11 +118,11 @@ public class TestListProjectWorkersEjb {
         projectEjb.update(project);
         project.removeWorker(workerEntity3);
         projectEjb.update(project);
-
         listPW.addAll(project.getWorkers());
-        System.out.println("remove: " + listPW.toString());
 
-        assertTrue("Recupera w2 correctamente", listWEjb.obtainWorkers(project).containsAll(listPW));
+        assertTrue("NO recupera w2 correctamente", workersListEjb.obtainWorkers(project).containsAll(listPW));
+        assertFalse("Incluye a w2 en los worker que NO pertenecen al project", workersListEjb.obtainWorkersNotProject(project).containsAll(listPW));
+        
         listPW.clear();
 
         project.removeWorker(workerEntity2);
