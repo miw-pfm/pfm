@@ -7,16 +7,13 @@ package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.ProjectEjb;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.util.ControllerDate;
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -25,7 +22,7 @@ import javax.inject.Named;
  * @author Fred Pena
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class ResourcesPlanBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;

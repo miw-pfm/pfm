@@ -172,7 +172,12 @@ public class IterationEntity implements Serializable {
 
     public String getCodeIteration() {
         return "" + this.getTypeIteration().toString().charAt(0) + this.getIterValue();
-    }
+    }    
+    
+     public String getPhase() {
+         return this.getTypeIteration().toString();        
+    }    
+
 
     @Override
     public int hashCode() {

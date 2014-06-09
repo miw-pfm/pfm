@@ -31,40 +31,17 @@
                 <br/>
             </h:panelGroup>
 
-            <p:dataTable id="dataTableSubActivity" value="#{progressAbstractBean.phases}" var="subactivity">     
+            <p:dataTable id="dataTableSubActivity" value="#{progressAbstractBean.iterations}" var="iter_proj">     
 
                 <p:column headerText="#{msgs.code}" width="55">
-                    <h:outputText value="#{phase.code}" style="display:block" />                    
+                    <h:outputText value="#{iter_proj.codeIteration}" style="display:block" />                    
                 </p:column>                        
+                <p:column headerText="#{msgs.code}" width="55">
+                    <h:outputText value="#{iter_proj.phase}" style="display:block" />                    
+                </p:column> 
 
-                <p:column headerText="#{msgs.iteration}">
-                    <h:outputText  value="#{phase.name}" style="display:block" />                    
-                </p:column>
 
-                <p:column headerText="#{msgs.identification}">
-                    <h:outputText  value="#{phase.name}" style="display:block" />                    
-                </p:column>
 
-                <p:column headerText="#{msgs.specification}
-                          ">
-                    <h:outputText  value="#{phase.name}" style="display:block" />                    
-                </p:column>
-
-                <p:column headerText="#{msgs.design}">
-                    <h:outputText  value="#{phase.name}" style="display:block" />                    
-                </p:column>
-
-                <p:column headerText="#{msgs.implementation}">
-                    <h:outputText  value="#{phase.name}" style="display:block" />                    
-                </p:column>
-
-                <p:column headerText="#{msgs.test}">
-                    <h:outputText  value="#{phase.name}" style="display:block" />                    
-                </p:column>
-
-                <p:columns var="iteration" value="#{progressAbstractBean.phaseBean.listInception}" headerText="#{iteration.codePhase}" width="40" styleClass="ui-editable-column">                         
-                    <h:outputText value="#{progressAbstractBean.findPercent(phase, discipline)}" style="display:block" />
-                </p:columns>     
 
             </p:dataTable> 
 
