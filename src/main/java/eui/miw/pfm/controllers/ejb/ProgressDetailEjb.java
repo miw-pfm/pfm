@@ -26,7 +26,7 @@ public class ProgressDetailEjb {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().create(progressDetail);
     }
 
-    public List<ProgressDetailEntity> getByIterationUseCaseDiscipline(IterationEntity iteration, UseCaseEntity useCase, DisciplineEntity discipline) {
+    public List<ProgressDetailEntity> getByIterationUseCaseDiscipline(final IterationEntity iteration, final UseCaseEntity useCase, final DisciplineEntity discipline) {
         final String psql = "SELECT pd FROM ProgressDetailEntity pd  WHERE pd.iteration = ?1 AND pd.useCase = ?2 AND pd.discipline = ?3 ";//NOPMD
         return AbstractDAOFactory.getFactory().getProgressDetailDAO().find(psql, new Object[]{iteration, useCase, discipline});
     }

@@ -11,6 +11,11 @@
     color: #FFF;
 }
 
+#formInsertDetail{
+    float: left;
+    margin: 15px;
+}
+
 #formInsertDetail\:chooseIteration{
     margin-bottom: 10px;
 }
@@ -20,7 +25,6 @@
 }
 
 #formInsertDetail\:submitDetailProgress{
-
     background-image: linear-gradient(to bottom, #F3D5BC 0%, #C0504D 100%);
     border-color: #C0504D;
     display: block;
@@ -53,11 +57,18 @@
 }
 
 #formShowDetails\:tableReadDetailProgress{
-width: 510px;
+float: right;
+    margin-right: 35px;
+    margin-top: 20px;
+    width: 510px;
 }
 
-#formShowDetails\:tableReadDetailProgress thead tr th span{
+#formShowDetails\:tableReadDetailProgress_head tr th{
+    background: #E6B9B8;
+}
 
+#formShowDetails\:tableReadDetailProgress tr th{
+    border-color: #E6B9B8;
 }
 
 #formShowDetails\:tableReadDetailProgress thead tr th.columChecks div{
@@ -69,20 +80,33 @@ width: 510px;
 }
 
 #formShowDetails\:tableReadDetailProgress tr .columIdentificacion{
+    width: 53px;
+}
+
+#formShowDetails\:tableReadDetailProgress tr .columIdentificacion input{
     width: 30px;
+    margin: 0;
 }
 
-.leyendaProgressTable{
-    border: 1px solid #E6B9B8;
-    margin: 20px 0;
+#formShowDetails\:tableReadDetailProgress tr .columPorcentajes{
+    text-align: center;
 }
 
-.leyendaProgressTable tr.headTableLegend{
+#leyendaDetailProgress{
+  border: 1px solid #E6B9B8;
+    clear: both;
+    float: left;
+    margin-left: 50px;
+    margin-top: 80px;
+    overflow: auto;
+}
+
+#leyendaDetailProgress tr.headTableLegend{
     background: #E6B9B8;
     font-weight: bold;
 }
 
-.leyendaProgressTable tr td{
+#leyendaDetailProgress tr td{
     border: 1px solid #E6B9B8;
     padding: 2px 6px;
     text-align: center;
@@ -97,6 +121,12 @@ width: 510px;
     position:relative;
     float:right;
     margin: 20px 0 0 0;
-    
-    
+}
+
+.ucdisable{
+    background-color: #C0504D;
+}
+
+.ucdisable input{
+    display: none;
 }

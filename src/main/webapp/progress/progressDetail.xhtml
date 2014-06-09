@@ -11,75 +11,69 @@
     </ui:define> 
 
     <ui:define name="title">
-
+        #{msgs.progress}
     </ui:define>
 
     <ui:define name="subtitle">
-
+        #{msgs.progressDetail}
     </ui:define>
 
     <ui:define name="body">
-        <h:outputScript target="body">
-
-        </h:outputScript>
-
-        <h:form id="formInsertDetail" class="leyendaProgressTable">
+        <h:form id="formInsertDetail">
             <h:panelGroup layout="block">
                 <p:growl id="growl"  sticky="true" life="1500"/>
                 <h:panelGrid columns="2">    
-                    <h:outputText value="Iterations" />                
+                    <h:outputText value="#{msgs.iterations}" />                
                     <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.idIterSelect}">
                         <p:ajax listener="#{progressDetailBean.findProgressDetail(true)}" update="chooseComplete :formShowDetails" />
                         <f:selectItems value="#{progressDetailBean.iterations}" var="iteration" itemLabel="#{iteration.iterValue} : #{iteration.typeIteration}" itemValue="#{iteration.id}" />
                     </p:selectOneMenu>
 
-                    <h:outputText value="Discipline" />                                
+                    <h:outputText value="#{msgs.discipline}" />                                
                     <p:selectOneMenu id="chooseDiscipline"  value="#{progressDetailBean.disciplineSelect}" disabled="#{progressDetailBean.enabled == 0}">
                         <p:ajax listener="#{progressDetailBean.findProgressDetail(true)}" update="chooseComplete" />
                         <f:selectItems value="#{progressDetailBean.disciplines}" var="discipline" itemLabel="#{discipline.name}" itemValue="#{discipline.id}" />
                     </p:selectOneMenu> 
 
-                    <h:outputText value="Use Cases" />                                
+                    <h:outputText value="#{msgs.useCases}" />                                
                     <p:selectOneMenu id="chooseUsecase"  value="#{progressDetailBean.useCaseSelect}">
                         <p:ajax listener="#{progressDetailBean.findProgressDetail(true)}" update="chooseComplete" />
                         <f:selectItems value="#{progressDetailBean.useCases}" var="usecase" itemLabel="#{usecase.name}" itemValue="#{usecase.id}"/>
-                    </p:selectOneMenu> 
+                    </p:selectOneMenu>
 
-                    <h:outputText value="U.C. Enable" />                                
-                    <p:selectOneMenu id="chooseEnable"  value="#{progressDetailBean.enabled}" onchange="">
+                    <h:outputText value="#{msgs.uc_enable}" />
+                    <p:selectOneMenu id="chooseEnable"  value="#{progressDetailBean.enabled}" >
                         <f:selectItem itemLabel="True" itemValue="1" />
-                        <f:selectItem itemLabel="False" itemValue="0" /> 
-                        <p:ajax event="change" update="chooseDiscipline chooseComplete"/>
+                        <f:selectItem itemLabel="False" itemValue="0" />
+                        <p:ajax event="change" update="chooseDiscipline chooseComplete" />
                     </p:selectOneMenu>
 
                     <h:outputText value="" />  
                 </h:panelGrid>
 
                 <h:panelGrid columns="3"> 
-                    <h:outputText value="% Complete" />
+                    <h:outputText value="#{msgs.percent_complete}" />
                     <p:spinner id="chooseComplete" value="#{progressDetailBean.percentCompleted}" disabled="#{progressDetailBean.enabled == 0}" />
                     <h:commandButton id="submitDetailProgress" value="#{msgs.submit}" action="#{progressDetailBean.save()}" styleClass="btn btn-success" />                    
                 </h:panelGrid>                     
             </h:panelGroup>                    
         </h:form>  
 
-<!-- rowStyleClass="#{car.year le 1990 ? 'old' : null}"  http://www.primefaces.org/showcase/ui/data/datatable/rowColor.xhtml-->
-
         <h:form id="formShowDetails" >
-            <p:dataTable id="tableReadDetailProgress" var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}">
+            <p:dataTable id="tableReadDetailProgress" var="usecases" value="#{useCaseBean.useCases}" rowKey="#{usecases.id}" rowStyleClass="#{usecases.enabled eq true ? 'ucenable' : 'ucdisable'}" >
 
                 <p:column styleClass="columUsecases" headerText="Use Case">
                     <h:outputText value="#{usecases.name}" />
                 </p:column>
 
-                <p:column headerText="Ident" >
-                    <h:selectBooleanCheckbox id="selection" value="#{progressDetailBean.getIdentUC(usecases)}" valueChangeListener="#{progressDetailBean.probando(usecases)}"  >
+                <p:column headerText="Ident" styleClass="columIdentificacion">
+                    <h:selectBooleanCheckbox id="selection" value="#{progressDetailBean.getIdentUC(usecases)}" valueChangeListener="#{progressDetailBean.checkIdentUC(usecases)}"  >
                         <p:ajax />
                     </h:selectBooleanCheckbox>
                 </p:column>
 
-                <c:forEach  var="discipline" items="#{progressDetailBean.disciplines}" >
-                    <p:column headerText="#{discipline.name.charAt(0)}" >
+                <c:forEach  var="discipline" items="#{progressDetailBean.disciplines}">
+                    <p:column headerText="#{discipline.name.charAt(0)}" styleClass="columPorcentajes">
                         <h:outputText value="#{progressDetailBean.getWorkUnitBy(usecases, discipline).percent}" />
                     </p:column>
                 </c:forEach>
