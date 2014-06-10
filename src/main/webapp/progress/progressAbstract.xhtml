@@ -36,13 +36,17 @@
                 <p:column headerText="#{msgs.code}" width="55">
                     <h:outputText value="#{iter_proj.codeIteration}" style="display:block" />                    
                 </p:column>                        
-                <p:column headerText="#{msgs.code}" width="55">
+                <p:column headerText="#{msgs.iteration}" width="55">
                     <h:outputText value="#{iter_proj.phase}" style="display:block" />                    
                 </p:column> 
-
-
-
-
+                <p:column headerText="#{msgs.identification}" width="55">
+                    <h:outputText value="#{progressAbstractBean.obtainPercentsOfIdentification(iter_proj)}" style="display:block" />                    
+                </p:column> 
+                <c:forEach var="i" begin="0" end="3">
+                    <p:column headerText="#{progressAbstractBean.discipline_header(i)}" width="55">
+                        <h:outputText value="#{progressAbstractBean.obtainPercentOfDiscipline(iter_proj,i)}" style="display:block" />                    
+                    </p:column> 
+                </c:forEach>                                    
             </p:dataTable> 
 
             <p:commandButton value="#{msgs.stats}" icon="ui-icon-extlink" actionListener="#{progressAbstractBean.viewProgressAbstractGraphic}" />                                    
