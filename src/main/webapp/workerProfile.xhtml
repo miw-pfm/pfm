@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- Author: ppbust -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateHome.xhtml">
+
+    <ui:define name="pagetitle">
+        #{projectConfBean.project.name}
+    </ui:define>    
+
+    <ui:define name="title">
+        #{msgs.home}
+    </ui:define>
+
+    <ui:define name="subtitle">
+        #{msgs.workerProfile} -- #{workerProfileBean.worker.name} 
+    </ui:define>
+
+    <ui:define name="body">
+        <h:panelGroup id="workerprofile" layout="block">
+            <p:dataTable id="workersTable" var="workUnit" value="#{workerProfileBean.workUnitBean.workerSubActivities}">
+                <p:column headerText="#{msgs.name}" sortBy="#{workUnit.subactivity.name}">
+                    #{workUnit.name}
+                </p:column>
+
+                <p:column headerText="#{msgs.code}" sortBy="#{workUnit.subactivity.code}">
+                    #{workUnit.code}
+                </p:column>
+
+                <p:column headerText="#{msgs.unit}" >
+                    <h:outputText value="#{workerProfileBean.workUnitBean.getWorkerNumSubActivityUnits(workUnit)}" />
+                </p:column>
+
+                <p:column headerText="#{msgs.hour}">
+                    <h:outputText value="#{workerProfileBean.workUnitBean.getWorkerNumSubActivityUnits(workUnit)/4}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
