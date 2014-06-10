@@ -1,6 +1,5 @@
 package eui.miw.pfm.models.entities;
 
-import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,9 +92,6 @@ public class ProjectEntity implements Serializable {
         @JoinColumn(name = "worker_id", referencedColumnName = "id")})
     @ManyToMany
     private List<WorkerEntity> workers = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private List<TasksEntityMock> taskMock = new ArrayList<>();
 
     public ProjectEntity(Integer id, String name, Date startDate, String stringStartDate, Date endDate, String stringEndDate, int weekNumIteration, int chosenNumIteration, String description, UserEntity owner) {
         this.id = id;
@@ -249,22 +245,6 @@ public class ProjectEntity implements Serializable {
 
     public void removeRisk(final RiskEntity risk) {
         this.risk.remove(risk);
-    }
-
-    public void addTask(final TasksEntityMock t) {
-        this.taskMock.add(t);
-    }
-
-    public void removeTask(final TasksEntityMock t) {
-        this.taskMock.remove(t);
-    }
-
-    public List<TasksEntityMock> getTaskMock() {
-        return taskMock;
-    }
-
-    public void setTaskMock(final List<TasksEntityMock> taskMock) {
-        this.taskMock = taskMock;
     }
 
     public List<WorkerEntity> getWorkers() {
