@@ -27,7 +27,7 @@ public class WorkerEjb {
     public boolean update(final WorkerEntity worker) {
         if (this.isUnique(worker, false)) {
             AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
-            return true;
+            return true;//NOPMD
         } else {
             return false;
         }
@@ -37,7 +37,7 @@ public class WorkerEjb {
     public boolean create(final WorkerEntity worker) {
         if (this.isUnique(worker, true)) {
             AbstractDAOFactory.getFactory().getWorkerDAO().create(worker);
-            return true;
+            return true;//NOPMD
         } else {
             return false;
         }
@@ -85,21 +85,15 @@ public class WorkerEjb {
             }
         } else {
             for (WorkerEntity r : list) {
-                if (r.getDni().equals(worker.getDni())) {
-                    if (r.getId().equals(worker.getId())) {
-                        continue;
-                    } else {
-                        return false;
-                    }
+                if (r.getDni().equals(worker.getDni()) && !r.getId().equals(worker.getId())) {
+                    return false;
                 }
             }
         }
-
         return true;
     }
-    
-    public WorkerEntity getWorker(int id)
-    {
-        return  AbstractDAOFactory.getFactory().getWorkerDAO().read(id);
+
+    public WorkerEntity getWorker(int code) {
+        return AbstractDAOFactory.getFactory().getWorkerDAO().read(code);
     }
 }

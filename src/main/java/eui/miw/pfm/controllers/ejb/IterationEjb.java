@@ -17,34 +17,34 @@ import java.util.List;
  */
 public class IterationEjb {
 
-    public IterationEntity obtainIteration(final Integer iterationID) {
-        return AbstractDAOFactory.getFactory().getIterationDAO().read(iterationID);
+    public IterationEntity obtainIteration(final Integer code) {
+        return AbstractDAOFactory.getFactory().getIterationDAO().read(code);
     }
 
-    public void create(final IterationEntity iterationEntity) {
-        AbstractDAOFactory.getFactory().getIterationDAO().create(iterationEntity);
+    public void create(final IterationEntity iteration) {
+        AbstractDAOFactory.getFactory().getIterationDAO().create(iteration);
     }
 
-    public void delete(final IterationEntity iterationEntity) {
-        AbstractDAOFactory.getFactory().getIterationDAO().delete(iterationEntity);
+    public void delete(final IterationEntity iteration) {
+        AbstractDAOFactory.getFactory().getIterationDAO().delete(iteration);
     }
 
-    public void update(final IterationEntity iterationEntity) {
-        AbstractDAOFactory.getFactory().getIterationDAO().update(iterationEntity);
+    public void update(final IterationEntity iteration) {
+        AbstractDAOFactory.getFactory().getIterationDAO().update(iteration);
     }
 
-    public List<IterationEntity> getIterations(final ProjectEntity proj) {
+    public List<IterationEntity> getIterations(final ProjectEntity project) {
         final String psql = "SELECT i FROM IterationEntity i WHERE i.project = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, proj);
+        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, new Object[]{project});
     }
 
-    public List<IterationEntity> getIterationsOfOnePhase(final TypeIteration type, final ProjectEntity proj) {
+    public List<IterationEntity> getIterationsOfOnePhase(final TypeIteration type, final ProjectEntity project) {
         final String psql = "SELECT i FROM IterationEntity i WHERE i.typeIteration = ?1 AND i.project = ?2";//NOPMD
-        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, type, proj);
+        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, new Object[]{type, project});
     }
-    
-    public List<IterationEntity> getAllIterations(final ProjectEntity proj) {
+
+    public List<IterationEntity> getAllIterations(final ProjectEntity project) {
         final String psql = "SELECT i FROM IterationEntity i WHERE i.project = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, proj);
+        return AbstractDAOFactory.getFactory().getIterationDAO().find(psql, new Object[]{project});
     }
 }

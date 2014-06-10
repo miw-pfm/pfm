@@ -23,10 +23,11 @@ public class ProjectEjb {
         AbstractDAOFactory.getFactory().getProjectDAO().create(project);
     }
 
-    public boolean nameProjectValidator(final ProjectEntity projectEntity, final UserEntity userEntity) {
+    public boolean nameProjectValidator(final ProjectEntity project, final UserEntity user) {
         final String psql = "SELECT p FROM ProjectEntity p WHERE p.owner = ?1";//NOPMD
-        for (ProjectEntity pe : AbstractDAOFactory.getFactory().getProjectDAO().find(psql, userEntity)) {
-            if (pe.getName().equals(projectEntity.getName())) {
+        final Object[] objects = new Object[]{user};
+        for (ProjectEntity pe : AbstractDAOFactory.getFactory().getProjectDAO().find(psql, objects)) {
+            if (pe.getName().equals(project.getName())) {
                 return false;//NOPMD
             }
         }
@@ -35,7 +36,7 @@ public class ProjectEjb {
 
     public List<ProjectEntity> obtainProjects(final UserEntity user) {
         final String psql = "SELECT p FROM ProjectEntity p WHERE p.owner = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getProjectDAO().find(psql, user);
+        return AbstractDAOFactory.getFactory().getProjectDAO().find(psql, new Object[]{user});
     }
 
     public void update(final ProjectEntity project) {
@@ -43,7 +44,7 @@ public class ProjectEjb {
         AbstractDAOFactory.getFactory().getProjectDAO().update(project);
     }
 
-    public ProjectEntity openProject(final int projectId) {
-        return AbstractDAOFactory.getFactory().getProjectDAO().read(projectId);
+    public ProjectEntity openProject(final int code) {
+        return AbstractDAOFactory.getFactory().getProjectDAO().read(code);
     }
 }
