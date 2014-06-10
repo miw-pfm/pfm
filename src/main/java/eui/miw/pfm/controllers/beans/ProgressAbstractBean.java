@@ -8,9 +8,7 @@ import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UseCaseEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +20,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author Clemencio Morales
  * @author Jose Angel de los Santos
+ * @author Roberto Amor
  */
 @RequestScoped
 @Named
@@ -29,7 +28,6 @@ public class ProgressAbstractBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-//    private static final Logger LOGGER = Logger.getLogger(ProgressResumeBean.class.getName());//NOPMD
     private ProgressDetailEntity progressDetailEntity;
     private ProgressDetailEjb progressDetailEjb;
     private ProjectEntity project;
@@ -184,28 +182,13 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         RequestContext.getCurrentInstance().openDialog("progressAbstractGraphic", options, null);
     }
 
+    // @author Roberto Amor
     public Integer obtainPercentsOfIdentification(final IterationEntity iteration) {
-        final List<UseCaseEntity> useCaseEntitys = new UseCaseEjb().obtainUseCaseChecked(project);
-        final List<IterationEntity> preIterations = new IterationBean().listPreIterations(iteration); //NOPMD
-
-        float numProgressIdent = 0; //NOPMD
-        for (UseCaseEntity useCaseEntity : useCaseEntitys) {
-            if (preIterations.contains(useCaseEntity.getIteration())) {
-                numProgressIdent++; //NOPMD
-            }
-        }
-
-        return (int) ((numProgressIdent / new UseCaseEjb().getEnabledUseCases(project)) * 100);
+        return new ProgressDetailEjb().obtainPercentsOfIdentification(iteration, this.project);
     }
 
     public Integer obtainPercentOfDiscipline(final IterationEntity iteration, final int cod_discipline) {
-//        List<Integer> discipline_percents= new ArrayList<Integer>();
-//        Integer porcentaje;
-//        for (IterationEntity iterationEntity : getIterations()) {
-            return progressDetailEjb.getSumTotalProgressDetail(this.project, iteration, this.discipline.get(cod_discipline));
-//            discipline_percents.add(porcentaje);
-//        }
-//        return discipline_percents;
+        return progressDetailEjb.getSumTotalProgressDetail(this.project, iteration, this.discipline.get(cod_discipline));
     }
     
     public String discipline_header(final int cod_discipline)
@@ -219,7 +202,11 @@ public class ProgressAbstractBean extends Bean implements Serializable {
             case 2:  header_discipline="Implementation"; 
                      break;
             case 3:  header_discipline="Test"; 
-                     break;                                 
+                     break; 
+            default:
+                    header_discipline="Error";
+                break;
+                    
         }
         return header_discipline;
     }
