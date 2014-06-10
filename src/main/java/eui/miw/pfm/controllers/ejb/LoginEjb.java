@@ -14,8 +14,8 @@ import eui.miw.pfm.models.entities.UserEntity;
  */
 public class LoginEjb {
 
-    public UserEntity findUser(final String userName, final String password) {
-        return AbstractDAOFactory.getFactory().getUserDAO().findUser(userName, password);
+    public UserEntity findUser(final String user, final String password) {
+        return AbstractDAOFactory.getFactory().getUserDAO().findUser(user, password);
     }
 
 }
