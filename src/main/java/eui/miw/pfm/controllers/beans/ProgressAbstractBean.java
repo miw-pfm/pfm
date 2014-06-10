@@ -1,8 +1,10 @@
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.DisciplineEjb;
 import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
 import eui.miw.pfm.controllers.ejb.UseCaseEjb;
+import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
@@ -18,6 +20,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author Clemencio Morales
  * @author Jose Angel de los Santos
+ * @author Roberto Amor
  */
 @RequestScoped
 @Named
@@ -25,7 +28,6 @@ public class ProgressAbstractBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-//    private static final Logger LOGGER = Logger.getLogger(ProgressResumeBean.class.getName());//NOPMD
     private ProgressDetailEntity progressDetailEntity;
     private ProgressDetailEjb progressDetailEjb;
     private ProjectEntity project;
@@ -42,6 +44,8 @@ public class ProgressAbstractBean extends Bean implements Serializable {
     private Integer percentDesign;
     private Integer percentImplementation;
     private Integer percentTest;
+
+    private transient final List<DisciplineEntity> discipline = new DisciplineEjb().findAll(); //NOPMD
 
     public ProgressAbstractBean() {
         super();
@@ -165,7 +169,7 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         }
         this.setPercentIdentification(total / progressDetails.size());
     }
-    
+
     // @author Jose Mª Villar
     public void viewProgressAbstractGraphic() {
         Map<String, Object> options = new HashMap<>();
@@ -176,5 +180,34 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         options.put("contentWidth", 850);
 
         RequestContext.getCurrentInstance().openDialog("progressAbstractGraphic", options, null);
+    }
+
+    // @author Roberto Amor
+    public Integer obtainPercentsOfIdentification(final IterationEntity iteration) {
+        return new ProgressDetailEjb().obtainPercentsOfIdentification(iteration, this.project);
+    }
+
+    public Integer obtainPercentOfDiscipline(final IterationEntity iteration, final int cod_discipline) {
+        return progressDetailEjb.getSumTotalProgressDetail(this.project, iteration, this.discipline.get(cod_discipline));
+    }
+    
+    public String discipline_header(final int cod_discipline)
+    {
+        String header_discipline="";
+        switch (cod_discipline) {
+            case 0:  header_discipline="Specification"; 
+                     break;
+            case 1:  header_discipline="Design"; 
+                     break;
+            case 2:  header_discipline="Implementation"; 
+                     break;
+            case 3:  header_discipline="Test"; 
+                     break; 
+            default:
+                    header_discipline="Error";
+                break;
+                    
+        }
+        return header_discipline;
     }
 }

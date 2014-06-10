@@ -223,28 +223,11 @@ public class JPATransactionGenericDAO<T, ID> implements TransactionGenericDAO<T,
     }
 
     @Override
-    public List<T> find(String psql, Object entity) {
-        Query query = entityManager.createQuery(psql);
-        query.setParameter(1, (T) entity);
-        return (List<T>) query.getResultList();
-
-    }
-
-    @Override
-    public List<T> find(String psql, Object entity1, Object entity2) {
-        Query query = entityManager.createQuery(psql);
-        query.setParameter(1, (T) entity1);
-        query.setParameter(2, (T) entity2);
-        return (List<T>) query.getResultList();
-    }
-
-    @Override
     public List<T> find(String psql, Object[] entities) {
         Query query = entityManager.createQuery(psql);
         for (int i = 0; i < entities.length; i++) {
             query.setParameter(i + 1, (T) entities[i]);
-
-}
+        }
         return (List<T>) query.getResultList();
     }
 }

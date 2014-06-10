@@ -17,5 +17,5 @@ import eui.miw.pfm.models.entities.UseCaseEntity;
  */
 public interface ProgressDetailDAO extends TransactionGenericDAO<ProgressDetailEntity, Integer> {
 
-    public ProgressDetailEntity findProgressDetail(final IterationEntity iteration, final UseCaseEntity useCase, final DisciplineEntity discipline);
+    ProgressDetailEntity findProgressDetail(final IterationEntity iteration, final UseCaseEntity useCase, final DisciplineEntity discipline);
 }

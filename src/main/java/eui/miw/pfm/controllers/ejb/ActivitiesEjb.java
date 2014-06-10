@@ -29,12 +29,11 @@ public class ActivitiesEjb {
         return AbstractDAOFactory.getFactory().getActivityDAO().findAll();
     }
 
-    public ActivityEntity obtainActivity(final Integer id) {
-        return AbstractDAOFactory.getFactory().getActivityDAO().read(id);
-    }  
-    
-    public SubActivityEntity obtainSubActivity(final int subActId)
-    {
-        return AbstractDAOFactory.getFactory().getSubActivityDAO().read(subActId);
+    public ActivityEntity obtainActivity(final Integer code) {
+        return AbstractDAOFactory.getFactory().getActivityDAO().read(code);
+    }
+
+    public SubActivityEntity obtainSubActivity(final int code) {
+        return AbstractDAOFactory.getFactory().getSubActivityDAO().read(code);
     }
 }

@@ -8,11 +8,9 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.DisciplineEjb;
 import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
-import eui.miw.pfm.controllers.ejb.UseCaseEjb;
 import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.UseCaseEntity;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +26,7 @@ import org.primefaces.model.chart.LineChartSeries;
  *
  * @author Jean Mubaied
  * @author Jose Mª Villar
+ * @author Roberto Amor (Refactor)
  */
 @Named
 @ViewScoped
@@ -79,7 +78,7 @@ public class ProgressAbstractGraphicBean extends Bean implements Serializable {
 
         for (IterationEntity iterationEntity : iterations) {
 
-            this.series.get("Identification").set(iterationEntity.getCodeIteration(), this.obtainPercentsOfIdentification(iterationEntity));
+            this.series.get("Identification").set(iterationEntity.getCodeIteration(), progressDetailEjb.obtainPercentsOfIdentification(iterationEntity, this.project));
 
             for (DisciplineEntity disciplineEntity : this.discipline) {
                 if (!disciplineEntity.getName().equals("Acceptance")) {
@@ -97,20 +96,5 @@ public class ProgressAbstractGraphicBean extends Bean implements Serializable {
                 this.linearModel.addSeries(this.series.get(disciplineEntity.getName()));
             }
         }
-    }
-
-    // @author Jose Mª Villar    
-    public Integer obtainPercentsOfIdentification(final IterationEntity iteration) {
-        final List<UseCaseEntity> useCaseEntitys = new UseCaseEjb().obtainUseCaseChecked(project);
-        final List<IterationEntity> preIterations = new IterationBean().listPreIterations(iteration); //NOPMD
-
-        float numProgressIdent = 0; //NOPMD
-        for (UseCaseEntity useCaseEntity : useCaseEntitys) {
-            if (preIterations.contains(useCaseEntity.getIteration())) {
-                numProgressIdent++; //NOPMD
-            }
-        }
-
-        return (int) ((numProgressIdent / new UseCaseEjb().getEnabledUseCases(project)) * 100);
     }
 }

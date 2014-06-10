@@ -4,19 +4,15 @@ import java.util.List;
 
 public interface TransactionGenericDAO<T, ID> extends GenericDAO<T, ID> {
 
-    public abstract void begin();
+    void begin();
 
-    public abstract void commit();
+    void commit();
 
-    public abstract void rollback();
+    void rollback();
 
-    public abstract List<T> find(String[] attributes, String[] values);
+    List<T> find(String[] attributes, String[] values);
 
-    public abstract List<T> find(String psql, Object entity);
+    List<T> find(String[] attributes, String[] values, String order, int index, int size);
 
-    public abstract List<T> find(String psql, Object entity1, Object entity2);
-
-    public abstract List<T> find(String[] attributes, String[] values, String order, int index, int size);
-    
-    public abstract List<T> find(String psql, Object[] entities);
+    List<T> find(String psql, Object[] entities);
 }
