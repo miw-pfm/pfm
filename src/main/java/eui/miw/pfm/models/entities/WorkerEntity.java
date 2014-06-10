@@ -5,7 +5,6 @@
  */
 package eui.miw.pfm.models.entities;
 
-import eui.miw.pfm.util.moks.entities.TasksEntityMock;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -73,9 +72,6 @@ public class WorkerEntity implements Serializable {
         @JoinColumn(name = "project_id", referencedColumnName = "id")})
     @ManyToMany
     private List<ProjectEntity> projects = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "worker")
-    private List<TasksEntityMock> taskMock = new ArrayList<>();
     
     /**
      *
@@ -161,22 +157,6 @@ public class WorkerEntity implements Serializable {
 
     public void removeProject(final ProjectEntity p) {
         this.projects.remove(p);
-    }
-
-    public void addTask(final TasksEntityMock t) {
-        this.taskMock.add(t);
-    }
-
-    public void removeTask(final TasksEntityMock t) {
-        this.taskMock.remove(t);
-    }
-
-    public List<TasksEntityMock> getTaskMock() {
-        return taskMock;
-    }
-
-    public void setTaskMock(final List<TasksEntityMock> taskMock) {
-        this.taskMock = taskMock;
     }
 
     public Set<WorkUnitEntity> getWorkUnits() {
