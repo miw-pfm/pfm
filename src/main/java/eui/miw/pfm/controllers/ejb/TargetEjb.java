@@ -23,7 +23,7 @@ public class TargetEjb {
     
     public List<TargetEntity> obtainProjectTargets(final ProjectEntity project) {
         final String psql = "SELECT t FROM TargetEntity t WHERE t.project = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getTargetDAO().find(psql, project);
+        return AbstractDAOFactory.getFactory().getTargetDAO().find(psql, new Object[]{project});
     }
     
     public List<TargetEntity> obtainTarget(final ProjectEntity project, final DisciplineEntity discipline) {
