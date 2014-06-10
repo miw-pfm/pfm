@@ -5,16 +5,19 @@
  */
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.DisciplineEjb;
 import eui.miw.pfm.controllers.ejb.TargetEjb;
 import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.TargetEntity;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.CellEditEvent;
 
 /**
  *
@@ -29,6 +32,7 @@ public class TargetBean extends Bean implements Serializable {
     private transient ProjectEntity project;
     private DisciplineEntity discipline;
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
+    private List<TargetEntity> targets;
 
     public TargetBean() {
         super();
@@ -39,6 +43,7 @@ public class TargetBean extends Bean implements Serializable {
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
+        fiilTargets();
     }
 
     public TargetEntity getTarget() {
@@ -61,15 +66,15 @@ public class TargetBean extends Bean implements Serializable {
         new TargetEjb().createTarget(target);
         return null;
     }
-    
+
     public String delete() {
-        if (null ==  this.target) {
+        if (null == this.target) {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No target Selected", ""));
         } else {
             this.target.setProject(project);
-            
+
             LOGGER.info(this.target.toString());
-            
+
             new TargetEjb().delete(target);
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Target Deleted", ""));
         }
@@ -81,6 +86,57 @@ public class TargetBean extends Bean implements Serializable {
         LOGGER.info(this.target.toString());
         new TargetEjb().update(target);
         return null;
+    }
+
+    public List<TargetEntity> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(final List<TargetEntity> targets) {
+        this.targets = targets;
+    }
+
+    public void onCellEdit(final CellEditEvent event) {
+        final Object oldValue = event.getOldValue();
+        final Object newValue = event.getNewValue();
+        TargetEntity targetUp;
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            targetUp = targets.get((Integer) event.getRowIndex());
+            switch (event.getColumn().getHeaderText()) {
+                case "I":
+                    targetUp.setInception((Integer) newValue);
+                    break;
+                case "E":
+                    targetUp.setElaboration((Integer) newValue);
+                    break;
+                case "C":
+                    targetUp.setConstruction((Integer) newValue);
+                    break;
+                case "T":
+                    targetUp.setTransition((Integer) newValue);
+                    break;
+                default:
+            }
+            new TargetEjb().update(targetUp);
+            final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+    public void fiilTargets() {
+
+        final TargetEjb targetEjb = new TargetEjb();
+        final List<TargetEntity> ltargets = targetEjb.obtainProjectTargets(this.project);
+        if (ltargets.size() == 5) {
+            targets = ltargets;
+        } else {
+            final List<DisciplineEntity> disciplines = new DisciplineEjb().findAll();
+            for (DisciplineEntity discip : disciplines) {
+                targetEjb.createTarget(new TargetEntity(null, 0, 0, 0, 0, this.project, discip));//NOPMD
+            }
+            targets = targetEjb.obtainProjectTargets(project);
+        }
     }
 
 }

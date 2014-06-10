@@ -112,6 +112,25 @@ float: right;
     text-align: center;
 }
 
+.leyendaProgressTable{
+  border: 1px solid #E6B9B8;
+    clear: both;
+    float: left;
+    margin-left: 50px;
+    overflow: auto;
+}
+
+.leyendaProgressTable tr.headTableLegend{
+    background: #E6B9B8;
+    font-weight: bold;
+}
+
+.leyendaProgressTable tr td{
+    border: 1px solid #E6B9B8;
+    padding: 2px 6px;
+    text-align: center;
+}
+
 .progressStimTbl {
     position:relative;
     float:left;

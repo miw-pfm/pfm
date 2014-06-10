@@ -21,14 +21,14 @@ public class TargetEjb {
         AbstractDAOFactory.getFactory().getTargetDAO().create(target);
     }
     
-    public List<TargetEntity> obtainProjectTarget(final ProjectEntity project) {
+    public List<TargetEntity> obtainProjectTargets(final ProjectEntity project) {
         final String psql = "SELECT t FROM TargetEntity t WHERE t.project = ?1";//NOPMD
         return AbstractDAOFactory.getFactory().getTargetDAO().find(psql, project);
     }
     
     public List<TargetEntity> obtainTarget(final ProjectEntity project, final DisciplineEntity discipline) {
         final String psql = "SELECT t FROM TargetEntity t WHERE t.project = ?1 AND t.discipline = ?2";//NOPMD
-        return AbstractDAOFactory.getFactory().getTargetDAO().find(psql, project);
+        return AbstractDAOFactory.getFactory().getTargetDAO().find(psql, new Object[]{project,discipline});
     }
     
     public void update(final TargetEntity target) {
