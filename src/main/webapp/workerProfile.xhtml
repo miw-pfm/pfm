@@ -21,23 +21,29 @@
 
     <ui:define name="body">
         <h:panelGroup id="workerprofile" layout="block">
-            <p:dataTable id="workersTable" var="workUnit" value="#{workerProfileBean.workUnitBean.workerSubActivities}">
-                <p:column headerText="#{msgs.name}" sortBy="#{workUnit.subactivity.name}">
-                    #{workUnit.name}
-                </p:column>
+            <p:dataTable id="workersTable" var="iteration" value="#{workerProfileBean.workUnitBean.allIterations}" style="width: 70%">
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column colspan="4" headerText="#{msgs.assigned_tasks}" />
+                    </p:row>                    
+                </p:columnGroup>
+                <p:subTable id="workersTable" var="workUnit" value="#{workerProfileBean.getAllWorkUnit(iteration)}">
+                    <p:column headerText="#{msgs.name}" sortBy="#{workUnit.name}">
+                        #{workUnit.name}
+                    </p:column>
 
-                <p:column headerText="#{msgs.code}" sortBy="#{workUnit.subactivity.code}">
-                    #{workUnit.code}
-                </p:column>
+                    <p:column headerText="#{msgs.code}" sortBy="#{workUnit.code}" style="text-align: center;">
+                        #{workUnit.code}
+                    </p:column>
 
-                <p:column headerText="#{msgs.unit}" >
-                    <h:outputText value="#{workerProfileBean.workUnitBean.getWorkerNumSubActivityUnits(workUnit)}" />
-                </p:column>
+                    <p:column headerText="#{msgs.unit}"  style="text-align: center;">
+                        <h:outputText value="#{workerProfileBean.workUnitBean.getWorkerNumSubActivityUnits(workUnit)}" />
+                    </p:column>
 
-                <p:column headerText="#{msgs.hour}">
-                    <h:outputText value="#{workerProfileBean.workUnitBean.getWorkerNumSubActivityUnits(workUnit)/4}" />
-                </p:column>
-
+                    <p:column headerText="#{msgs.hour}" style="text-align: center;">
+                        <h:outputText value="#{workerProfileBean.workUnitBean.getWorkerNumSubActivityUnits(workUnit)/4}" />
+                    </p:column>
+                </p:subTable>
             </p:dataTable>
         </h:panelGroup>
     </ui:define>

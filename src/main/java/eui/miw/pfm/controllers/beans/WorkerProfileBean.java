@@ -5,19 +5,15 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.WorkUnitEjb;
-import eui.miw.pfm.controllers.ejb.WorkerEjb;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
-import eui.miw.pfm.models.entities.WorkUnitEntity;
+import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -58,7 +54,7 @@ public class WorkerProfileBean extends Bean implements Serializable {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(final ProjectEntity project) {
         this.project = project;
     }
 
@@ -66,11 +62,12 @@ public class WorkerProfileBean extends Bean implements Serializable {
         return worker;
     }
 
-    public void setWorker(WorkerEntity worker) {
+    public void setWorker(final WorkerEntity worker) {
         this.worker = worker;
     }
 
-    public List<WorkUnitEntity> getAllWorkUnit() {
-        return new WorkUnitEjb().getWorkerWorkUnits(worker);
+    public List<SubActivityEntity> getAllWorkUnit(final IterationEntity iteration) {
+        this.workUnitBean.setIteration(iteration);
+        return this.workUnitBean.getWorkerSubActivities();
     }
 }
