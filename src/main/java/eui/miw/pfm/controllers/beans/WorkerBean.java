@@ -23,7 +23,7 @@ public class WorkerBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(WorkerBean.class.getName());
 
-    private WorkerEntity worker;
+    private transient WorkerEntity worker;
 
     public WorkerBean() {
         super();
@@ -45,9 +45,9 @@ public class WorkerBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Updated", ""));
         } else {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Workers DNI is already exists", ""));
-            return null;
+            return null; //NOPMD
         }
-        return "/phaseplan/workerListAll";
+        return "/workerListAll";
     }
 
     public String create() {
@@ -57,9 +57,9 @@ public class WorkerBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
         } else {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Workers DNI is already exists", ""));
-            return null;
+            return null; //NOPMD
         }
-        return "/phaseplan/workerListAll";
+        return "/workerListAll";
     }
 
     public String delete() {
@@ -72,14 +72,14 @@ public class WorkerBean extends Bean implements Serializable {
             new WorkerEjb().delete(this.worker);
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Deleted", ""));
         }
-        return "/phaseplan/workerListAll";
+        return "/workerListAll";
     }
 
     public String editWorker() {
         if (this.worker == null) {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Worker Selected", ""));
         } else {
-            return "/phaseplan/workerEdit";
+            return "/workerEdit"; //NOPMD
         }
         return null;
     }
@@ -89,7 +89,7 @@ public class WorkerBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No Worker Selected", ""));
         } else {
             super.sessionMap.put("worker", this.worker);
-            return "/phaseplan/workerProfile";
+            return "/workerProfile"; //NOPMD
         }
         return null;
     }
