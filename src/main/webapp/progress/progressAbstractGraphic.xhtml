@@ -8,7 +8,7 @@
 
 
     <h:head>
-        <title>Cars</title>
+        <title>#{msgs.stats_abstract_of_progress}</title>
         <style type="text/css">
             .ui-widget {
                 font-size: 90%;
@@ -17,8 +17,8 @@
     </h:head>
 
     <h:body>
-        <p:panel header="Header">             
-            <p:lineChart animate="true" value="#{chartBean.categoryModel}" style="height:300px; width:800px" legendPosition="e"/>
+        <p:panel>             
+            <p:lineChart animate="true" value="#{progressAbstractGraphicBean.linearModel}" style="height:300px; width:800px" legendPosition="nw" xaxisLabel="Iterations" yaxisLabel="% Percent"/>
         </p:panel>  
 
     </h:body>

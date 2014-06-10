@@ -15,12 +15,9 @@ import eui.miw.pfm.models.entities.UserEntity;
 import eui.miw.pfm.util.TypeIteration;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -44,7 +41,7 @@ public class TestProgressDetailProject {
 
     @Before
     public void before() {
-       
+
         user = new UserEntity();
         user.setName("usuario");
         user.setEmail("pepe@gmail.com");
@@ -83,7 +80,7 @@ public class TestProgressDetailProject {
         useCase.setName("Use Case 1");
         useCase.setProject(project);
         AbstractDAOFactory.getFactory().getUseCaseDAO().create(useCase);
-        
+
         progressDetail1 = new ProgressDetailEntity();
         progressDetail1.setDiscipline(discipline);
         progressDetail1.setIteration(iteration);
@@ -96,29 +93,28 @@ public class TestProgressDetailProject {
         progressDetail2.setIteration(iteration);
         progressDetail2.setPercent(4);
         progressDetail2.setUseCase(useCase);
-        TestProgressDetailProject.sumTotal += progressDetail2.getPercent();        
+        TestProgressDetailProject.sumTotal += progressDetail2.getPercent();
 
         progressDetail3 = new ProgressDetailEntity();
         progressDetail3.setDiscipline(discipline);
         progressDetail3.setIteration(iteration);
         progressDetail3.setPercent(3);
         progressDetail3.setUseCase(useCase);
-        TestProgressDetailProject.sumTotal += progressDetail3.getPercent();                
+        TestProgressDetailProject.sumTotal += progressDetail3.getPercent();
     }
 
     public TestProgressDetailProject() {
         TestProgressDetailProject.sumTotal = 0;
     }
-    
+
 //    @Test
 //    public void testEnabledUseCases() {
 //        ProgressDetailEjb progressDetailEjb=createProgressDetails();       
 //        assertTrue("ERROR enabled use cases", progressDetailEjb.getEnabledUseCases(project)== 1);
 //    }
-    
     @Test
     public void testCreate() {
-        
+
         createProgressDetails();
 
         assertTrue("ERROR creating", AbstractDAOFactory.getFactory().getProgressDetailDAO().read(progressDetail1.getId()).equals(progressDetail1));
@@ -127,31 +123,31 @@ public class TestProgressDetailProject {
 
     }
 
-    public void createProgressDetails()
-    {
+    public void createProgressDetails() {
         final ProgressDetailEjb progressDetailEjb = new ProgressDetailEjb();
         progressDetailEjb.create(progressDetail1);
         progressDetailEjb.create(progressDetail2);
         progressDetailEjb.create(progressDetail3);
     }
-    
+
     @Test
     public void testFind() {
-        assertNotNull("Not Found Progress Detail : ",new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline));
-    }
-    
-    @Test
-    public void testFindProgressDetailsByProject(){
-        createProgressDetails();
-        assertSame("Error getProgressDetailEntitiesByProject",new ProgressDetailEjb().getProgressDetailEntitiesByProject(project).size(), 3);
+        assertNotNull("Not Found Progress Detail : ", new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline));
     }
 
     @Test
-    public void testSumTotalProgressDetailsByProject() {        
+    public void testFindProgressDetailsByProject() {
         createProgressDetails();
-        assertEquals("Totales iguales",new ProgressDetailEjb().getSumTotalProgressDetail(iteration, discipline), TestProgressDetailProject.sumTotal);
+        assertSame("Error getProgressDetailEntitiesByProject", new ProgressDetailEjb().getProgressDetailEntitiesByProject(project).size(), 3);
     }
-    
+
+    //@author Jose Mª Villar Bógalo
+    @Test
+    public void testSumTotalProgressDetailsByProject() {
+        createProgressDetails();
+        assertEquals("Totales iguales", new ProgressDetailEjb().getSumTotalProgressDetail(project, iteration, discipline), TestProgressDetailProject.sumTotal);
+    }
+
     @After
     public void after() {
         AbstractDAOFactory.getFactory().getProgressDetailDAO().delete(progressDetail1);
@@ -160,8 +156,8 @@ public class TestProgressDetailProject {
 
         AbstractDAOFactory.getFactory().getDisciplineDAO().delete(discipline);
         AbstractDAOFactory.getFactory().getUseCaseDAO().delete(useCase);
-        AbstractDAOFactory.getFactory().getIterationDAO().delete(iteration);        
-        
+        AbstractDAOFactory.getFactory().getIterationDAO().delete(iteration);
+
         AbstractDAOFactory.getFactory().getProjectDAO().delete(project);
         AbstractDAOFactory.getFactory().getUserDAO().delete(user);
     }

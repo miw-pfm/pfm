@@ -443,17 +443,22 @@ public class IterationBean extends Bean implements Serializable {
         return listPost;
     }
 
+    // Refactorizado por Jose Mª Villar
     public List<IterationEntity> listPreIterations(IterationEntity iter) {
 
         List<IterationEntity> listPre = new ArrayList<>();
         List<IterationEntity> listPost = listPostIterations(iter);
-        listPre.add(iter);
 
         for (IterationEntity it : allIterations) {
             if (!listPost.contains(it)) {
                 listPre.add(it);
             }
         }
+
+        if (!listPre.contains(iter)) {
+            listPre.add(iter);
+        }
+        
         return listPre;
     }
 

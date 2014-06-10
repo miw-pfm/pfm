@@ -97,19 +97,24 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
     }
 
     public double getInceptionIterationValue(final ActivityEntity activity, final int index) {
-        final TheoreticalAssignmentEntity theoretical = activity.getTheoreticalAssignment().get(0);
-
+        final TheoreticalAssignmentEntity theoretical = activity.getTheoreticalAssignment().get(0);//NOPMD
+        double iterationValue;//NOPMD
         switch (index) {
             case 0:
-                return iterationValue(this.iterationBean.getListInception().size(), theoretical.getInceptionValue(), index);
+                iterationValue = iterationValue(this.iterationBean.getListInception().size(), theoretical.getInceptionValue(), index);
+                break;
             case 1:
-                return iterationValue(this.iterationBean.getListElaboration().size(), theoretical.getElaborationValue(), index);
+                iterationValue = iterationValue(this.iterationBean.getListElaboration().size(), theoretical.getElaborationValue(), index);
+                break;
             case 2:
-                return iterationValue(this.iterationBean.getListConstruction().size(), theoretical.getContrutionValue(), index);
+                iterationValue = iterationValue(this.iterationBean.getListConstruction().size(), theoretical.getContrutionValue(), index);
+                break;
             case 3:
-                return iterationValue(this.iterationBean.getListTransition().size(), theoretical.getTransitionValue(), index);
+                iterationValue = iterationValue(this.iterationBean.getListTransition().size(), theoretical.getTransitionValue(), index);
+                break;
             default:
-                return 0.0;
+                iterationValue = 0.0;
         }
+        return iterationValue;
     }
 }

@@ -34,24 +34,24 @@ public class WorkUnitEjb {
 
     public List<WorkUnitEntity> getAvailableWorkUnits(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2 AND wu.worker IS NULL";//NOPMD
-        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity);
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{iteration, subActivity});
     }
 
     public List<WorkUnitEntity> getWorkUnitsByIterAndSubActivity(final SubActivityEntity subActivity, final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2";//NOPMD
-        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration, subActivity);
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{iteration, subActivity});
     }
 
     public List<WorkUnitEntity> getWorkUnitsByIter(final IterationEntity iteration) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1";//NOPMD
-        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, iteration);
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{iteration});
     }
-    
+
     public List<WorkUnitEntity> getTotalWorkUnitsByWorker(final SubActivityEntity subActivity, final IterationEntity iteration, final WorkerEntity worker) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.iteration = ?1 AND wu.subactivity = ?2 AND wu.worker = ?3";//NOPMD
-        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{iteration,subActivity,worker});
-}
-    
+        return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{iteration, subActivity, worker});
+    }
+
     public List<WorkUnitEntity> getWorkerWorkUnits(final WorkerEntity worker) {
         final String psql = "SELECT wu FROM WorkUnitEntity wu WHERE wu.worker = ?1";//NOPMD
         return AbstractDAOFactory.getFactory().getWorkUnitDAO().find(psql, new Object[]{worker});
