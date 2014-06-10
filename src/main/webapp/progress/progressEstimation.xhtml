@@ -31,30 +31,44 @@
                         return false;"/>  
                 <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
             </p:contextMenu> 
-            <p:dataTable id="tableProgressEstimation" styleClass="progressStimTbl" var="target" value="#{targetBean.targets}"  editable="true" editMode="cell" widgetVar="cellEstimation">
+            <p:dataTable id="tableProgressEstimation" styleClass="tableProgressEstimation progressStimTbl" var="target" value="#{targetBean.targets}"  editable="true" editMode="cell" widgetVar="cellEstimation">
                 <p:ajax event="cellEdit" listener="#{targetBean.onCellEdit}" update=":formProgressEstimation:msgs" />
                 <p:columnGroup type="header">
                     <p:row>
-                        <p:column colspan="0" headerText="" />
+                        <p:column rowspan="2" colspan="0" headerText="" styleClass="hide_head_disciplines"  />
                         <p:column colspan="4" headerText="#{msgs.abstract}" />
                         <p:column colspan="4" headerText="#{msgs.objective}" />
                         <p:column colspan="4" headerText="#{msgs.fulfillment}" />
+                    </p:row>
+                    <p:row>
+                        <p:column headerText="#{msgs.letter_i}" />
+                        <p:column headerText="#{msgs.letter_e}" />
+                        <p:column headerText="#{msgs.letter_c}" />
+                        <p:column headerText="#{msgs.letter_t}" />
+                        <p:column headerText="#{msgs.letter_i}" />
+                        <p:column headerText="#{msgs.letter_e}" />
+                        <p:column headerText="#{msgs.letter_c}" />
+                        <p:column headerText="#{msgs.letter_t}" />
+                        <p:column headerText="#{msgs.letter_i}" />
+                        <p:column headerText="#{msgs.letter_e}" />
+                        <p:column headerText="#{msgs.letter_c}" />
+                        <p:column headerText="#{msgs.letter_t}" />
                     </p:row>
                 </p:columnGroup>
                 <p:column >
                     <h:outputText value="#{target.discipline.name}" />
                 </p:column>
 
-                <p:column>
+                <p:column headerText="I" >
                     <h:outputText value="#{target.inception}" />
                 </p:column>
-                <p:column>
+                <p:column headerText="E" >
                     <h:outputText value="#{target.elaboration}" />
                 </p:column>
-                <p:column>
+                <p:column headerText="C" >
                     <h:outputText value="#{target.construction}" />
                 </p:column>
-                <p:column>
+                <p:column headerText="T" >
                     <h:outputText value="#{target.transition}" />
                 </p:column>
 
@@ -83,21 +97,21 @@
                     </p:cellEditor> 
                 </p:column>
 
-                <p:column>
+                <p:column headerText="I" >
                     <h:outputText value="#{target.inception}" />
                 </p:column>
-                <p:column>
+                <p:column headerText="E" >
                     <h:outputText value="#{target.elaboration}" />
                 </p:column>
-                <p:column>
+                <p:column headerText="C" >
                     <h:outputText value="#{target.construction}" />
                 </p:column>
-                <p:column>
+                <p:column headerText="T" >
                     <h:outputText value="#{target.transition}" />
                 </p:column>
 
             </p:dataTable>
-            
+
             <table id="leyendaProgressEstimation" class="leyendaProgressTable progressStimTbl">
                 <tr class="headTableLegend">
                     <td colspan="2">#{msgs.legend}</td>
@@ -120,12 +134,12 @@
                 </tr>
             </table>
             <h:panelGroup id="pnlStats" styleClass="pnlStats" layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="stats" value="#{msgs.stats}"  oncomplete="PF('statsPanel').show()" styleClass="btn btn-success" />
+                <p:commandButton id="stats" value="#{msgs.stats}"  oncomplete="PF('statsPanel').show()"  />
             </h:panelGroup>
         </h:form>
 
         <p:dialog id="statsPanelDialog" header="#{msgs.stats} #{msgs.progressEstimation}" widgetVar="statsPanel" hideEffect="fade" dynamic="true">            
-
+            <p:lineChart animate="true" value="#{targetGraphicBean.model}" legendPosition="e" style="height:384px; width:800px"  yaxisLabel="% Percents" xaxisLabel="Phases"  />
         </p:dialog>
 
     </ui:define>

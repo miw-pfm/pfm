@@ -57,7 +57,7 @@
 }
 
 #formShowDetails\:tableReadDetailProgress{
-float: right;
+    float: right;
     margin-right: 35px;
     margin-top: 20px;
     width: 510px;
@@ -93,7 +93,7 @@ float: right;
 }
 
 #leyendaDetailProgress{
-  border: 1px solid #E6B9B8;
+    border: 1px solid #E6B9B8;
     clear: both;
     float: left;
     margin-left: 50px;
@@ -113,10 +113,10 @@ float: right;
 }
 
 .leyendaProgressTable{
-  border: 1px solid #E6B9B8;
+    margin: 0;
+    border: 1px solid #E6B9B8;
     clear: both;
     float: left;
-    margin-left: 50px;
     overflow: auto;
 }
 
@@ -139,7 +139,7 @@ float: right;
 .pnlStats {
     position:relative;
     float:right;
-    margin: 20px 0 0 0;
+    margin: 0;
 }
 
 .ucdisable{
@@ -149,3 +149,14 @@ float: right;
 .ucdisable input{
     display: none;
 }
+
+.tableProgressEstimation{
+    margin-bottom: 12px;
+    width: 100%
+}
+
+.hide_head_disciplines{
+
+    background: none;
+    border-width: 0;
+}    
