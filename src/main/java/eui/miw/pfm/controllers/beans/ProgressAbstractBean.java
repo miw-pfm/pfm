@@ -1,12 +1,16 @@
 package eui.miw.pfm.controllers.beans;
 
+import eui.miw.pfm.controllers.ejb.DisciplineEjb;
 import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.controllers.ejb.ProgressDetailEjb;
 import eui.miw.pfm.controllers.ejb.UseCaseEjb;
+import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.UseCaseEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +46,8 @@ public class ProgressAbstractBean extends Bean implements Serializable {
     private Integer percentDesign;
     private Integer percentImplementation;
     private Integer percentTest;
+
+    private transient final List<DisciplineEntity> discipline = new DisciplineEjb().findAll(); //NOPMD
 
     public ProgressAbstractBean() {
         super();
@@ -165,7 +171,7 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         }
         this.setPercentIdentification(total / progressDetails.size());
     }
-    
+
     // @author Jose Mª Villar
     public void viewProgressAbstractGraphic() {
         Map<String, Object> options = new HashMap<>();
@@ -176,5 +182,45 @@ public class ProgressAbstractBean extends Bean implements Serializable {
         options.put("contentWidth", 850);
 
         RequestContext.getCurrentInstance().openDialog("progressAbstractGraphic", options, null);
+    }
+
+    public Integer obtainPercentsOfIdentification(final IterationEntity iteration) {
+        final List<UseCaseEntity> useCaseEntitys = new UseCaseEjb().obtainUseCaseChecked(project);
+        final List<IterationEntity> preIterations = new IterationBean().listPreIterations(iteration); //NOPMD
+
+        float numProgressIdent = 0; //NOPMD
+        for (UseCaseEntity useCaseEntity : useCaseEntitys) {
+            if (preIterations.contains(useCaseEntity.getIteration())) {
+                numProgressIdent++; //NOPMD
+            }
+        }
+
+        return (int) ((numProgressIdent / new UseCaseEjb().getEnabledUseCases(project)) * 100);
+    }
+
+    public Integer obtainPercentOfDiscipline(final IterationEntity iteration, final int cod_discipline) {
+//        List<Integer> discipline_percents= new ArrayList<Integer>();
+//        Integer porcentaje;
+//        for (IterationEntity iterationEntity : getIterations()) {
+            return progressDetailEjb.getSumTotalProgressDetail(this.project, iteration, this.discipline.get(cod_discipline));
+//            discipline_percents.add(porcentaje);
+//        }
+//        return discipline_percents;
+    }
+    
+    public String discipline_header(final int cod_discipline)
+    {
+        String header_discipline="";
+        switch (cod_discipline) {
+            case 0:  header_discipline="Specification"; 
+                     break;
+            case 1:  header_discipline="Design"; 
+                     break;
+            case 2:  header_discipline="Implementation"; 
+                     break;
+            case 3:  header_discipline="Test"; 
+                     break;                                 
+        }
+        return header_discipline;
     }
 }
