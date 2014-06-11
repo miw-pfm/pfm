@@ -88,7 +88,7 @@ public class WorkerBean extends Bean implements Serializable {
             LOGGER.info(this.worker.toString());
 
             new WorkerEjb().delete(this.worker);
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Deleted", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Deleted", ""));
         }
         return "/workerListAll";
     }
