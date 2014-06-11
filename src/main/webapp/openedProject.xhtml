@@ -8,7 +8,7 @@
                 template="/templates/templateHome.xhtml">
 
     <ui:define name="pagetitle" >
-         #{project.name}
+        #{project.name}
     </ui:define>      
 
     <ui:define name="title">
@@ -19,29 +19,29 @@
         <h:panelGroup id="openproject" layout="block">
             <h:panelGroup layout="block">
                 <h:panelGroup id="description_grup" layout="block">
-                    <h3>Project Config</h3>
+                    <h3>#{msgs.configureProject}</h3>
                     <p>
-                        <b><h:outputText value="#{msgs.startDate}" />: </b>
+                        <h:outputText id="startDate_label" value="#{msgs.startDate}:" />
                         <h:outputText value="#{project.startDate}">
                             <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
                         </h:outputText><br />
-                        <b><h:outputText value="#{msgs.endDate}" />: </b>
+                        <h:outputText id="endDate_label" value="#{msgs.endDate}:" />
                         <h:outputText value="#{project.endDate}">
                             <f:convertDateTime type="date" pattern="MM-dd-yyyy" timeZone="Europe/Madrid" />
                         </h:outputText><br />
-                        <b><h:outputText value="#{msgs.number_weeks_per_iteration}"/>: </b>#{project.weekNumIteration} <br />
-                        <b><h:outputText value="#{msgs.number_iterations_defined}" />: </b>#{project.chosenNumIteration} <br />
-          
+                        <h:outputText id="number_weeks_per_iteration_label" value="#{msgs.number_weeks_per_iteration}:"/>
+                        <h:outputText value="#{project.weekNumIteration}" /> <br />
+                        <h:outputText id="number_iterations_defined_label" value="#{msgs.number_iterations_defined}:" />
+                        <h:outputText value="#{project.chosenNumIteration}" /><br />         
                     </p>
                 </h:panelGroup>
-                
+
                 <h:panelGroup id="participants_pnl" layout="block">
-                    <h3>Workers</h3>
+                    <h3>#{msgs.workers}</h3>
                     <p:dataList id="participants" var="participant" value="#{project.workers}" itemType="participant" >  
-                    #{participant.name}  
+                        #{participant.name}  
                     </p:dataList>
                 </h:panelGroup>
-
 
                 <h:panelGroup id="actualIteration" layout="block">
                     <h3>#{msgs.currentIteration}</h3>

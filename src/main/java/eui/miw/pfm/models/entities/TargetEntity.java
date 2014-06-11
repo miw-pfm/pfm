@@ -16,7 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -24,7 +26,8 @@ import javax.validation.constraints.Size;
  * @author Jean Mubaied
  */
 @Entity
-@Table(name = "target")
+@Table(name = "target" , 
+        uniqueConstraints={@UniqueConstraint(columnNames={"project_id","discipline_id"})})
 public class TargetEntity implements Serializable {
     
     @Id
@@ -34,22 +37,22 @@ public class TargetEntity implements Serializable {
     
     @Column(name = "inception")
     @NotNull
-    @Size(min = 1, max = 100)
+//    @Pattern(regexp="^[1-9][0-9]?$|^100$", message="Inception is invalid.")
     private Integer inception;  
     
     @Column(name = "elaboration")
     @NotNull
-    @Size(min = 1, max = 100)
+//    @Pattern(regexp="^[1-9][0-9]?$|^100$", message="Elaboration is invalid.")
     private Integer elaboration;  
     
     @Column(name = "construction")
     @NotNull
-    @Size(min = 1, max = 100)
+//    @Pattern(regexp="^[1-9][0-9]?$|^100$", message="Construction is invalid.")
     private Integer construction;  
     
     @Column(name = "transition")
     @NotNull
-    @Size(min = 1, max = 100)
+//    @Pattern(regexp="^[1-9][0-9]?$|^100$", message="Transition is invalid.")
     private Integer transition; 
     
     @ManyToOne
@@ -64,8 +67,9 @@ public class TargetEntity implements Serializable {
         super();
     }
 
-    public TargetEntity(final Integer id,final Integer inception,final Integer construction,final Integer transition,final ProjectEntity project,final DisciplineEntity discipline) {
+    public TargetEntity(final Integer id,final Integer inception,final Integer construction,final Integer elaboration,final Integer transition,final ProjectEntity project,final DisciplineEntity discipline) {
         this.id = id;
+        this.elaboration = elaboration;
         this.inception = inception;
         this.construction = construction;
         this.transition = transition;
