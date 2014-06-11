@@ -282,25 +282,29 @@ public class IterationBean extends Bean implements Serializable {
     }
 
     public double getRecommendedIterationsInception() {
-        return round(this.getRecommendedWeeksInception() / this.getProject().getWeekNumIteration());
+        return round2(this.getRecommendedWeeksInception() / this.getProject().getWeekNumIteration());
     }
 
     public double getRecommendedIterationsElaboration() {
-        return round(this.getRecommendedWeeksElaboration() / this.getProject().getWeekNumIteration());
+        return round2(this.getRecommendedWeeksElaboration() / this.getProject().getWeekNumIteration());
     }
 
     public double getRecommendedIterationsConstruction() {
-        return round(this.getRecommendedWeeksConstruction() / this.getProject().getWeekNumIteration());
+        return round2(this.getRecommendedWeeksConstruction() / this.getProject().getWeekNumIteration());
     }
 
     public double getRecommendedIterationsTransition() {
-        return round(this.getRecommendedWeeksTransition() / this.getProject().getWeekNumIteration());
+        return round2(this.getRecommendedWeeksTransition() / this.getProject().getWeekNumIteration());
     }
 
     public double round(final double calc) {
         return Math.round(calc * 100) / 100;
     }
 
+    public double round2(final double calc) {
+        return Math.rint(calc * 100) / 100;
+    }    
+    
     public double plannedPercent(final int iter) {
         return ((double) iter / (double) this.project.getChosenNumIteration()) * 100;
     }
