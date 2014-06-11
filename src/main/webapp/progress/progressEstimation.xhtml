@@ -8,8 +8,6 @@
                 template="/templates/templateProgress.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-
-
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define> 
@@ -31,42 +29,94 @@
                         return false;"/>  
                 <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
             </p:contextMenu> 
-            <p:dataTable id="tableProgressEstimation" styleClass="progressStimTbl" var="disicpline" value="#{progressDetailBean.disciplines}"  editable="true" editMode="cell" widgetVar="cellEstimation">
-                <!--                <p:ajax event="cellEdit" listener="" update=":formProgressEstimation:msgs" />-->
+            <p:dataTable id="tableProgressEstimation" styleClass="tableProgressEstimation progressStimTbl" var="target" value="#{targetBean.targets}"  editable="true" editMode="cell" widgetVar="cellEstimation">
+                <p:ajax event="cellEdit" listener="#{targetBean.onCellEdit}" update=":formProgressEstimation:msgs" />
                 <p:columnGroup type="header">
                     <p:row>
-                        <p:column colspan="0" headerText="" />
+                        <p:column rowspan="2" colspan="0" headerText="" styleClass="hide_head_disciplines"  />
                         <p:column colspan="4" headerText="#{msgs.abstract}" />
                         <p:column colspan="4" headerText="#{msgs.objective}" />
                         <p:column colspan="4" headerText="#{msgs.fulfillment}" />
                     </p:row>
+                    <p:row>
+                        <p:column headerText="#{msgs.letter_i}" />
+                        <p:column headerText="#{msgs.letter_e}" />
+                        <p:column headerText="#{msgs.letter_c}" />
+                        <p:column headerText="#{msgs.letter_t}" />
+                        <p:column headerText="#{msgs.letter_i}" />
+                        <p:column headerText="#{msgs.letter_e}" />
+                        <p:column headerText="#{msgs.letter_c}" />
+                        <p:column headerText="#{msgs.letter_t}" />
+                        <p:column headerText="#{msgs.letter_i}" />
+                        <p:column headerText="#{msgs.letter_e}" />
+                        <p:column headerText="#{msgs.letter_c}" />
+                        <p:column headerText="#{msgs.letter_t}" />
+                    </p:row>
                 </p:columnGroup>
-                <p:column styleClass="columUsecases">
-                    <h:outputText value="#{disicpline.name}" />
+                <p:column >
+                    <h:outputText value="#{target.discipline.name}  " />
+                </p:column>
+                <p:column headerText="I" >
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(0)} " />
+                </p:column>
+                <p:column headerText="E" >
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(1)}" />
+                </p:column>
+                <p:column headerText="C" >
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(2)}" />
+                </p:column>
+                <p:column headerText="T" >
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(3)}" />
                 </p:column>
 
-                <c:forEach  var="abstract" items="#{progressDetailBean.disciplines}" >
-                    <p:column headerText="#{discipline.name.charAt(0)}"  >
-                        <h:outputText value="#{abstract.name}" />
-                    </p:column>
-                </c:forEach>
+                <p:column headerText="I" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{target.inception}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="modelInput" value="#{target.inception}" style="width:100%"/></f:facet>
+                    </p:cellEditor> 
+                </p:column>
+                <p:column headerText="E" >
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{target.elaboration}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{target.elaboration}" style="width:100%"/></f:facet>
+                    </p:cellEditor> 
+                </p:column>
+                <p:column headerText="C">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{target.construction}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{target.construction}" style="width:100%"/></f:facet>
+                    </p:cellEditor> 
+                </p:column>
+                <p:column headerText="T">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{target.transition}" /></f:facet>
+                        <f:facet name="input"><p:inputText  value="#{target.transition}" style="width:100%"/></f:facet>
+                    </p:cellEditor> 
+                </p:column>
 
-                <c:forEach  var="objective" items="#{progressDetailBean.disciplines}" >
-                    <p:column headerText="#{discipline.name.charAt(0)}"  >
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{objective.name}" /></f:facet>
-                            <f:facet name="input"><p:inputText id="#{objective.name}" value="#{objective.name}" style="width:100%"/></f:facet>
-                        </p:cellEditor> 
-                    </p:column>
-                </c:forEach>
-
-                <c:forEach  var="fulfillment" items="#{progressDetailBean.disciplines}" >
-                    <p:column headerText="#{discipline.name.charAt(0)}"  >
-                        <h:outputText value="#{fulfillment.name}" />
-                    </p:column>
-                </c:forEach>
+                <p:column headerText="I" >
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(0)/target.inception)*100}" >
+                        <f:convertNumber pattern="#000" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="E" >
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(1)/target.elaboration)*100}" >
+                            <f:convertNumber pattern="#000" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="C" >
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(2)/target.construction)*100}" >
+                            <f:convertNumber pattern="#000" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="T" >
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(3)/target.transition)*100}" >
+                            <f:convertNumber pattern="#000" />
+                    </h:outputText>
+                </p:column>
 
             </p:dataTable>
+
             <table id="leyendaProgressEstimation" class="leyendaProgressTable progressStimTbl">
                 <tr class="headTableLegend">
                     <td colspan="2">#{msgs.legend}</td>
@@ -89,16 +139,14 @@
                 </tr>
             </table>
             <h:panelGroup id="pnlStats" styleClass="pnlStats" layout="block" style="margin-bottom: 5px;">
-                <p:commandButton id="stats" value="#{msgs.stats}"  oncomplete="PF('statsPanel').show()" styleClass="btn btn-success" />
+                <p:commandButton id="stats" value="#{msgs.stats}"  oncomplete="PF('statsPanel').show()"  />
             </h:panelGroup>
         </h:form>
 
-        <p:dialog id="statsPanelDialog" header="#{msgs.stats} #{msgs.progressEstimation}" widgetVar="statsPanel" hideEffect="fade" dynamic="true">            
-
+        <p:dialog modal="true" id="statsPanelDialog" header="#{msgs.stats} #{msgs.progressEstimation}" widgetVar="statsPanel" hideEffect="fade" dynamic="true">            
+            <p:lineChart  animate="true" value="#{targetGraphicBean.model}" legendPosition="e" style="height:384px; width:800px"  yaxisLabel="% Percents" xaxisLabel="Phases"  />
         </p:dialog>
 
     </ui:define>
-
-
 </ui:composition>
 
