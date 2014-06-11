@@ -21,7 +21,7 @@ import javax.inject.Named;
  * @author Fred Peña
  * @author Clemencio Morales
  * @author Pepe Bustamante
- * 
+ *
  * Refactorizado por @author Jose Mª Villar Bogalo
  */
 @RequestScoped
@@ -66,5 +66,10 @@ public class WorkerProfileBean extends Bean implements Serializable {
 
     public void setWorker(final WorkerEntity worker) {
         this.worker = worker;
+    }
+
+    public List<SubActivityEntity> getAllWorkUnit(final IterationEntity iteration) {
+        this.workUnitBean.setIteration(iteration);
+        return this.workUnitBean.getWorkerSubActivities();
     }
 }
