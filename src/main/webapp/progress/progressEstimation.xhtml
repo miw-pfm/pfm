@@ -8,8 +8,6 @@
                 template="/templates/templateProgress.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-
-
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define> 
@@ -58,7 +56,6 @@
                 <p:column >
                     <h:outputText value="#{target.discipline.name}  " />
                 </p:column>
-
                 <p:column headerText="I" >
                     <h:outputText value="#{targetBean.obtainPercentOfPhase(0)} " />
                 </p:column>
@@ -151,7 +148,5 @@
         </p:dialog>
 
     </ui:define>
-
-
 </ui:composition>
 
