@@ -35,8 +35,6 @@ public class IterationBean extends Bean implements Serializable {
 
     private ProjectEntity project;
 
-    private Map<String, List<IterationEntity>> iterations = new HashMap<String, List<IterationEntity>>();
-
     private List<IterationEntity> listInception;
     private List<IterationEntity> listElaboration;
     private List<IterationEntity> listConstruction;
