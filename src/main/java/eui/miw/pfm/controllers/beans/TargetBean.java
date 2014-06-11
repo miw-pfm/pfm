@@ -12,6 +12,7 @@ import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.TargetEntity;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -175,5 +176,18 @@ public class TargetBean extends Bean implements Serializable {
         }
         return percent;
     }
+    
+    
+    public int obtainRealPercentOfPhase(final double resumeOfPhase,final double objectiveOfPhase){
+        double percent;
+        percent = 0;//NOPMD
+        try{
+            percent = Math.round((resumeOfPhase / objectiveOfPhase)*100);
+        }catch(Exception e){
+            LOGGER.log(Level.WARNING, "Error {0}", e.getMessage());
+        }
+        return (int)percent;
+    }
+    
     
 }

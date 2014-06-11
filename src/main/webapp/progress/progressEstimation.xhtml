@@ -21,16 +21,16 @@
     </ui:define>
 
     <ui:define name="body">
-
-        <h:form id="formProgressEstimation" >
-            <p:growl id="msgs" showDetail="true"/>
+        
+        <p:growl id="msgs" showDetail="true" />
+        <h:form id="formProgressEstimation" > 
             <p:contextMenu for="tableProgressEstimation" widgetVar="cMenu">   
                 <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellEstimation').showCellEditor();
                         return false;"/>  
                 <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
             </p:contextMenu> 
             <p:dataTable id="tableProgressEstimation" styleClass="tableProgressEstimation progressStimTbl" var="target" value="#{targetBean.targets}"  editable="true" editMode="cell" widgetVar="cellEstimation">
-                <p:ajax event="cellEdit" listener="#{targetBean.onCellEdit}" update=":formProgressEstimation:msgs" />
+                <p:ajax event="cellEdit" listener="#{targetBean.onCellEdit}" update=":msgs" oncomplete="editActionrCallback(xhr, status, args)"/>
                 <p:columnGroup type="header">
                     <p:row>
                         <p:column rowspan="2" colspan="0" headerText="" styleClass="hide_head_disciplines"  />
@@ -57,63 +57,65 @@
                     <h:outputText value="#{target.discipline.name}  " />
                 </p:column>
                 <p:column headerText="I" >
-                    <h:outputText value="#{targetBean.obtainPercentOfPhase(0)} " />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(0)}% " />
                 </p:column>
                 <p:column headerText="E" >
-                    <h:outputText value="#{targetBean.obtainPercentOfPhase(1)}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(1)}%" />
                 </p:column>
                 <p:column headerText="C" >
-                    <h:outputText value="#{targetBean.obtainPercentOfPhase(2)}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(2)}%" />
                 </p:column>
                 <p:column headerText="T" >
-                    <h:outputText value="#{targetBean.obtainPercentOfPhase(3)}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(3)}%" />
                 </p:column>
 
                 <p:column headerText="I" >
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{target.inception}" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{target.inception}%" /></f:facet>
                         <f:facet name="input"><p:inputText id="modelInput" value="#{target.inception}" style="width:100%"/></f:facet>
                     </p:cellEditor> 
                 </p:column>
                 <p:column headerText="E" >
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{target.elaboration}" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{target.elaboration}%" /></f:facet>
                         <f:facet name="input"><p:inputText  value="#{target.elaboration}" style="width:100%"/></f:facet>
                     </p:cellEditor> 
                 </p:column>
                 <p:column headerText="C">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{target.construction}" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{target.construction}%" /></f:facet>
                         <f:facet name="input"><p:inputText  value="#{target.construction}" style="width:100%"/></f:facet>
                     </p:cellEditor> 
                 </p:column>
                 <p:column headerText="T">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{target.transition}" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{target.transition}%" /></f:facet>
                         <f:facet name="input"><p:inputText  value="#{target.transition}" style="width:100%"/></f:facet>
                     </p:cellEditor> 
                 </p:column>
-
+                
+                <div id="progresCompleted">
                 <p:column headerText="I" >
-                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(0)/target.inception)*100}" >
+                    <h:outputText value="#{targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(0),target.inception)}%" >
                         <f:convertNumber pattern="#000" />
                     </h:outputText>
                 </p:column>
                 <p:column headerText="E" >
-                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(1)/target.elaboration)*100}" >
+                    <h:outputText value="#{targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(1),target.elaboration)}%" >
                             <f:convertNumber pattern="#000" />
                     </h:outputText>
                 </p:column>
                 <p:column headerText="C" >
-                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(2)/target.construction)*100}" >
+                    <h:outputText value="#{targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(2),target.construction)}%" >
                             <f:convertNumber pattern="#000" />
                     </h:outputText>
                 </p:column>
                 <p:column headerText="T" >
-                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(3)/target.transition)*100}" >
+                    <h:outputText value="#{targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(3),target.transition)}%" >
                             <f:convertNumber pattern="#000" />
                     </h:outputText>
                 </p:column>
+                </div>    
 
             </p:dataTable>
 
@@ -142,11 +144,19 @@
                 <p:commandButton id="stats" value="#{msgs.stats}"  oncomplete="PF('statsPanel').show()"  />
             </h:panelGroup>
         </h:form>
-
+        <!--<p:commandButton id="refresh" value="Update Table!"  update=":formProgressEstimation"/>-->
         <p:dialog modal="true" id="statsPanelDialog" header="#{msgs.stats} #{msgs.progressEstimation}" widgetVar="statsPanel" hideEffect="fade" dynamic="true">            
             <p:lineChart  animate="true" value="#{targetGraphicBean.model}" legendPosition="e" style="height:384px; width:800px"  yaxisLabel="% Percents" xaxisLabel="Phases"  />
         </p:dialog>
-
+         <script type="text/javascript">
+            //<![CDATA[
+            function editActionrCallback(xhr, status, args) {
+//               sleep(3000,PrimeFaces.ab({source:'refresh',update:'formProgressEstimation'}););
+               PrimeFaces.ab({source:'refresh',update:'formProgressEstimation'});
+               return false;
+            }
+            //]]>
+        </script> 
     </ui:define>
 </ui:composition>
 
