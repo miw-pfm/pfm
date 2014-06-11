@@ -29,6 +29,7 @@ public class TargetGraphicBean extends Bean implements Serializable{
     private final transient CartesianChartModel model; 
     private final transient List<TargetEntity> targets;
     
+    private final transient TargetBean targetBean = new TargetBean();
 
     public TargetGraphicBean() {
         super();
@@ -50,14 +51,13 @@ public class TargetGraphicBean extends Bean implements Serializable{
     
     private void prepareGraphic(){
         ChartSeries discipline ;
-        //NOPMD
         for(TargetEntity target:targets){
             discipline = new ChartSeries();
             discipline.setLabel(target.getDiscipline().getName());
-            discipline.set("Inception",target.getInception());
-            discipline.set("Elaboration",target.getElaboration());
-            discipline.set("Construction",target.getConstruction());
-            discipline.set("Transition",target.getTransition());
+            discipline.set("Inception",(int)((targetBean.obtainPercentOfPhase(0)/target.getInception())*100));
+            discipline.set("Elaboration",(int)((targetBean.obtainPercentOfPhase(1)/target.getElaboration())*100));
+            discipline.set("Construction",(int)((targetBean.obtainPercentOfPhase(2)/target.getConstruction())*100));
+            discipline.set("Transition",(int)((targetBean.obtainPercentOfPhase(3)/target.getTransition())*100));
             model.addSeries(discipline);
         }
     }

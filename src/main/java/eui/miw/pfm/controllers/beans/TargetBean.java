@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.event.CellEditEvent;
+import javax.faces.bean.ManagedProperty;
 
 /**
  *
@@ -33,6 +34,12 @@ public class TargetBean extends Bean implements Serializable {
     private DisciplineEntity discipline;
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
     private List<TargetEntity> targets;
+    
+    @ManagedProperty(value = "#{progresAbstactBean}")
+    private ProgressAbstractBean progresAbstactBean = new ProgressAbstractBean();
+    
+    @ManagedProperty(value = "#{iterationBean}")
+    private final transient IterationBean iterationBean = new IterationBean();
 
     public TargetBean() {
         super();
@@ -121,6 +128,8 @@ public class TargetBean extends Bean implements Serializable {
             new TargetEjb().update(targetUp);
             final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            this.targets.clear();
+            fiilTargets();
         }
     }
 
@@ -138,5 +147,26 @@ public class TargetBean extends Bean implements Serializable {
             targets = targetEjb.obtainProjectTargets(project);
         }
     }
-
+    
+    public int obtainPercentOfPhase(final int phase){
+        int percent;
+        switch(phase){
+            case 0 :
+                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListInception().get(iterationBean.getListInception().size()-1));
+                break;
+            case 1 :
+                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListElaboration().get(iterationBean.getListElaboration().size()-1));
+                break;
+            case 2 :
+                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListConstruction().get(iterationBean.getListConstruction().size()-1));
+                break;
+            case 3 :
+                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListInception().get(iterationBean.getListInception().size()-1));
+                break;
+            default:
+                percent = 0 ;
+        }
+        return percent;
+    }
+    
 }

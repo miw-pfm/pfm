@@ -56,20 +56,20 @@
                     </p:row>
                 </p:columnGroup>
                 <p:column >
-                    <h:outputText value="#{target.discipline.name}" />
+                    <h:outputText value="#{target.discipline.name}  " />
                 </p:column>
 
                 <p:column headerText="I" >
-                    <h:outputText value="#{target.inception}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(0)} " />
                 </p:column>
                 <p:column headerText="E" >
-                    <h:outputText value="#{target.elaboration}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(1)}" />
                 </p:column>
                 <p:column headerText="C" >
-                    <h:outputText value="#{target.construction}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(2)}" />
                 </p:column>
                 <p:column headerText="T" >
-                    <h:outputText value="#{target.transition}" />
+                    <h:outputText value="#{targetBean.obtainPercentOfPhase(3)}" />
                 </p:column>
 
                 <p:column headerText="I" >
@@ -98,16 +98,24 @@
                 </p:column>
 
                 <p:column headerText="I" >
-                    <h:outputText value="#{target.inception}" />
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(0)/target.inception)*100}" >
+                        <f:convertNumber pattern="#000" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="E" >
-                    <h:outputText value="#{target.elaboration}" />
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(1)/target.elaboration)*100}" >
+                            <f:convertNumber pattern="#000" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="C" >
-                    <h:outputText value="#{target.construction}" />
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(2)/target.construction)*100}" >
+                            <f:convertNumber pattern="#000" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="T" >
-                    <h:outputText value="#{target.transition}" />
+                    <h:outputText value="#{(targetBean.obtainPercentOfPhase(3)/target.transition)*100}" >
+                            <f:convertNumber pattern="#000" />
+                    </h:outputText>
                 </p:column>
 
             </p:dataTable>
@@ -138,8 +146,8 @@
             </h:panelGroup>
         </h:form>
 
-        <p:dialog id="statsPanelDialog" header="#{msgs.stats} #{msgs.progressEstimation}" widgetVar="statsPanel" hideEffect="fade" dynamic="true">            
-            <p:lineChart animate="true" value="#{targetGraphicBean.model}" legendPosition="e" style="height:384px; width:800px"  yaxisLabel="% Percents" xaxisLabel="Phases"  />
+        <p:dialog modal="true" id="statsPanelDialog" header="#{msgs.stats} #{msgs.progressEstimation}" widgetVar="statsPanel" hideEffect="fade" dynamic="true">            
+            <p:lineChart  animate="true" value="#{targetGraphicBean.model}" legendPosition="e" style="height:384px; width:800px"  yaxisLabel="% Percents" xaxisLabel="Phases"  />
         </p:dialog>
 
     </ui:define>
