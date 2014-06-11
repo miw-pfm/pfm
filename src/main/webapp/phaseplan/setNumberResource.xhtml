@@ -25,7 +25,7 @@
                 <p:growl id="growl" sticky="true" life="1500"/>    
                 <h:panelGrid columns="2">
                     <h:outputText value="#{msgs.workers}" />
-                    <h:inputText id="workers" value="#{resourcesPlanBean.workers}" required="true" binding="#{workers}">
+                    <h:inputText id="workers" value="#{resourcesPlanBean.workers}" required="true" binding="#{workers}" requiredMessage="Field can't be Empty"  converterMessage="Only accepts Positives Integers Numbers">
                         <f:converter converterId = "javax.faces.Integer"/>  
                         <p:ajax event="blur" update="weeks working hours" listener="#{resourcesPlanBean.calculator()}"/>
                     </h:inputText>  

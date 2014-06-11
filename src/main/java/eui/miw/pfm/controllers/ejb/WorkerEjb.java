@@ -6,12 +6,8 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.moks.entities.TasksEntityMock;
-import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -55,20 +51,20 @@ public class WorkerEjb {
         if (create) {
             for (WorkerEntity r : list) {
                 if (r.getDni().equals(worker.getDni())) {
-                    return false;
+                    return false; //NOPMD
                 }
             }
         } else {
             for (WorkerEntity r : list) {
                 if (r.getDni().equals(worker.getDni()) && !r.getId().equals(worker.getId())) {
-                    return false;
+                    return false; //NOPMD
                 }
             }
         }
         return true;
     }
 
-    public WorkerEntity getWorker(int code) {
+    public WorkerEntity getWorker(final int code) {
         return AbstractDAOFactory.getFactory().getWorkerDAO().read(code);
     }
 }
