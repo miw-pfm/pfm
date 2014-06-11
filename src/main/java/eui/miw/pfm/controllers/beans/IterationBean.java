@@ -3,11 +3,14 @@ package eui.miw.pfm.controllers.beans;
 import eui.miw.pfm.controllers.ejb.IterationEjb;
 import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.util.ConverterDecimal;
 import eui.miw.pfm.util.TypeIteration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
@@ -21,6 +24,7 @@ import org.apache.log4j.Logger;
  * @author Clemencio Morales Lucas
  * @added code Hector William
  * @refacored Hector William
+ * @refacored Fred Peña
  */
 @RequestScoped
 @Named
@@ -30,6 +34,8 @@ public class IterationBean extends Bean implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(IterationBean.class.getName());
 
     private ProjectEntity project;
+
+    private Map<String, List<IterationEntity>> iterations = new HashMap<String, List<IterationEntity>>();
 
     private List<IterationEntity> listInception;
     private List<IterationEntity> listElaboration;
@@ -42,10 +48,7 @@ public class IterationBean extends Bean implements Serializable {
     private int construction;
     private int transition;
 
-    private static final int PERCENT_INCEPTION = 10;
-    private static final int PERCENT_ELABORATION = 30;
-    private static final int PERCENT_CONSTRUCTION = 50;
-    private static final int PERCENT_TRANSITION = 10;
+    private static final double[] PERCENT = {10.0, 30.0, 50.0, 10.0};
 
     private static final int DAYSOFONEWEEK = 5;
 
@@ -70,7 +73,7 @@ public class IterationBean extends Bean implements Serializable {
         this.listConstruction = this.iterationEjb.getIterationsOfOnePhase(TypeIteration.CONSTRUCTION, this.project);
         this.listTransition = this.iterationEjb.getIterationsOfOnePhase(TypeIteration.TRANSITION, this.project);
 
-        this.allIterations = new ArrayList<>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);
+        this.allIterations = new ArrayList<>();//iterationEjb.getIterationsOfOnePhase(TypeIteration.INCEPTION);        
         this.allIterations.addAll(this.listInception);
         this.allIterations.addAll(this.listElaboration);
         this.allIterations.addAll(this.listConstruction);
@@ -92,7 +95,6 @@ public class IterationBean extends Bean implements Serializable {
     public void update(final TypeIteration type, final int valueNew, final List<IterationEntity> list) {
         int valueOld = list.size();
 
-        final IterationEjb iterationEjb = new IterationEjb();
         if (valueNew > valueOld) {
 
             while (valueNew > valueOld) {
@@ -217,176 +219,95 @@ public class IterationBean extends Bean implements Serializable {
         this.iterEntity = iterEntity;
     }
 
-    public int getPERCENT_INCEPTION() {
-        return PERCENT_INCEPTION;
-    }
-
-    public int getPERCENT_ELABORATION() {
-        return PERCENT_ELABORATION;
-    }
-
-    public int getPERCENT_CONSTRUCTION() {
-        return PERCENT_CONSTRUCTION;
-    }
-
-    public int getPERCENT_TRANSITION() {
-        return PERCENT_TRANSITION;
-    }
-
     public CalendarProjectBean getCpb() {
         return cpb;
     }
 
-    public double calculateRecommendedDays(final int percent) {
-        return (this.cpb.getWorkingDays() * percent) / 100;
+    public double getPercentage(final int index) {
+        return ConverterDecimal.roundOneDecimals(PERCENT[index]);
     }
 
-    public double getRecommendedDaysInception() {
-        return this.calculateRecommendedDays(this.getPERCENT_INCEPTION());
+    public double getRecommendedDays(final int index) {
+        return ConverterDecimal.roundOneDecimals(((this.cpb.getWorkingDays() * getPercentage(index)) / 100));
     }
 
-    public double getRecommendedDaysElaboration() {
-        return this.calculateRecommendedDays(this.getPERCENT_ELABORATION());
-    }
-
-    public double getRecommendedDaysConstruction() {
-        return this.calculateRecommendedDays(this.getPERCENT_CONSTRUCTION());
-    }
-
-    public double getRecommendedDaysTransition() {
-        return this.calculateRecommendedDays(this.getPERCENT_TRANSITION());
-    }
-
-    public int getDAYSOFONEWEEK() {
-        return DAYSOFONEWEEK;
-    }
-
-    public double getRecommendedWeeksInception() {
-        return round(this.getRecommendedDaysInception() / this.getDAYSOFONEWEEK());
-    }
-
-    public double getRecommendedWeeksElaboration() {
-        return round(this.getRecommendedDaysElaboration() / this.getDAYSOFONEWEEK());
-    }
-
-    public double getRecommendedWeeksConstruction() {
-        return round(this.getRecommendedDaysConstruction() / this.getDAYSOFONEWEEK());
-    }
-
-    public double getRecommendedWeeksTransition() {
-        return round(this.getRecommendedDaysTransition() / this.getDAYSOFONEWEEK());
+    public double getRecommendedWeeks(final int index) {
+        return ConverterDecimal.roundOneDecimals(this.getRecommendedDays(index) / DAYSOFONEWEEK);
     }
 
     public double getWorkingWeeks() {
-        return round(this.cpb.getWorkingDays() / this.getDAYSOFONEWEEK());
+        return roundOneDecimals(this.cpb.getWorkingDays() / DAYSOFONEWEEK);
     }
 
-    public double getRecommendedIterationsInception() {
-        return round2(this.getRecommendedWeeksInception() / this.getProject().getWeekNumIteration());
+    public double getRecommendedIterations(final int index) {
+        return roundOneDecimals(this.getRecommendedWeeks(index) / this.getProject().getWeekNumIteration());
     }
 
-    public double getRecommendedIterationsElaboration() {
-        return round2(this.getRecommendedWeeksElaboration() / this.getProject().getWeekNumIteration());
+    private double roundOneDecimals(final double calc) {
+        return ConverterDecimal.roundOneDecimals(((calc * 100) / 100));
     }
 
-    public double getRecommendedIterationsConstruction() {
-        return round2(this.getRecommendedWeeksConstruction() / this.getProject().getWeekNumIteration());
+    public double getPlannedPercent(final int index) {
+        int size;
+        switch (index) {
+            case 0:
+                size = this.inception;
+                break;
+            case 1:
+                size = this.elaboration;
+                break;
+            case 2:
+                size = this.construction;
+                break;
+            case 3:
+                size = this.transition;
+                break;
+            default:
+                size = -1;
+        }
+        return ConverterDecimal.roundOneDecimals((((double) size) / ((double) this.project.getChosenNumIteration())) * 100);
     }
 
-    public double getRecommendedIterationsTransition() {
-        return round2(this.getRecommendedWeeksTransition() / this.getProject().getWeekNumIteration());
+    private double planned(final int index) {
+        int size;
+        switch (index) {
+            case 0:
+                size = this.inception;
+                break;
+            case 1:
+                size = this.elaboration;
+                break;
+            case 2:
+                size = this.construction;
+                break;
+            case 3:
+                size = this.transition;
+                break;
+            default:
+                size = -1;
+        }
+        return ((double) size * this.project.getWeekNumIteration());
     }
 
-    public double round(final double calc) {
-        return Math.round(calc * 100) / 100;
+    public double getPlannedWeeks(final int index) {
+        return ConverterDecimal.roundOneDecimals(this.planned(index));
     }
 
-    public double round2(final double calc) {
-        return Math.rint(calc * 100) / 100;
-    }    
-    
-    public double plannedPercent(final int iter) {
-        return ((double) iter / (double) this.project.getChosenNumIteration()) * 100;
+    public double getPlannedDays(final int index) {
+        return ConverterDecimal.roundOneDecimals(this.planned(index) * DAYSOFONEWEEK);
     }
 
-    public int getPlannedPercentInception() {
-        return (int) Math.round(this.plannedPercent(this.inception));
+    public double getDesviation(final int index) {
+        final double percent = (double) (((double) getPlannedPercent(index) - (double) getPercentage(index)) / (double) getPercentage(index));
+        return this.roundOneDecimals(percent * 100);
     }
 
-    public int getPlannedPercentElaboration() {
-        return (int) Math.round(this.plannedPercent(this.elaboration));
+    public double getPlusPlannedDays() {
+        return ConverterDecimal.roundOneDecimals(this.getPlannedDays(0) + this.getPlannedDays(1) + this.getPlannedDays(2) + this.getPlannedDays(3));
     }
 
-    public int getPlannedPercentConstruction() {
-        return (int) Math.round(this.plannedPercent(this.construction));
-    }
-
-    public int getPlannedPercentTransition() {
-        return (int) Math.round(this.plannedPercent(this.transition));
-    }
-
-    public int plannedWeeks(int p) {
-        return p * this.project.getWeekNumIteration();
-    }
-
-    public int getPlannedWeeksInception() {
-        return this.plannedWeeks(this.inception);
-    }
-
-    public int getPlannedDaysInception() {
-        return this.getPlannedWeeksInception() * DAYSOFONEWEEK;
-    }
-
-    public int getPlannedWeeksElaboration() {
-        return this.plannedWeeks(this.elaboration);
-    }
-
-    public int getPlannedDaysElaboration() {
-        return this.getPlannedWeeksElaboration() * DAYSOFONEWEEK;
-    }
-
-    public int getPlannedWeeksConstruction() {
-        return this.plannedWeeks(this.construction);
-    }
-
-    public int getPlannedDaysConstruction() {
-        return this.getPlannedWeeksConstruction() * DAYSOFONEWEEK;
-    }
-
-    public int getPlannedWeeksTransition() {
-        return this.plannedWeeks(this.transition);
-    }
-
-    public int getPlannedDaysTransition() {
-        return this.getPlannedWeeksTransition() * DAYSOFONEWEEK;
-    }
-
-    public double getDesviationInception() {
-        final double percent = (double) (((double) this.getPlannedPercentInception() - (double) this.getPERCENT_INCEPTION()) / (double) this.getPERCENT_INCEPTION());
-        return this.round(percent * 100);
-    }
-
-    public double getDesviationElaboration() {
-        final double percent = (double) (((double) this.getPlannedPercentElaboration() - (double) this.getPERCENT_ELABORATION()) / (double) this.getPERCENT_ELABORATION());
-        return this.round(percent * 100);
-    }
-
-    public double getDesviationConstruction() {
-        final double percent = (double) (((double) this.getPlannedPercentConstruction() - (double) this.getPERCENT_CONSTRUCTION()) / (double) this.getPERCENT_CONSTRUCTION());
-        return this.round(percent * 100);
-    }
-
-    public double getDesviationTransition() {
-        final double percent = (double) (((double) this.getPlannedPercentTransition() - (double) this.getPERCENT_TRANSITION()) / (double) this.getPERCENT_TRANSITION());
-        return this.round(percent * 100);
-    }
-
-    public int getPlusPlannedDays() {
-        return this.getPlannedDaysInception() + this.getPlannedDaysElaboration() + this.getPlannedDaysConstruction() + this.getPlannedDaysTransition();
-    }
-
-    public int getPlusPlannedWeeks() {
-        return this.getPlannedWeeksInception() + this.getPlannedWeeksElaboration() + this.getPlannedWeeksConstruction() + this.getPlannedWeeksTransition();
+    public double getPlusPlannedWeeks() {
+        return ConverterDecimal.roundOneDecimals(this.getPlannedWeeks(0) + this.getPlannedWeeks(1) + this.getPlannedWeeks(2) + this.getPlannedWeeks(3));
     }
 
     public int getPlusIterations() {
@@ -395,7 +316,7 @@ public class IterationBean extends Bean implements Serializable {
 
     @Override
     public String toString() {
-        return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", inception=" + inception + ", elaboration=" + elaboration + ", construction=" + construction + ", transition=" + transition + ", iterEntity=" + iterEntity + '}';
+        return "IterationBean{" + "project=" + project + ", listInception=" + listInception + ", listElaboration=" + listElaboration + ", listConstruction=" + listConstruction + ", listTransition=" + listTransition + ", phases[0]=" + inception + ", phases[1]=" + elaboration + ", phases[2]=" + construction + ", phases[3]=" + transition + ", iterEntity=" + iterEntity + '}';
     }
 
     public void setAllIterations(final List<IterationEntity> allIterations) {
@@ -462,7 +383,7 @@ public class IterationBean extends Bean implements Serializable {
         if (!listPre.contains(iter)) {
             listPre.add(iter);
         }
-        
+
         return listPre;
     }
 

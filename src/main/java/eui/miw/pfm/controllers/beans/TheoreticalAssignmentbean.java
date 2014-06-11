@@ -26,7 +26,7 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final double[] TOTAL = {5.0, 20.0, 65.0, 10.0};
+    private static final double[] PERCENT = {5.0, 20.0, 65.0, 10.0};
 
     private transient TheoreticalAssignmentEjb assignmentEjb;
 
@@ -46,7 +46,7 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
     }
 
     public double getTotalTheoreticalAssignmentPercentage(final int index) {
-        return ConverterDecimal.roundOneDecimals(TOTAL[index]);
+        return ConverterDecimal.roundOneDecimals(PERCENT[index]);
     }
 
     public double getTotalTheoreticalAssignmentPercentageProject() {
@@ -61,10 +61,10 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
         double total = 0.0;
         for (TheoreticalAssignmentEntity assignment : getTheoreticalAssignments()) {
             if (assignment.getActivity().equals(activity)) {
-                total += (assignment.getInceptionValue() * TOTAL[0]);
-                total += (assignment.getElaborationValue() * TOTAL[1]);
-                total += (assignment.getContrutionValue() * TOTAL[2]);
-                total += (assignment.getTransitionValue() * TOTAL[3]);
+                total += (assignment.getInceptionValue() * PERCENT[0]);
+                total += (assignment.getElaborationValue() * PERCENT[1]);
+                total += (assignment.getContrutionValue() * PERCENT[2]);
+                total += (assignment.getTransitionValue() * PERCENT[3]);
                 break;
             }
         }
@@ -73,7 +73,7 @@ public class TheoreticalAssignmentbean extends Bean implements Serializable {
 
     public double getTotalAssignmentWorkingDays(final int index) {
         resourcesPlanBean.calculator();
-        return ConverterDecimal.roundOneDecimals((TOTAL[index] / 100) * resourcesPlanBean.getWorking());
+        return ConverterDecimal.roundOneDecimals((PERCENT[index] / 100) * resourcesPlanBean.getWorking());
     }
 
     public double getTotalAssignmentWorkingDaysProject() {
