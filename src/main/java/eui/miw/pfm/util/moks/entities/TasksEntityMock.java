@@ -20,7 +20,6 @@ import javax.validation.constraints.Size;
  * @author Fred Peña
  * @author Clemencio Morales
  */
-@Entity
 @Table(name = "taskmock")
 public class TasksEntityMock implements Serializable {
 

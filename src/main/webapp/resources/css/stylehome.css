@@ -18,7 +18,6 @@
 
 #openproject {
     overflow: auto;
-
 }
 
 #openproject h3 {
@@ -27,22 +26,29 @@
     font-size: 18px;
 }
 
-#openproject p, #openproject ul {
+#openproject p, #openproject #participants {
     border-radius: 3px;
     border: 1px solid #FF9981;   
     background: none repeat scroll 0 0 #FFFFFF;
     box-shadow: 0 2px 2px #FCD5B4 inset;
     color: #313131; 
-    margin: 10px 0;
+    margin: 10px 20px 30px 0 ;
     padding: 5px;    
     vertical-align: middle;    
 }
 
-#openproject #participants {
+#description_grup br {
+    margin: 3px; 
+}
+
+#description_grup span {
+    margin-right: 5px; 
+    font-weight: bold;
+}
+
+#openproject #participants_pnl {
     float: left;
-    width: 410px;   
-    margin-right: 10px;
-    margin-bottom: 30px;
+    width: 600px;   
 }
 
 #openproject #participants ul li {
@@ -50,11 +56,13 @@
     margin: 2px 15px;
 }
 
+#openproject #participants_content {
+    border: none;
+}
+
 #openproject #actualIteration {
     float: right;
     width: 200px;
-    margin-right: 20px;
-    margin-bottom: 30px;    
 }
 
 #openproject #actualIteration p {
@@ -65,7 +73,6 @@
 #openproject #description {
     clear: both;
     display: block;
-    margin-right: 20px;
 }
 
 
@@ -220,4 +227,8 @@ input.hasDatepicker {
 
 #form_calendario\:calProject_inline{
     margin-right: 50px;
+}
+
+#workersTable\:j_idt50{
+    background: #FCD5B4;
 }

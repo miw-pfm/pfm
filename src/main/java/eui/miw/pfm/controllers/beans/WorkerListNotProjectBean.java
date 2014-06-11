@@ -90,6 +90,7 @@ public class WorkerListNotProjectBean extends Bean implements Serializable {
      * @author Jose M Villar
      */
     public void reload() {
+        System.out.println("Entra reload");
         this.workers = new WorkersListEjb().obtainWorkersNotProject(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }

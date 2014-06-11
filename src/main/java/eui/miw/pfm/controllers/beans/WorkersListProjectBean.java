@@ -104,6 +104,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         new ProjectEjb().update(project);
 
         this.listWorkerBean.reload();
+        this.reload();
 
         return "workerList";
     }
@@ -119,6 +120,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         new ProjectEjb().update(project);
 
         this.listWorkerBean.reload();
+        this.reload();
 
         return "workerList";
     }
@@ -131,7 +133,7 @@ public class WorkersListProjectBean extends Bean implements Serializable {
         this.listWorkerBean.reload();
     }
 
-    public void reset() {
+    public void reload() {
         this.setWorkers(new WorkersListEjb().obtainWorkers(this.project));
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }

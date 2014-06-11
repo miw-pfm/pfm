@@ -31,13 +31,13 @@
                     </h:inputText>  
 
                     <h:outputText value="#{msgs.weeks}" />
-                    <h:inputText id="weeks" value="#{resourcesPlanBean.weeks}" readonly="true" required="true"/>  
+                    <h:inputText id="weeks" value="#{resourcesPlanBean.weeks}" readonly="true" required="true" disabled="true"/>  
 
                     <h:outputText value="#{msgs.working}" />
-                    <h:inputText id="working" value="#{resourcesPlanBean.working}" readonly="true" required="true"/>  
+                    <h:inputText id="working" value="#{resourcesPlanBean.working}" readonly="true" required="true" disabled="true"/>  
 
                     <h:outputText value="#{msgs.hours}" />
-                    <h:inputText id="hours" value="#{resourcesPlanBean.hours}" readonly="true" required="true"/>  
+                    <h:inputText id="hours" value="#{resourcesPlanBean.hours}" readonly="true" required="true" disabled="true"/>  
 
 
                     <p:commandButton value="#{msgs.submit}" action="#{resourcesPlanBean.saveWorkers()}" styleClass="btn btn-success" update="form"/>

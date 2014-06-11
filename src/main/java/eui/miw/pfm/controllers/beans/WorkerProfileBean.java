@@ -5,16 +5,15 @@
  */
 package eui.miw.pfm.controllers.beans;
 
-import eui.miw.pfm.controllers.ejb.WorkerEjb;
-import eui.miw.pfm.models.dao.AbstractDAOFactory;
+import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
+import eui.miw.pfm.models.entities.SubActivityEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ManagedProperty;
 import javax.inject.Named;
 
 /**
@@ -25,38 +24,50 @@ import javax.inject.Named;
  */
 @RequestScoped
 @Named
-public class WorkerProfileBean implements Serializable {
+public class WorkerProfileBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(WorkerProfileBean.class.getName());//NOPMD
 
-    private List<ProjectEntity> projects;
-    private WorkerEntity workerEntity;
+    private transient ProjectEntity project;
+    private transient WorkerEntity worker;
+
+    @ManagedProperty(value = "#{workUnitBean}")
+    private final transient WorkUnitBean workUnitBean = new WorkUnitBean();
 
     public WorkerProfileBean() {
         super();
-        this.workerEntity = AbstractDAOFactory.getFactory().getWorkerDAO().read(1);
-
-        if (workerEntity != null) {//NOPMD
-            projects = new WorkerEjb().findProjects(workerEntity);
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Worker not selected", ""));
+        try {
+            this.project = ((ProjectEntity) sessionMap.get("project"));
+            this.worker = ((WorkerEntity) sessionMap.get("worker"));
+        } catch (Exception e) {
+            LOGGER.info("No session exist");
         }
+        this.workUnitBean.setWorker(worker);
     }
 
-    public List<ProjectEntity> getProjects() {
-        return projects;
+    public WorkUnitBean getWorkUnitBean() {
+        return workUnitBean;
     }
 
-    public void setProjects(final List<ProjectEntity> projects) {
-        this.projects = projects;
+    public ProjectEntity getProject() {
+        return project;
     }
 
-    public WorkerEntity getWorkerEntity() {
-        return workerEntity;
+    public void setProject(final ProjectEntity project) {
+        this.project = project;
     }
 
-    public void setWorkerEntity(final WorkerEntity workerEntity) {
-        this.workerEntity = workerEntity;
+    public WorkerEntity getWorker() {
+        return worker;
+    }
+
+    public void setWorker(final WorkerEntity worker) {
+        this.worker = worker;
+    }
+
+    public List<SubActivityEntity> getAllWorkUnit(final IterationEntity iteration) {
+        this.workUnitBean.setIteration(iteration);
+        return this.workUnitBean.getWorkerSubActivities();
     }
 }

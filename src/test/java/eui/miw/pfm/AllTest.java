@@ -15,7 +15,6 @@ import eui.miw.pfm.controllers.ejb.TestNameProjectValidator;
 import eui.miw.pfm.controllers.ejb.TestRisk;
 import eui.miw.pfm.controllers.ejb.TestUseCase;
 import eui.miw.pfm.controllers.ejb.TestWorker;
-import eui.miw.pfm.controllers.ejb.TestWorkerProfile;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -26,7 +25,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({TestWorker.class, TestCalendarProject.class, TestCreateProject.class,
     TestListCaseUse.class, TestListProjectWorkersEjb.class, TestLogin.class,
-    TestNameProjectValidator.class, TestRisk.class, TestUseCase.class, TestWorkerProfile.class, TestIteration.class})
+    TestNameProjectValidator.class, TestRisk.class, TestUseCase.class, TestIteration.class})
 public class AllTest {
 
 }

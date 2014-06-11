@@ -11,16 +11,16 @@
     </ui:define>    
 
     <ui:define name="title">
-        #{msgs.home}
+        #{msgs.list_of_workers}
     </ui:define>
 
     <ui:define name="subtitle">
-        #{msgs.list_of_workers}
     </ui:define>
 
     <ui:define name="body">
 
         <h:link value="#{msgs.createWorker}" styleClass="btn btn-success" id="submitcreateworker" outcome="workerCreate"/>
+        <p></p>
 
         <h:form id="form">
             <p:growl id="messages" sticky="true" life="1500" />      
@@ -54,7 +54,8 @@
                     <p:commandButton process="workers" update=":form" icon="ui-icon-trash" value="#{msgs.delete}" action="#{workerBean.delete()}" >
                         <p:confirm header="#{msgs.confirmation}" message="#{msgs.are_you_sure}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton process="workers" update=":form" icon="ui-icon-pencil" value="Edit" action="#{workerBean.editWorker()}" />
+                    <p:commandButton process="workers" update=":form" icon="ui-icon-pencil" value="#{msgs.edit}" action="#{workerBean.editWorker()}" />
+                    <p:commandButton process="workers" update=":form" icon="ui-icon-pencil" value="#{msgs.view}" action="#{workerBean.viewWorker()}" />
                 </f:facet>
             </p:dataTable>
 

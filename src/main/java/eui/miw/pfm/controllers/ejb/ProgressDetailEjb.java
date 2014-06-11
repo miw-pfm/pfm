@@ -5,6 +5,7 @@
  */
 package eui.miw.pfm.controllers.ejb;
 
+import eui.miw.pfm.controllers.beans.IterationBean;
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
 import eui.miw.pfm.models.entities.DisciplineEntity;
 import eui.miw.pfm.models.entities.IterationEntity;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author Fred Peña
  * @author William
  * @author Manuel Rodríguez
+ * @author Roberto Amor
  */
 public class ProgressDetailEjb {
 
@@ -57,5 +59,20 @@ public class ProgressDetailEjb {
             sumTotal += progressDetailEntity.getPercent();
         }
         return Math.round(sumTotal / new UseCaseEjb().getEnabledUseCases(project));
+    }
+    
+    // @author Jose Mª Villar  
+    public Integer obtainPercentsOfIdentification(final IterationEntity iteration, final ProjectEntity project) {
+        final List<UseCaseEntity> useCaseEntitys = new UseCaseEjb().obtainUseCaseChecked(project);
+        final List<IterationEntity> preIterations = new IterationBean().listPreIterations(iteration); //NOPMD
+
+        float numProgressIdent = 0; //NOPMD
+        for (UseCaseEntity useCaseEntity : useCaseEntitys) {
+            if (preIterations.contains(useCaseEntity.getIteration())) {
+                numProgressIdent++; //NOPMD
+            }
+        }
+
+        return (int) ((numProgressIdent / new UseCaseEjb().getEnabledUseCases(project)) * 100);
     }
 }

@@ -9,13 +9,14 @@
     <ui:composition>
         <h:panelGroup id="panelsubmenu" layout="block">
             <ul>
+                <li><h:link value="#{msgs.projectPlan}" outcome="projectPlan" /></li> 
+                <li class="divisorSubMenu"><h:link value="#{msgs.set_number_of_resource}" outcome="setNumberResource" /></li>                
                 <li><h:link value="#{msgs.workers_of_project}" outcome="workerList" /></li>
-                <li><h:link value="#{msgs.projectPlan}" outcome="projectPlan" /></li>
-                <li><h:link value="#{msgs.set_number_of_resource}" outcome="setNumberResource" /></li>
-                <li><h:link value="#{msgs.iters_distribution}" outcome="iterationDistribution" /></li>
-                <li><h:link value="#{msgs.activitiesPlan}" outcome="activitiesDetailedAsignation" /></li>                            
+                <li class="divisorSubMenu"><h:link value="#{msgs.activitiesPlan}" outcome="activitiesDetailedAsignation" /></li>                            
                 <li><h:link value="#{msgs.activitiesDetails}" outcome="activitiesDetailedView" /></li>   
                 <li><h:link value="#{msgs.theorical_assignment}" outcome="theoricalAssignment" /></li>   
+                <li class="divisorSubMenu"><h:link value="#{msgs.iters_distribution}" outcome="iterationDistribution" /></li>
+                
             </ul>
         </h:panelGroup>
     </ui:composition>

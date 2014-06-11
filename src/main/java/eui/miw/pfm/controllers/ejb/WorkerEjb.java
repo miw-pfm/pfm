@@ -48,31 +48,6 @@ public class WorkerEjb {
         return AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
     }
 
-    public List<ProjectEntity> findProjects(final WorkerEntity worker) {
-
-        final List<ProjectEntity> lTaskProjects = new CopyOnWriteArrayList<>();
-        final List<ProjectEntity> lWorkerTaskProjects = new CopyOnWriteArrayList<>();
-
-        for (TasksEntityMock te : worker.getTaskMock()) {
-            lWorkerTaskProjects.add(te.getProject());
-        }
-
-        for (ProjectEntity pe : new CopyOnWriteArrayList<>(lWorkerTaskProjects)) {
-            try {
-                for (TasksEntityMock te : pe.getTaskMock()) {
-                    if (!te.getWorker().equals(worker)) {
-                        pe.removeTask(te);
-                    }
-                }
-            } catch (ConcurrentModificationException cme) {
-            }
-            lTaskProjects.add(pe);
-
-        }
-
-        return lTaskProjects;
-    }
-
     private boolean isUnique(final WorkerEntity worker, final boolean create) {
 
         final List<WorkerEntity> list = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();

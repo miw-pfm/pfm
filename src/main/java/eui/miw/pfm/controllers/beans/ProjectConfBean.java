@@ -81,7 +81,8 @@ public class ProjectConfBean extends Bean implements Serializable {
         
         boolean validDates = false;
         Date actual = new Date(System.currentTimeMillis() - (60 * 60 * 1000));
-        if ((start.after(actual) || start.equals(actual)) && (end.after(start))) {
+//        if ((start.after(actual) || start.equals(actual)) && (end.after(start))) {
+        if ((end.after(start))) {        
             validDates = true;
         }
         return validDates;
