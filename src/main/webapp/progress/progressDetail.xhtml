@@ -21,7 +21,7 @@
     <ui:define name="body">
         <h:form id="formInsertDetail">
             <h:panelGroup layout="block">
-                <p:growl id="growl"  sticky="true" life="1500"/>
+                <p:growl id="growl_progres" showDetail="true" life="1500" />
                 <h:panelGrid columns="2">    
                     <h:outputText value="#{msgs.iterations}" />                
                     <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.idIterSelect}">

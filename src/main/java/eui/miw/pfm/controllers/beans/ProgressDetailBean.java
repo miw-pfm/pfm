@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -99,6 +101,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         } else {
             new ProgressDetailEjb().update(this.progressDetail);
         }
+        FacesContext.getCurrentInstance().addMessage("formProgressDetailBean", new FacesMessage("Updated"));
     }
 
     public void fillCheckedUseCase() {
