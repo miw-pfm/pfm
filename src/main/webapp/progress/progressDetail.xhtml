@@ -74,7 +74,7 @@
 
                 <c:forEach  var="discipline" items="#{progressDetailBean.disciplines}">
                     <p:column headerText="#{discipline.name.charAt(0)}" styleClass="columPorcentajes">
-                        <h:outputText value="#{progressDetailBean.getWorkUnitBy(usecases, discipline).percent}" />
+                        <h:outputText value="#{progressDetailBean.getWUorPrev(usecases, discipline).percent}" />
                     </p:column>
                 </c:forEach>
             </p:dataTable>

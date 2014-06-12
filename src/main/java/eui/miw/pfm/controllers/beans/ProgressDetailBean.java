@@ -214,12 +214,41 @@ public class ProgressDetailBean extends Bean implements Serializable {
     }
 
     public ProgressDetailEntity getWorkUnitBy(final UseCaseEntity useCase, final DisciplineEntity discipline) {
-        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(this.iterationSelected, useCase, discipline);
+        return getWorkUnitBy(this.iterationSelected, useCase, discipline);
+    }
+
+    public ProgressDetailEntity getWorkUnitBy(final IterationEntity iteration, final UseCaseEntity useCase, final DisciplineEntity discipline) {
+
+        final List<ProgressDetailEntity> lProgress = new ProgressDetailEjb().getByIterationUseCaseDiscipline(iteration, useCase, discipline);
         ProgressDetailEntity progress;
         if (lProgress.isEmpty()) {
             progress = new ProgressDetailEntity(null, useCase, this.iterationSelected, discipline, 0);
         } else {
             progress = lProgress.get(0);
+        }
+        return progress;
+
+    }
+
+    public ProgressDetailEntity getWUorPrev(final UseCaseEntity useCase, final DisciplineEntity discipline) {
+        ProgressDetailEntity progress = getWorkUnitBy(useCase, discipline);
+
+        if (progress.getPercent() == 0) {
+
+            List<IterationEntity> lIteration = iterationBean.listPreIterations(this.iterationSelected);
+            if (!lIteration.isEmpty()) {
+                int size = (lIteration.size()>=0)?lIteration.size()-1:0;
+                for (int i = size; i >= 0; i--) {
+                    IterationEntity iter = lIteration.get(i);
+                    ProgressDetailEntity pde = getWorkUnitBy(iter, useCase, discipline);
+                    if (pde.getPercent() > 0) {
+                        progress.setPercent(pde.getPercent());
+                        break;
+                    }
+
+                }
+            }
+
         }
         return progress;
     }
