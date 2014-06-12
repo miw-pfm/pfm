@@ -186,6 +186,11 @@ public class TargetBean extends Bean implements Serializable {
         }catch(Exception e){
             LOGGER.log(Level.WARNING, "Error {0}", e.getMessage());
         }
+        finally{
+            if(Double.isInfinite((resumeOfPhase / objectiveOfPhase))){
+                percent=0;
+            }
+        }
         return (int)percent;
     }
     

@@ -53,10 +53,10 @@ public class TargetGraphicBean extends Bean implements Serializable{
         for(TargetEntity target:targets){
             discipline = new ChartSeries();//NOPMD
             discipline.setLabel(target.getDiscipline().getName());
-            discipline.set("Inception",(int)((targetBean.obtainPercentOfPhase(0)/target.getInception())*100));
-            discipline.set("Elaboration",(int)((targetBean.obtainPercentOfPhase(1)/target.getElaboration())*100));
-            discipline.set("Construction",(int)((targetBean.obtainPercentOfPhase(2)/target.getConstruction())*100));
-            discipline.set("Transition",(int)((targetBean.obtainPercentOfPhase(3)/target.getTransition())*100));
+            discipline.set("Inception",targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(0),target.getInception()));
+            discipline.set("Elaboration",targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(1),target.getElaboration()));
+            discipline.set("Construction",targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(2),target.getConstruction()));
+            discipline.set("Transition",targetBean.obtainRealPercentOfPhase(targetBean.obtainPercentOfPhase(3),target.getTransition()));
             model.addSeries(discipline);
         }
     }
