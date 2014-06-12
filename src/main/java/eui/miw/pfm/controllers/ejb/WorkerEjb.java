@@ -6,12 +6,8 @@
 package eui.miw.pfm.controllers.ejb;
 
 import eui.miw.pfm.models.dao.AbstractDAOFactory;
-import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.WorkerEntity;
-import eui.miw.pfm.util.moks.entities.TasksEntityMock;
-import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -24,51 +20,98 @@ public class WorkerEjb {
         AbstractDAOFactory.getFactory().getWorkerDAO().delete(worker);
     }
 
-    public boolean update(final WorkerEntity worker) {
-        if (this.isUnique(worker, false)) {
-            AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
-            return true;//NOPMD
+    public int update(final WorkerEntity worker) {
+        if (!this.isUniqueDNI(worker, false)) {
+            return 1; //NOPMD
+        } else if (!this.isUniqueEmail(worker, false)) {
+            return 2; //NOPMD
+        } else if (!this.isUniqueGitUser(worker, false)) {
+            return 3; //NOPMD
         } else {
-            return false;
+            AbstractDAOFactory.getFactory().getWorkerDAO().update(worker);
+            return 0;
         }
 
     }
 
-    public boolean create(final WorkerEntity worker) {
-        if (this.isUnique(worker, true)) {
-            AbstractDAOFactory.getFactory().getWorkerDAO().create(worker);
-            return true;//NOPMD
+    public int create(final WorkerEntity worker) {
+        if (!this.isUniqueDNI(worker, true)) {
+            return 1; //NOPMD
+        } else if (!this.isUniqueEmail(worker, true)) {
+            return 2; //NOPMD
+        } else if (!this.isUniqueGitUser(worker, true)) {
+            return 3; //NOPMD
         } else {
-            return false;
+            AbstractDAOFactory.getFactory().getWorkerDAO().create(worker);
+            return 0;
         }
-
     }
 
     public List<WorkerEntity> getWorkers() {
         return AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
     }
 
-    private boolean isUnique(final WorkerEntity worker, final boolean create) {
+    private boolean isUniqueDNI(final WorkerEntity worker, final boolean create) {
 
         final List<WorkerEntity> list = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
 
         if (create) {
             for (WorkerEntity r : list) {
                 if (r.getDni().equals(worker.getDni())) {
-                    return false;
+                    return false; //NOPMD
                 }
             }
         } else {
             for (WorkerEntity r : list) {
                 if (r.getDni().equals(worker.getDni()) && !r.getId().equals(worker.getId())) {
-                    return false;
+                    return false; //NOPMD
                 }
             }
         }
         return true;
     }
 
-    public WorkerEntity getWorker(int code) {
+    private boolean isUniqueEmail(final WorkerEntity worker, final boolean create) {
+
+        final List<WorkerEntity> list = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
+
+        if (create) {
+            for (WorkerEntity r : list) {
+                if (r.getEmail().equals(worker.getEmail())) {
+                    return false; //NOPMD
+                }
+            }
+        } else {
+            for (WorkerEntity r : list) {
+                if (r.getEmail().equals(worker.getEmail()) && !r.getId().equals(worker.getId())) {
+                    return false; //NOPMD
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isUniqueGitUser(final WorkerEntity worker, final boolean create) {
+
+        final List<WorkerEntity> list = AbstractDAOFactory.getFactory().getWorkerDAO().findAll();
+
+        if (create) {
+            for (WorkerEntity r : list) {
+                if (r.getGitUser().equals(worker.getGitUser())) {
+                    return false; //NOPMD
+                }
+            }
+        } else {
+            for (WorkerEntity r : list) {
+                if (r.getGitUser().equals(worker.getGitUser()) && !r.getId().equals(worker.getId())) {
+                    return false; //NOPMD
+                }
+            }
+        }
+        return true;
+    }
+
+    public WorkerEntity getWorker(final int code) {
         return AbstractDAOFactory.getFactory().getWorkerDAO().read(code);
     }
 }

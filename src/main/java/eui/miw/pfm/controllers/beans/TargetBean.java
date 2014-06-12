@@ -12,7 +12,9 @@ import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.TargetEntity;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -23,6 +25,7 @@ import javax.faces.bean.ManagedProperty;
 /**
  *
  * @author Jean Mubaied
+ * @author William
  */
 @ViewScoped
 @Named
@@ -31,25 +34,30 @@ public class TargetBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
     private TargetEntity target;
     private transient ProjectEntity project;
-    private DisciplineEntity discipline;
     private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
     private List<TargetEntity> targets;
     
-    @ManagedProperty(value = "#{progresAbstactBean}")
-    private ProgressAbstractBean progresAbstactBean = new ProgressAbstractBean();
+    @ManagedProperty(value = "#{progresAbstactB}")
+    private final transient ProgressAbstractBean progresAbstactB ;
     
     @ManagedProperty(value = "#{iterationBean}")
     private final transient IterationBean iterationBean = new IterationBean();
 
     public TargetBean() {
         super();
+        progresAbstactB = new ProgressAbstractBean();
         this.target = new TargetEntity();
-        this.discipline = new DisciplineEntity();
         try {
             this.project = ((ProjectEntity) sessionMap.get("project"));
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
+        
+    }
+    
+    //@author William
+    @PostConstruct
+    public void init(){
         fiilTargets();
     }
 
@@ -66,9 +74,7 @@ public class TargetBean extends Bean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN, "No project selected", ""));
             return null;//NOPMD
         }
-
         LOGGER.info(this.target.toString());
-
         this.target.setProject(this.project);
         new TargetEjb().createTarget(target);
         return null;
@@ -132,7 +138,8 @@ public class TargetBean extends Bean implements Serializable {
             fiilTargets();
         }
     }
-
+    
+    //@author William
     public void fiilTargets() {
 
         final TargetEjb targetEjb = new TargetEjb();
@@ -148,25 +155,39 @@ public class TargetBean extends Bean implements Serializable {
         }
     }
     
+    //@author William
     public int obtainPercentOfPhase(final int phase){
         int percent;
         switch(phase){
             case 0 :
-                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListInception().get(iterationBean.getListInception().size()-1));
+                percent = progresAbstactB.obtainPercentsOfIdentification(iterationBean.getListInception().get(iterationBean.getListInception().size()-1));
                 break;
             case 1 :
-                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListElaboration().get(iterationBean.getListElaboration().size()-1));
+                percent = progresAbstactB.obtainPercentsOfIdentification(iterationBean.getListElaboration().get(iterationBean.getListElaboration().size()-1));
                 break;
             case 2 :
-                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListConstruction().get(iterationBean.getListConstruction().size()-1));
+                percent = progresAbstactB.obtainPercentsOfIdentification(iterationBean.getListConstruction().get(iterationBean.getListConstruction().size()-1));
                 break;
             case 3 :
-                percent = progresAbstactBean.obtainPercentsOfIdentification(iterationBean.getListInception().get(iterationBean.getListInception().size()-1));
+                percent = progresAbstactB.obtainPercentsOfIdentification(iterationBean.getListInception().get(iterationBean.getListInception().size()-1));
                 break;
             default:
                 percent = 0 ;
         }
         return percent;
     }
+    
+    
+    public int obtainRealPercentOfPhase(final double resumeOfPhase,final double objectiveOfPhase){
+        double percent;
+        percent = 0;//NOPMD
+        try{
+            percent = Math.round((resumeOfPhase / objectiveOfPhase)*100);
+        }catch(Exception e){
+            LOGGER.log(Level.WARNING, "Error {0}", e.getMessage());
+        }
+        return (int)percent;
+    }
+    
     
 }

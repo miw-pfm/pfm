@@ -39,59 +39,59 @@
 
 
                     <h:outputText class="msgTableProjectPlan" value="#{msgs.inception}" />
-                    <h:outputText value="#{iterationBean.PERCENT_INCEPTION}%" />
-                    <h:outputText value="#{iterationBean.recommendedDaysInception}" />
-                    <h:outputText value="#{iterationBean.recommendedWeeksInception}" />
-                    <h:outputText value="#{iterationBean.recommendedIterationsInception}" />
+                    <h:outputText value="#{iterationBean.getPercentage(0)}%" />
+                    <h:outputText value="#{iterationBean.getRecommendedDays(0)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedWeeks(0)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedIterations(0)}" />
                     <h:inputText  value="#{iterationBean.inception}" id="inputInception" required="true" binding="#{inception}" requiredMessage="#{msgs.error_inception_empty}"  converterMessage="#{msgs.inceptionPhase} #{msgs.have_be_integer}">
                         <f:converter converterId = "javax.faces.Integer"/>
                     </h:inputText>
-                    <h:outputText value="#{iterationBean.plannedPercentInception}%" />
-                    <h:outputText value="#{iterationBean.plannedDaysInception}" />
-                    <h:outputText value="#{iterationBean.plannedWeeksInception}" />
-                    <h:outputText value="#{iterationBean.desviationInception}%" />
+                    <h:outputText value="#{iterationBean.getPlannedPercent(0)}%" />
+                    <h:outputText value="#{iterationBean.getPlannedDays(0)}" />
+                    <h:outputText value="#{iterationBean.getPlannedWeeks(0)}" />
+                    <h:outputText value="#{iterationBean.getDesviation(0)}%" />
 
 
                     <h:outputText class="msgTableProjectPlan" value="#{msgs.elaboration}" />
-                    <h:outputText value="#{iterationBean.PERCENT_ELABORATION}%" />
-                    <h:outputText value="#{iterationBean.recommendedDaysElaboration}" />
-                    <h:outputText value="#{iterationBean.recommendedWeeksElaboration}" />
-                    <h:outputText value="#{iterationBean.recommendedIterationsElaboration}" />
+                    <h:outputText value="#{iterationBean.getPercentage(1)}%" />
+                    <h:outputText value="#{iterationBean.getRecommendedDays(1)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedWeeks(1)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedIterations(1)}" />
                     <h:inputText  value="#{iterationBean.elaboration}" id="inputElaboration" required="true" binding="#{elaboration}" requiredMessage="#{msgs.error_inception_empty}"  converterMessage="#{msgs.elaborationPhase} #{msgs.have_be_integer}">
                         <f:converter converterId = "javax.faces.Integer"/>
                     </h:inputText>
-                    <h:outputText value="#{iterationBean.plannedPercentElaboration}%" />
-                    <h:outputText value="#{iterationBean.plannedDaysElaboration}" />
-                    <h:outputText value="#{iterationBean.plannedWeeksElaboration}" />
-                    <h:outputText value="#{iterationBean.desviationElaboration}%" />
+                    <h:outputText value="#{iterationBean.getPlannedPercent(1)}%" />
+                    <h:outputText value="#{iterationBean.getPlannedDays(1)}" />
+                    <h:outputText value="#{iterationBean.getPlannedWeeks(1)}" />
+                    <h:outputText value="#{iterationBean.getDesviation(1)}%" />
 
 
                     <h:outputText class="msgTableProjectPlan" value="#{msgs.construction}" />
-                    <h:outputText value="#{iterationBean.PERCENT_CONSTRUCTION}%" />
-                    <h:outputText value="#{iterationBean.recommendedDaysConstruction}" />
-                    <h:outputText value="#{iterationBean.recommendedWeeksConstruction}" />
-                    <h:outputText value="#{iterationBean.recommendedIterationsConstruction}" />
+                    <h:outputText value="#{iterationBean.getPercentage(2)}%" />
+                    <h:outputText value="#{iterationBean.getRecommendedDays(2)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedWeeks(2)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedIterations(2)}" />
                     <h:inputText  value="#{iterationBean.construction}" id="inputConstruction" required="true" binding="#{inputConstruction}" requiredMessage="#{msgs.error_inception_empty}"  converterMessage="#{msgs.constructionPhase} #{msgs.have_be_integer}">
                         <f:converter converterId = "javax.faces.Integer"/>
                     </h:inputText>
-                    <h:outputText value="#{iterationBean.plannedPercentConstruction}%" />
-                    <h:outputText value="#{iterationBean.plannedDaysConstruction}" />
-                    <h:outputText value="#{iterationBean.plannedWeeksConstruction}" />
-                    <h:outputText value="#{iterationBean.desviationConstruction}%" />
+                    <h:outputText value="#{iterationBean.getPlannedPercent(2)}%" />
+                    <h:outputText value="#{iterationBean.getPlannedDays(2)}" />
+                    <h:outputText value="#{iterationBean.getPlannedWeeks(2)}" />
+                    <h:outputText value="#{iterationBean.getDesviation(2)}%" />
 
 
                     <h:outputText class="msgTableProjectPlan" value="#{msgs.transition}" />
-                    <h:outputText value="#{iterationBean.PERCENT_TRANSITION}%" />
-                    <h:outputText value="#{iterationBean.recommendedDaysTransition}" />
-                    <h:outputText value="#{iterationBean.recommendedWeeksTransition}" />
-                    <h:outputText value="#{iterationBean.recommendedIterationsTransition}" />
+                    <h:outputText value="#{iterationBean.getPercentage(3)}%" />
+                    <h:outputText value="#{iterationBean.getRecommendedDays(3)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedWeeks(3)}" />
+                    <h:outputText value="#{iterationBean.getRecommendedIterations(3)}" />
                     <h:inputText  value="#{iterationBean.transition}" id="inputTransition" required="true" binding="#{inputTransition}" requiredMessage="#{msgs.error_inception_empty}" converterMessage="#{msgs.transitionPhase} #{msgs.have_be_integer}">
                         <f:converter converterId = "javax.faces.Integer" />
                     </h:inputText>
-                    <h:outputText value="#{iterationBean.plannedPercentTransition}%" />
-                    <h:outputText value="#{iterationBean.plannedDaysTransition}" />
-                    <h:outputText value="#{iterationBean.plannedWeeksTransition}" />
-                    <h:outputText value="#{iterationBean.desviationTransition}%" />
+                    <h:outputText value="#{iterationBean.getPlannedPercent(3)}%" />
+                    <h:outputText value="#{iterationBean.getPlannedDays(3)}" />
+                    <h:outputText value="#{iterationBean.getPlannedWeeks(3)}" />
+                    <h:outputText value="#{iterationBean.getDesviation(3)}%" />
 
                     <h:outputText value="" />
                     <h:outputText value="" />

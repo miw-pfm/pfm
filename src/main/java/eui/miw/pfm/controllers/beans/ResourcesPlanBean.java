@@ -10,6 +10,7 @@ import eui.miw.pfm.models.entities.ProjectEntity;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
@@ -28,7 +29,7 @@ public class ResourcesPlanBean extends Bean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private transient ProjectEntity project;
-    private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(ProjectConfBean.class.getName());
     private int workers;
     private int weeks;
     private int working;
@@ -37,7 +38,13 @@ public class ResourcesPlanBean extends Bean implements Serializable {
     private static final int HOURS_WORKED_DAY = 8;//hours worked per day
 
     @ManagedProperty(value = "#{calendarProjectBean}")
-    private final transient CalendarProjectBean calendarProjectBean = new CalendarProjectBean();
+    private final transient CalendarProjectBean calendarProjectBean = new CalendarProjectBean(); //NOPMD
+
+    @PostConstruct
+    public void inti() {
+        this.workers = this.project.getWorkersInPlan();
+        calculator();
+    }
 
     public ResourcesPlanBean() {
         super();
@@ -46,8 +53,6 @@ public class ResourcesPlanBean extends Bean implements Serializable {
         } catch (Exception e) {
             LOGGER.warning("No session exist");
         }
-        this.workers = this.project.getWorkersInPlan();
-        calculator();
     }
 
     public int getWorkers() {
@@ -84,7 +89,7 @@ public class ResourcesPlanBean extends Bean implements Serializable {
 
     public void saveWorkers() {
         if (validateWorkers()) {
-            LOGGER.log(Level.INFO, this.workers + "");
+            LOGGER.log(Level.INFO, this.workers + ".");
             this.project.setWorkersInPlan(this.workers);
             new ProjectEjb().update(this.project);
             FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Workers Saved", ""));

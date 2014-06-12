@@ -30,7 +30,7 @@ public class WorkerListNotProjectBean extends Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private transient LazyDataModel<WorkerEntity> lazyModel;
-    private static final Logger LOGGER = Logger.getLogger(WorkerListNotProjectBean.class.getName());//NOPMD
+    private static final Logger LOGGER = Logger.getLogger(WorkerListNotProjectBean.class.getName());
     private WorkerEntity selectedWorker;
     private List<WorkerEntity> workers;
     private UserEntity user;
@@ -90,7 +90,6 @@ public class WorkerListNotProjectBean extends Bean implements Serializable {
      * @author Jose M Villar
      */
     public void reload() {
-        System.out.println("Entra reload");
         this.workers = new WorkersListEjb().obtainWorkersNotProject(this.project);
         this.lazyModel = new LazyWorkerDataModel(this.workers);
     }

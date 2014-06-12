@@ -40,26 +40,44 @@ public class WorkerBean extends Bean implements Serializable {
 
     public String update() {
         LOGGER.info(this.worker.toString());
+        String view = ""; //NOPMD
+        switch (new WorkerEjb().update(this.worker)) {
+            case 1:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "The worker DNI already exists", "")); //NOPMD
+                break;
+            case 2:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "The worker email already exists", ""));
+                break;
+            case 3:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "The worker GitHub already exists", ""));
+                break;
+            default:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Updated", ""));
+                view = "/workerListAll";
 
-        if (new WorkerEjb().update(this.worker)) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Updated", ""));
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Workers DNI is already exists", ""));
-            return null; //NOPMD
         }
-        return "/workerListAll";
+        return view;
     }
 
     public String create() {
         LOGGER.info(this.worker.toString());
+        String view = ""; //NOPMD
+        switch (new WorkerEjb().create(this.worker)) {
+            case 1:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "The worker DNI already exists", "")); //NOPMD
+                break;
+            case 2:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "The worker email already exists", ""));
+                break;
+            case 3:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "The worker GitHub already exists", ""));
+                break;
+            default:
+                FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
+                view = "/workerListAll";
 
-        if (new WorkerEjb().create(this.worker)) {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Created", ""));
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Workers DNI is already exists", ""));
-            return null; //NOPMD
         }
-        return "/workerListAll";
+        return view;        
     }
 
     public String delete() {
@@ -70,7 +88,7 @@ public class WorkerBean extends Bean implements Serializable {
             LOGGER.info(this.worker.toString());
 
             new WorkerEjb().delete(this.worker);
-            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Risk Deleted", ""));
+            FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Worker Deleted", ""));
         }
         return "/workerListAll";
     }

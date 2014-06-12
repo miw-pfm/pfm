@@ -21,6 +21,8 @@ import javax.inject.Named;
  * @author Fred Peña
  * @author Clemencio Morales
  * @author Pepe Bustamante
+ *
+ * Refactorizado por @author Jose Mª Villar Bogalo
  */
 @RequestScoped
 @Named

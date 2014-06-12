@@ -14,6 +14,7 @@ import java.util.List;
 /**
  *
  * @author Jean Mubaied
+ * @author William 
  */
 public class TargetEjb {
     
