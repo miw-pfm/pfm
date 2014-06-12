@@ -6,6 +6,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/templateProgress.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{progressDetailBean.redirectIfNoConfigured('projectPlan')}" />
+    </f:metadata>
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define> 
@@ -21,7 +24,7 @@
     <ui:define name="body">
         <h:form id="formInsertDetail">
             <h:panelGroup layout="block">
-                <p:growl id="growl"  sticky="true" life="1500"/>
+                <p:growl id="growl_progres" showDetail="true" life="1500" />
                 <h:panelGrid columns="2">    
                     <h:outputText value="#{msgs.iterations}" />                
                     <p:selectOneMenu id="chooseIteration" value="#{progressDetailBean.idIterSelect}">

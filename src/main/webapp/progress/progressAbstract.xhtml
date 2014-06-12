@@ -23,7 +23,7 @@
     <ui:define name="body">
 
         <h:form id="formProgressAbstract" class="dataTableList">
-            <p:growl id="msgs" sticky="true"/>
+            <p:growl id="msgs" showDetail="true" life="1500"/>
 
             <h:panelGroup id="totalUC" layout="block">
                 <h4>#{msgs.total_number_use_cases}</h4>
@@ -42,7 +42,7 @@
                 <p:column headerText="#{msgs.identification}" width="55">
                     <h:outputText value="#{progressAbstractBean.obtainPercentsOfIdentification(iter_proj)}" style="display:block" />                    
                 </p:column> 
-                <c:forEach var="i" begin="0" end="3">
+                <c:forEach var="i" begin="0" end="4">
                     <p:column headerText="#{progressAbstractBean.discipline_header(i)}" width="55">
                         <h:outputText value="#{progressAbstractBean.obtainPercentOfDiscipline(iter_proj,i)}" style="display:block" />                    
                     </p:column> 

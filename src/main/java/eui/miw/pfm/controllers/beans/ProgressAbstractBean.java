@@ -203,6 +203,8 @@ public class ProgressAbstractBean extends Bean implements Serializable {
                      break;
             case 3:  header_discipline="Test"; 
                      break; 
+            case 4:  header_discipline="Acceptance"; 
+                     break; 
             default:
                     header_discipline="Error";
                 break;

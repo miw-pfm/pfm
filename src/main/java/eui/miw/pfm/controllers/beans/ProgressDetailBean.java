@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eui.miw.pfm.controllers.beans;
 
 import eui.miw.pfm.controllers.ejb.DisciplineEjb;
@@ -13,12 +8,17 @@ import eui.miw.pfm.models.entities.IterationEntity;
 import eui.miw.pfm.models.entities.ProgressDetailEntity;
 import eui.miw.pfm.models.entities.ProjectEntity;
 import eui.miw.pfm.models.entities.UseCaseEntity;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -62,10 +62,14 @@ public class ProgressDetailBean extends Bean implements Serializable {
     public void init() {
         iterationBean = new IterationBean();
         this.lDisciplines = new DisciplineEjb().findAll();
-        this.iterationSelected = iterationBean.getAllIterations().get(0);
-        this.idIterSelect = this.iterationSelected.getId();
-        findProgressDetail(true);
-        fillCheckedUseCase();
+        try {
+            this.iterationSelected = iterationBean.getAllIterations().get(0);
+            this.idIterSelect = this.iterationSelected.getId();
+            findProgressDetail(true);
+            fillCheckedUseCase();
+        } catch (Exception e) {
+            LOGGER.warning("No iteration configured");
+        }                
     }
 
     public ProgressDetailBean() {
@@ -99,6 +103,7 @@ public class ProgressDetailBean extends Bean implements Serializable {
         } else {
             new ProgressDetailEjb().update(this.progressDetail);
         }
+        FacesContext.getCurrentInstance().addMessage("formProgressDetailBean", new FacesMessage("Updated"));
     }
 
     public void fillCheckedUseCase() {
@@ -275,5 +280,19 @@ public class ProgressDetailBean extends Bean implements Serializable {
             checkedUseCases.add(ucc);
         }
         new UseCaseEjb().update(ucc);
+    }        
+    
+    public void redirectIfNoConfigured(final String view) {        
+        if (iterationBean.getAllIterations().isEmpty()) {            
+            try {
+                Logger.getLogger(CalendarProjectBean.class.getName()).log(Level.WARNING, "No iteration configured to the opened Project.", view);                
+                FacesContext context;
+                context = FacesContext.getCurrentInstance();            
+                ExternalContext extContext = context.getExternalContext();  
+                extContext.redirect(extContext.getRequestContextPath()+"/phaseplan/" + view + ".xhtml");                
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarProjectBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
