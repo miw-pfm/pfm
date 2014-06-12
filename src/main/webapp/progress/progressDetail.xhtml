@@ -6,6 +6,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/templateProgress.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{progressDetailBean.redirectIfNoConfigured('projectPlan')}" />
+    </f:metadata>
     <ui:define name="pagetitle">
         #{projectConfBean.project.name}
     </ui:define> 
